@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         }
 
         public async Task<UploadRegistrationsResponseViewModel> ProcessBulkRegistrationsAsync(UploadRegistrationsRequestViewModel viewModel)
-        {            
+        {
             var bulkRegistrationRequest = _mapper.Map<BulkProcessRequest>(viewModel);
 
             using (var fileStream = viewModel.File.OpenReadStream())
@@ -69,7 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                     SourceFilePath = $"{aoUkprn}/{BulkProcessStatus.ValidationErrors}"
                 });
 
-                if(fileStream == null)
+                if (fileStream == null)
                 {
                     var blobReadError = $"No FileStream found to download registration validation errors. Method: DownloadFileAsync(ContainerName: {DocumentType.Registrations}, BlobFileName = {tlevelDetails.BlobFileName}, SourceFilePath = {aoUkprn}/{BulkProcessStatus.ValidationErrors})";
                     _logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
@@ -80,7 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No DocumentUploadHistoryDetails found or the request is not valid. Method: GetDocumentUploadHistoryDetailsAsync(AoUkprn: {aoUkprn}, BlobUniqueReference = {blobUniqueReference})");
                 return null;
-            }            
+            }
         }
 
         public async Task<SelectProviderViewModel> GetRegisteredTqAoProviderDetailsAsync(long aoUkprn)
@@ -100,7 +100,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var pathwaySpecialisms = await _internalApiClient.GetPathwaySpecialismsByPathwayLarIdAsync(aoUkprn, pathwayLarId);
             var pathwaySpecialismsViewModel = _mapper.Map<PathwaySpecialismsViewModel>(pathwaySpecialisms);
 
-            if(pathwaySpecialismsViewModel != null)
+            if (pathwaySpecialismsViewModel != null)
                 pathwaySpecialismsViewModel.Specialisms = pathwaySpecialismsViewModel.Specialisms.OrderBy(x => x.DisplayName).ToList();
 
             return pathwaySpecialismsViewModel;
@@ -123,7 +123,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var response = await _internalApiClient.GetRegistrationDetailsAsync(aoUkprn, profileId, status);
             return _mapper.Map<RegistrationDetailsViewModel>(response);
         }
-        
+
         public async Task<RegistrationAssessmentDetails> GetRegistrationAssessmentAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null)
         {
             var response = await _internalApiClient.GetLearnerRecordAsync(aoUkprn, profileId, status);
@@ -146,7 +146,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var reg = await _internalApiClient.GetRegistrationDetailsAsync(aoUkprn, viewModel.ProfileId, RegistrationPathwayStatus.Active);
             if (reg == null)
                 return null;
-            
+
             if (reg.ProviderUkprn == viewModel.SelectedProviderUkprn.ToLong())
             {
                 return new ProviderChangeResponse { IsModified = false };
@@ -159,7 +159,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                     var request = _mapper.Map<ManageRegistration>(reg);
                     _mapper.Map(viewModel, request);
                     var isSuccess = await _internalApiClient.UpdateRegistrationAsync(request);
-                    return new ProviderChangeResponse { ProfileId = request.ProfileId, Uln = request.Uln, IsModified = true,  IsSuccess = isSuccess };
+                    return new ProviderChangeResponse { ProfileId = request.ProfileId, Uln = request.Uln, IsModified = true, IsSuccess = isSuccess };
                 }
                 else
                 {
@@ -171,7 +171,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         public async Task<ManageRegistrationResponse> ProcessProfileNameChangeAsync(long aoUkprn, ChangeLearnersNameViewModel viewModel)
         {
             var reg = await _internalApiClient.GetRegistrationDetailsAsync(aoUkprn, viewModel.ProfileId, RegistrationPathwayStatus.Active);
-            if (reg == null) 
+            if (reg == null)
                 return null;
 
             if (viewModel.Firstname.Trim().Equals(reg.Firstname) && viewModel.Lastname.Trim().Equals(reg.Lastname))
@@ -179,7 +179,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
             var request = _mapper.Map<ManageRegistration>(reg);
             _mapper.Map(viewModel, request);
-            
+
             var isSuccess = await _internalApiClient.UpdateRegistrationAsync(request);
 
             return new ManageRegistrationResponse { ProfileId = request.ProfileId, Uln = request.Uln, IsModified = true, IsSuccess = isSuccess };
@@ -191,7 +191,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             if (reg == null)
                 return null;
 
-            if (reg.DateofBirth == viewModel.DateofBirth.ToDateTime()) 
+            if (reg.DateofBirth == viewModel.DateofBirth.ToDateTime())
                 return new ManageRegistrationResponse { IsModified = false };
 
             var request = _mapper.Map<ManageRegistration>(reg);
@@ -266,7 +266,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             }
 
             var reregistrationRequest = _mapper.Map<ReregistrationRequest>(viewModel, opt => opt.Items["aoUkprn"] = aoUkprn);
-            var isSuccess =  await _internalApiClient.ReregistrationAsync(reregistrationRequest);
+            var isSuccess = await _internalApiClient.ReregistrationAsync(reregistrationRequest);
             return new ReregistrationResponse { ProfileId = reg.ProfileId, Uln = reg.Uln, IsSuccess = isSuccess };
         }
 
@@ -280,26 +280,50 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.GetAcademicYearsAsync();
         }
 
-        public async Task<IList<DataExportResponse>> GenerateRegistrationsExportAsync(long aoUkprn, string requestedBy)
+        public Task<IList<DataExportResponse>> GenerateRegistrationsExportAsync(long aoUkprn, string requestedBy)
         {
-            return await _internalApiClient.GenerateDataExportAsync(aoUkprn, DataExportType.Registrations, requestedBy);
+            return _internalApiClient.GenerateDataExportAsync(aoUkprn, DataExportType.Registrations, requestedBy);
         }
 
-        public async Task<Stream> GetRegistrationsDataFileAsync(long aoUkprn, Guid blobUniqueReference)
+        public Task<IList<DataExportResponse>> GeneratePendingWithdrawalsExportAsync(long aoUkprn, string requestedBy)
         {
-            var fileStream = await _blobStorageService.DownloadFileAsync(new BlobStorageData
+            return _internalApiClient.GenerateDataExportAsync(aoUkprn, DataExportType.PendingWithdrawals, requestedBy);
+        }
+
+        public Task<Stream> GetRegistrationsDataFileAsync(long aoUkprn, Guid blobUniqueReference)
+        {
+            string fileStreamNotFoundMessage = $"No FileStream found to download registrations data. Method: {nameof(GetRegistrationsDataFileAsync)}";
+            return GetDataFileAsync(aoUkprn, blobUniqueReference, DataExportType.Registrations, fileStreamNotFoundMessage);
+        }
+
+        public Task<Stream> GetPendingWithdrawalsDataFileAsync(long aoUkprn, Guid blobUniqueReference)
+        {
+            string fileStreamNotFoundMessage = $"No FileStream found to download pending withdrawals data. Method: {nameof(GetPendingWithdrawalsDataFileAsync)}";
+            return GetDataFileAsync(aoUkprn, blobUniqueReference, DataExportType.PendingWithdrawals, fileStreamNotFoundMessage);
+        }
+
+        private async Task<Stream> GetDataFileAsync(long aoUkprn, Guid blobUniqueReference, DataExportType dataExportType, string fileStreamNotFoundMessage)
+        {
+            string sourceFilePath = $"{aoUkprn}/{dataExportType}";
+
+            Stream fileStream = await DownloadFileAsync(blobUniqueReference, sourceFilePath);
+            if (fileStream == null)
+            {
+                string blobReadError = $"{fileStreamNotFoundMessage}(ContainerName: {DocumentType.Registrations}, BlobFileName = {blobUniqueReference}, SourceFilePath = {sourceFilePath})";
+                _logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
+            }
+
+            return fileStream;
+        }
+
+        private Task<Stream> DownloadFileAsync(Guid blobUniqueReference, string sourceFilePath)
+        {
+            return _blobStorageService.DownloadFileAsync(new BlobStorageData
             {
                 ContainerName = DocumentType.DataExports.ToString(),
                 BlobFileName = $"{blobUniqueReference}.{FileType.Csv}",
-                SourceFilePath = $"{aoUkprn}/{DataExportType.Registrations}"
+                SourceFilePath = sourceFilePath
             });
-
-            if (fileStream == null)
-            {
-                var blobReadError = $"No FileStream found to download registrations data. Method: GetRegistrationsDataFileAsync(ContainerName: {DocumentType.Registrations}, BlobFileName = {blobUniqueReference}, SourceFilePath = {aoUkprn}/{DataExportType.Registrations})";
-                _logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
-            }
-            return fileStream;
         }
     }
 }

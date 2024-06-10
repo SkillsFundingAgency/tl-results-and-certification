@@ -123,17 +123,11 @@
   <data name="Contact_Tlevel_Team_Link" xml:space="preserve">
     <value>Contact the Manage T Level results team</value>
   </data>
-  <data name="Email_Subject" xml:space="preserve">
-    <value>Enquiry about ULN registered with another awarding organisation</value>
-  </data>
   <data name="Information_Text_Part1" xml:space="preserve">
-    <value>Another awarding organisation has already registered this ULN ({0}).</value>
-  </data>
-  <data name="Information_Text_Part2" xml:space="preserve">
-    <value>and we will investigate the issue.</value>
+    <value>{0} has already registered this ULN.</value>
   </data>
   <data name="Page_Heading" xml:space="preserve">
-    <value>ULN cannot be registered</value>
+    <value>ULN {0} cannot be registered</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Add a new registration - ULN cannot be registered page</value>

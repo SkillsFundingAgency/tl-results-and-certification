@@ -99,5 +99,65 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var changeLogRecord = await _internalApiClient.GetAdminChangeLogRecordAsync(changeLogId);
             return _mapper.Map<AdminViewChangeRecordAddSpecialismResultViewModel>(changeLogRecord);
         }
+
+        public async Task<AdminViewChangeRecordViewModel> GetAdminViewChangePathwayResultRecord(int changeLogId)
+        {
+            var changeLogRecord = await _internalApiClient.GetAdminChangeLogRecordAsync(changeLogId);
+            return _mapper.Map<AdminViewChangeRecordPathwayResultViewModel>(changeLogRecord);
+        }
+
+        public async Task<AdminViewChangeRecordViewModel> GetAdminViewChangeSpecialismResultRecord(int changeLogId)
+        {
+            var changeLogRecord = await _internalApiClient.GetAdminChangeLogRecordAsync(changeLogId);
+            return _mapper.Map<AdminViewChangeRecordSpecialismResultViewModel>(changeLogRecord);
+        }
+
+        public async Task<AdminViewChangeRecordViewModel> GetAdminViewChangeOpenPathwayRommRecord(int changeLogId)
+        {
+            var changeLogRecord = await _internalApiClient.GetAdminChangeLogRecordAsync(changeLogId);
+            return _mapper.Map<AdminViewChangeRecordOpenPathwayRommViewModel>(changeLogRecord);
+        }
+
+        public async Task<AdminViewChangeRecordViewModel> GetAdminViewChangeOpenSpecialismRommRecord(int changeLogId)
+        {
+            var changeLogRecord = await _internalApiClient.GetAdminChangeLogRecordAsync(changeLogId);
+            return _mapper.Map<AdminViewChangeRecordOpenSpecialismRommViewModel>(changeLogRecord);
+        }
+
+        public async Task<AdminViewChangeRecordViewModel> GetAdminViewChangePathwayRommOutcomeRecord(int changeLogId)
+        {
+            var changeLogRecord = await _internalApiClient.GetAdminChangeLogRecordAsync(changeLogId);
+            return _mapper.Map<AdminViewChangeRecordPathwayRommOutcomeViewModel>(changeLogRecord);
+        }
+
+        public async Task<AdminViewChangeRecordViewModel> GetAdminViewChangeSpecialismRommOutcomeRecord(int changeLogId)
+        {
+            var changeLogRecord = await _internalApiClient.GetAdminChangeLogRecordAsync(changeLogId);
+            return _mapper.Map<AdminViewChangeRecordSpecialismRommOutcomeViewModel>(changeLogRecord);
+        }
+
+        public async Task<AdminViewChangeRecordViewModel> GetAdminViewChangeOpenPathwayAppealRecord(int changeLogId)
+        {
+            var changeLogRecord = await _internalApiClient.GetAdminChangeLogRecordAsync(changeLogId);
+            return _mapper.Map<AdminViewChangeRecordOpenPathwayAppealViewModel>(changeLogRecord);
+        }
+
+        public async Task<AdminViewChangeRecordViewModel> GetAdminViewChangeOpenSpecialismAppealRecord(int changeLogId)
+        {
+            var changeLogRecord = await _internalApiClient.GetAdminChangeLogRecordAsync(changeLogId);
+            return _mapper.Map<AdminViewChangeRecordOpenSpecialismAppealViewModel>(changeLogRecord);
+        }
+
+        public async Task<AdminViewChangeRecordViewModel> GetAdminViewChangePathwayAppealOutcomeRecord(int changeLogId)
+        {
+            var changeLogRecord = await _internalApiClient.GetAdminChangeLogRecordAsync(changeLogId);
+            return _mapper.Map<AdminViewChangeRecordPathwayAppealOutcomeViewModel>(changeLogRecord);
+        }
+
+        public async Task<AdminViewChangeRecordViewModel> GetAdminViewChangeSpecialismAppealOutcomeRecord(int changeLogId)
+        {
+            var changeLogRecord = await _internalApiClient.GetAdminChangeLogRecordAsync(changeLogId);
+            return _mapper.Map<AdminViewChangeRecordSpecialismAppealOutcomeViewModel>(changeLogRecord);
+        }
     }
 }

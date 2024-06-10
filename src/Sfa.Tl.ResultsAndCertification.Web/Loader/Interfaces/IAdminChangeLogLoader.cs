@@ -22,5 +22,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<AdminViewChangeRecordViewModel> GetAdminViewChangeRemoveCoreAssessmentRecord(int changeLogId);
 
         Task<AdminViewChangeRecordViewModel> GetAdminViewChangeRemoveSpecialismAssessmentRecord(int changeLogId);
+
+        Task<AdminViewChangeRecordViewModel> GetAdminViewChangePathwayResultRecord(int changeLogId);
+
+        Task<AdminViewChangeRecordViewModel> GetAdminViewChangeSpecialismResultRecord(int changeLogId);
+
+        Task<AdminViewChangeRecordViewModel> GetAdminViewChangeOpenPathwayRommRecord(int changeLogId);
+
+        Task<AdminViewChangeRecordViewModel> GetAdminViewChangeOpenSpecialismRommRecord(int changeLogId);
+
+        Task<AdminViewChangeRecordViewModel> GetAdminViewChangePathwayRommOutcomeRecord(int changeLogId);
+
+        Task<AdminViewChangeRecordViewModel> GetAdminViewChangeSpecialismRommOutcomeRecord(int changeLogId);
+
+        Task<AdminViewChangeRecordViewModel> GetAdminViewChangeOpenPathwayAppealRecord(int changeLogId);
+
+        Task<AdminViewChangeRecordViewModel> GetAdminViewChangeOpenSpecialismAppealRecord(int changeLogId);
+
+        Task<AdminViewChangeRecordViewModel> GetAdminViewChangePathwayAppealOutcomeRecord(int changeLogId);
+
+        Task<AdminViewChangeRecordViewModel> GetAdminViewChangeSpecialismAppealOutcomeRecord(int changeLogId);
     }
 }

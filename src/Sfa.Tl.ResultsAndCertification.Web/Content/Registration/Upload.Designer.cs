@@ -88,6 +88,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 1KB.
+        /// </summary>
+        public static string File_Size_Kb_Text_Template {
+            get {
+                return ResourceManager.GetString("File_Size_Kb_Text_Template", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File size too large – must be no more than {0}MB.
         /// </summary>
         public static string File_Size_Too_Large_Validation_Message {
@@ -97,11 +106,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CSV.
+        /// </summary>
+        public static string File_Type_CSV {
+            get {
+                return ResourceManager.GetString("File_Type_CSV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to XLSX.
         /// </summary>
-        public static string File_Type {
+        public static string File_Type_XLSX {
             get {
-                return ResourceManager.GetString("File_Type", resourceCulture);
+                return ResourceManager.GetString("File_Type_XLSX", resourceCulture);
             }
         }
         
@@ -138,6 +156,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         public static string Link_Tlevels_Registration_Data_Format_Rules {
             get {
                 return ResourceManager.GetString("Link_Tlevels_Registration_Data_Format_Rules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download T Levels registrations data template ({0}, {1}).
+        /// </summary>
+        public static string Link_Tlevels_Registration_Data_Template {
+            get {
+                return ResourceManager.GetString("Link_Tlevels_Registration_Data_Template", resourceCulture);
             }
         }
         
@@ -214,7 +241,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If you export data from another system, you might need to adjust the format so that it can be uploaded into this system..
+        ///   Looks up a localized string similar to If you export data from another system, you must check the data is in the right format..
         /// </summary>
         public static string Para_If_You_Export_Data_From_Another_System {
             get {
@@ -223,7 +250,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You can add or change registration details for one or more learners by uploading CSV files..
+        ///   Looks up a localized string similar to You can add or change registration details for one or more learners by uploading a CSV file..
         /// </summary>
         public static string Para_You_Can_Add_Or_Change_Registration {
             get {
@@ -232,7 +259,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You can download a template with data formats and rules guidance to help you..
+        ///   Looks up a localized string similar to You can download guidance on data formats and rules to help you. Once you have added your registration details to the template, you can upload your file..
         /// </summary>
         public static string Para_You_Can_Download_Template_With_Formats_And_Rules {
             get {
@@ -246,6 +273,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         public static string Registrations_Published_On {
             get {
                 return ResourceManager.GetString("Registrations_Published_On", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to published 25 May 2024.
+        /// </summary>
+        public static string Registrations_Template_Published_On {
+            get {
+                return ResourceManager.GetString("Registrations_Template_Published_On", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version 2.0.
+        /// </summary>
+        public static string Registrations_Template_Version {
+            get {
+                return ResourceManager.GetString("Registrations_Template_Version", resourceCulture);
             }
         }
         

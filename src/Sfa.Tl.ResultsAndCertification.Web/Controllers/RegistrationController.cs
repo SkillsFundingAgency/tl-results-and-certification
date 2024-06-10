@@ -10,8 +10,12 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
+using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using RegistrationContent = Sfa.Tl.ResultsAndCertification.Web.Content.Registration;
@@ -145,7 +149,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else
             {
-                _logger.LogWarning(LogEvent.DownloadRegistrationErrorsFailed, $"Not a valid guid to read file.Method: DownloadRegistrationErrors(Id = { id}), Ukprn: { User.GetUkPrn()}, User: { User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.DownloadRegistrationErrorsFailed, $"Not a valid guid to read file.Method: DownloadRegistrationErrors(Id = {id}), Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
             }
         }
@@ -385,7 +389,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             cacheModel.SpecialismQuestion = model;
             await _cacheService.SetAsync(CacheKey, cacheModel);
 
-            if(model.IsChangeMode)
+            if (model.IsChangeMode)
             {
                 return model.HasLearnerDecidedSpecialism.Value ? RedirectToRoute(RouteConstants.AddRegistrationSpecialisms, new { isChangeMode = "true" }) : RedirectToRoute(RouteConstants.AddRegistrationCheckAndSubmit);
             }
@@ -441,7 +445,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var cacheModel = await _cacheService.GetAsync<RegistrationViewModel>(CacheKey);
 
-            if (cacheModel?.SpecialismQuestion == null || 
+            if (cacheModel?.SpecialismQuestion == null ||
                 (cacheModel?.SpecialismQuestion?.HasLearnerDecidedSpecialism == true && cacheModel?.SelectSpecialisms == null))
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
@@ -532,53 +536,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("search-for-registration", Name = RouteConstants.SearchRegistration)]
-        public async Task<IActionResult> SearchRegistration()
-        {
-            var defaultValue = await _cacheService.GetAndRemoveAsync<string>(Constants.RegistrationSearchCriteria);
-            var viewModel = new SearchRegistrationViewModel { SearchUln = defaultValue };
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        [Route("search-for-registration", Name = RouteConstants.SubmitSearchRegistration)]
-        public async Task<IActionResult> SearchRegistrationAsync(SearchRegistrationViewModel model)
-        {
-            if (!ModelState.IsValid)
-                return View(model);
-
-            var searchResult = await _registrationLoader.FindUlnAsync(User.GetUkPrn(), model.SearchUln.ToLong());
-
-            if (searchResult?.IsAllowed == true)
-            {
-                return RedirectToRoute(RouteConstants.RegistrationDetails, new { profileId = searchResult.RegistrationProfileId });
-            }
-            else
-            {
-                await _cacheService.SetAsync(Constants.RegistrationSearchCriteria, model.SearchUln);
-
-                var ulnNotfoundModel = new UlnRegistrationNotFoundViewModel { Uln = model.SearchUln.ToString(), BackLinkRouteName = RouteConstants.SearchRegistration };
-                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.SearchRegistrationUlnNotFound), ulnNotfoundModel, CacheExpiryTime.XSmall);
-
-                return RedirectToRoute(RouteConstants.SearchRegistrationNotFound);
-            }
-        }
-
-        [HttpGet]
-        [Route("search-for-registration-ULN-not-found", Name = RouteConstants.SearchRegistrationNotFound)]
-        public async Task<IActionResult> SearchRegistrationNotFound()
-        {
-            var viewModel = await _cacheService.GetAndRemoveAsync<UlnRegistrationNotFoundViewModel>(string.Concat(CacheKey, Constants.SearchRegistrationUlnNotFound));
-
-            if (viewModel == null)
-            {
-                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read SearchRegistrationUlnNotFound from temp data in search registration not found page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
-                return RedirectToRoute(RouteConstants.PageNotFound);
-            }
-            return View(viewModel);
-        }
-
-        [HttpGet]
         [Route("search-for-registration-registration-details/{profileId}", Name = RouteConstants.RegistrationDetails)]
         public async Task<IActionResult> RegistrationDetailsAsync(int profileId)
         {
@@ -647,7 +604,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("registrations-generating-download", Name = RouteConstants.RegistrationsGeneratingDownload)]
-        public IActionResult RegistrationsGeneratingDownload()  
+        public IActionResult RegistrationsGeneratingDownload()
         {
             return View();
         }
@@ -656,28 +613,44 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("registrations-generating-download", Name = RouteConstants.SubmitRegistrationsGeneratingDownload)]
         public async Task<IActionResult> SubmitRegistrationsGeneratingDownloadAsync()
         {
-            var response = await _registrationLoader.GenerateRegistrationsExportAsync(User.GetUkPrn(), User.GetUserEmail());
-            if (response == null || response.Count != 1)
+            long ukprn = User.GetUkPrn();
+            string email = User.GetUserEmail();
+
+            Task<IList<DataExportResponse>> registrationsResponseTask = _registrationLoader.GenerateRegistrationsExportAsync(ukprn, email);
+            Task<IList<DataExportResponse>> pendingWithdrawalsResponseTask = _registrationLoader.GeneratePendingWithdrawalsExportAsync(ukprn, email);
+
+            await Task.WhenAll(registrationsResponseTask, pendingWithdrawalsResponseTask);
+
+            IList<DataExportResponse> registrationsResponse = registrationsResponseTask.Result;
+            IList<DataExportResponse> pendingWithdrawalsResponse = pendingWithdrawalsResponseTask.Result;
+
+            if (!registrationsResponse.ContainsSingle() || !pendingWithdrawalsResponse.ContainsSingle())
                 return RedirectToRoute(RouteConstants.ProblemWithService);
 
-            if (!response.Any(x => x.IsDataFound))
+            if (!registrationsResponse.Any(x => x.IsDataFound))
             {
                 _logger.LogWarning(LogEvent.NoDataFound,
-                    $"There are no registrations found for the Data export. Method: GenerateRegistrationsExportAsync({User.GetUkPrn()}, {User.GetUserEmail()})");
+                    $"There are no registrations found for the Data export. Method: GenerateRegistrationsExportAsync({ukprn}, {email})");
 
                 return RedirectToRoute(RouteConstants.RegistrationsNoRecordsFound);
             }
 
-            var regExportResponse = response.FirstOrDefault();
             var registrationsDownloadViewModel = new RegistrationsDownloadViewModel
             {
-                BlobUniqueReference = regExportResponse.BlobUniqueReference,
-                FileSize = regExportResponse.FileSize,
-                FileType = FileType.Csv.ToString().ToUpperInvariant()
+                RegistrationsDownloadLinkViewModel = CreateDownloadLink(registrationsResponse.First()),
+                PendingWithdrawalsDownloadLinkViewModel = CreateDownloadLink(pendingWithdrawalsResponse.First())
             };
 
             await _cacheService.SetAsync(CacheKey, registrationsDownloadViewModel, CacheExpiryTime.XSmall);
             return RedirectToRoute(RouteConstants.RegistrationsDownloadData);
+
+            static DownloadLinkViewModel CreateDownloadLink(DataExportResponse response)
+                => new()
+                {
+                    BlobUniqueReference = response.BlobUniqueReference,
+                    FileSize = response.FileSize,
+                    FileType = FileType.Csv.ToString().ToUpperInvariant()
+                };
         }
 
         [HttpGet]
@@ -703,28 +676,46 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("download-registrations-data/{id}", Name = RouteConstants.RegistrationsDownloadDataLink)]
-        public async Task<IActionResult> RegistrationsDownloadDataLinkAsync(string id)
+        public Task<IActionResult> RegistrationsDownloadDataLinkAsync(string id)
         {
-            if (id.IsGuid())
-            {
-                var fileStream = await _registrationLoader.GetRegistrationsDataFileAsync(User.GetUkPrn(), id.ToGuid());
-                if (fileStream == null)
-                {
-                    _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download registration data. Method: RegistrationsDownloadDataLinkAsync(AoUkprn: {User.GetUkPrn()}, BlobUniqueReference = {id})");
-                    return RedirectToRoute(RouteConstants.PageNotFound);
-                }
+            return DownloadDataLinkAsync(
+                id,
+                () => _registrationLoader.GetRegistrationsDataFileAsync(User.GetUkPrn(), id.ToGuid()),
+                RegistrationContent.RegistrationsDownloadData.Registrations_Data_Report_File_Name_Text,
+                nameof(RegistrationsDownloadDataLinkAsync));
+        }
 
-                fileStream.Position = 0;
-                return new FileStreamResult(fileStream, "text/csv")
-                {
-                    FileDownloadName = RegistrationContent.RegistrationsDownloadData.Registrations_Data_Report_File_Name_Text
-                };
-            }
-            else
+        [HttpGet]
+        [Route("download-pending-withdrawals-data/{id}", Name = RouteConstants.PendingWithdrawalsDownloadDataLink)]
+        public Task<IActionResult> PendingWithdrawalsDownloadDataLinkAsync(string id)
+        {
+            return DownloadDataLinkAsync(
+                id,
+                () => _registrationLoader.GetPendingWithdrawalsDataFileAsync(User.GetUkPrn(), id.ToGuid()),
+                RegistrationContent.RegistrationsDownloadData.Pending_Withdrawals_Data_Report_File_Name,
+                nameof(PendingWithdrawalsDownloadDataLinkAsync));
+        }
+
+        private async Task<IActionResult> DownloadDataLinkAsync(string id, Func<Task<Stream>> getDataFile, string fileDownloadName, string methodName)
+        {
+            if (!id.IsGuid())
             {
-                _logger.LogWarning(LogEvent.DocumentDownloadFailed, $"Not a valid guid to read file.Method: RegistrationsDownloadDataLinkAsync(Id = { id}), Ukprn: { User.GetUkPrn()}, User: { User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.DocumentDownloadFailed, $"Not a valid guid to read file.Method: {methodName}(Id = {id}), Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
             }
+
+            var fileStream = await getDataFile();
+            if (fileStream == null)
+            {
+                _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download registration data. Method: {methodName}(AoUkprn: {User.GetUkPrn()}, BlobUniqueReference = {id})");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            fileStream.Position = 0;
+            return new FileStreamResult(fileStream, "text/csv")
+            {
+                FileDownloadName = fileDownloadName
+            };
         }
 
         private async Task<SelectProviderViewModel> GetAoRegisteredProviders()

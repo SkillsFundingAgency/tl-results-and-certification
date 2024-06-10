@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.Design.Serialization;
-
-namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
+﻿namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
 {
     public static class RouteConstants
     {
@@ -134,9 +132,6 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
         public const string ReregistrationConfirmation = "ReregistrationConfirmation";
 
         // Search Registration
-        public const string SearchRegistration = "SearchRegistration";
-        public const string SubmitSearchRegistration = "SubmitSearchRegistration";
-        public const string SearchRegistrationNotFound = "SearchRegistrationNotFound";
         public const string RegistrationDetails = "RegistrationDetails";
 
         // Cancel Registration
@@ -174,6 +169,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
         public const string AssessmentsNoRecordsFound = "AssessmentsNoRecordsFound";
         public const string RegistrationsDownloadData = "RegistrationsDownloadData";
         public const string RegistrationsDownloadDataLink = "RegistrationsDownloadDataLink";
+        public const string PendingWithdrawalsDownloadDataLink = "PendingWithdrawalsDownloadDataLink";
         public const string AssessmentsDownloadData = "AssessmentsDownloadData";
         public const string AssessmentsDownloadDataLink = "AssessmentsDownloadDataLink";
         public const string ResultsGeneratingDownload = "ResultsGeneratingDownload";
@@ -183,9 +179,6 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
         public const string ResultsNoRecordsFound = "ResultsNoRecordsFound";
 
         // Search Assessment Entries
-        public const string SearchAssessments = "SearchAssessments";
-        public const string SubmitSearchAssessments = "SubmitSearchAssessments";
-        public const string SearchAssessmentsNotFound = "SearchAssessmentsNotFound";
         public const string AssessmentDetails = "AssessmentDetails";
         public const string AssessmentWithdrawnDetails = "AssessmentWithdrawnDetails";
 
@@ -207,9 +200,6 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
         public const string SubmitChangeSpecialismResult = "SubmitChangeSpecialismResult";
 
         // Search Results
-        public const string SearchResults = "SearchResults";
-        public const string SubmitSearchResults = "SubmitSearchResults";
-        public const string SearchResultsNotFound = "SearchResultsNotFound";
         public const string ResultWithdrawnDetails = "ResultWithdrawnDetails";
         public const string ResultDetails = "ResultDetails";
 
@@ -235,6 +225,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
         // Document
         public const string RegistrationDataFormatAndRulesGuide = "RegistrationDataFormatAndRulesGuide";
         public const string DownloadRegistrationDataFormatAndRulesGuide = "DownloadRegistrationDataFormatAndRulesGuide";
+        public const string DownloadRegistrationDataTemplate = "DownloadRegistrationDataTemplate";
         public const string DownloadAssessmentEntriesDataFormatAndRulesGuide = "DownloadAssessmentEntriesDataFormatAndRulesGuide";
         public const string DownloadResultsDataFormatAndRulesGuide = "DownloadResultsDataFormatAndRulesGuide";
         public const string DownloadIndustryPlacementDataFormatAndRulesGuide = "DownloadIndustryPlacementDataFormatAndRulesGuide";
@@ -328,9 +319,6 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
         #region Post Results Service
 
         public const string StartReviewsAndAppeals = "StartReviewsAndAppeals";
-        public const string PrsSearchLearner = "PrsSearchLearner";
-        public const string SubmitPrsSearchLearner = "SubmitPrsSearchLearner";
-        public const string PrsUlnNotFound = "PrsUlnNotFound";
         public const string PrsUlnWithdrawn = "PrsUlnWithdrawn";
         public const string PrsLearnerDetails = "PrsLearnerDetails";
         public const string PrsAddRomm = "PrsAddRomm";
@@ -487,6 +475,17 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
         public const string AdminViewChangeAddSpecialismResultRecord = "AdminViewChangeAddSpecialismResultRecord";
         public const string AdminViewChangeRemoveCoreAssessmentRecord = "AdminViewChangeRemoveCoreAssessmentRecord";
         public const string AdminViewChangeRemoveSpecialismAssessmentRecord = "AdminViewChangeRemoveSpecialismAssessmentRecord";
+        public const string AdminViewChangePathwayResultRecord = "AdminViewChangePathwayResultRecord";
+        public const string AdminViewChangeSpecialismResultRecord = "AdminViewChangeSpecialismResultRecord";
+        public const string AdminViewOpenPathwayRommRecord = "AdminViewOpenPathwayRommRecord";
+        public const string AdminViewOpenSpecialismRommRecord = "AdminViewOpenSpecialismRommRecord";
+        public const string AdminViewPathwayRommOutcomeRecord = "AdminViewPathwayRommOutcomeRecord";
+        public const string AdminViewSpecialismRommOutcomeRecord = "AdminViewSpecialismRommOutcomeRecord";
+        public const string AdminViewOpenPathwayAppealRecord = "AdminViewOpenPathwayAppealRecord";
+        public const string AdminViewOpenSpecialismAppealRecord = "AdminViewOpenSpecialismAppealRecord";
+        public const string AdminViewPathwayAppealOutcomeRecord = "AdminViewPathwayAppealOutcomeRecord";
+        public const string AdminViewSpecialismAppealOutcomeRecord = "AdminViewSpecialismAppealOutcomeRecord";
+
 
 
         #endregion
@@ -558,6 +557,17 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Helpers
         public const string AdminAddAppealOutcomeChangeGradeSpecialism = "AdminAddAppealOutcomeChangeGradeSpecialism";
         public const string SubmitAdminAddAppealOutcomeChangeGradeSpecialism = "SubmitAdminAddAppealOutcomeChangeGradeSpecialism";
         public const string SubmitAdminReviewChangesAppealOutcomeSpecialism = "SubmitAdminReviewChangesAppealOutcomeSpecialism";
+
+        #endregion
+
+        #region Search registration
+
+        public const string SearchRegistrationClear = "SearchRegistrationClear";
+        public const string SearchRegistration = "SearchRegistration";
+        public const string SubmitSearchRegistrationSearchKey = "SubmitSearchRegistrationSearchKey";
+        public const string SubmitSearchRegistrationClearKey = "SubmitSearchRegistrationClearKey";
+        public const string SubmitSearchRegistrationFilters = "SubmitSearchRegistrationFilters";
+        public const string SubmitSearchRegistrationClearFilters = "SubmitSearchRegistrationClearFilters";
 
         #endregion
     }

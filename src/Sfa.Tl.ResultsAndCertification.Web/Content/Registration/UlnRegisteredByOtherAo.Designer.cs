@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class UlnRegisteredByOtherAo {
@@ -79,16 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enquiry about ULN registered with another awarding organisation.
-        /// </summary>
-        public static string Email_Subject {
-            get {
-                return ResourceManager.GetString("Email_Subject", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Another awarding organisation has already registered this ULN ({0})..
+        ///   Looks up a localized string similar to {0} has already registered this ULN..
         /// </summary>
         public static string Information_Text_Part1 {
             get {
@@ -97,16 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to and we will investigate the issue..
-        /// </summary>
-        public static string Information_Text_Part2 {
-            get {
-                return ResourceManager.GetString("Information_Text_Part2", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to ULN cannot be registered.
+        ///   Looks up a localized string similar to ULN {0} cannot be registered.
         /// </summary>
         public static string Page_Heading {
             get {

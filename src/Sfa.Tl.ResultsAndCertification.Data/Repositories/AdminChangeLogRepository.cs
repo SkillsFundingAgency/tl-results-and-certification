@@ -34,10 +34,12 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
             if (!string.IsNullOrWhiteSpace(request.SearchKey))
             {
+                string searchKey = request.SearchKey.Trim();
+
                 Expression<Func<ChangeLog, bool>> queryExpression =
-                        p => (request.SearchKey.IsLong() && p.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == request.SearchKey.ToLong())
-                        || EF.Functions.Like(p.TqRegistrationPathway.TqRegistrationProfile.Lastname.Trim(), request.SearchKey)
-                        || EF.Functions.Like(p.ZendeskTicketID.Trim(), request.SearchKey);
+                        p => (searchKey.IsLong() && p.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber == searchKey.ToLong())
+                        || EF.Functions.Like(p.TqRegistrationPathway.TqRegistrationProfile.Lastname.Trim(), searchKey)
+                        || EF.Functions.Like(p.ZendeskTicketID.Trim(), searchKey);
 
                 changeLogQueryable = changeLogQueryable.Where(queryExpression);
             }
@@ -71,7 +73,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return await _dbContext.ChangeLog
                 .Include(p => p.TqRegistrationPathway)
                     .ThenInclude(p => p.TqPathwayAssessments.Where(pa => pa.IsOptedin))
-                    .ThenInclude(p => p.TqPathwayResults.Where(pr => pr.IsOptedin))
+                    .ThenInclude(p => p.TqPathwayResults)
                     .ThenInclude(p => p.TlLookup)
                 .Include(p => p.TqRegistrationPathway.TqPathwayAssessments.Where(pa => pa.IsOptedin))
                 .ThenInclude(p => p.AssessmentSeries)

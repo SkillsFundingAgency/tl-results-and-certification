@@ -1,10 +1,9 @@
 ﻿using FluentValidation.Results;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser.Interfaces;
-using System.Collections.Generic;
-using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Assessment.BulkProcess;
-using System.Linq;
+using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
+using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
 {
@@ -12,14 +11,14 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
     {
         public AssessmentCsvRecordResponse ParseRow(FileBaseModel model, int rownum)
         {
-            if (!(model is AssessmentCsvRecordRequest assessment))
+            if (model is not AssessmentCsvRecordRequest assessment)
                 return null;
 
             return new AssessmentCsvRecordResponse
             {
                 Uln = assessment.Uln.Trim().ToLong(),
                 CoreCode = assessment.CoreCode.Trim(),
-                SpecialismCodes = assessment.SpecialismCodes.Trim().Split(',').Where(x => !string.IsNullOrWhiteSpace(x.Trim()))?.Select(sp => sp.Trim()).ToList(),
+                SpecialismCodes = CsvStringToListParser.Parse(assessment.SpecialismCodes),
                 CoreAssessmentEntry = assessment.CoreAssessmentEntry.Trim(),
                 SpecialismAssessmentEntry = assessment.SpecialismAssessmentEntry.Trim(),
                 RowNum = rownum,

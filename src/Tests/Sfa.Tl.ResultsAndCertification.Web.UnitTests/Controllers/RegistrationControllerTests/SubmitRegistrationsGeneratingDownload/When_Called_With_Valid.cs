@@ -7,30 +7,32 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationControllerTests.SubmitRegistrationsGeneratingDownload
 {
     public class When_Called_With_Valid : TestSetup
     {
-        private IList<DataExportResponse> _dataExportResponse;
+        private readonly DataExportResponse _registrationsResponse = new()
+        {
+            BlobUniqueReference = new Guid("f47d7a4e-9b8c-4a6f-8e4d-2e3b1a5c9f0d"),
+            FileSize = 100,
+            ComponentType = ComponentType.NotSpecified,
+            IsDataFound = true
+        };
+
+        private readonly DataExportResponse _pendingWithdrawalsResponse = new()
+        {
+            BlobUniqueReference = new Guid("c8a3e9b7-5f8d-4b6a-9e8c-1d7f0e2c4a9f"),
+            FileSize = 200,
+            ComponentType = ComponentType.NotSpecified,
+            IsDataFound = true
+        };
 
         public override void Given()
         {
-            _dataExportResponse = new List<DataExportResponse>
-            {
-                new DataExportResponse
-                {
-                    BlobUniqueReference = Guid.NewGuid(),
-                    FileSize = 100,
-                    ComponentType = Common.Enum.ComponentType.Core,
-                    IsDataFound = true
-                }
-            };
-
-            RegistrationLoader.GenerateRegistrationsExportAsync(AoUkprn, Arg.Any<string>())
-                .Returns(_dataExportResponse);
+            RegistrationLoader.GenerateRegistrationsExportAsync(AoUkprn, UserEmail).Returns(new List<DataExportResponse> { _registrationsResponse });
+            RegistrationLoader.GeneratePendingWithdrawalsExportAsync(AoUkprn, UserEmail).Returns(new List<DataExportResponse> { _pendingWithdrawalsResponse });
         }
 
         [Fact]
@@ -43,12 +45,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         [Fact]
         public void Then_Expected_Method_Is_Called()
         {
-            CacheService.Received(1).SetAsync(CacheKey,
+            string fileType = FileType.Csv.ToString().ToUpperInvariant();
+
+            CacheService.Received(1).SetAsync(
+                CacheKey,
                 Arg.Is<RegistrationsDownloadViewModel>(x =>
-                            x.BlobUniqueReference == _dataExportResponse.FirstOrDefault().BlobUniqueReference &&
-                            x.FileSize == _dataExportResponse.FirstOrDefault().FileSize &&
-                            x.FileType == FileType.Csv.ToString().ToUpperInvariant()),
-                            CacheExpiryTime.XSmall);
+                    x.RegistrationsDownloadLinkViewModel.BlobUniqueReference == _registrationsResponse.BlobUniqueReference
+                    && x.RegistrationsDownloadLinkViewModel.FileSize == _registrationsResponse.FileSize
+                    && x.RegistrationsDownloadLinkViewModel.FileType == fileType
+                    && x.PendingWithdrawalsDownloadLinkViewModel.BlobUniqueReference == _pendingWithdrawalsResponse.BlobUniqueReference
+                    && x.PendingWithdrawalsDownloadLinkViewModel.FileSize == _pendingWithdrawalsResponse.FileSize
+                    && x.PendingWithdrawalsDownloadLinkViewModel.FileType == fileType),
+                CacheExpiryTime.XSmall);
         }
     }
 }

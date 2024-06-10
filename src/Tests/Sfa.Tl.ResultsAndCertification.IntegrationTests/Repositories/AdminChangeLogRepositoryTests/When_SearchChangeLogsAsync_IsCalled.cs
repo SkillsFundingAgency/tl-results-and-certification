@@ -62,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                            TotalRecords = 5,
                            Records = new List<AdminSearchChangeLog>
                            {
-                               new AdminSearchChangeLog
+                               new()
                                {
                                    ChangeLogId = 1,
                                    ChangeType = ChangeType.StartYear,
@@ -75,7 +75,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                                    ZendeskTicketID = "zendesk-ticket-01",
                                    LastUpdatedBy = "admin-user-01"
                                },
-                               new AdminSearchChangeLog
+                               new()
                                {
                                    ChangeLogId = 2,
                                    ChangeType = ChangeType.IndustryPlacement,
@@ -88,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                                    ZendeskTicketID = "zendesk-ticket-02",
                                    LastUpdatedBy = "admin-user-02"
                                },
-                               new AdminSearchChangeLog
+                               new()
                                {
                                    ChangeLogId = 3,
                                    ChangeType = ChangeType.AddPathwayResult,
@@ -101,7 +101,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                                    ZendeskTicketID = "zendesk-ticket-03",
                                    LastUpdatedBy = "admin-user-03"
                                },
-                               new AdminSearchChangeLog
+                               new()
                                {
                                    ChangeLogId = 4,
                                    ChangeType = ChangeType.AddPathwayAssessment,
@@ -114,7 +114,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                                    ZendeskTicketID = "zendesk-ticket-04",
                                    LastUpdatedBy = "admin-user-04"
                                },
-                               new AdminSearchChangeLog
+                               new()
                                {
                                    ChangeLogId = 5,
                                    ChangeType = ChangeType.AddSpecialismResult,
@@ -155,7 +155,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                            TotalRecords = 5,
                            Records = new List<AdminSearchChangeLog>
                            {
-                               new AdminSearchChangeLog
+                               new()
                                {
                                    ChangeLogId = 1,
                                    ChangeType = ChangeType.StartYear,
@@ -183,7 +183,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                            TotalRecords = 5,
                            Records = new List<AdminSearchChangeLog>
                            {
-                               new AdminSearchChangeLog
+                               new()
                                {
                                    ChangeLogId = 1,
                                    ChangeType = ChangeType.StartYear,
@@ -196,7 +196,48 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                                    ZendeskTicketID = "zendesk-ticket-01",
                                    LastUpdatedBy = "admin-user-01"
                                },
-                               new AdminSearchChangeLog
+                               new()
+                               {
+                                   ChangeLogId = 3,
+                                   ChangeType = ChangeType.AddPathwayResult,
+                                   DateAndTimeOfChange = new DateTime(2022, 12, 31),
+                                   LearnerFirstname = "Peter",
+                                   LearnerLastname = "Smith",
+                                   Uln = 2100000000,
+                                   ProviderName = "pearson-provider-02",
+                                   ProviderUkprn = 2,
+                                   ZendeskTicketID = "zendesk-ticket-03",
+                                   LastUpdatedBy = "admin-user-03"
+                               }
+                           },
+                           PagerInfo = new Pager(2, 0, 10)
+                        }
+                    },
+                    new object[]
+                    {
+                        new AdminSearchChangeLogRequest
+                        {
+                            SearchKey = " smith   "
+                        },
+                        new PagedResponse<AdminSearchChangeLog>
+                        {
+                           TotalRecords = 5,
+                           Records = new List<AdminSearchChangeLog>
+                           {
+                               new()
+                               {
+                                   ChangeLogId = 1,
+                                   ChangeType = ChangeType.StartYear,
+                                   DateAndTimeOfChange = new DateTime(2024, 1, 1),
+                                   LearnerFirstname = "John",
+                                   LearnerLastname = "Smith",
+                                   Uln = 1100000000,
+                                   ProviderName = "pearson-provider-01",
+                                   ProviderUkprn = 1,
+                                   ZendeskTicketID = "zendesk-ticket-01",
+                                   LastUpdatedBy = "admin-user-01"
+                               },
+                               new()
                                {
                                    ChangeLogId = 3,
                                    ChangeType = ChangeType.AddPathwayResult,
@@ -224,7 +265,35 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                            TotalRecords = 5,
                            Records = new List<AdminSearchChangeLog>
                            {
-                               new AdminSearchChangeLog
+                               new()
+                               {
+                                   ChangeLogId = 4,
+                                   ChangeType = ChangeType.AddPathwayAssessment,
+                                   DateAndTimeOfChange = new DateTime(2020, 6, 15),
+                                   LearnerFirstname = "Eric",
+                                   LearnerLastname = "Johnson",
+                                   Uln = 3100000000,
+                                   ProviderName = "ncfe-provider-01",
+                                   ProviderUkprn = 3,
+                                   ZendeskTicketID = "zendesk-ticket-04",
+                                   LastUpdatedBy = "admin-user-04"
+                               }
+                           },
+                           PagerInfo = new Pager(1, 0, 10)
+                        }
+                    },
+                    new object[]
+                    {
+                        new AdminSearchChangeLogRequest
+                        {
+                            SearchKey = " zendesk-ticket-04   "
+                        },
+                        new PagedResponse<AdminSearchChangeLog>
+                        {
+                           TotalRecords = 5,
+                           Records = new List<AdminSearchChangeLog>
+                           {
+                               new()
                                {
                                    ChangeLogId = 4,
                                    ChangeType = ChangeType.AddPathwayAssessment,
@@ -252,7 +321,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                            TotalRecords = 5,
                            Records = new List<AdminSearchChangeLog>
                            {
-                               new AdminSearchChangeLog
+                               new()
                                {
                                    ChangeLogId = 2,
                                    ChangeType = ChangeType.IndustryPlacement,
@@ -265,7 +334,48 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminChan
                                    ZendeskTicketID = "zendesk-ticket-02",
                                    LastUpdatedBy = "admin-user-02"
                                },
-                               new AdminSearchChangeLog
+                               new()
+                               {
+                                   ChangeLogId = 5,
+                                   ChangeType = ChangeType.AddSpecialismResult,
+                                   DateAndTimeOfChange = new DateTime(2024, 4, 6),
+                                   LearnerFirstname = "Sue",
+                                   LearnerLastname = "Baker",
+                                   Uln = 3200000000,
+                                   ProviderName = "ncfe-provider-01",
+                                   ProviderUkprn = 3,
+                                   ZendeskTicketID = "1200000000",
+                                   LastUpdatedBy = "admin-user-05"
+                               }
+                           },
+                           PagerInfo = new Pager(2, 0, 10)
+                        }
+                    },
+                    new object[]
+                    {
+                        new AdminSearchChangeLogRequest
+                        {
+                            SearchKey = " 1200000000   "
+                        },
+                        new PagedResponse<AdminSearchChangeLog>
+                        {
+                           TotalRecords = 5,
+                           Records = new List<AdminSearchChangeLog>
+                           {
+                               new()
+                               {
+                                   ChangeLogId = 2,
+                                   ChangeType = ChangeType.IndustryPlacement,
+                                   DateAndTimeOfChange = new DateTime(2024, 3, 1),
+                                   LearnerFirstname = "Jessica",
+                                   LearnerLastname = "Johnson",
+                                   Uln = 1200000000,
+                                   ProviderName = "pearson-provider-01",
+                                   ProviderUkprn = 1,
+                                   ZendeskTicketID = "zendesk-ticket-02",
+                                   LastUpdatedBy = "admin-user-02"
+                               },
+                               new()
                                {
                                    ChangeLogId = 5,
                                    ChangeType = ChangeType.AddSpecialismResult,

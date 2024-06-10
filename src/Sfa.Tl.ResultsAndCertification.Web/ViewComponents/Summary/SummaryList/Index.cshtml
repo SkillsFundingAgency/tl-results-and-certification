@@ -1,29 +1,33 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryList.SummaryListModel
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
-<div class="govuk-summary-list__row">
+<dl class="govuk-summary-list__row">
     <dt class="govuk-summary-list__key">
         @Html.Raw(@Model?.Title)
     </dt>
-    <dd class="govuk-summary-list__value">
+
+    <div class="govuk-summary-list__value">
         @{
             if ((Model?.Value == null || Model?.Value?.Count() == 0) && !string.IsNullOrWhiteSpace(Model?.HiddenText))
             {
-                <span class="govuk-visually-hidden">@Model.HiddenText</span>
+                <dd class="govuk-body govuk-!-margin-left-0 govuk-visually-hidden">@Model.HiddenText </dd>
             }
             else
             {
-                foreach (var val in Model?.Value)
+                foreach (string val in Model.Value)
                 {
-                    <p class="govuk-body">@Html.Raw(@val)</p>
+                    <dd class="govuk-body govuk-!-margin-left-0">
+                        @Html.Raw(@val)
+                    </dd>
                 }
             }
         }
-    </dd>
+    </div>
+
     <dd class="govuk-summary-list__actions">
         @if (!string.IsNullOrWhiteSpace(Model?.ActionText))
         {
             <a class="govuk-link" id="@Model?.Id" asp-route="@Model?.RouteName" asp-all-route-data="@Model?.RouteAttributes">@Model?.ActionText<span class="govuk-visually-hidden">@Model?.Title</span></a>
         }
     </dd>
-</div>
+</dl>

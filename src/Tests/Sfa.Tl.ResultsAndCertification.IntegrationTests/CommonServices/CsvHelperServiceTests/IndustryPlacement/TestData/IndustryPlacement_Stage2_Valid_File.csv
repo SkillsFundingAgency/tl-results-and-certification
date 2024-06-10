@@ -2,5 +2,7 @@
 2452343451,12345678,Placement completed,,
 2452343452,12345678,Placement completed with special consideration,10,"ML"
 2452343453,12345678,Placement completed with special consideration,99,"U,B"
+2452343453,12345678,Placement completed with special consideration,99,"""U,B"""
+2452343453,12345678,Placement completed with special consideration,99,"""U, B  """
 2452343454,12345678,Placement still to be completed,,
 2452343455,12345678,Placement will not be completed,,

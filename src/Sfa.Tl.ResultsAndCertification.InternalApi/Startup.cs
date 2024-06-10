@@ -151,6 +151,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<ICommonRepository, CommonRepository>();
             services.AddTransient<IAdminDashboardRepository, AdminDashboardRepository>();
             services.AddTransient<IAdminChangeLogRepository, AdminChangeLogRepository>();
+            services.AddTransient<ISearchRegistrationRepository, SearchRegistrationRepository>();
             services.AddTransient(typeof(IRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IRepositoryFactory, RepositoryFactory>();
 
@@ -196,10 +197,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<IAdminDashboardService, AdminDashboardService>();
             services.AddTransient<IAdminChangeLogService, AdminChangeLogService>();
             services.AddTransient<IAdminPostResultsService, AdminPostResultsService>();
+            services.AddTransient<ISearchRegistrationService, SearchRegistrationService>();
 
             // DataExports 
             services.AddTransient<IDataExportLoader, DataExportLoader>();
-            services.AddTransient<IDataExportService, DataExportService>();
             services.AddTransient<IDataExportRepository, DataExportRepository>();
 
             // IndustryPlacement

@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 {
     public class DataExportRepository : IDataExportRepository
     {
-        protected readonly ResultsAndCertificationDbContext _dbContext;        
+        protected readonly ResultsAndCertificationDbContext _dbContext;
 
         public DataExportRepository(ResultsAndCertificationDbContext dbContext)
         {
@@ -63,7 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                    StartYear = academicYears.First(f => f.Year == pa.TqRegistrationPathway.AcademicYear).Name,
                    CoreCode = pa.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
                    CoreAssessmentEntry = pa.AssessmentSeries.Name
-               }).ToListAsync();         
+               }).ToListAsync();
         }
 
         public async Task<IList<SpecialismAssessmentsExport>> GetDataExportSpecialismAssessmentsAsync(long aoUkprn)
@@ -80,7 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .OrderByDescending(pa => pa.CreatedOn)
                 .Select(sa => new SpecialismAssessmentsExport
                 {
-                    Uln = sa.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber,                    
+                    Uln = sa.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber,
                     StartYear = academicYears.First(f => f.Year == sa.TqRegistrationSpecialism.TqRegistrationPathway.AcademicYear).Name,
                     SpecialismCode = sa.TqRegistrationSpecialism.TlSpecialism.LarId,
                     SpecialismAssessmentEntry = sa.AssessmentSeries.Name
@@ -127,6 +127,30 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     SpecialismAssessmentEntry = sr.TqSpecialismAssessment.AssessmentSeries.Name,
                     SpecialismGrade = sr.TlLookup.Value
                 }).ToListAsync();
+        }
+
+        public async Task<IList<PendingWithdrawalsExport>> GetDataExportPendingWithdrawalsAsync(long aoUkprn)
+        {
+            var pendingWithdrawals = await _dbContext.TqRegistrationPathway
+                   .Where(x => x.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn
+                          && (x.Status == RegistrationPathwayStatus.Active)
+                          && x.IsPendingWithdrawal)
+                   .Select(x => new PendingWithdrawalsExport
+                   {
+                       Uln = x.TqRegistrationProfile.UniqueLearnerNumber,
+                       FirstName = x.TqRegistrationProfile.Firstname,
+                       LastName = x.TqRegistrationProfile.Lastname,
+                       DateOfBirth = x.TqRegistrationProfile.DateofBirth,
+                       Ukprn = x.TqProvider.TlProvider.UkPrn,
+                       AcademicYear = x.AcademicYear,
+                       Core = x.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
+                       SpecialismsList = x.TqRegistrationSpecialisms.Where(s => s.IsOptedin).Select(s => s.TlSpecialism.LarId).ToList(),
+                       CreatedOn = x.CreatedOn
+                   }).ToListAsync();
+
+            return pendingWithdrawals?.GroupBy(x => x.Uln)
+                    .Select(x => x.OrderByDescending(o => o.CreatedOn).First())
+                    .ToList();
         }
     }
 }

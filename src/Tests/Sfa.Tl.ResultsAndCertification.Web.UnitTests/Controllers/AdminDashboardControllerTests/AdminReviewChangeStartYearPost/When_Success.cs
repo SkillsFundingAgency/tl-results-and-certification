@@ -12,11 +12,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 {
     public class When_Success : TestSetup
     {
-        private ReviewChangeStartYearViewModel MockResult = null;
-        private NotificationBannerModel _expectedNotificationBannerModel;
         public override void Given()
         {
-            var isSuccess = true;
             ReviewChangeStartYearViewModel = new ReviewChangeStartYearViewModel()
             {
                 RegistrationPathwayId = 1,
@@ -36,15 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 Year = "1970"
             };
 
-            _expectedNotificationBannerModel = new NotificationBannerModel
-            {
-                Message = LearnerRecord.Message_Notification_Success,
-                DisplayMessageBody = true,
-                IsRawHtml = true
-            };
-
-            AdminDashboardLoader.ProcessChangeStartYearAsync(ReviewChangeStartYearViewModel).Returns(isSuccess = true);
-
+            AdminDashboardLoader.ProcessChangeStartYearAsync(ReviewChangeStartYearViewModel).Returns(true);
         }
 
         [Fact]

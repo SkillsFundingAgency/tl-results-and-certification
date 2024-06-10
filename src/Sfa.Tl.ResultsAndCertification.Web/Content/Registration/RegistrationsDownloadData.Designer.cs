@@ -71,6 +71,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download T Levels pending withdrawals data.
+        /// </summary>
+        public static string Download_Link_Pending_Withdrawals_Data {
+            get {
+                return ResourceManager.GetString("Download_Link_Pending_Withdrawals_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download T Levels registrations data.
+        /// </summary>
+        public static string Download_Link_Registrations_Data {
+            get {
+                return ResourceManager.GetString("Download_Link_Registrations_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to KB.
         /// </summary>
         public static string File_Size_Units {
@@ -98,20 +116,47 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pending withdrawals data only includes those learners who have been flagged by their provider as being withdrawn. Providers are advised to contact the awarding organisation directly to confirm withdrawals. Learners will remain active until their registration is formally withdrawn by the awarding organisation..
+        /// </summary>
+        public static string Para_Pending_Widthdrawals_Only_Includes_Learners_Who_Have_Been_Flagged {
+            get {
+                return ResourceManager.GetString("Para_Pending_Widthdrawals_Only_Includes_Learners_Who_Have_Been_Flagged", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registrations data includes both active and withdrawn learners..
+        /// </summary>
+        public static string Para_Registrations_Data_Includes_Active_Widthdrawn_Learners {
+            get {
+                return ResourceManager.GetString("Para_Registrations_Data_Includes_Active_Widthdrawn_Learners", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There are currently no pending withdrawals..
+        /// </summary>
+        public static string Para_There_Are_No_Pending_Withdrawals {
+            get {
+                return ResourceManager.GetString("Para_There_Are_No_Pending_Withdrawals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to pending_withdrawals_data.csv.
+        /// </summary>
+        public static string Pending_Withdrawals_Data_Report_File_Name {
+            get {
+                return ResourceManager.GetString("Pending_Withdrawals_Data_Report_File_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to registrations_data.csv.
         /// </summary>
         public static string Registrations_Data_Report_File_Name_Text {
             get {
                 return ResourceManager.GetString("Registrations_Data_Report_File_Name_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Registrations data.
-        /// </summary>
-        public static string Registrations_Link_DisplayName {
-            get {
-                return ResourceManager.GetString("Registrations_Link_DisplayName", resourceCulture);
             }
         }
     }

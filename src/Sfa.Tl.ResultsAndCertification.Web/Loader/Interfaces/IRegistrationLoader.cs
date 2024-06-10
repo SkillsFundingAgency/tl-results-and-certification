@@ -2,7 +2,6 @@
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
@@ -19,10 +18,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<SelectProviderViewModel> GetRegisteredTqAoProviderDetailsAsync(long aoUkprn);
         Task<SelectCoreViewModel> GetRegisteredProviderPathwayDetailsAsync(long aoUkprn, long providerUkprn);
         Task<PathwaySpecialismsViewModel> GetPathwaySpecialismsByPathwayLarIdAsync(long aoUkprn, string pathwayLarId);
-        
+
         Task<UlnRegistrationNotFoundViewModel> FindUlnAsync(long aoUkprn, long uln);
         Task<RegistrationDetailsViewModel> GetRegistrationDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null);
-        Task<RegistrationAssessmentDetails> GetRegistrationAssessmentAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null); 
+        Task<RegistrationAssessmentDetails> GetRegistrationAssessmentAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null);
         Task<bool> AddRegistrationAsync(long aoUkprn, RegistrationViewModel model);
         Task<bool> DeleteRegistrationAsync(long aoUkprn, int profileId);
 
@@ -40,7 +39,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
 
         Task<IEnumerable<AcademicYear>> GetCurrentAcademicYearsAsync();
         Task<IEnumerable<AcademicYear>> GetAcademicYearsAsync();
+
         Task<IList<DataExportResponse>> GenerateRegistrationsExportAsync(long aoUkprn, string requestedBy);
+        Task<IList<DataExportResponse>> GeneratePendingWithdrawalsExportAsync(long aoUkprn, string requestedBy);
         Task<Stream> GetRegistrationsDataFileAsync(long aoUkprn, Guid blobUniqueReference);
+        Task<Stream> GetPendingWithdrawalsDataFileAsync(long aoUkprn, Guid blobUniqueReference);
     }
 }
