@@ -113,8 +113,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var isValid = false;
 
-            DateTime startDate = new(2023, 06, 17),
-                     endDate = new(2023, 08, 18);
+            DateTime startDate = new(2024, 06, 11),
+                     endDate = new(2024, 07, 31);
 
             var ipExtractTriggerDates = Enumerable.Range(0, (endDate - startDate).Days + 1).Select(d => startDate.AddDays(d));
 
