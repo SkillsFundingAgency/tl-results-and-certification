@@ -15,6 +15,7 @@ jobs:
       SharedSQLServerName: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.sharedSQLServerName'] ]
       SharedSQLServerReplicaName: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.sharedSQLServerReplicaName'] ]
       ConfigurationStorageConnectionString: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.configStorageConnectionString'] ]
+      ConfigStorageAccountName: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.ConfigStorageAccountName'] ]
       SharedResourceGroup: $[stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.SharedVariables.SharedResourceGroup']]
 
     steps:
@@ -47,6 +48,7 @@ jobs:
             -sqlDatabaseTier "$(SQLDatabaseTier)"
             -sqlserverlessAutoPauseDelay "$(SQLServerlessAutoPauseDelay)"
             -configurationStorageConnectionString "$(ConfigurationStorageConnectionString)"
+            -configStorageAccountName "$(ConfigStorageAccountName)"
             -uiCustomHostName "$(UICustomHostName)"
             -uiCertificateName "$(CertificateName)"
             -storageAccountContainerArray "$(storageAccountContainerArray)"
