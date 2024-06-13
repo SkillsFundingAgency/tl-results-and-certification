@@ -1,22 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.ExtractIndustryPlacement
 {
-   public  class ExtractData
+    public class ExtractData
     {
         [DisplayName(ExtractHeader.Uln)]
-        public long Uln { get; set; }       
+        public long Uln { get; set; }
 
         [DisplayName(ExtractHeader.FirstName)]
         public string FirstName { get; set; }
 
         [DisplayName(ExtractHeader.LastName)]
         public string LastName { get; set; }
+
+        [DisplayName(ExtractHeader.TLevelTitle)]
+        public string TlevelTitle { get; set; }
 
         [DisplayName(ExtractHeader.UKPRN)]
         public string UKPRN { get; set; }
