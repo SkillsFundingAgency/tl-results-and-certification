@@ -232,7 +232,7 @@
                         "value": "[parameters('isStorageSecondaryKeyInUse')]"
                     },
                     "isManagedIdentityInUse":{
-                        "value": true
+                        "value": false
                     }
                 }
             },
