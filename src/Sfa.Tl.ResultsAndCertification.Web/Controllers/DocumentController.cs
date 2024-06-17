@@ -81,6 +81,26 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
+        [Route("tlevels-assessment-entries-template", Name = RouteConstants.DownloadAssessmentEntriesTemplate)]
+        public async Task<IActionResult> DownloadAssessmentEntriesTemplateAsync()
+        {
+            var fileName = DocumentResource.TlevelDataFormatAndRulesGuide.Tlevels_Assessment_Entry_Data_Template_File_Name;
+            var fileStream = await _documentLoader.GetBulkUploadAssessmentEntriesTechSpecFileAsync(fileName);
+            if (fileStream == null)
+            {
+                _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download bulk upload assessment entries tech spec document. Method: GetBulkUploadAssessmentEntriesTechSpecFileAsync(FileName: {fileName})");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            fileStream.Position = 0;
+            return new FileStreamResult(fileStream, "text/csv")
+            {
+                FileDownloadName = fileName
+            };
+        }
+
+
+        [HttpGet]
         [Route("tlevels-results-data-format-and-rules", Name = RouteConstants.DownloadResultsDataFormatAndRulesGuide)]
         public async Task<IActionResult> DownloadResultsDataFormatAndRulesGuideAsync()
         {
