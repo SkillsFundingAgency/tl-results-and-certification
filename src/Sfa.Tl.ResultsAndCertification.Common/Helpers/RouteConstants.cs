@@ -228,7 +228,6 @@
         public const string DownloadRegistrationDataTemplate = "DownloadRegistrationDataTemplate";
         public const string DownloadAssessmentEntriesDataFormatAndRulesGuide = "DownloadAssessmentEntriesDataFormatAndRulesGuide";
         public const string DownloadResultsDataFormatAndRulesGuide = "DownloadResultsDataFormatAndRulesGuide";
-        public const string DownloadIndustryPlacementDataFormatAndRulesGuide = "DownloadIndustryPlacementDataFormatAndRulesGuide";
         public const string DownloadAssessmentEntriesTemplate = "DownloadAssessmentEntriesTemplate";
 
         public const string TlevelDataFormatAndRulesGuide = "TlevelDataFormatAndRulesGuide";
