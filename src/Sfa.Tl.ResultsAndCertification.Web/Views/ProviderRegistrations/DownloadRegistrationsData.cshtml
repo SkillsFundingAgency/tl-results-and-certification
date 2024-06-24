@@ -1,0 +1,31 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderRegistrations.DownloadRegistrationsDataViewModel
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.ProviderRegistrations
+@using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderRegistrations
+
+@{
+    ViewData["Title"] = DownloadRegistrationsData.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-form-group">
+            <h1 class="govuk-heading-l">
+                @DownloadRegistrationsData.Download_Registrations_Data_Heading
+            </h1>
+            <p class="govuk-body">@DownloadRegistrationsData.Select_Start_Year_To_Download_Registrations_Data_For</p>
+            <ul class="govuk-list govuk-list--bullet">
+                @{
+                    foreach (AvailableStartYearViewModel currentStartYear in Model.AvailableStartYearViewModels)
+                    {
+                        <li><a class="govuk-link" asp-route="@RouteConstants.DownloadRegistrationsDataFor" asp-route-startYear="@currentStartYear.Year">@currentStartYear.DisplayYear</a></li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+</div>

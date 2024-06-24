@@ -233,6 +233,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             services.AddTransient<IAdminPostResultsLoader, AdminPostResultsLoader>();
             services.AddTransient<ISystemProvider, SystemProvider>();
             services.AddTransient<ISearchRegistrationLoader, SearchRegistrationLoader>();
+            services.AddTransient<IProviderRegistrationsLoader, ProviderRegistrationsLoader>();
         }
     }
 }
