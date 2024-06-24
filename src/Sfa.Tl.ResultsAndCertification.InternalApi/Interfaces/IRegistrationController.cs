@@ -16,5 +16,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
 
         // Bulk process
         Task<BulkProcessResponse> ProcessBulkRegistrationsAsync(BulkProcessRequest request);
+        Task<BulkProcessResponse> ProcessBulkWithdrawlsAsync(BulkProcessRequest request);
     }
 }

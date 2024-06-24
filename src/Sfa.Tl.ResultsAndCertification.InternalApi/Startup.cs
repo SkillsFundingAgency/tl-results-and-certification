@@ -169,10 +169,15 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             // Bulk Registrations
             services.AddTransient<IDataParser<RegistrationCsvRecordResponse>, RegistrationParser>();
             services.AddTransient<IValidator<RegistrationCsvRecordRequest>, RegistrationValidator>();
+            services.AddTransient<IDataParser<WithdrawlCsvRecordResponse>, WithdrawlParser>();
+            services.AddTransient<IValidator<WithdrawlCsvRecordRequest>, WithdrawlValidator>();
             services.AddTransient<ICsvHelperService<RegistrationCsvRecordRequest, CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse>, CsvHelperService<RegistrationCsvRecordRequest, CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse>>();
+            services.AddTransient<ICsvHelperService<WithdrawlCsvRecordRequest, CsvResponseModel<WithdrawlCsvRecordResponse>, WithdrawlCsvRecordResponse>, CsvHelperService<WithdrawlCsvRecordRequest, CsvResponseModel<WithdrawlCsvRecordResponse>, WithdrawlCsvRecordResponse>>();
             services.AddTransient<IBulkBaseLoader, BulkBaseLoader>();
             services.AddTransient<IBulkProcessLoader, BulkRegistrationLoader>();
+            services.AddTransient<IBulkWithdrawlLoader, BulkWithdrawlLoader>();
             services.AddTransient<IRegistrationService, RegistrationService>();
+            services.AddTransient<IWithdrawlService, WithdrawlService>();
 
             // Bulk Assessments
             services.AddTransient<IDataParser<AssessmentCsvRecordResponse>, AssessmentParser>();

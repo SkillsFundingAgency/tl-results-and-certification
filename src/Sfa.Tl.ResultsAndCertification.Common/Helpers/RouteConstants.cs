@@ -61,6 +61,12 @@
         public const string RegistrationsUploadUnsuccessful = "RegistrationsUploadUnsuccessful";
         public const string ProblemWithRegistrationsUpload = "ProblemWithRegistrationsUpload";
         public const string DownloadRegistrationErrors = "DownloadRegistrationErrors";
+        public const string UploadWithdrawlsFile = "UploadWithdrawlsFile";
+        public const string SubmitUploadWithdrawlsFile = "SubmitUploadWithdrawlsFile";
+        public const string WithdrawlsUploadSuccessful = "WithdrawlsUploadSuccessful";
+        public const string WithdrawlsUploadUnsuccessful = "WithdrawlsUploadUnsuccessful";
+        public const string ProblemWithWithdrawlsUpload = "ProblemWithWithdrawlsUpload";
+        public const string DownloadWithdrawlErrors = "DownloadWithdrawlErrors";
 
         // Add Registration
         public const string AddRegistration = "AddRegistration";
@@ -229,6 +235,8 @@
         public const string DownloadAssessmentEntriesDataFormatAndRulesGuide = "DownloadAssessmentEntriesDataFormatAndRulesGuide";
         public const string DownloadResultsDataFormatAndRulesGuide = "DownloadResultsDataFormatAndRulesGuide";
         public const string DownloadIndustryPlacementDataFormatAndRulesGuide = "DownloadIndustryPlacementDataFormatAndRulesGuide";
+        public const string DownloadWithdrawlsDataFormatAndRulesGuide = "DownloadWithdrawlsDataFormatAndRulesGuide";
+        public const string DownloadWithdrawlsDataTemplate = "DownloadWithdrawlsDataTemplate";
 
         public const string TlevelDataFormatAndRulesGuide = "TlevelDataFormatAndRulesGuide";
 

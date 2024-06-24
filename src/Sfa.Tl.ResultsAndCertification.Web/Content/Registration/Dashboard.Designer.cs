@@ -88,6 +88,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Withdraw one or more learners using a CSV file.
+        /// </summary>
+        public static string Card_Content_Upload_Withdrawls_File {
+            get {
+                return ResourceManager.GetString("Card_Content_Upload_Withdrawls_File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to View and change registration details, including reinstating and withdrawing learners..
         /// </summary>
         public static string Card_Content_View_And_Change_Registration_Details {
@@ -129,6 +138,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         public static string Card_Heading_Link_Register_A_New_Learner {
             get {
                 return ResourceManager.GetString("Card_Heading_Link_Register_A_New_Learner", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload withdrawls.
+        /// </summary>
+        public static string Card_Heading_Link_Upload_Withdrawls_File {
+            get {
+                return ResourceManager.GetString("Card_Heading_Link_Upload_Withdrawls_File", resourceCulture);
             }
         }
         

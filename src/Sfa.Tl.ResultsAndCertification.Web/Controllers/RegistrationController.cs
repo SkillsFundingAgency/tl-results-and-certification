@@ -696,6 +696,104 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 nameof(PendingWithdrawalsDownloadDataLinkAsync));
         }
 
+        [HttpGet]
+        [Route("upload-withdrawls-file/{requestErrorTypeId:int?}", Name = RouteConstants.UploadWithdrawlsFile)]
+        public IActionResult UploadWithdrawlsFile(int? requestErrorTypeId)
+        {
+            var model = new UploadWithdrawlsRequestViewModel { RequestErrorTypeId = requestErrorTypeId };
+            model.SetAnyModelErrors(ModelState);
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("upload-withdrawls-file", Name = RouteConstants.SubmitUploadWithdrawlsFile)]
+        public async Task<IActionResult> UploadWithdrawlsFileAsync(UploadWithdrawlsRequestViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
+            viewModel.AoUkprn = User.GetUkPrn();
+            var response = await _registrationLoader.ProcessBulkWithdrawlsAsync(viewModel);
+
+            if (response.IsSuccess)
+            {
+                var successfulViewModel = new UploadSuccessfulViewModel { Stats = response.Stats };
+                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.UploadSuccessfulViewModel), successfulViewModel, CacheExpiryTime.XSmall);
+
+                return RedirectToRoute(RouteConstants.WithdrawlsUploadSuccessful);
+            }
+            else
+            {
+                if (response.ShowProblemWithServicePage)
+                {
+                    return RedirectToRoute(RouteConstants.ProblemWithWithdrawlsUpload);
+                }
+                else
+                {
+                    var unsuccessfulViewModel = new UploadUnsuccessfulViewModel { BlobUniqueReference = response.BlobUniqueReference, FileSize = response.ErrorFileSize, FileType = FileType.Csv.ToString().ToUpperInvariant() };
+                    await _cacheService.SetAsync(string.Concat(CacheKey, Constants.UploadUnsuccessfulViewModel), unsuccessfulViewModel, CacheExpiryTime.XSmall);
+                    return RedirectToRoute(RouteConstants.WithdrawlsUploadUnsuccessful);
+                }
+            }
+        }
+
+        [HttpGet]
+        [Route("upload-withdrawls-file-success", Name = RouteConstants.WithdrawlsUploadSuccessful)]
+        public async Task<IActionResult> UploadWithdrawlsSuccessful()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<UploadSuccessfulViewModel>(string.Concat(CacheKey, Constants.UploadSuccessfulViewModel));
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.UploadSuccessfulPageFailed,
+                    $"Unable to read upload successful withdrawl response from temp data. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("withdrawls-upload-unsuccessful", Name = RouteConstants.WithdrawlsUploadUnsuccessful)]
+        public async Task<IActionResult> UploadWithdrawlsUnsuccessful()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<UploadUnsuccessfulViewModel>(string.Concat(CacheKey, Constants.UploadUnsuccessfulViewModel));
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.UploadUnsuccessfulPageFailed,
+                    $"Unable to read upload unsuccessful withdrwal response from temp data. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("download-withdrawl-errors", Name = RouteConstants.DownloadWithdrawlErrors)]
+        public async Task<IActionResult> DownloadWithdrawlErrors(string id)
+        {
+            if (id.IsGuid())
+            {
+                var fileStream = await _registrationLoader.GetWithdrawlValidationErrorsFileAsync(User.GetUkPrn(), id.ToGuid());
+                if (fileStream == null)
+                {
+                    _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download withdrawl validation errors. Method: GetWithdrawlValidationErrorsFileAsync(AoUkprn: {User.GetUkPrn()}, BlobUniqueReference = {id})");
+                    return RedirectToRoute(RouteConstants.PageNotFound);
+                }
+
+                fileStream.Position = 0;
+                return new FileStreamResult(fileStream, "text/csv")
+                {
+                    FileDownloadName = RegistrationContent.UploadWithdrawlsUnsuccessful.Withdrawls_Error_Report_File_Name_Text
+                };
+            }
+            else
+            {
+                _logger.LogWarning(LogEvent.DownloadRegistrationErrorsFailed, $"Not a valid guid to read file.Method: DownloadRegistrationErrors(Id = {id}), Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
+            }
+        }
+
         private async Task<IActionResult> DownloadDataLinkAsync(string id, Func<Task<Stream>> getDataFile, string fileDownloadName, string methodName)
         {
             if (!id.IsGuid())

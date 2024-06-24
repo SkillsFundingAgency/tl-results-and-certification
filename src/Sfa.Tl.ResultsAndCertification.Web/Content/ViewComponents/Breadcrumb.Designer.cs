@@ -419,5 +419,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
                 return ResourceManager.GetString("Upload_Results_File", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload multiple withdrawls.
+        /// </summary>
+        public static string Upload_Withdrawls_File {
+            get {
+                return ResourceManager.GetString("Upload_Withdrawls_File", resourceCulture);
+            }
+        }
     }
 }
