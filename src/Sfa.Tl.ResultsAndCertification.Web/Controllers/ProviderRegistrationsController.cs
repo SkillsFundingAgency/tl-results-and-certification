@@ -30,6 +30,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> DownloadRegistrationsDataAsync()
         {
             IList<AvailableStartYearViewModel> availableStartYearViewModels = await _loader.GetAvailableStartYearsAsync();
+
+            if (availableStartYearViewModels.IsNullOrEmpty())
+            {
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+            }
+
             DownloadRegistrationsDataViewModel viewModel = new()
             {
                 AvailableStartYearViewModels = availableStartYearViewModels
@@ -64,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("download-registrations-data-for/{id}", Name = RouteConstants.DownloadRegistrationsDataForLink)]
-        public async Task<IActionResult> RegistrationsDownloadDataLinkAsync(string id)
+        public async Task<IActionResult> DownloadRegistrationsDataForLinkAsync(string id)
         {
             if (!id.IsGuid())
             {
