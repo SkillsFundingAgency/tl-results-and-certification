@@ -97,6 +97,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download registrations data.
+        /// </summary>
+        public static string Download_Registrations_Data {
+            get {
+                return ResourceManager.GetString("Download_Registrations_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download registrations data for {0}.
+        /// </summary>
+        public static string Download_Registrations_Data_For {
+            get {
+                return ResourceManager.GetString("Download_Registrations_Data_For", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string Home {
