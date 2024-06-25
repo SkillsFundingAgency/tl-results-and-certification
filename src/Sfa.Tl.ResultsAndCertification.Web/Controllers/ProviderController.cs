@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
@@ -17,11 +19,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
     public class ProviderController : Controller
     {
         private readonly IProviderLoader _providerLoader;
+        private readonly ICacheService _cacheService;
         private readonly ILogger _logger;
 
-        public ProviderController(IProviderLoader providerLoader, ILogger<ProviderController> logger)
+        private string CacheKey => CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.ProviderCacheKey);
+
+        public ProviderController(IProviderLoader providerLoader, ICacheService cacheService, ILogger<ProviderController> logger)
         {
             _providerLoader = providerLoader;
+            _cacheService = cacheService;
             _logger = logger;
         }
 
@@ -97,7 +103,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (isSuccess)
             {
                 viewModel.Tlevels = viewModel.Tlevels.Where(x => x.IsSelected).ToList();
-                TempData[Constants.ProviderTlevelsViewModel] = JsonConvert.SerializeObject(viewModel);
+                await _cacheService.SetAsync(CacheKey, viewModel);
                 return RedirectToRoute(RouteConstants.ProviderTlevelConfirmation);
             }
             else
@@ -110,16 +116,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("submit-successful", Name = RouteConstants.ProviderTlevelConfirmation)]
-        public IActionResult ConfirmationAsync()
+        public async Task<IActionResult> ConfirmationAsync()
         {
-            if (TempData[Constants.ProviderTlevelsViewModel] == null)
+            var viewModel = await _cacheService.GetAsync<ProviderTlevelsViewModel>(CacheKey);
+
+            if (viewModel == null)
             {
                 _logger.LogWarning(LogEvent.ConfirmationPageFailed,
                     $"Unable to read provider T level add confirmation page temp data. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            var viewModel = JsonConvert.DeserializeObject<ProviderTlevelsViewModel>(TempData[Constants.ProviderTlevelsViewModel] as string);
             return View(viewModel);
         }
 
@@ -163,7 +170,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                     var providersViewModel = await _providerLoader.GetTqAoProviderDetailsAsync(User.GetUkPrn());
                     viewModel.ShowBackToProvidersLink = providersViewModel != null && providersViewModel.Count > 0;
                 }
-                TempData[Constants.ProviderTlevelDetailsViewModel] = JsonConvert.SerializeObject(viewModel);
+
+                await _cacheService.SetAsync(CacheKey, viewModel);
                 return RedirectToRoute(RouteConstants.RemoveProviderTlevelConfirmation);
             }
             else
@@ -176,16 +184,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("tlevel-removed-confirmation", Name = RouteConstants.RemoveProviderTlevelConfirmation)]
-        public IActionResult RemoveConfirmationAsync()
+        public async Task<IActionResult> RemoveConfirmationAsync()
         {
-            if (TempData[Constants.ProviderTlevelDetailsViewModel] == null)
+            var viewModel = await _cacheService.GetAsync<ProviderTlevelDetailsViewModel>(CacheKey);
+
+            if (viewModel == null)
             {
                 _logger.LogWarning(LogEvent.ConfirmationPageFailed,
                     $"Unable to read remove provider T level confirmation page temp data. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            var viewModel = JsonConvert.DeserializeObject<ProviderTlevelDetailsViewModel>(TempData[Constants.ProviderTlevelDetailsViewModel] as string);
             return View(viewModel);
         }
 

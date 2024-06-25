@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
@@ -19,6 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         protected int ProviderId;
         protected TempDataDictionary TempData;
         protected IProviderLoader ProviderLoader;
+        protected ICacheService CacheService;
         protected ProviderController Controller;
         protected IActionResult Result;
         protected ILogger<ProviderController> Logger;
@@ -30,8 +32,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
             Ukprn = 12345;
             HttpContextAccessor = Substitute.For<IHttpContextAccessor>();
             ProviderLoader = Substitute.For<IProviderLoader>();
+            CacheService = Substitute.For<ICacheService>();
             Logger = Substitute.For<ILogger<ProviderController>>();
-            Controller = new ProviderController(ProviderLoader, Logger);
+            Controller = new ProviderController(ProviderLoader, CacheService, Logger);
             var httpContext = new ClaimsIdentityBuilder<ProviderController>(Controller)
                .Add(CustomClaimTypes.Ukprn, Ukprn.ToString())
                .Build()

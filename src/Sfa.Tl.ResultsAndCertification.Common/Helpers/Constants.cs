@@ -30,6 +30,7 @@
         public const string HelpController = "Help";
         public const string ErrorController = "Error";
         public const string TlevelController = "Tlevel";
+        public const string ProviderController = "Provider";
 
         // TempData Key Constants        
         public const string IsRedirect = "IsRedirect";
