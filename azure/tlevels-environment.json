@@ -133,6 +133,9 @@
     },
     "configStorageAccountName": {
       "type": "string"
+    },
+    "ipSecurityRestrictions": {
+      "type": "array"
     }
   },
   "variables": {
@@ -329,6 +332,12 @@
           },
           "certificateThumbprint": {
             "value": "[if(greater(length(parameters('uiCustomHostname')), 0), reference(concat('ui-app-service-certificate','-', parameters('environmentNameAbbreviation')), '2018-11-01').outputs.certificateThumbprint.value, '')]"
+          },
+          "ipSecurityRestrictions": {
+            "value": "[parameters('ipSecurityRestrictions')]"
+          },
+          "ipSecurityRestrictionsDefaultAction": {
+            "value": "Deny"
           }
         }
       },
@@ -426,6 +435,12 @@
           },
           "certificateThumbprint": {
             "value": "[if(greater(length(parameters('internalApiCustomHostname')), 0), reference(concat('internal-api-app-service-certificate','-',parameters('environmentNameAbbreviation')), '2018-11-01').outputs.certificateThumbprint.value, '')]"
+          },
+          "ipSecurityRestrictions": {
+            "value": "[parameters('ipSecurityRestrictions')]"
+          },
+          "ipSecurityRestrictionsDefaultAction": {
+            "value": "Deny"
           }
         }
       },
