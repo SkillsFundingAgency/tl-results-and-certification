@@ -21,7 +21,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
                     BreadcrumbItems = new List<BreadcrumbItem>
                     {
                         new() { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Home },
-                        new() { DisplayName = BreadcrumbContent.Registration_Dashboard, RouteName = RouteConstants.RegistrationDashboard }
+                        new() { DisplayName = BreadcrumbContent.Registration_Dashboard, RouteName = RouteConstants.RegistrationDashboard },
+                        new() { DisplayName = BreadcrumbContent.Download_Registrations_Data }
                     }
                 };
             }
