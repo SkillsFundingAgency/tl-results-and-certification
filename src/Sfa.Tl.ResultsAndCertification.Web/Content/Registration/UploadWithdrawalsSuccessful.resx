@@ -117,46 +117,79 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Card_Content_Add_One_Registration" xml:space="preserve">
-    <value>Add details one at a time for registered learners.</value>
+  <data name="Add" xml:space="preserve">
+    <value>add</value>
   </data>
-  <data name="Card_Content_Add_Or_Change_Using_Csv" xml:space="preserve">
-    <value>Add or change registration details for learners using a CSV file.</value>
+  <data name="Amended_Withdrawals_Singular_Text" xml:space="preserve">
+    <value>{0} amended withdrawal</value>
   </data>
-  <data name="Card_Content_Download_Registrations_Csv" xml:space="preserve">
-    <value>Download your data as a CSV file, for registrations and pending withdrawals.</value>
+  <data name="Amended_Withdrawals_Text" xml:space="preserve">
+    <value>{0} amended withdrawals</value>
   </data>
-  <data name="Card_Content_Upload_Withdrawals_File" xml:space="preserve">
-    <value>Withdraw one or more learners using a CSV file</value>
+  <data name="Assessment_Periods" xml:space="preserve">
+    <value>assessment periods</value>
   </data>
-  <data name="Card_Content_View_And_Change_Registration_Details" xml:space="preserve">
-    <value>View and change registration details, including reinstating and withdrawing learners.</value>
+  <data name="Button_Home" xml:space="preserve">
+    <value>Back to home</value>
   </data>
-  <data name="Card_Heading_Link_Download_Registrations_Data" xml:space="preserve">
-    <value>Download registrations data</value>
+  <data name="Button_Upload_Another_File" xml:space="preserve">
+    <value>Upload another file</value>
   </data>
-  <data name="Card_Heading_Link_Manage_Existing_Registration" xml:space="preserve">
-    <value>Manage registrations</value>
+  <data name="By_Searching_For_A_Learner" xml:space="preserve">
+    <value>by searching for a learner</value>
   </data>
-  <data name="Card_Heading_Link_Multiple_Registrations" xml:space="preserve">
-    <value>Upload registrations</value>
+  <data name="For_Registered_Learners" xml:space="preserve">
+    <value>for registered learners</value>
   </data>
-  <data name="Card_Heading_Link_Register_A_New_Learner" xml:space="preserve">
-    <value>Add a registration</value>
+  <data name="Manage_Individual_Withdrawals" xml:space="preserve">
+    <value>manage individual withdrawals</value>
   </data>
-  <data name="Card_Heading_Link_Upload_Withdrawals_File" xml:space="preserve">
-    <value>Upload withdrawals</value>
+  <data name="New_Withdrawals_Singular_Text" xml:space="preserve">
+    <value>{0} new withdrawals</value>
   </data>
-  <data name="Heading_In_This_Section" xml:space="preserve">
-    <value>In this section</value>
-  </data>
-  <data name="Page_Heading" xml:space="preserve">
-    <value>Registrations</value>
+  <data name="New_Withdrawals_Text" xml:space="preserve">
+    <value>{0} new withdrawals</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Registrations</value>
+    <value>Withdrawals upload success</value>
   </data>
-  <data name="Para_Tell_Us_About_Your_Learners_And_The_Tlevels_They_Are_Studying" xml:space="preserve">
-    <value>Tell us about your learners and the T Levels they are studying</value>
+  <data name="Para_You_Can_Now" xml:space="preserve">
+    <value>You can now</value>
+  </data>
+  <data name="Section_Heading" xml:space="preserve">
+    <value>Withdrawals uploaded successfully</value>
+  </data>
+  <data name="Successfully_Sent_Amended_Withdrawals_Singular_Text" xml:space="preserve">
+    <value>You successfully sent {0} amended withdrawal</value>
+  </data>
+  <data name="Successfully_Sent_Amended_Withdrawals_Text" xml:space="preserve">
+    <value>You successfully sent {0} amended withdrawals</value>
+  </data>
+  <data name="Successfully_Sent_New_Withdrawals_Singular_Text" xml:space="preserve">
+    <value>You successfully sent {0} new withdrawal</value>
+  </data>
+  <data name="Successfully_Sent_New_Withdrawals_Text" xml:space="preserve">
+    <value>You successfully sent {0} new withdrawals</value>
+  </data>
+  <data name="Successfully_Sent_Total_Withdrawals_Text" xml:space="preserve">
+    <value>You successfully sent {0} withdrawals. This included:</value>
+  </data>
+  <data name="Successfully_Sent_Unchanged_Withdrawals_Singular_Text" xml:space="preserve">
+    <value>You successfully sent {0} unchanged withdrawals</value>
+  </data>
+  <data name="Successfully_Sent_Unchanged_Withdrawals_Text" xml:space="preserve">
+    <value>You successfully sent {0} unchanged withdrawals</value>
+  </data>
+  <data name="Unchanged_Withdrawals_Singular_Text" xml:space="preserve">
+    <value>{0} unchanged withdrawal</value>
+  </data>
+  <data name="Unchanged_Withdrawals_Text" xml:space="preserve">
+    <value>{0} unchanged withdrawals</value>
+  </data>
+  <data name="Upload_Another_Multiple_Withdrawals_File" xml:space="preserve">
+    <value>upload another multiple withdrawals file</value>
+  </data>
+  <data name="What_Happens_Next" xml:space="preserve">
+    <value>What happens next</value>
   </data>
 </root>

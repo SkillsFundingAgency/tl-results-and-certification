@@ -61,12 +61,12 @@
         public const string RegistrationsUploadUnsuccessful = "RegistrationsUploadUnsuccessful";
         public const string ProblemWithRegistrationsUpload = "ProblemWithRegistrationsUpload";
         public const string DownloadRegistrationErrors = "DownloadRegistrationErrors";
-        public const string UploadWithdrawlsFile = "UploadWithdrawlsFile";
-        public const string SubmitUploadWithdrawlsFile = "SubmitUploadWithdrawlsFile";
-        public const string WithdrawlsUploadSuccessful = "WithdrawlsUploadSuccessful";
-        public const string WithdrawlsUploadUnsuccessful = "WithdrawlsUploadUnsuccessful";
-        public const string ProblemWithWithdrawlsUpload = "ProblemWithWithdrawlsUpload";
-        public const string DownloadWithdrawlErrors = "DownloadWithdrawlErrors";
+        public const string UploadWithdrawalsFile = "UploadWithdrawalsFile";
+        public const string SubmitUploadWithdrawalsFile = "SubmitUploadWithdrawalsFile";
+        public const string WithdrawalsUploadSuccessful = "WithdrawalsUploadSuccessful";
+        public const string WithdrawalsUploadUnsuccessful = "WithdrawalsUploadUnsuccessful";
+        public const string ProblemWithWithdrawalsUpload = "ProblemWithWithdrawalsUpload";
+        public const string DownloadWithdrawalErrors = "DownloadWithdrawalErrors";
 
         // Add Registration
         public const string AddRegistration = "AddRegistration";
@@ -235,8 +235,8 @@
         public const string DownloadAssessmentEntriesDataFormatAndRulesGuide = "DownloadAssessmentEntriesDataFormatAndRulesGuide";
         public const string DownloadResultsDataFormatAndRulesGuide = "DownloadResultsDataFormatAndRulesGuide";
         public const string DownloadIndustryPlacementDataFormatAndRulesGuide = "DownloadIndustryPlacementDataFormatAndRulesGuide";
-        public const string DownloadWithdrawlsDataFormatAndRulesGuide = "DownloadWithdrawlsDataFormatAndRulesGuide";
-        public const string DownloadWithdrawlsDataTemplate = "DownloadWithdrawlsDataTemplate";
+        public const string DownloadWithdrawalsDataFormatAndRulesGuide = "DownloadWithdrawalsDataFormatAndRulesGuide";
+        public const string DownloadWithdrawalsDataTemplate = "DownloadWithdrawalsDataTemplate";
 
         public const string TlevelDataFormatAndRulesGuide = "TlevelDataFormatAndRulesGuide";
 

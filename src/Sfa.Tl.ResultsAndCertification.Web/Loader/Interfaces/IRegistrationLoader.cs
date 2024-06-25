@@ -14,9 +14,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
     public interface IRegistrationLoader
     {
         Task<UploadRegistrationsResponseViewModel> ProcessBulkRegistrationsAsync(UploadRegistrationsRequestViewModel viewModel);
-        Task<UploadWithdrawlsResponseViewModel> ProcessBulkWithdrawlsAsync(UploadWithdrawlsRequestViewModel viewModel);
+        Task<UploadWithdrawalsResponseViewModel> ProcessBulkWithdrawalsAsync(UploadWithdrawalsRequestViewModel viewModel);
         Task<Stream> GetRegistrationValidationErrorsFileAsync(long aoUkprn, Guid blobUniqueReference);
-        Task<Stream> GetWithdrawlValidationErrorsFileAsync(long aoUkprn, Guid blobUniqueReference);
+        Task<Stream> GetWithdrawalValidationErrorsFileAsync(long aoUkprn, Guid blobUniqueReference);
         Task<SelectProviderViewModel> GetRegisteredTqAoProviderDetailsAsync(long aoUkprn);
         Task<SelectCoreViewModel> GetRegisteredProviderPathwayDetailsAsync(long aoUkprn, long providerUkprn);
         Task<PathwaySpecialismsViewModel> GetPathwaySpecialismsByPathwayLarIdAsync(long aoUkprn, string pathwayLarId);

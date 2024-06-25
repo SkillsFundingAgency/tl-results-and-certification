@@ -36,7 +36,7 @@
         public const string SpecialismIsNotValid = "Specialism is not valid";
         public const string SpecialismCannotBeSelectedAsSingleOption = "This specialism cannot be selected as a single option (for when only one code of a paired specialism has been entered)";
 
-        // Bulk Withdrawl Learner Validation Messages
+        // Bulk Withdrawal Learner Validation Messages
         public const string InactiveUln = "Inactive Uln";
         public const string InvalidResultState = "Active Romm or Appeal";
 

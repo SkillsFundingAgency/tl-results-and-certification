@@ -90,9 +90,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         /// <summary>
         ///   Looks up a localized string similar to Withdraw one or more learners using a CSV file.
         /// </summary>
-        public static string Card_Content_Upload_Withdrawls_File {
+        public static string Card_Content_Upload_Withdrawals_File {
             get {
-                return ResourceManager.GetString("Card_Content_Upload_Withdrawls_File", resourceCulture);
+                return ResourceManager.GetString("Card_Content_Upload_Withdrawals_File", resourceCulture);
             }
         }
         
@@ -142,11 +142,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload withdrawls.
+        ///   Looks up a localized string similar to Upload withdrawals.
         /// </summary>
-        public static string Card_Heading_Link_Upload_Withdrawls_File {
+        public static string Card_Heading_Link_Upload_Withdrawals_File {
             get {
-                return ResourceManager.GetString("Card_Heading_Link_Upload_Withdrawls_File", resourceCulture);
+                return ResourceManager.GetString("Card_Heading_Link_Upload_Withdrawals_File", resourceCulture);
             }
         }
         

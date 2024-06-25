@@ -56,24 +56,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<UploadRegistrationsResponseViewModel>(bulkRegistrationResponse);
         }
 
-        public async Task<UploadWithdrawlsResponseViewModel> ProcessBulkWithdrawlsAsync(UploadWithdrawlsRequestViewModel viewModel)
+        public async Task<UploadWithdrawalsResponseViewModel> ProcessBulkWithdrawalsAsync(UploadWithdrawalsRequestViewModel viewModel)
         {
-            var bulkWithdrawlsRequest = _mapper.Map<BulkProcessRequest>(viewModel);
+            var bulkWithdrawalsRequest = _mapper.Map<BulkProcessRequest>(viewModel);
 
             using (var fileStream = viewModel.File.OpenReadStream())
             {
                 await _blobStorageService.UploadFileAsync(new BlobStorageData
                 {
-                    ContainerName = bulkWithdrawlsRequest.DocumentType.ToString(),
-                    BlobFileName = bulkWithdrawlsRequest.BlobFileName,
-                    SourceFilePath = $"{bulkWithdrawlsRequest.AoUkprn}/{BulkProcessStatus.Processing}",
+                    ContainerName = bulkWithdrawalsRequest.DocumentType.ToString(),
+                    BlobFileName = bulkWithdrawalsRequest.BlobFileName,
+                    SourceFilePath = $"{bulkWithdrawalsRequest.AoUkprn}/{BulkProcessStatus.Processing}",
                     FileStream = fileStream,
-                    UserName = bulkWithdrawlsRequest.PerformedBy
+                    UserName = bulkWithdrawalsRequest.PerformedBy
                 });
             }
 
-            var bulkWithdrawlsResponse = await _internalApiClient.ProcessBulkWithdrawlsAsync(bulkWithdrawlsRequest);
-            return _mapper.Map<UploadWithdrawlsResponseViewModel>(bulkWithdrawlsResponse);
+            var bulkWithdrawalsResponse = await _internalApiClient.ProcessBulkWithdrawalsAsync(bulkWithdrawalsRequest);
+            return _mapper.Map<UploadWithdrawalsResponseViewModel>(bulkWithdrawalsResponse);
         }
 
         public async Task<Stream> GetRegistrationValidationErrorsFileAsync(long aoUkprn, Guid blobUniqueReference)
@@ -103,7 +103,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             }
         }
 
-        public async Task<Stream> GetWithdrawlValidationErrorsFileAsync(long aoUkprn, Guid blobUniqueReference)
+        public async Task<Stream> GetWithdrawalValidationErrorsFileAsync(long aoUkprn, Guid blobUniqueReference)
         {
             var tlevelDetails = await _internalApiClient.GetDocumentUploadHistoryDetailsAsync(aoUkprn, blobUniqueReference);
 
@@ -111,14 +111,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             {
                 var fileStream = await _blobStorageService.DownloadFileAsync(new BlobStorageData
                 {
-                    ContainerName = DocumentType.Withdrawls.ToString(),
+                    ContainerName = DocumentType.Withdrawals.ToString(),
                     BlobFileName = tlevelDetails.BlobFileName,
                     SourceFilePath = $"{aoUkprn}/{BulkProcessStatus.ValidationErrors}"
                 });
 
                 if (fileStream == null)
                 {
-                    var blobReadError = $"No FileStream found to download withdrawl validation errors. Method: DownloadFileAsync(ContainerName: {DocumentType.Withdrawls}, BlobFileName = {tlevelDetails.BlobFileName}, SourceFilePath = {aoUkprn}/{BulkProcessStatus.ValidationErrors})";
+                    var blobReadError = $"No FileStream found to download withdrawal validation errors. Method: DownloadFileAsync(ContainerName: {DocumentType.Withdrawals}, BlobFileName = {tlevelDetails.BlobFileName}, SourceFilePath = {aoUkprn}/{BulkProcessStatus.ValidationErrors})";
                     _logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
                 }
                 return fileStream;

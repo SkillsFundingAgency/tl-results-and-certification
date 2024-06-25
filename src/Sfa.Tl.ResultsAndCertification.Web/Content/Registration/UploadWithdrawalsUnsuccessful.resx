@@ -117,46 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Card_Content_Add_One_Registration" xml:space="preserve">
-    <value>Add details one at a time for registered learners.</value>
+  <data name="Back_To_Home_Button" xml:space="preserve">
+    <value>Back to home</value>
   </data>
-  <data name="Card_Content_Add_Or_Change_Using_Csv" xml:space="preserve">
-    <value>Add or change registration details for learners using a CSV file.</value>
+  <data name="Download_Text" xml:space="preserve">
+    <value>Download</value>
   </data>
-  <data name="Card_Content_Download_Registrations_Csv" xml:space="preserve">
-    <value>Download your data as a CSV file, for registrations and pending withdrawals.</value>
+  <data name="Error_Report" xml:space="preserve">
+    <value>withdrawals error report</value>
   </data>
-  <data name="Card_Content_Upload_Withdrawals_File" xml:space="preserve">
-    <value>Withdraw one or more learners using a CSV file</value>
+  <data name="Error_Report_Heading" xml:space="preserve">
+    <value>Error report</value>
   </data>
-  <data name="Card_Content_View_And_Change_Registration_Details" xml:space="preserve">
-    <value>View and change registration details, including reinstating and withdrawing learners.</value>
+  <data name="File_Size_Kb" xml:space="preserve">
+    <value>KB</value>
   </data>
-  <data name="Card_Heading_Link_Download_Registrations_Data" xml:space="preserve">
-    <value>Download registrations data</value>
+  <data name="Inset_Para_If_You_Leave_This_Page_You_Will_Not_Able_To_Come_Back" xml:space="preserve">
+    <value>If you leave this page you will not be able to come back later to access the error report.</value>
   </data>
-  <data name="Card_Heading_Link_Manage_Existing_Registration" xml:space="preserve">
-    <value>Manage registrations</value>
-  </data>
-  <data name="Card_Heading_Link_Multiple_Registrations" xml:space="preserve">
-    <value>Upload registrations</value>
-  </data>
-  <data name="Card_Heading_Link_Register_A_New_Learner" xml:space="preserve">
-    <value>Add a registration</value>
-  </data>
-  <data name="Card_Heading_Link_Upload_Withdrawals_File" xml:space="preserve">
-    <value>Upload withdrawals</value>
-  </data>
-  <data name="Heading_In_This_Section" xml:space="preserve">
-    <value>In this section</value>
-  </data>
-  <data name="Page_Heading" xml:space="preserve">
-    <value>Registrations</value>
+  <data name="Inset_Para_Your_File_Contains_Formatting_Errors" xml:space="preserve">
+    <value>Your file contains formatting errors. Please check and correct the errors before uploading it again.</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Registrations</value>
+    <value>Withdrawals upload error</value>
   </data>
-  <data name="Para_Tell_Us_About_Your_Learners_And_The_Tlevels_They_Are_Studying" xml:space="preserve">
-    <value>Tell us about your learners and the T Levels they are studying</value>
+  <data name="Para_The_Error_Report_Will_Tell_You_What_Went_Wrong" xml:space="preserve">
+    <value>The error report will tell you what went wrong. Please download this file immediately.</value>
+  </data>
+  <data name="Section_Heading" xml:space="preserve">
+    <value>There is a problem</value>
+  </data>
+  <data name="Upload_Another_File_Button" xml:space="preserve">
+    <value>Upload another file</value>
+  </data>
+  <data name="Withdrawals_Error_Report_File_Name_Text" xml:space="preserve">
+    <value>withdrawals-error-report.csv</value>
   </data>
 </root>

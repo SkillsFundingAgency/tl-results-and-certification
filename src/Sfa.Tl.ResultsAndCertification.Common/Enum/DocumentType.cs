@@ -16,6 +16,6 @@
         SpecialismRomm = 12,
         ProviderAddressess = 13,
         CertificateTracking = 14,
-        Withdrawls = 15
+        Withdrawals = 15
     }
 }
