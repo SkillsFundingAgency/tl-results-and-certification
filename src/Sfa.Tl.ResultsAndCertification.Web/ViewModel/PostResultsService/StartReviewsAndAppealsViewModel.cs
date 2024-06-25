@@ -7,19 +7,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 {
     public class StartReviewsAndAppealsViewModel
     {
-
         public BreadcrumbModel Breadcrumb
-        {
-            get
+            => new()
             {
-                return new BreadcrumbModel
+                BreadcrumbItems = new List<BreadcrumbItem>
                 {
-                    BreadcrumbItems = new List<BreadcrumbItem>
-                    {
-                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Home }
-                    }
-                };
-            }
-        }
+                    new() { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Home },
+                    new() { DisplayName = BreadcrumbContent.StartPostResultsService }
+                }
+            };
     }
 }
