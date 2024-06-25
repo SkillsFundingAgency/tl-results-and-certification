@@ -70,7 +70,8 @@ jobs:
             -providerAddressExtractTrigger "$(providerAddressExtractTrigger)"
             -CertificateTrackingExtractTrigger "$(CertificateTrackingExtractTrigger)"
             -enableReplica $(enableReplica)
-            -containerLifecyclePolicyRules $(containerLifecyclePolicyRules)'
+            -containerLifecyclePolicyRules $(containerLifecyclePolicyRules)
+            -ipSecurityRestrictions $(ipSecurityRestrictions)'
           tags: $(Tags) 
           processOutputs: true
 

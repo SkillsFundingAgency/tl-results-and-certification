@@ -27,6 +27,9 @@ stages:
       sharedEnvironmentId: d01
       serviceConnection: $(devServiceConnection)
       applicationName: resac
+      variableTemplates: 
+        - ./Automation/variables/vars-non-prd.yml@devopsTemplates
+
 ######################## TEST ##############################################
   - template: tlevels-shared-stage.yml
     parameters:
@@ -50,6 +53,8 @@ stages:
       sharedEnvironmentId: t01
       serviceConnection: $(testServiceConnection)
       applicationName: resac
+      variableTemplates: 
+        - ./Automation/variables/vars-non-prd.yml@devopsTemplates
 
 ######################## TEST 3 ##############################################
   - template: tlevels-shared-stage.yml
@@ -74,7 +79,9 @@ stages:
       sharedEnvironmentId: t03
       serviceConnection: $(testServiceConnection)
       applicationName: resac
-
+      variableTemplates: 
+        - ./Automation/variables/vars-non-prd.yml@devopsTemplates
+      
 ######################## Pre Prod ##############################################
   - template: tlevels-shared-stage.yml
     parameters:
@@ -99,6 +106,8 @@ stages:
       sharedEnvironmentId: p02
       serviceConnection: $(prodServiceConnection)
       applicationName: resac
+      variableTemplates: 
+        - ./Automation/variables/vars-non-prd.yml@devopsTemplates
 
 ########################## Prod ##############################################
   - template: tlevels-shared-stage.yml
@@ -124,3 +133,5 @@ stages:
       sharedEnvironmentId: p01
       serviceConnection: $(prodServiceConnection)
       applicationName: resac
+      variableTemplates: 
+        - ./Automation/variables/vars-prd.yml@devopsTemplates
