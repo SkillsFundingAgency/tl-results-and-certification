@@ -129,6 +129,12 @@
   <data name="Contact" xml:space="preserve">
     <value>Contact us</value>
   </data>
+  <data name="Download_Registrations_Data" xml:space="preserve">
+    <value>Download registrations data</value>
+  </data>
+  <data name="Download_Registrations_Data_For" xml:space="preserve">
+    <value>Download registrations data for {0}</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
   </data>

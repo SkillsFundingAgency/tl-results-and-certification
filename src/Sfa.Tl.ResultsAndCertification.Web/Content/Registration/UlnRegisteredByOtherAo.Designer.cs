@@ -79,29 +79,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enquiry about ULN registered with another awarding organisation.
-        /// </summary>
-        public static string Email_Subject {
-            get {
-                return ResourceManager.GetString("Email_Subject", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to {0} has already registered this ULN..
         /// </summary>
         public static string Information_Text_Part1 {
             get {
                 return ResourceManager.GetString("Information_Text_Part1", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to and we will investigate the issue..
-        /// </summary>
-        public static string Information_Text_Part2 {
-            get {
-                return ResourceManager.GetString("Information_Text_Part2", resourceCulture);
             }
         }
         

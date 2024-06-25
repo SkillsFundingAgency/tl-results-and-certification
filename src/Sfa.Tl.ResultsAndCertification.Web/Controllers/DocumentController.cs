@@ -81,27 +81,31 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("tlevels-results-data-format-and-rules", Name = RouteConstants.DownloadResultsDataFormatAndRulesGuide)]
-        public async Task<IActionResult> DownloadResultsDataFormatAndRulesGuideAsync()
+        [Route("tlevels-assessment-entries-template", Name = RouteConstants.DownloadAssessmentEntriesTemplate)]
+        public async Task<IActionResult> DownloadAssessmentEntriesTemplateAsync()
         {
-            var fileName = DocumentResource.TlevelDataFormatAndRulesGuide.Tlevels_Results_Data_Format_And_Rules_File_Name;
-            var fileStream = await _documentLoader.GetTechSpecFileAsync(BlobStorageConstants.ResultsFolderName, fileName);
+            var fileName = DocumentResource.TlevelDataFormatAndRulesGuide.Tlevels_Assessment_Entry_Data_Template_File_Name;
+            var fileStream = await _documentLoader.GetBulkUploadAssessmentEntriesTechSpecFileAsync(fileName);
             if (fileStream == null)
+            {
+                _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download bulk upload assessment entries tech spec document. Method: GetBulkUploadAssessmentEntriesTechSpecFileAsync(FileName: {fileName})");
                 return RedirectToRoute(RouteConstants.PageNotFound);
+            }
 
             fileStream.Position = 0;
-            return new FileStreamResult(fileStream, "text/xlsx")
+            return new FileStreamResult(fileStream, "text/csv")
             {
                 FileDownloadName = fileName
             };
         }
 
+
         [HttpGet]
-        [Route("tlevels-industry-placement-data-format-and-rules", Name = RouteConstants.DownloadIndustryPlacementDataFormatAndRulesGuide)]
-        public async Task<IActionResult> DownloadIndustryPlacementDataFormatAndRulesGuideAsync()
+        [Route("tlevels-results-data-format-and-rules", Name = RouteConstants.DownloadResultsDataFormatAndRulesGuide)]
+        public async Task<IActionResult> DownloadResultsDataFormatAndRulesGuideAsync()
         {
-            var fileName = DocumentResource.TlevelDataFormatAndRulesGuide.Tlevels_Industry_Placement_Data_Format_And_Rules_File_Name;
-            var fileStream = await _documentLoader.GetTechSpecFileAsync(BlobStorageConstants.IndustryPlacementsFolderName, fileName);
+            var fileName = DocumentResource.TlevelDataFormatAndRulesGuide.Tlevels_Results_Data_Format_And_Rules_File_Name;
+            var fileStream = await _documentLoader.GetTechSpecFileAsync(BlobStorageConstants.ResultsFolderName, fileName);
             if (fileStream == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 

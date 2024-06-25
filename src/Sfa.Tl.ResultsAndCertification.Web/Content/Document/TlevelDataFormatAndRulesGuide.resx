@@ -210,8 +210,8 @@
   <data name="Tlevels_Assessment_Entry_Data_Format_And_Rules_File_Name" xml:space="preserve">
     <value>tlevels-assessment-entry-data-format-and-rules.xlsx</value>
   </data>
-  <data name="Tlevels_Industry_Placement_Data_Format_And_Rules_File_Name" xml:space="preserve">
-    <value>tlevels-industry-placement-data-format-and-rules.xlsx</value>
+  <data name="Tlevels_Assessment_Entry_Data_Template_File_Name" xml:space="preserve">
+    <value>tlevels-assessment-entry-template.csv</value>
   </data>
   <data name="Tlevels_Registrations_Data_Format_And_Rules_File_Name" xml:space="preserve">
     <value>tlevels-registrations-data-format-and-rules.xlsx</value>
