@@ -1,8 +1,8 @@
 ﻿using FluentAssertions;
-using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.UnitTests.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
 using System;
@@ -34,12 +34,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
         public void Then_Expected_Results_Are_Returned()
         {
             Result.Should().NotBeNull();
-            Result.Should().BeOfType(typeof(ViewResult));
 
-            var viewResult = Result as ViewResult;
-            viewResult.Model.Should().BeOfType(typeof(RegistrationsDownloadViewModel));
-
-            var actualResult = viewResult.Model as RegistrationsDownloadViewModel;
+            var actualResult = Result.ShouldBeViewResult<RegistrationsDownloadViewModel>();
             actualResult.Should().NotBeNull();
             actualResult.RegistrationsDownloadLinkViewModel.Should().NotBeNull();
 
@@ -49,11 +45,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.RegistrationC
 
             actualResult.Breadcrumb.Should().NotBeNull();
             actualResult.Breadcrumb.BreadcrumbItems.Should().NotBeNull();
-            actualResult.Breadcrumb.BreadcrumbItems.Count.Should().Be(2);
+            actualResult.Breadcrumb.BreadcrumbItems.Count.Should().Be(3);
+
             actualResult.Breadcrumb.BreadcrumbItems[0].RouteName.Should().Be(RouteConstants.Home);
             actualResult.Breadcrumb.BreadcrumbItems[0].DisplayName.Should().Be(BreadcrumbContent.Home);
+
             actualResult.Breadcrumb.BreadcrumbItems[1].RouteName.Should().Be(RouteConstants.RegistrationDashboard);
             actualResult.Breadcrumb.BreadcrumbItems[1].DisplayName.Should().Be(BreadcrumbContent.Registration_Dashboard);
+
+            actualResult.Breadcrumb.BreadcrumbItems[2].RouteName.Should().BeNull();
+            actualResult.Breadcrumb.BreadcrumbItems[2].DisplayName.Should().Be(BreadcrumbContent.Download_Registrations_Data);
         }
     }
 }
