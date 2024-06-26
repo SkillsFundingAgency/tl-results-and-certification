@@ -39,7 +39,8 @@ jobs:
                   -keyVaultFullAccessObjectIds "$(keyVaultFullAccessObjectIds)"
                   -sqlFirewallIpAddressesPredefined $(sqlFirewallIpAddresses)
                   -enableReplica $(enableReplica)
-                  -isStorageSecondaryKeyInUse "$(isStorageSecondaryKeyInUse)"'
+                  -isStorageSecondaryKeyInUse "$(isStorageSecondaryKeyInUse)"
+                  -environmentPrefix "$(environmentPrefix)"'
                 tags: $(Tags)
                 processOutputs: true
             - pwsh: Write-Host "##vso[task.setvariable variable=SharedResourceGroup;isOutput=true]$(SharedResourceGroup)"

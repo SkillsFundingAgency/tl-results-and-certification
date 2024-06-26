@@ -17,9 +17,12 @@ jobs:
       ConfigurationStorageConnectionString: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.configStorageConnectionString'] ]
       ConfigStorageAccountName: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.ConfigStorageAccountName'] ]
       SharedResourceGroup: $[stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.SharedVariables.SharedResourceGroup']]
-
+      EntraReaderUserIdentityResourceId: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.EntraReaderUserIdentityResourceId'] ]
+      SqlUserIdentityResourceId: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.SqlUserIdentityResourceId'] ]
+  
     steps:
       - checkout: self
+      - checkout: devopsTools
       - pwsh: |
           'Write-Host "SharedResourceGroup variable: $(SharedResourceGroup)"'
           'Write-Host "SharedASPName variable: $(SharedASPName)"'
@@ -29,13 +32,21 @@ jobs:
           'Write-Host "containerLifecyclePolicyRules variable: $(containerLifecyclePolicyRules)"'
         displayName: "Show Variables"
 
+      - task: AzureCLI@2
+        displayName: Create temporary SQL firewall rule to allow Azure service connections
+        inputs:
+          azureSubscription: ${{parameters.serviceConnection}}
+          scriptType: 'pscore'
+          scriptLocation: 'inlineScript'
+          inlineScript: 'az sql server firewall-rule create -g $(SharedResourceGroup) -s $(SharedSQLServerName) -n "allowAllAzure" --start-ip-address 0.0.0.0 --end-ip-address 0.0.0.0'
+
       - template: ./Infrastructure/steps/deploy-template.yml@devopsTemplates
         parameters:
           serviceConnection: ${{ parameters.serviceConnection }}
           subscriptionId: $(subscriptionId)
           resourceGroupName: $(ResourceGroupName)
           location: "West Europe"
-          templateFilePath: "./azure/tlevels-environment.json"
+          templateFilePath: "./tl-results-and-certification/azure/tlevels-environment.json"
           armParameterOverrideString:
             '-environmentNameAbbreviation "${{parameters.environmentName}}"
             -resourceNamePrefix "${{parameters.BaseName}}"
@@ -70,10 +81,11 @@ jobs:
             -providerAddressExtractTrigger "$(providerAddressExtractTrigger)"
             -CertificateTrackingExtractTrigger "$(CertificateTrackingExtractTrigger)"
             -enableReplica $(enableReplica)
-            -containerLifecyclePolicyRules $(containerLifecyclePolicyRules)'
+            -containerLifecyclePolicyRules $(containerLifecyclePolicyRules)
+            -ipSecurityRestrictions $(ipSecurityRestrictions)'
           tags: $(Tags) 
           processOutputs: true
-
+      
       - task: AzureCLI@2
         displayName: 'Add function access to Keyvault'
         inputs:
@@ -84,6 +96,36 @@ jobs:
             $functionAppObjectId = az functionapp identity show -n $(armOutputs.armOutput.functionAppName) -g $(ResourceGroupName) --query "principalId"
             Write-Host $functionAppObjectId
             az keyvault set-policy --name $(SharedKeyVaultName) --object-id $functionAppObjectId --secret-permissions "get" --key-permissions "get" --certificate-permissions "get"
+
+      - task: AzureCLI@2
+        displayName: 'Create Internal Api SQL Users and Permissions'
+        inputs:
+          azureSubscription: ${{parameters.serviceConnection}}
+          scriptType: 'pscore'
+          scriptLocation: 'ScriptPath'
+          ScriptPath: ./operations-devops-tools/Powershell/CreateAppSQLUser/executeCreateAppSQLUser.ps1
+          ScriptArguments: '-UserName "$(armOutputs.armOutput.internalApiAppName)" -ObjectID "$(armOutputs.armOutput.internalApiManagedServiceIdentityId)" -sqlServerName $(SharedSQLServerName) -sqlDatabaseName "$(armOutputs.armOutput.sqlDatabaseName)" -sqlServerResourceGroup $(SharedResourceGroup) -EntraReaderUserIdentityResourceId $(EntraReaderUserIdentityResourceId) -sqlUserIdentityResourceId $(sqlUserIdentityResourceId)'
+          azurePowerShellVersion: 'LatestVersion'
+          failOnStandardError: true
+
+      - task: AzureCLI@2
+        displayName: 'Create Function Ap SQL Users and Permissions'
+        inputs:
+          azureSubscription: ${{parameters.serviceConnection}}
+          scriptType: 'pscore'
+          scriptLocation: 'ScriptPath'
+          ScriptPath: ./operations-devops-tools/Powershell/CreateAppSQLUser/executeCreateAppSQLUser.ps1
+          ScriptArguments: '-UserName "$(armOutputs.armOutput.functionAppName)" -ObjectID "$(armOutputs.armOutput.functionAppManagedServiceIdentityId)" -sqlServerName $(SharedSQLServerName) -sqlDatabaseName "$(armOutputs.armOutput.sqlDatabaseName)" -sqlServerResourceGroup $(SharedResourceGroup) -EntraReaderUserIdentityResourceId $(EntraReaderUserIdentityResourceId) -sqlUserIdentityResourceId $(sqlUserIdentityResourceId)'
+          azurePowerShellVersion: 'LatestVersion'
+          failOnStandardError: true
+
+      - task: AzureCLI@2
+        displayName: Remove temporary SQL firewall rule to allow Azure service connections
+        inputs:
+          azureSubscription: ${{parameters.serviceConnection}}
+          scriptType: 'pscore'
+          scriptLocation: 'inlineScript'
+          inlineScript: 'az sql server firewall-rule delete -g $(SharedResourceGroup) -s $(SharedSQLServerName) -n "allowAllAzure"'
 
 
      

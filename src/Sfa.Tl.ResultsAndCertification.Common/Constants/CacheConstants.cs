@@ -12,6 +12,7 @@
         public const string TrainingProviderCacheKey = "TrainingProvider";
         public const string TrainingProviderInformationCacheKey = "TrainingProviderInformation";
         public const string ProviderAddressCacheKey = "ProviderAddress";
+        public const string ProviderCacheKey = "Provider";
         public const string SoaCacheKey = "StatementOfAchievement";
         public const string PrsCacheKey = "PostResultsService";
         public const string IpCacheKey = "IndustryPlacement";

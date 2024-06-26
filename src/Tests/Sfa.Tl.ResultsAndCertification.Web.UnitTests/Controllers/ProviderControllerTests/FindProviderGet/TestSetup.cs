@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
@@ -14,6 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
     {
         // DI Mocks
         protected IProviderLoader ProviderLoader;
+        protected ICacheService CacheService;
         protected ILogger<ProviderController> Logger;
 
         // input, output and other mock variables
@@ -27,16 +29,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         {
             HttpContextAccessor = Substitute.For<IHttpContextAccessor>();
             ProviderLoader = Substitute.For<IProviderLoader>();
+            CacheService = Substitute.For<ICacheService>();
             Logger = Substitute.For<ILogger<ProviderController>>();
-            
-            Controller = new ProviderController(ProviderLoader, Logger);
+
+            Controller = new ProviderController(ProviderLoader, CacheService, Logger);
             TempData = new TempDataDictionary(HttpContextAccessor.HttpContext, Substitute.For<ITempDataProvider>());
             Controller.TempData = TempData;
         }
 
         public async override Task When()
         {
-            Result = await Controller.FindProviderAsync() ;
+            Result = await Controller.FindProviderAsync();
         }
     }
 }
