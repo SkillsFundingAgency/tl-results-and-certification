@@ -382,11 +382,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                             .ThenInclude(x => x.TlProvider)
                        .Include(x => x.TqProvider)
                             .ThenInclude(x => x.TqAwardingOrganisation)
-                                    .ThenInclude(x => x.TlAwardingOrganisaton)
+                            .ThenInclude(x => x.TlAwardingOrganisaton)
+                       .Include(x => x.TqProvider)
+                            .ThenInclude(x => x.TqAwardingOrganisation)
+                            .ThenInclude(x => x.TlPathway)
                 .Where(w => w.Status == RegistrationPathwayStatus.Active &&
                             w.EndDate == null &&
                             w.AcademicYear == currentAcademicYears.FirstOrDefault().Year - 1)
-                .ToListAsync();            
+                .ToListAsync();
 
             var industryPlacementResults = _mapper.Map<IList<ExtractData>>(industryPlacements);
 
