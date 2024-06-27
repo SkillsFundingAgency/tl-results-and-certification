@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Newtonsoft.Json;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers.Action;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.PathwayResult;
@@ -21,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.UniqueLearnerNumber, opts => opts.MapFrom(s => s.TqRegistrationProfile.UniqueLearnerNumber))
                 .ForMember(d => d.Status, opts => opts.MapFrom(s => s.Status.ToString()))
                 .ForMember(d => d.Ukprn, opts => opts.MapFrom(s => s.TqProvider.TlProvider.UkPrn))
-                .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.TqProvider.TlProvider.Name.Replace(",", " ")))
+                .ForMember(d => d.ProviderName, opts => opts.ConvertUsing(new DoubleQuotedStringConverter(), s => s.TqProvider.TlProvider.Name))
                 .ForMember(d => d.LastName, opts => opts.ConvertUsing(new DoubleQuotedStringConverter(), s => s.TqRegistrationProfile.Lastname))
                 .ForMember(d => d.FirstName, opts => opts.ConvertUsing(new DoubleQuotedStringConverter(), s => s.TqRegistrationProfile.Firstname))
                 .ForMember(d => d.DateOfBirth, opts => opts.MapFrom(s => DateOnly.FromDateTime(s.TqRegistrationProfile.DateofBirth)))
@@ -31,24 +32,25 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.CoreComponent, opts => opts.ConvertUsing(new DoubleQuotedStringConverter(), s => s.TqProvider.TqAwardingOrganisation.TlPathway.Name))
                 .ForMember(d => d.CoreCode, opts => opts.MapFrom(s => s.TqProvider.TqAwardingOrganisation.TlPathway.LarId))
                 .ForMember(d => d.CoreResult, opts => opts.ConvertUsing(new PathwayResultStringConverter(), p => p.TqPathwayAssessments))
-                .ForMember(d => d.OccupationalSpecialism, opts => opts.ConvertUsing(new SpecialismNameConverter(), p => p.TqRegistrationSpecialisms.Where(w => w.EndDate == null)))
-                .ForMember(d => d.SpecialismCode, opts => opts.ConvertUsing(new SpecialismCodeConverter(), p => p.TqRegistrationSpecialisms.Where(w => w.EndDate == null)))
+                .ForMember(d => d.OccupationalSpecialism, opts => opts.ConvertUsing(new SpecialismNameConverter(), p => p.TqRegistrationSpecialisms.Where(w => w.IsOptedin && w.EndDate == null)))
+                .ForMember(d => d.SpecialismCode, opts => opts.ConvertUsing(new SpecialismCodeConverter(), p => p.TqRegistrationSpecialisms.Where(w => w.IsOptedin && w.EndDate == null)))
                 .ForMember(d => d.SpecialismResult, opts => opts.MapFrom(s => GetSpecialismResult(s)))
                 .ForMember(d => d.IndustryPlacementStatus, opts => opts.ConvertUsing(new IndustryPlacementStatusStringConverter(), p => p.IndustryPlacements))
-                .ForMember(d => d.OverallResult, opts => opts.MapFrom(s => GetOverallResult(s)));
+                .ForMember(d => d.OverallResult, opts => opts.MapFrom(s => GetOverallResult(s)))
+                .AfterMap<AnalystOverallResultExtractionEmptyToNullTextAction>();
         }
 
-        private string GetSpecialismResult(TqRegistrationPathway registrationPathway)
+        private static string GetSpecialismResult(TqRegistrationPathway registrationPathway)
         {
             return GetOverallResultProperty(registrationPathway, p => p.SpecialismResultAwarded);
         }
 
-        private string GetOverallResult(TqRegistrationPathway registrationPathway)
+        private static string GetOverallResult(TqRegistrationPathway registrationPathway)
         {
             return GetOverallResultAwardedProperty(registrationPathway, p => p.ResultAwarded);
         }
 
-        private string GetOverallResultProperty(TqRegistrationPathway registrationPathway, Func<OverallResult, string> getPropertyValue)
+        private static string GetOverallResultProperty(TqRegistrationPathway registrationPathway, Func<OverallResult, string> getPropertyValue)
         {
             if (registrationPathway.OverallResults.IsNullOrEmpty())
                 return string.Empty;
@@ -61,7 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 getPropertyValue(overallResult) : string.Empty;
         }
 
-        private string GetOverallResultAwardedProperty(TqRegistrationPathway registrationPathway, Func<OverallResult, string> getPropertyValue)
+        private static string GetOverallResultAwardedProperty(TqRegistrationPathway registrationPathway, Func<OverallResult, string> getPropertyValue)
         {
             if (registrationPathway.OverallResults.IsNullOrEmpty())
                 return string.Empty;
