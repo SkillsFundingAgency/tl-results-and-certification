@@ -139,5 +139,44 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             return View(viewModel);
         }
+
+
+        [HttpGet]
+        [Route("tlevels-withdrawals-data-format-and-rules", Name = RouteConstants.DownloadWithdrawalsDataFormatAndRulesGuide)]
+        public async Task<IActionResult> DownloadWithdrawalDataFormatAndRulesGuideAsync()
+        {
+            var fileName = DocumentResource.TlevelDataFormatAndRulesGuide.Tlevels_Withdrawals_Data_Format_And_Rules_File_Name;
+            var fileStream = await _documentLoader.GetBulkUploadWithdrawalsTechSpecFileAsync(fileName);
+            if (fileStream == null)
+            {
+                _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download bulk upload withdrawal tech spec document. Method: DownloadWithdrawlDataFormatAndRulesGuideAsync(FileName: {fileName})");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            fileStream.Position = 0;
+            return new FileStreamResult(fileStream, "text/xlsx")
+            {
+                FileDownloadName = fileName
+            };
+        }
+
+        [HttpGet]
+        [Route("tlevels-withdrawal-data-template", Name = RouteConstants.DownloadWithdrawalsDataTemplate)]
+        public async Task<IActionResult> DownloadWithdrawalnDataTemplateAsync()
+        {
+            var fileName = DocumentResource.TlevelDataFormatAndRulesGuide.Tlevels_Withdrawal_Data_Template_File_Name;
+            var fileStream = await _documentLoader.GetBulkUploadWithdrawalsTechSpecFileAsync(fileName);
+            if (fileStream == null)
+            {
+                _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download bulk upload withdrawal tech spec document. Method: DownloadWithdrawlnDataTemplateAsync(FileName: {fileName})");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            fileStream.Position = 0;
+            return new FileStreamResult(fileStream, "text/csv")
+            {
+                FileDownloadName = fileName
+            };
+        }
     }
 }

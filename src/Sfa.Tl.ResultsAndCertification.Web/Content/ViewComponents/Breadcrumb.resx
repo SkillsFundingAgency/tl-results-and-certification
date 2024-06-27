@@ -243,4 +243,7 @@
   <data name="Upload_Results_File" xml:space="preserve">
     <value>Upload multiple results</value>
   </data>
+  <data name="Upload_Withdrawls_File" xml:space="preserve">
+    <value>Upload multiple withdrawls</value>
+  </data>
 </root>

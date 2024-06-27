@@ -41,6 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 
         //Registrations
         Task<BulkProcessResponse> ProcessBulkRegistrationsAsync(BulkProcessRequest model);
+        Task<BulkProcessResponse> ProcessBulkWithdrawalsAsync(BulkProcessRequest model);
         Task<IList<PathwayDetails>> GetRegisteredProviderPathwayDetailsAsync(long aoUkprn, long providerUkprn);
         Task<bool> AddRegistrationAsync(RegistrationRequest model);
         Task<FindUlnResponse> FindUlnAsync(long aoUkprn, long uln);

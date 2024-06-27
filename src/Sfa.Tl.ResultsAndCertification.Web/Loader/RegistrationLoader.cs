@@ -56,6 +56,26 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<UploadRegistrationsResponseViewModel>(bulkRegistrationResponse);
         }
 
+        public async Task<UploadWithdrawalsResponseViewModel> ProcessBulkWithdrawalsAsync(UploadWithdrawalsRequestViewModel viewModel)
+        {
+            var bulkWithdrawalsRequest = _mapper.Map<BulkProcessRequest>(viewModel);
+
+            using (var fileStream = viewModel.File.OpenReadStream())
+            {
+                await _blobStorageService.UploadFileAsync(new BlobStorageData
+                {
+                    ContainerName = bulkWithdrawalsRequest.DocumentType.ToString(),
+                    BlobFileName = bulkWithdrawalsRequest.BlobFileName,
+                    SourceFilePath = $"{bulkWithdrawalsRequest.AoUkprn}/{BulkProcessStatus.Processing}",
+                    FileStream = fileStream,
+                    UserName = bulkWithdrawalsRequest.PerformedBy
+                });
+            }
+
+            var bulkWithdrawalsResponse = await _internalApiClient.ProcessBulkWithdrawalsAsync(bulkWithdrawalsRequest);
+            return _mapper.Map<UploadWithdrawalsResponseViewModel>(bulkWithdrawalsResponse);
+        }
+
         public async Task<Stream> GetRegistrationValidationErrorsFileAsync(long aoUkprn, Guid blobUniqueReference)
         {
             var tlevelDetails = await _internalApiClient.GetDocumentUploadHistoryDetailsAsync(aoUkprn, blobUniqueReference);
@@ -72,6 +92,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 if (fileStream == null)
                 {
                     var blobReadError = $"No FileStream found to download registration validation errors. Method: DownloadFileAsync(ContainerName: {DocumentType.Registrations}, BlobFileName = {tlevelDetails.BlobFileName}, SourceFilePath = {aoUkprn}/{BulkProcessStatus.ValidationErrors})";
+                    _logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
+                }
+                return fileStream;
+            }
+            else
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No DocumentUploadHistoryDetails found or the request is not valid. Method: GetDocumentUploadHistoryDetailsAsync(AoUkprn: {aoUkprn}, BlobUniqueReference = {blobUniqueReference})");
+                return null;
+            }
+        }
+
+        public async Task<Stream> GetWithdrawalValidationErrorsFileAsync(long aoUkprn, Guid blobUniqueReference)
+        {
+            var tlevelDetails = await _internalApiClient.GetDocumentUploadHistoryDetailsAsync(aoUkprn, blobUniqueReference);
+
+            if (tlevelDetails != null && tlevelDetails.Status == (int)DocumentUploadStatus.Failed)
+            {
+                var fileStream = await _blobStorageService.DownloadFileAsync(new BlobStorageData
+                {
+                    ContainerName = DocumentType.Withdrawals.ToString(),
+                    BlobFileName = tlevelDetails.BlobFileName,
+                    SourceFilePath = $"{aoUkprn}/{BulkProcessStatus.ValidationErrors}"
+                });
+
+                if (fileStream == null)
+                {
+                    var blobReadError = $"No FileStream found to download withdrawal validation errors. Method: DownloadFileAsync(ContainerName: {DocumentType.Withdrawals}, BlobFileName = {tlevelDetails.BlobFileName}, SourceFilePath = {aoUkprn}/{BulkProcessStatus.ValidationErrors})";
                     _logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
                 }
                 return fileStream;
