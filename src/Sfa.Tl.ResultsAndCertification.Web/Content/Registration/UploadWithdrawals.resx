@@ -199,15 +199,15 @@
     <value>Processing, please wait. This could take up to 10 seconds. Do not refresh.</value>
   </data>
   <data name="Withdrawals_Published_On" xml:space="preserve">
-    <value>published 16 May 2023</value>
+    <value>published 30 June 2024</value>
   </data>
   <data name="Withdrawals_Template_Published_On" xml:space="preserve">
-    <value>published 25 May 2024</value>
+    <value>published 30 June 2024</value>
   </data>
   <data name="Withdrawals_Template_Version" xml:space="preserve">
-    <value>Version 2.0</value>
+    <value>Version 1.0</value>
   </data>
   <data name="Withdrawals_Version" xml:space="preserve">
-    <value>Version 1.9</value>
+    <value>Version 1.0</value>
   </data>
 </root>

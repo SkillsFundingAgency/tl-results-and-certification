@@ -358,7 +358,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
             }
         }
         
-        
         /// <summary>
         ///   Looks up a localized string similar to tlevels-registrations-data-format-and-rules.xlsx.
         /// </summary>
@@ -374,6 +373,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         public static string Tlevels_Results_Data_Format_And_Rules_File_Name {
             get {
                 return ResourceManager.GetString("Tlevels_Results_Data_Format_And_Rules_File_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to tlevels-withdrawal-data-template.csv.
+        /// </summary>
+        public static string Tlevels_Withdrawal_Data_Template_File_Name {
+            get {
+                return ResourceManager.GetString("Tlevels_Withdrawal_Data_Template_File_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to tlevels-withdrawals-data-format-and-rules.xlsx.
+        /// </summary>
+        public static string Tlevels_Withdrawals_Data_Format_And_Rules_File_Name {
+            get {
+                return ResourceManager.GetString("Tlevels_Withdrawals_Data_Format_And_Rules_File_Name", resourceCulture);
             }
         }
         
