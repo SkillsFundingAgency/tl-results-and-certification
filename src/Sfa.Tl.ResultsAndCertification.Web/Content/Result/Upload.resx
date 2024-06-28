@@ -123,13 +123,13 @@
   <data name="File_Name_Length_Validation_Message" xml:space="preserve">
     <value>File name must have no more than {0} characters</value>
   </data>
-  <data name="File_Size_Kb_Text" xml:space="preserve">
-    <value>279KB</value>
-  </data>
   <data name="File_Size_Too_Large_Validation_Message" xml:space="preserve">
     <value>File size too large – must be no more than {0}MB</value>
   </data>
-  <data name="File_Type" xml:space="preserve">
+  <data name="File_Type_Csv" xml:space="preserve">
+    <value>CSV</value>
+  </data>
+  <data name="File_Type_Xlsx" xml:space="preserve">
     <value>XLSX</value>
   </data>
   <data name="Heading_Before_You_Start" xml:space="preserve">
@@ -143,6 +143,9 @@
   </data>
   <data name="Link_Tlevels_Results_Data_Format_Rules" xml:space="preserve">
     <value>Download T Levels results data format and rules ({0}, {1})</value>
+  </data>
+  <data name="Link_Tlevels_Results_Template" xml:space="preserve">
+    <value>Download T Levels results template ({0}, {1})</value>
   </data>
   <data name="List_Blank_Will_Delete_Existing" xml:space="preserve">
     <value>If a result is already recorded and a blank one is submitted in the file, the existing result will be deleted.</value>
@@ -163,22 +166,37 @@
     <value>Upload multiple results</value>
   </data>
   <data name="Para_If_You_Export_Data_From_Another_System" xml:space="preserve">
-    <value>If you export data from another system, you must check the data is in the right format. You can download a template with data formats and rules guidance to help you.</value>
+    <value>If you export data from another system, you must check the data is in the right format.</value>
   </data>
   <data name="Para_You_Can_Add_Or_Change_Registration" xml:space="preserve">
-    <value>You can add or change results for one or more learners by uploading CSV files.</value>
+    <value>You can add or change results for one or more learners by uploading a CSV file.</value>
+  </data>
+  <data name="Para_You_Can_Download_Guidance_On_Data_Format_And_Rules" xml:space="preserve">
+    <value>You can download guidance on data formats and rules to help you. Once you have added your results to the template, you can upload your file.</value>
   </data>
   <data name="Processing_Result_Entries_File_Text" xml:space="preserve">
     <value>Processing results file</value>
   </data>
-  <data name="Results_Published_On" xml:space="preserve">
-    <value>published 16 May 2023</value>
-  </data>
-  <data name="Results_Version" xml:space="preserve">
-    <value>Version 1.6</value>
-  </data>
   <data name="Select_File_To_Upload_Required_Validation_Message" xml:space="preserve">
     <value>Select a file to upload</value>
+  </data>
+  <data name="Tlevels_Results_Data_Format_Rules_File_Size_Kb" xml:space="preserve">
+    <value>290KB</value>
+  </data>
+  <data name="Tlevels_Results_Data_Format_Rules_Published_On" xml:space="preserve">
+    <value>published 16 May 2023</value>
+  </data>
+  <data name="Tlevels_Results_Data_Format_Rules_Version" xml:space="preserve">
+    <value>Version 1.6</value>
+  </data>
+  <data name="Tlevels_Results_Template_File_Size_Kb" xml:space="preserve">
+    <value>0.6KB</value>
+  </data>
+  <data name="Tlevels_Results_Template_Published_On" xml:space="preserve">
+    <value>published 16 July 2024</value>
+  </data>
+  <data name="Tlevels_Results_Template_Version" xml:space="preserve">
+    <value>Version 1.0</value>
   </data>
   <data name="Upload_File_Button_Text" xml:space="preserve">
     <value>Upload</value>

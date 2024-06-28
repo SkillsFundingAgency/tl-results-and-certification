@@ -215,5 +215,9 @@
         public const string OverallResultUnclassifiedCode = "OR6";
         public const string OverallResultXNoResultCode = "OR7";
         public const string OverallResultQpendingCode = "OR8";
+
+        // Content types
+        public const string TextCsv = "text/csv";
+        public const string TextXlsx = "text/xlsx";
     }
 }

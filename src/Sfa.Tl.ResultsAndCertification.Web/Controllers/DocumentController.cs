@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Document;
+using System.IO;
 using System.Threading.Tasks;
 using DocumentResource = Sfa.Tl.ResultsAndCertification.Web.Content.Document;
 
@@ -36,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             fileStream.Position = 0;
-            return new FileStreamResult(fileStream, "text/xlsx")
+            return new FileStreamResult(fileStream, Constants.TextXlsx)
             {
                 FileDownloadName = fileName
             };
@@ -55,7 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             fileStream.Position = 0;
-            return new FileStreamResult(fileStream, "text/csv")
+            return new FileStreamResult(fileStream, Constants.TextCsv)
             {
                 FileDownloadName = fileName
             };
@@ -74,7 +75,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             fileStream.Position = 0;
-            return new FileStreamResult(fileStream, "text/xlsx")
+            return new FileStreamResult(fileStream, Constants.TextXlsx)
             {
                 FileDownloadName = fileName
             };
@@ -93,24 +94,31 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             fileStream.Position = 0;
-            return new FileStreamResult(fileStream, "text/csv")
+            return new FileStreamResult(fileStream, Constants.TextCsv)
             {
                 FileDownloadName = fileName
             };
         }
 
-
         [HttpGet]
         [Route("tlevels-results-data-format-and-rules", Name = RouteConstants.DownloadResultsDataFormatAndRulesGuide)]
-        public async Task<IActionResult> DownloadResultsDataFormatAndRulesGuideAsync()
+        public Task<IActionResult> DownloadResultsDataFormatAndRulesGuideAsync()
+            => DownloadTechSpecFileAsync(DocumentResource.TlevelDataFormatAndRulesGuide.Tlevels_Results_Data_Format_And_Rules_File_Name, Constants.TextXlsx);
+
+        [HttpGet]
+        [Route("tlevels-results-template", Name = RouteConstants.DownloadResultsTemplate)]
+        public Task<IActionResult> DownloadResultsTemplateAsync()
+            => DownloadTechSpecFileAsync(DocumentResource.TlevelDataFormatAndRulesGuide.Tlevels_Results_Template_File_Name, Constants.TextCsv);
+
+        private async Task<IActionResult> DownloadTechSpecFileAsync(string fileName, string contentType)
         {
-            var fileName = DocumentResource.TlevelDataFormatAndRulesGuide.Tlevels_Results_Data_Format_And_Rules_File_Name;
-            var fileStream = await _documentLoader.GetTechSpecFileAsync(BlobStorageConstants.ResultsFolderName, fileName);
+            Stream fileStream = await _documentLoader.GetTechSpecFileAsync(BlobStorageConstants.ResultsFolderName, fileName);
+
             if (fileStream == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             fileStream.Position = 0;
-            return new FileStreamResult(fileStream, "text/xlsx")
+            return new FileStreamResult(fileStream, contentType)
             {
                 FileDownloadName = fileName
             };
@@ -154,7 +162,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             fileStream.Position = 0;
-            return new FileStreamResult(fileStream, "text/xlsx")
+            return new FileStreamResult(fileStream, Constants.TextXlsx)
             {
                 FileDownloadName = fileName
             };
@@ -173,7 +181,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             fileStream.Position = 0;
-            return new FileStreamResult(fileStream, "text/csv")
+            return new FileStreamResult(fileStream, Constants.TextCsv)
             {
                 FileDownloadName = fileName
             };

@@ -6,7 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentControllerTests.DownloadResultsDataFormatAndRulesGuide
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentControllerTests.DownloadResultsTemplate
 {
     public abstract class TestSetup : BaseTest<DocumentController>
     {
@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentContr
 
         public async override Task When()
         {
-            Result = await Controller.DownloadResultsDataFormatAndRulesGuideAsync();
+            Result = await Controller.DownloadResultsTemplateAsync();
         }
     }
 }
