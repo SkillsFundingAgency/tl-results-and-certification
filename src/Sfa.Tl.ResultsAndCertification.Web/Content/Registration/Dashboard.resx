@@ -127,7 +127,7 @@
     <value>Download your data as a CSV file, for registrations and pending withdrawals.</value>
   </data>
   <data name="Card_Content_Upload_Withdrawals_File" xml:space="preserve">
-    <value>Withdraw one or more learners using a CSV file</value>
+    <value>Withdraw one or more learners using a CSV file.</value>
   </data>
   <data name="Card_Content_View_And_Change_Registration_Details" xml:space="preserve">
     <value>View and change registration details, including reinstating and withdrawing learners.</value>

@@ -706,7 +706,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("upload-withdrawls-file", Name = RouteConstants.SubmitUploadWithdrawalsFile)]
+        [Route("upload-withdrawals-file", Name = RouteConstants.SubmitUploadWithdrawalsFile)]
         public async Task<IActionResult> UploadWithdrawalsFileAsync(UploadWithdrawalsRequestViewModel viewModel)
         {
             if (!ModelState.IsValid)
