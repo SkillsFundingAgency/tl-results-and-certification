@@ -41,7 +41,7 @@
         },
         "appServicePlanInstances": {
             "type": "int",
-            "minValue": 1
+            "minValue": 2
         },
         "azureWebsitesRPObjectId": {
             "type": "string"
