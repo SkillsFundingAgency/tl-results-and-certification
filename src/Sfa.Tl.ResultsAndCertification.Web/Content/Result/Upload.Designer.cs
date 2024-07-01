@@ -286,7 +286,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to published 16 July 2024.
+        ///   Looks up a localized string similar to published 30 June 2024.
         /// </summary>
         public static string Tlevels_Results_Template_Published_On {
             get {
@@ -295,7 +295,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Version 1.0.
+        ///   Looks up a localized string similar to Version 2.0.
         /// </summary>
         public static string Tlevels_Results_Template_Version {
             get {
