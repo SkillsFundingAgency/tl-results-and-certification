@@ -439,7 +439,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload multiple withdrawls.
+        ///   Looks up a localized string similar to Upload multiple withdrawals.
         /// </summary>
         public static string Upload_Withdrawls_File {
             get {

@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             {
                 ContainerName = DocumentType.Documents.ToString(),
                 BlobFileName = fileName,
-                SourceFilePath = $"{BlobStorageConstants.TechSpecFolderName}/{BlobStorageConstants.WithdrawalsFolderName}"
+                SourceFilePath = $"{BlobStorageConstants.TechSpecFolderName}/{BlobStorageConstants.RegistrationsFolderName}"
             });
 
             if (fileStream == null)

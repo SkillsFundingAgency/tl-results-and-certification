@@ -88,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Withdraw one or more learners using a CSV file.
+        ///   Looks up a localized string similar to Withdraw one or more learners using a CSV file..
         /// </summary>
         public static string Card_Content_Upload_Withdrawals_File {
             get {
