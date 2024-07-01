@@ -8,19 +8,20 @@ using Xunit;
 using Constants = Sfa.Tl.ResultsAndCertification.Common.Helpers.Constants;
 using DocumentResource = Sfa.Tl.ResultsAndCertification.Web.Content.Document;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentControllerTests.DownloadResultsDataFormatAndRulesGuide
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentControllerTests.DownloadResultsTemplate
 {
     public class When_Called_With_ValidData : TestSetup
     {
         private string _fileName;
         private string _folderName;
+
         public override void Given()
         {
             _folderName = BlobStorageConstants.ResultsFolderName;
-            _fileName = DocumentResource.TlevelDataFormatAndRulesGuide.Tlevels_Results_Data_Format_And_Rules_File_Name;
-
+            _fileName = DocumentResource.TlevelDataFormatAndRulesGuide.Tlevels_Results_Template_File_Name;
+            
             DocumentLoader.GetTechSpecFileAsync(_folderName, _fileName)
-                .Returns(new MemoryStream(Encoding.ASCII.GetBytes("Test File for assessment entries tech spec")));
+                .Returns(new MemoryStream(Encoding.ASCII.GetBytes("T-levels results template")));
         }
 
         [Fact]
@@ -33,9 +34,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentContr
         public void Then_Returns_Expected_Results()
         {
             var viewResult = Result as FileStreamResult;
+
             viewResult.Should().NotBeNull();
-            viewResult.FileDownloadName.Should().Be(DocumentResource.TlevelDataFormatAndRulesGuide.Tlevels_Results_Data_Format_And_Rules_File_Name);
-            viewResult.ContentType.Should().Be(Constants.TextXlsx);
+            viewResult.FileDownloadName.Should().Be(DocumentResource.TlevelDataFormatAndRulesGuide.Tlevels_Results_Template_File_Name);
+            viewResult.ContentType.Should().Be(Constants.TextCsv);
             viewResult.FileStream.Should().NotBeNull();
         }
     }
