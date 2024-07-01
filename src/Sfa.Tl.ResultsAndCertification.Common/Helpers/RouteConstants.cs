@@ -238,6 +238,7 @@
         public const string DownloadWithdrawalsDataFormatAndRulesGuide = "DownloadWithdrawalsDataFormatAndRulesGuide";
         public const string DownloadWithdrawalsDataTemplate = "DownloadWithdrawalsDataTemplate";
         public const string DownloadAssessmentEntriesTemplate = "DownloadAssessmentEntriesTemplate";
+        public const string DownloadResultsTemplate = "DownloadResultsTemplate";
 
         public const string TlevelDataFormatAndRulesGuide = "TlevelDataFormatAndRulesGuide";
 
