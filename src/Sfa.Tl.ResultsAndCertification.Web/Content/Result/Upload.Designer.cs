@@ -241,6 +241,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to published 30 June 2024.
+        /// </summary>
+        public static string Published_On {
+            get {
+                return ResourceManager.GetString("Published_On", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Select a file to upload.
         /// </summary>
         public static string Select_File_To_Upload_Required_Validation_Message {
@@ -259,47 +268,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to published 16 May 2023.
-        /// </summary>
-        public static string Tlevels_Results_Data_Format_Rules_Published_On {
-            get {
-                return ResourceManager.GetString("Tlevels_Results_Data_Format_Rules_Published_On", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Version 1.6.
-        /// </summary>
-        public static string Tlevels_Results_Data_Format_Rules_Version {
-            get {
-                return ResourceManager.GetString("Tlevels_Results_Data_Format_Rules_Version", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to 0.6KB.
         /// </summary>
         public static string Tlevels_Results_Template_File_Size_Kb {
             get {
                 return ResourceManager.GetString("Tlevels_Results_Template_File_Size_Kb", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to published 30 June 2024.
-        /// </summary>
-        public static string Tlevels_Results_Template_Published_On {
-            get {
-                return ResourceManager.GetString("Tlevels_Results_Template_Published_On", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Version 2.0.
-        /// </summary>
-        public static string Tlevels_Results_Template_Version {
-            get {
-                return ResourceManager.GetString("Tlevels_Results_Template_Version", resourceCulture);
             }
         }
         
@@ -327,6 +300,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         public static string Upload_Processing_Spinner_Text {
             get {
                 return ResourceManager.GetString("Upload_Processing_Spinner_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version 2.0.
+        /// </summary>
+        public static string Version {
+            get {
+                return ResourceManager.GetString("Version", resourceCulture);
             }
         }
         
