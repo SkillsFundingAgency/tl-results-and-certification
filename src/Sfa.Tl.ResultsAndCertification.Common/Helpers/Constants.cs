@@ -217,5 +217,9 @@
         public const string OverallResultQpendingCode = "OR8";
 
         public const string GCSEQualificationType = "GCSE (9 to 1)";
+
+        // Content types
+        public const string TextCsv = "text/csv";
+        public const string TextXlsx = "text/xlsx";
     }
 }

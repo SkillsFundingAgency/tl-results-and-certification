@@ -7,13 +7,11 @@ namespace Sfa.Tl.ResultsAndCertification.Models.DataExport
         [DisplayName(ProviderRegistrationExportHeader.Uln)]
         public long Uln { get; set; }
 
-        [DisplayName(ProviderRegistrationExportHeader.FirstName)]
-
-        public string Firstname { get; set; }
-
         [DisplayName(ProviderRegistrationExportHeader.LastName)]
-
         public string Lastname { get; set; }
+
+        [DisplayName(ProviderRegistrationExportHeader.FirstName)]
+        public string Firstname { get; set; }
 
         [DisplayName(ProviderRegistrationExportHeader.DateOfBirth)]
 

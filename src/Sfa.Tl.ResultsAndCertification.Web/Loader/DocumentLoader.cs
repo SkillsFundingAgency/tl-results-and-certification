@@ -35,7 +35,27 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
             if (fileStream == null)
             {
-                var blobReadError = $"No FileStream found to download bulkupload registration tech spec. Method: DownloadFileAsync(ContainerName: {DocumentType.Documents}, BlobFileName = {fileName}, SourceFilePath = {BlobStorageConstants.TechSpecFolderName}/{BlobStorageConstants.RegistrationsFolderName})";
+                var blobReadError = $"No FileStream found to download bulkupload registration tech spec. Method: DownloadFileAsync(ContainerName: {DocumentType.Documents}, BlobFileName = {fileName}, SourceFilePath = {BlobStorageConstants.TechSpecFolderName}/{BlobStorageConstants.WithdrawalsFolderName})";
+                _logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
+            }
+            return fileStream;
+        }
+
+        public async Task<Stream> GetBulkUploadWithdrawalsTechSpecFileAsync(string fileName)
+        {
+            if (string.IsNullOrWhiteSpace(fileName))
+                return null;
+
+            var fileStream = await _blobStorageService.DownloadFileAsync(new BlobStorageData
+            {
+                ContainerName = DocumentType.Documents.ToString(),
+                BlobFileName = fileName,
+                SourceFilePath = $"{BlobStorageConstants.TechSpecFolderName}/{BlobStorageConstants.WithdrawalsFolderName}"
+            });
+
+            if (fileStream == null)
+            {
+                var blobReadError = $"No FileStream found to download bulkupload registration tech spec. Method: DownloadFileAsync(ContainerName: {DocumentType.Documents}, BlobFileName = {fileName}, SourceFilePath = {BlobStorageConstants.TechSpecFolderName}/{BlobStorageConstants.WithdrawalsFolderName})";
                 _logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
             }
             return fileStream;

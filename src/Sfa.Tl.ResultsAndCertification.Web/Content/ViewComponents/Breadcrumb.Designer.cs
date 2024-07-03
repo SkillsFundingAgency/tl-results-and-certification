@@ -160,6 +160,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Learner’s ROMMs and appeals.
+        /// </summary>
+        public static string Learners_Romms_And_Appeals {
+            get {
+                return ResourceManager.GetString("Learners_Romms_And_Appeals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage learner T Level records.
         /// </summary>
         public static string Manage_Learner_TLevel_Records {
@@ -435,6 +444,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         public static string Upload_Results_File {
             get {
                 return ResourceManager.GetString("Upload_Results_File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload multiple withdrawals.
+        /// </summary>
+        public static string Upload_Withdrawls_File {
+            get {
+                return ResourceManager.GetString("Upload_Withdrawls_File", resourceCulture);
             }
         }
     }
