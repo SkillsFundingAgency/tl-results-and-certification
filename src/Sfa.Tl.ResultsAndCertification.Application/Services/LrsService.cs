@@ -135,7 +135,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             foreach (var learnerEvent in learnerRecord.LearningEventDetails)
             {
                 var qualification = qualifications.FirstOrDefault(q => q.IsActive && q.Code.Equals(learnerEvent.QualificationCode, StringComparison.InvariantCultureIgnoreCase));
-                var qualificationGrade = qualification?.QualificationType?.QualificationGrades?.FirstOrDefault(g => g.IsActive && g.Grade.Equals(learnerEvent.Grade, StringComparison.InvariantCultureIgnoreCase));
+
+                var qualificationGrade = qualification?.QualificationType?.Name == Constants.GCSEQualificationType && learnerEvent.Grade.Length > 1
+                    ? qualification?.QualificationType?.QualificationGrades?.FirstOrDefault(g => g.IsActive && g.Grade.Equals(learnerEvent.Grade.Remove(learnerEvent.Grade.Length - 1), StringComparison.InvariantCultureIgnoreCase))
+                    : qualification?.QualificationType?.QualificationGrades?.FirstOrDefault(g => g.IsActive && g.Grade.Equals(learnerEvent.Grade, StringComparison.InvariantCultureIgnoreCase));
+
 
                 if (qualification != null && qualificationGrade != null)
                 {
@@ -148,7 +152,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     learnerEvent.IsMathsSubject = qualification.TlLookup?.Code.Equals("Math", StringComparison.InvariantCultureIgnoreCase) ?? false;
                 }
             }
-        }        
+        }
 
         private static TqRegistrationProfile ProcessProfileAndQualificationsAchieved(List<Qualification> qualifications, LrsLearnerRecordDetails learnerRecord, TqRegistrationProfile profile)
         {
@@ -175,7 +179,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                 foreach (var learnerLearningEvent in learnerLearningEvents)
                 {
-                    var existingQualificationAchieved = profile.QualificationAchieved.FirstOrDefault(q => q.QualificationId == learnerLearningEvent.QualificationId);
+                    var existingQualificationAchieved = profile.QualificationAchieved.FirstOrDefault(q => q.QualificationId == learnerLearningEvent.QualificationId && q.IsAchieved);
 
                     if (existingQualificationAchieved != null)
                     {
@@ -194,7 +198,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                 existingQualificationAchieved.ModifiedBy = learnerRecord.PerformedBy;
                                 existingQualificationAchieved.ModifiedOn = DateTime.UtcNow;
                             }
-                            
+
                             isQualificationAchievedChanged = true;
                         }
                     }
@@ -225,13 +229,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     {
                         profile.EnglishStatus = learnerLearningEvents.Any(e => e.IsEnglishSubject && e.IsAchieved) ? SubjectStatus.AchievedByLrs : SubjectStatus.NotAchievedByLrs;
                     }
-                                        
+
                     profile.ModifiedOn = DateTime.UtcNow;
                     profile.ModifiedBy = learnerRecord.PerformedBy;
                     isProfileChanged = true;
                 }
             }
-            
+
             return isProfileChanged ? profile : null;
         }
 
