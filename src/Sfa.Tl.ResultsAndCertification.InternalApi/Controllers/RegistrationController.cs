@@ -15,11 +15,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
     {
         private readonly IRegistrationService _registrationService;
         private readonly IBulkProcessLoader _bulkRegistrationProcess;
+        private readonly IBulkWithdrawalLoader _bulkWithdrawalProcess;
 
-        public RegistrationController(IRegistrationService registrationService, IBulkProcessLoader bulkRegistrationProcess)
+        public RegistrationController(IRegistrationService registrationService, IBulkProcessLoader bulkRegistrationProcess, IBulkWithdrawalLoader bulkWithdrawalProcess)
         {
             _registrationService = registrationService;
             _bulkRegistrationProcess = bulkRegistrationProcess;
+            _bulkWithdrawalProcess = bulkWithdrawalProcess;
         }
 
         [HttpPost]
@@ -27,6 +29,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         public async Task<BulkProcessResponse> ProcessBulkRegistrationsAsync(BulkProcessRequest request)
         {
             return await _bulkRegistrationProcess.ProcessAsync(request);
+        }
+
+        [HttpPost]
+        [Route("ProcessBulkWithdrawals")]
+        public async Task<BulkProcessResponse> ProcessBulkWithdrawalsAsync(BulkProcessRequest request)
+        {
+            return await _bulkWithdrawalProcess.ProcessAsync(request);
         }
 
         [HttpPost]

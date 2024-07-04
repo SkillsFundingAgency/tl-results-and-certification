@@ -6,6 +6,7 @@
         Registrations = 1,
         Assessments = 2,
         Results = 3,
-        PendingWithdrawals = 4
+        PendingWithdrawals = 4,
+        ProviderRegistrations = 5
     }
 }

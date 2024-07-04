@@ -358,6 +358,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download learner registrations.
+        /// </summary>
+        public static string Tile_Heading_Download_Learner_Registrations {
+            get {
+                return ResourceManager.GetString("Tile_Heading_Download_Learner_Registrations", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download learner results.
         /// </summary>
         public static string Tile_Heading_Download_Learner_Results {
@@ -372,6 +381,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         public static string Tile_Heading_Upload_Industry_Placement_Data {
             get {
                 return ResourceManager.GetString("Tile_Heading_Upload_Industry_Placement_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download a CSV file of your learners’ registration data, by start year..
+        /// </summary>
+        public static string Tile_Para_Download_Csv_Learners_Registration_Data {
+            get {
+                return ResourceManager.GetString("Tile_Para_Download_Csv_Learners_Registration_Data", resourceCulture);
             }
         }
         

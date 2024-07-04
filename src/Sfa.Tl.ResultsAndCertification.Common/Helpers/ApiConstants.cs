@@ -23,6 +23,7 @@
 
         // Registrations Related Uri's
         public const string ProcessBulkRegistrationsUri = "/api/registration/ProcessBulkRegistrations";
+        public const string ProcessBulkWithdrawalsUri = "/api/registration/ProcessBulkWithdrawals";
         public const string AddRegistrationUri = "/api/registration/AddRegistration";
         public const string FindUlnUri = "/api/registration/FindUln/{0}/{1}";
         public const string GetRegistrationDetailsUri = "/api/registration/GetRegistrationDetails/{0}/{1}/{2}";
@@ -160,5 +161,10 @@
         // Search registration
         public const string GetSearchRegistrationFiltersUri = "/api/searchregistration/GetSearchRegistrationFilters";
         public const string SearchRegistrationDetailsUri = "/api/searchregistration/SearchRegistrationDetails";
+
+        // Download registrations
+        public const string GetAvailableStartYearsUri = "/api/providerregistrations/GetAvailableStartYears";
+        public const string GetRegistrationsUri = "/api/providerregistrations/GetRegistrations";
+
     }
 }

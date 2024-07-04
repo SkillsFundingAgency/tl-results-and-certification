@@ -341,11 +341,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to tlevels-industry-placement-data-format-and-rules.xlsx.
+        ///   Looks up a localized string similar to tlevels-assessment-entry-template.csv.
         /// </summary>
-        public static string Tlevels_Industry_Placement_Data_Format_And_Rules_File_Name {
+        public static string Tlevels_Assessment_Entry_Data_Template_File_Name {
             get {
-                return ResourceManager.GetString("Tlevels_Industry_Placement_Data_Format_And_Rules_File_Name", resourceCulture);
+                return ResourceManager.GetString("Tlevels_Assessment_Entry_Data_Template_File_Name", resourceCulture);
             }
         }
         
@@ -373,6 +373,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         public static string Tlevels_Results_Data_Format_And_Rules_File_Name {
             get {
                 return ResourceManager.GetString("Tlevels_Results_Data_Format_And_Rules_File_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to tlevels-results-template.csv.
+        /// </summary>
+        public static string Tlevels_Results_Template_File_Name {
+            get {
+                return ResourceManager.GetString("Tlevels_Results_Template_File_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to tlevels-withdrawal-data-template.csv.
+        /// </summary>
+        public static string Tlevels_Withdrawal_Data_Template_File_Name {
+            get {
+                return ResourceManager.GetString("Tlevels_Withdrawal_Data_Template_File_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to tlevels-withdrawals-data-format-and-rules.xlsx.
+        /// </summary>
+        public static string Tlevels_Withdrawals_Data_Format_And_Rules_File_Name {
+            get {
+                return ResourceManager.GetString("Tlevels_Withdrawals_Data_Format_And_Rules_File_Name", resourceCulture);
             }
         }
         

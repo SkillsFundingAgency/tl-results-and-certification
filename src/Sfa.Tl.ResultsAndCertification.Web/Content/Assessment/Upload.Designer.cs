@@ -61,7 +61,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to published 16 May 2023.
+        ///   Looks up a localized string similar to published 20 June 2024.
+        /// </summary>
+        public static string Assessments_Entry_Published_On {
+            get {
+                return ResourceManager.GetString("Assessments_Entry_Published_On", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version 2.0.
+        /// </summary>
+        public static string Assessments_Entry_Version {
+            get {
+                return ResourceManager.GetString("Assessments_Entry_Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to published 20 June 2024.
         /// </summary>
         public static string Assessments_Published_On {
             get {
@@ -70,11 +88,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Version 1.8.
+        ///   Looks up a localized string similar to Version 2.0.
         /// </summary>
         public static string Assessments_Version {
             get {
                 return ResourceManager.GetString("Assessments_Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 1KB.
+        /// </summary>
+        public static string CSV_File_Size_Kb_Text {
+            get {
+                return ResourceManager.GetString("CSV_File_Size_Kb_Text", resourceCulture);
             }
         }
         
@@ -124,6 +151,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CSV.
+        /// </summary>
+        public static string File_Type_CSV {
+            get {
+                return ResourceManager.GetString("File_Type_CSV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Before you start.
         /// </summary>
         public static string Heading_Before_You_Start {
@@ -156,6 +192,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         public static string Link_Tlevels_Assessment_Entry_Data_Format_Rules {
             get {
                 return ResourceManager.GetString("Link_Tlevels_Assessment_Entry_Data_Format_Rules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download T Levels assessment entry template ({0}, {1}).
+        /// </summary>
+        public static string Link_Tlevels_Assessment_Entry_Template {
+            get {
+                return ResourceManager.GetString("Link_Tlevels_Assessment_Entry_Template", resourceCulture);
             }
         }
         
@@ -214,7 +259,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If you export data from another system, you must check the data is in the right format. You can download a template with data formats and rules guidance to help you..
+        ///   Looks up a localized string similar to If you export data from another system, you must check the data is in the right format. .
         /// </summary>
         public static string Para_If_You_Export_Data_From_Another_System {
             get {
@@ -223,7 +268,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You can add or change results for one or more learners by uploading CSV files..
+        ///   Looks up a localized string similar to You can download guidance on data formats and rules to help you. Once you have added your assessment entries to the template, you can upload your file..
+        /// </summary>
+        public static string Para_If_You_Export_Data_From_Another_System_Guidance {
+            get {
+                return ResourceManager.GetString("Para_If_You_Export_Data_From_Another_System_Guidance", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can add or change assessment entries for one or more learners by uploading a CSV file.
         /// </summary>
         public static string Para_You_Can_Add_Or_Change_Registration {
             get {

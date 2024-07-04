@@ -216,11 +216,17 @@
   <data name="Text_Tlevel_Results_Certificates_Soa" xml:space="preserve">
     <value>This service provides T Level results, certificates and statements of achievement for your learners.</value>
   </data>
+  <data name="Tile_Heading_Download_Learner_Registrations" xml:space="preserve">
+    <value>Download learner registrations</value>
+  </data>
   <data name="Tile_Heading_Download_Learner_Results" xml:space="preserve">
     <value>Download learner results</value>
   </data>
   <data name="Tile_Heading_Upload_Industry_Placement_Data" xml:space="preserve">
     <value>Upload industry placement data</value>
+  </data>
+  <data name="Tile_Para_Download_Csv_Learners_Registration_Data" xml:space="preserve">
+    <value>Download a CSV file of your learners’ registration data, by start year.</value>
   </data>
   <data name="Tile_Para_Download_Results_For_Active_Learners" xml:space="preserve">
     <value>Download results for active learners in their final year of their T Level.</value>
