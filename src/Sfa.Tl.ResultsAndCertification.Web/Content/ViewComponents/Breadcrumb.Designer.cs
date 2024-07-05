@@ -97,6 +97,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download registrations data.
+        /// </summary>
+        public static string Download_Registrations_Data {
+            get {
+                return ResourceManager.GetString("Download_Registrations_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download registrations data for {0}.
+        /// </summary>
+        public static string Download_Registrations_Data_For {
+            get {
+                return ResourceManager.GetString("Download_Registrations_Data_For", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string Home {
@@ -138,6 +156,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         public static string Learners_Results {
             get {
                 return ResourceManager.GetString("Learners_Results", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Learner’s ROMMs and appeals.
+        /// </summary>
+        public static string Learners_Romms_And_Appeals {
+            get {
+                return ResourceManager.GetString("Learners_Romms_And_Appeals", resourceCulture);
             }
         }
         
@@ -417,6 +444,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         public static string Upload_Results_File {
             get {
                 return ResourceManager.GetString("Upload_Results_File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload multiple withdrawals.
+        /// </summary>
+        public static string Upload_Withdrawls_File {
+            get {
+                return ResourceManager.GetString("Upload_Withdrawls_File", resourceCulture);
             }
         }
     }

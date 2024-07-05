@@ -42,6 +42,9 @@
             </form>
             <h2 class="govuk-heading-m">@Upload.Heading_Before_You_Start</h2>
             <p class="govuk-body">@Upload.Para_If_You_Export_Data_From_Another_System</p>
+            <p class="govuk-body">@Upload.Para_If_You_Export_Data_From_Another_System_Guidance</p>
+
+
 
             <section class="gem-c-attachment">
                 <div class="gem-c-attachment__thumbnail">
@@ -57,6 +60,22 @@
                     </a>
                 </h3>
                 <p class="govuk-body-s">@Upload.Assessments_Version, @Upload.Assessments_Published_On</p>
+            </section>
+
+            <section class="gem-c-attachment">
+                <div class="gem-c-attachment__thumbnail">
+                    <a class="govuk-link" target="_self" tabindex="-1" aria-hidden="true" asp-route="DownloadAssessmentEntriesTemplate">
+                        <svg class="gem-c-attachment__thumbnail-image" version="1.1" viewBox="0 0 99 140" width="99" height="140" aria-hidden="true">
+                            <path d="M12 12h75v27H12zM12 59h9v9h-9zM12 77h9v9h-9zM12 95h9v9h-9zM12 113h9v9h-9zM30 59h57v9H30zM30 77h39v9H30zM30 95h57v9H30zM30 113h48v9H30z" stroke-width="0"></path>
+                        </svg>
+                    </a>
+                </div>
+                <h3 class="govuk-heading-s">
+                    <a class="govuk-link" target="_self" asp-route="DownloadAssessmentEntriesTemplate">
+                        @string.Format(@Upload.Link_Tlevels_Assessment_Entry_Template, @Upload.File_Type_CSV, @Upload.CSV_File_Size_Kb_Text)
+                    </a>
+                </h3>
+                <p class="govuk-body-s">@Upload.Assessments_Entry_Version, @Upload.Assessments_Entry_Published_On</p>
             </section>
 
             <ul class="govuk-list govuk-list--bullet">

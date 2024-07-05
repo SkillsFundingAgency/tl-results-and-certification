@@ -130,6 +130,12 @@
     },
     "containerLifecyclePolicyRules": {
       "type": "array"
+    },
+    "configStorageAccountName": {
+      "type": "string"
+    },
+    "ipSecurityRestrictions": {
+      "type": "array"
     }
   },
   "variables": {
@@ -326,6 +332,12 @@
           },
           "certificateThumbprint": {
             "value": "[if(greater(length(parameters('uiCustomHostname')), 0), reference(concat('ui-app-service-certificate','-', parameters('environmentNameAbbreviation')), '2018-11-01').outputs.certificateThumbprint.value, '')]"
+          },
+          "ipSecurityRestrictions": {
+            "value": "[parameters('ipSecurityRestrictions')]"
+          },
+          "ipSecurityRestrictionsDefaultAction": {
+            "value": "Deny"
           }
         }
       },
@@ -423,6 +435,9 @@
           },
           "certificateThumbprint": {
             "value": "[if(greater(length(parameters('internalApiCustomHostname')), 0), reference(concat('internal-api-app-service-certificate','-',parameters('environmentNameAbbreviation')), '2018-11-01').outputs.certificateThumbprint.value, '')]"
+          },
+          "ipSecurityRestrictionsDefaultAction": {
+            "value": "Allow"
           }
         }
       },
@@ -740,27 +755,121 @@
         }
       }
     },
-{
-  "apiVersion": "2022-09-01",
-  "name": "[concat('storage-account-lifecycle-policy','-', parameters('environmentNameAbbreviation'))]",
-  "resourceGroup": "[resourceGroup().name]",
-  "type": "Microsoft.Resources/deployments",
-  "properties": {
-    "mode": "Incremental",
-    "templateLink": {
-      "uri": "[concat(variables('deploymentUrlBase'),'storage-management-policy.json')]",
-      "contentVersion": "1.0.0.0"
+    {
+      "apiVersion": "2022-09-01",
+      "name": "[concat('storage-account-lifecycle-policy','-', parameters('environmentNameAbbreviation'))]",
+      "resourceGroup": "[resourceGroup().name]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'),'storage-management-policy.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "storageAccountName": {
+            "value": "[variables('storageAccountName')]"
+          },
+          "policyRules": {
+            "value": "[parameters('containerLifecyclePolicyRules')]"
+          }
+        }
+      }
     },
-    "parameters": {
-      "storageAccountName": {
-        "value": "[variables('storageAccountName')]"
-      },
-      "policyRules": {
-        "value": "[parameters('containerLifecyclePolicyRules')]"
+    {
+      "apiVersion": "2022-09-01",
+      "name": "[concat('internal-api-role-assignment-storage-account','-', parameters('environmentNameAbbreviation'))]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'),'/role-assignments/role-assignment-storage-account.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "principalId": {
+            "value": "[reference(concat('internal-api-app-service','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]"
+          },
+          "assignmentType": {
+            "value": "StorageBlobDataContributor"
+          },
+          "resourceName": {
+            "value": "[variables('storageAccountName')]"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2022-09-01",
+      "name": "[concat('function-app-role-assignment-storage-account','-', parameters('environmentNameAbbreviation'))]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'),'/role-assignments/role-assignment-storage-account.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "principalId": {
+            "value": "[reference(concat('function-app','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]"
+          },
+          "assignmentType": {
+            "value": "StorageBlobDataContributor"
+          },
+          "resourceName": {
+            "value": "[variables('storageAccountName')]"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2022-09-01",
+      "name": "[concat('internal-api-role-assignment-config-storage-account','-', parameters('environmentNameAbbreviation'))]",
+      "resourceGroup": "[parameters('sharedEnvResourceGroup')]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'),'/role-assignments/role-assignment-storage-account.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "principalId": {
+            "value": "[reference(concat('internal-api-app-service','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]"
+          },
+          "assignmentType": {
+            "value": "StorageTableDataReader"
+          },
+          "resourceName": {
+            "value": "[parameters('configStorageAccountName')]"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2022-09-01",
+      "name": "[concat('function-app-role-assignment-config-storage-account','-', parameters('environmentNameAbbreviation'))]",
+      "resourceGroup": "[parameters('sharedEnvResourceGroup')]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'),'/role-assignments/role-assignment-storage-account.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "principalId": {
+            "value": "[reference(concat('function-app','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]"
+          },
+          "assignmentType": {
+            "value": "StorageTableDataReader"
+          },
+          "resourceName": {
+            "value": "[parameters('configStorageAccountName')]"
+          }
+        }
       }
     }
-  }
-}
   ],
   "outputs": {
     "sqlDatabaseName": {
@@ -786,6 +895,14 @@
     "BlobStorageConnectionString": {
       "type": "string",
       "value": "[reference(concat('storage-account','-', parameters('environmentNameAbbreviation'))).outputs.storageConnectionStringKey2.value]"
+    },
+    "internalApiManagedServiceIdentityId": {
+      "type": "string",
+      "value": "[reference(concat('internal-api-app-service','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]"
+    },
+    "functionAppManagedServiceIdentityId": {
+      "type": "string",
+      "value": "[reference(concat('function-app','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]"
     }
   }
 }

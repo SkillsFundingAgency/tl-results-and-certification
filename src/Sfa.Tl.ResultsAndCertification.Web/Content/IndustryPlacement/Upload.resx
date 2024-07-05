@@ -144,8 +144,11 @@
   <data name="Js_Disabled_Upload_File_Help" xml:space="preserve">
     <value>JavaScript is disabled so you will not see the upload progress icon after you press Submit. Processing the file can take up to 10 seconds depending on the file size.</value>
   </data>
-  <data name="Link_Learner_Data_Format_Rules_Guidance_Template" xml:space="preserve">
-    <value>learner data format and rules guidance template</value>
+  <data name="Link_Name_Tlevels_Data_Format_And_Rules_For_Providers" xml:space="preserve">
+    <value>T levels data format and rules for Providers</value>
+  </data>
+  <data name="Link_Tlevels_Data_Format_And_Rules_For_Providers" xml:space="preserve">
+    <value>https://support.tlevels.gov.uk/hc/en-gb/articles/11509479311634-T-Levels-data-format-and-rules-for-Providers</value>
   </data>
   <data name="Must_Be_Csv_Validation_Message" xml:space="preserve">
     <value>The selected file must be a CSV</value>
@@ -178,6 +181,6 @@
     <value>Warning</value>
   </data>
   <data name="Your_File_Must_Include_Specific_Column_Names" xml:space="preserve">
-    <value>Your file must include the specific column names provided in the </value>
+    <value>Your file must include the specific column names provided in the guidance on </value>
   </data>
 </root>

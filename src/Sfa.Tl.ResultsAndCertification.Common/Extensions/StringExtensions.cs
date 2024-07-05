@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
 {
@@ -110,5 +111,11 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
 
             return value.GetHashCode();
         }
+
+        public static string ToDoubleQuotesWrappedString(this string value)
+            => "\"" + value + "\"";
+
+        public static string ToTripleQuotesWrappedString(this string value)
+            => $"\"\"\"{value}\"\"\"";
     }
 }

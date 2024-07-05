@@ -129,6 +129,12 @@
   <data name="Contact" xml:space="preserve">
     <value>Contact us</value>
   </data>
+  <data name="Download_Registrations_Data" xml:space="preserve">
+    <value>Download registrations data</value>
+  </data>
+  <data name="Download_Registrations_Data_For" xml:space="preserve">
+    <value>Download registrations data for {0}</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
   </data>
@@ -140,6 +146,9 @@
   </data>
   <data name="Learners_Results" xml:space="preserve">
     <value>Learner's results</value>
+  </data>
+  <data name="Learners_Romms_And_Appeals" xml:space="preserve">
+    <value>Learner’s ROMMs and appeals</value>
   </data>
   <data name="Learner_TLevel_Record" xml:space="preserve">
     <value>Learner T Level record</value>
@@ -236,5 +245,8 @@
   </data>
   <data name="Upload_Results_File" xml:space="preserve">
     <value>Upload multiple results</value>
+  </data>
+  <data name="Upload_Withdrawls_File" xml:space="preserve">
+    <value>Upload multiple withdrawals</value>
   </data>
 </root>

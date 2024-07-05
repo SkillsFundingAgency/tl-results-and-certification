@@ -5,6 +5,7 @@ parameters:
     type: string
   - name: dependencies
     type: object
+    default: []
   - name: environmentName
     type: string
   - name: environmentId
@@ -15,6 +16,9 @@ parameters:
     type: string
   - name: applicationName
     type: string
+  - name: variableTemplates
+    type: object  
+
 stages:
   - stage: Deploy_${{parameters.environmentId}}
     dependsOn:
@@ -32,6 +36,8 @@ stages:
         value: ${{ parameters.environmentName }}
       - name: environmentTagName
         value: ${{parameters.environmentTagName}}
+      - '${{ each variableTemplate in parameters.variableTemplates }}':
+        - template: '${{variableTemplate}}'       
 
     displayName: "${{parameters.environmentName}} [${{parameters.environmentId}}] deployment"
     jobs:

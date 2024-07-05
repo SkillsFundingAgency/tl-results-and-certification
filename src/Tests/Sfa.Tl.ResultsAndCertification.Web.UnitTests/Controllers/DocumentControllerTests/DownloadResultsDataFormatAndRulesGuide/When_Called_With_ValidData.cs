@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using System.IO;
 using System.Text;
 using Xunit;
+using Constants = Sfa.Tl.ResultsAndCertification.Common.Helpers.Constants;
 using DocumentResource = Sfa.Tl.ResultsAndCertification.Web.Content.Document;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentControllerTests.DownloadResultsDataFormatAndRulesGuide
@@ -17,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentContr
         {
             _folderName = BlobStorageConstants.ResultsFolderName;
             _fileName = DocumentResource.TlevelDataFormatAndRulesGuide.Tlevels_Results_Data_Format_And_Rules_File_Name;
-            
+
             DocumentLoader.GetTechSpecFileAsync(_folderName, _fileName)
                 .Returns(new MemoryStream(Encoding.ASCII.GetBytes("Test File for assessment entries tech spec")));
         }
@@ -34,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentContr
             var viewResult = Result as FileStreamResult;
             viewResult.Should().NotBeNull();
             viewResult.FileDownloadName.Should().Be(DocumentResource.TlevelDataFormatAndRulesGuide.Tlevels_Results_Data_Format_And_Rules_File_Name);
-            viewResult.ContentType.Should().Be("text/xlsx");
+            viewResult.ContentType.Should().Be(Constants.TextXlsx);
             viewResult.FileStream.Should().NotBeNull();
         }
     }

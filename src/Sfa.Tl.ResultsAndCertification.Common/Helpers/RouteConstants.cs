@@ -61,6 +61,12 @@
         public const string RegistrationsUploadUnsuccessful = "RegistrationsUploadUnsuccessful";
         public const string ProblemWithRegistrationsUpload = "ProblemWithRegistrationsUpload";
         public const string DownloadRegistrationErrors = "DownloadRegistrationErrors";
+        public const string UploadWithdrawalsFile = "UploadWithdrawalsFile";
+        public const string SubmitUploadWithdrawalsFile = "SubmitUploadWithdrawalsFile";
+        public const string WithdrawalsUploadSuccessful = "WithdrawalsUploadSuccessful";
+        public const string WithdrawalsUploadUnsuccessful = "WithdrawalsUploadUnsuccessful";
+        public const string ProblemWithWithdrawalsUpload = "ProblemWithWithdrawalsUpload";
+        public const string DownloadWithdrawalErrors = "DownloadWithdrawalErrors";
 
         // Add Registration
         public const string AddRegistration = "AddRegistration";
@@ -229,6 +235,10 @@
         public const string DownloadAssessmentEntriesDataFormatAndRulesGuide = "DownloadAssessmentEntriesDataFormatAndRulesGuide";
         public const string DownloadResultsDataFormatAndRulesGuide = "DownloadResultsDataFormatAndRulesGuide";
         public const string DownloadIndustryPlacementDataFormatAndRulesGuide = "DownloadIndustryPlacementDataFormatAndRulesGuide";
+        public const string DownloadWithdrawalsDataFormatAndRulesGuide = "DownloadWithdrawalsDataFormatAndRulesGuide";
+        public const string DownloadWithdrawalsDataTemplate = "DownloadWithdrawalsDataTemplate";
+        public const string DownloadAssessmentEntriesTemplate = "DownloadAssessmentEntriesTemplate";
+        public const string DownloadResultsTemplate = "DownloadResultsTemplate";
 
         public const string TlevelDataFormatAndRulesGuide = "TlevelDataFormatAndRulesGuide";
 
@@ -568,6 +578,14 @@
         public const string SubmitSearchRegistrationClearKey = "SubmitSearchRegistrationClearKey";
         public const string SubmitSearchRegistrationFilters = "SubmitSearchRegistrationFilters";
         public const string SubmitSearchRegistrationClearFilters = "SubmitSearchRegistrationClearFilters";
+
+        #endregion
+
+        #region Provider registrations
+
+        public const string DownloadRegistrationsData = "DownloadRegistrationsData";
+        public const string DownloadRegistrationsDataFor = "DownloadRegistrationsDataFor";
+        public const string DownloadRegistrationsDataForLink = "DownloadRegistrationsDataForLink";
 
         #endregion
     }
