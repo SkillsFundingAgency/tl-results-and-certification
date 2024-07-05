@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Help;
+using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -72,7 +73,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("service-unavailable", Name = RouteConstants.ServiceUnavailable)]
         public IActionResult ServiceUnavailable()
         {
-            var serviceAvailableFrom = _configuration.FreezePeriodEndDate.AddSeconds(1).ToLocalTime();
+            var serviceAvailableFrom = _configuration.FreezePeriodEndDate.AddSeconds(1);
+
+            TimeZoneInfo gmtZone = TimeZoneInfo.FindSystemTimeZoneById("GMT Standard Time");
+            serviceAvailableFrom = TimeZoneInfo.ConvertTimeFromUtc(serviceAvailableFrom, gmtZone);
 
             var viewModel = new ServiceUnavailableViewModel
             {
