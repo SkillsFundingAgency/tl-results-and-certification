@@ -152,6 +152,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<IAdminDashboardRepository, AdminDashboardRepository>();
             services.AddTransient<IAdminChangeLogRepository, AdminChangeLogRepository>();
             services.AddTransient<ISearchRegistrationRepository, SearchRegistrationRepository>();
+            services.AddTransient<IProviderRegistrationsRepository, ProviderRegistrationsRepository>();
             services.AddTransient(typeof(IRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IRepositoryFactory, RepositoryFactory>();
 
@@ -169,10 +170,15 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             // Bulk Registrations
             services.AddTransient<IDataParser<RegistrationCsvRecordResponse>, RegistrationParser>();
             services.AddTransient<IValidator<RegistrationCsvRecordRequest>, RegistrationValidator>();
+            services.AddTransient<IDataParser<WithdrawalCsvRecordResponse>, WithdrawalParser>();
+            services.AddTransient<IValidator<WithdrawalCsvRecordRequest>, WithdrawalValidator>();
             services.AddTransient<ICsvHelperService<RegistrationCsvRecordRequest, CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse>, CsvHelperService<RegistrationCsvRecordRequest, CsvResponseModel<RegistrationCsvRecordResponse>, RegistrationCsvRecordResponse>>();
+            services.AddTransient<ICsvHelperService<WithdrawalCsvRecordRequest, CsvResponseModel<WithdrawalCsvRecordResponse>, WithdrawalCsvRecordResponse>, CsvHelperService<WithdrawalCsvRecordRequest, CsvResponseModel<WithdrawalCsvRecordResponse>, WithdrawalCsvRecordResponse>>();
             services.AddTransient<IBulkBaseLoader, BulkBaseLoader>();
             services.AddTransient<IBulkProcessLoader, BulkRegistrationLoader>();
+            services.AddTransient<IBulkWithdrawalLoader, BulkWithdrawalLoader>();
             services.AddTransient<IRegistrationService, RegistrationService>();
+            services.AddTransient<IWithdrawalService, WithdrawalService>();
 
             // Bulk Assessments
             services.AddTransient<IDataParser<AssessmentCsvRecordResponse>, AssessmentParser>();
@@ -198,6 +204,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<IAdminChangeLogService, AdminChangeLogService>();
             services.AddTransient<IAdminPostResultsService, AdminPostResultsService>();
             services.AddTransient<ISearchRegistrationService, SearchRegistrationService>();
+            services.AddTransient<IProviderRegistrationsService, ProviderRegistrationsService>();
 
             // DataExports 
             services.AddTransient<IDataExportLoader, DataExportLoader>();

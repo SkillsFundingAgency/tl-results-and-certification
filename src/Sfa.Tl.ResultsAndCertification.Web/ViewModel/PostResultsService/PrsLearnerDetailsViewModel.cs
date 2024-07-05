@@ -47,7 +47,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
                             DisplayName = BreadcrumbContent.Search_For_Romm_Or_An_Appeal_Entry,
                             RouteName = SearchRegistrationRouteName,
                             RouteAttributes =  SearchRegistrationRouteAttributes
-                        }
+                        },
+                        new() { DisplayName = BreadcrumbContent.Learners_Romms_And_Appeals }
                     }
                 };
             }

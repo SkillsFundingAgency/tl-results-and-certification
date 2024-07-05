@@ -109,7 +109,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Result.Manual
                             DisplayName = BreadcrumbContent.Search_For_Result_Entry,
                             RouteName = SearchRegistrationRouteName,
                             RouteAttributes =  SearchRegistrationRouteAttributes
-                        }
+                        },
+                        new() { DisplayName = BreadcrumbContent.Learners_Results }
                     }
                 };
             }

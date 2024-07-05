@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Document;
+using System.IO;
 using System.Threading.Tasks;
 using DocumentResource = Sfa.Tl.ResultsAndCertification.Web.Content.Document;
 
@@ -36,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             fileStream.Position = 0;
-            return new FileStreamResult(fileStream, "text/xlsx")
+            return new FileStreamResult(fileStream, Constants.TextXlsx)
             {
                 FileDownloadName = fileName
             };
@@ -55,7 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             fileStream.Position = 0;
-            return new FileStreamResult(fileStream, "text/csv")
+            return new FileStreamResult(fileStream, Constants.TextCsv)
             {
                 FileDownloadName = fileName
             };
@@ -74,7 +75,26 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             fileStream.Position = 0;
-            return new FileStreamResult(fileStream, "text/xlsx")
+            return new FileStreamResult(fileStream, Constants.TextXlsx)
+            {
+                FileDownloadName = fileName
+            };
+        }
+
+        [HttpGet]
+        [Route("tlevels-assessment-entries-template", Name = RouteConstants.DownloadAssessmentEntriesTemplate)]
+        public async Task<IActionResult> DownloadAssessmentEntriesTemplateAsync()
+        {
+            var fileName = DocumentResource.TlevelDataFormatAndRulesGuide.Tlevels_Assessment_Entry_Data_Template_File_Name;
+            var fileStream = await _documentLoader.GetBulkUploadAssessmentEntriesTechSpecFileAsync(fileName);
+            if (fileStream == null)
+            {
+                _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download bulk upload assessment entries tech spec document. Method: GetBulkUploadAssessmentEntriesTechSpecFileAsync(FileName: {fileName})");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            fileStream.Position = 0;
+            return new FileStreamResult(fileStream, Constants.TextCsv)
             {
                 FileDownloadName = fileName
             };
@@ -82,31 +102,23 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("tlevels-results-data-format-and-rules", Name = RouteConstants.DownloadResultsDataFormatAndRulesGuide)]
-        public async Task<IActionResult> DownloadResultsDataFormatAndRulesGuideAsync()
-        {
-            var fileName = DocumentResource.TlevelDataFormatAndRulesGuide.Tlevels_Results_Data_Format_And_Rules_File_Name;
-            var fileStream = await _documentLoader.GetTechSpecFileAsync(BlobStorageConstants.ResultsFolderName, fileName);
-            if (fileStream == null)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            fileStream.Position = 0;
-            return new FileStreamResult(fileStream, "text/xlsx")
-            {
-                FileDownloadName = fileName
-            };
-        }
+        public Task<IActionResult> DownloadResultsDataFormatAndRulesGuideAsync()
+            => DownloadTechSpecFileAsync(DocumentResource.TlevelDataFormatAndRulesGuide.Tlevels_Results_Data_Format_And_Rules_File_Name, Constants.TextXlsx);
 
         [HttpGet]
-        [Route("tlevels-industry-placement-data-format-and-rules", Name = RouteConstants.DownloadIndustryPlacementDataFormatAndRulesGuide)]
-        public async Task<IActionResult> DownloadIndustryPlacementDataFormatAndRulesGuideAsync()
+        [Route("tlevels-results-template", Name = RouteConstants.DownloadResultsTemplate)]
+        public Task<IActionResult> DownloadResultsTemplateAsync()
+            => DownloadTechSpecFileAsync(DocumentResource.TlevelDataFormatAndRulesGuide.Tlevels_Results_Template_File_Name, Constants.TextCsv);
+
+        private async Task<IActionResult> DownloadTechSpecFileAsync(string fileName, string contentType)
         {
-            var fileName = DocumentResource.TlevelDataFormatAndRulesGuide.Tlevels_Industry_Placement_Data_Format_And_Rules_File_Name;
-            var fileStream = await _documentLoader.GetTechSpecFileAsync(BlobStorageConstants.IndustryPlacementsFolderName, fileName);
+            Stream fileStream = await _documentLoader.GetTechSpecFileAsync(BlobStorageConstants.ResultsFolderName, fileName);
+
             if (fileStream == null)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             fileStream.Position = 0;
-            return new FileStreamResult(fileStream, "text/xlsx")
+            return new FileStreamResult(fileStream, contentType)
             {
                 FileDownloadName = fileName
             };
@@ -134,6 +146,45 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             };
 
             return View(viewModel);
+        }
+
+
+        [HttpGet]
+        [Route("tlevels-withdrawals-data-format-and-rules", Name = RouteConstants.DownloadWithdrawalsDataFormatAndRulesGuide)]
+        public async Task<IActionResult> DownloadWithdrawalDataFormatAndRulesGuideAsync()
+        {
+            var fileName = DocumentResource.TlevelDataFormatAndRulesGuide.Tlevels_Withdrawals_Data_Format_And_Rules_File_Name;
+            var fileStream = await _documentLoader.GetBulkUploadWithdrawalsTechSpecFileAsync(fileName);
+            if (fileStream == null)
+            {
+                _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download bulk upload withdrawal tech spec document. Method: DownloadWithdrawlDataFormatAndRulesGuideAsync(FileName: {fileName})");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            fileStream.Position = 0;
+            return new FileStreamResult(fileStream, Constants.TextXlsx)
+            {
+                FileDownloadName = fileName
+            };
+        }
+
+        [HttpGet]
+        [Route("tlevels-withdrawal-data-template", Name = RouteConstants.DownloadWithdrawalsDataTemplate)]
+        public async Task<IActionResult> DownloadWithdrawalnDataTemplateAsync()
+        {
+            var fileName = DocumentResource.TlevelDataFormatAndRulesGuide.Tlevels_Withdrawal_Data_Template_File_Name;
+            var fileStream = await _documentLoader.GetBulkUploadWithdrawalsTechSpecFileAsync(fileName);
+            if (fileStream == null)
+            {
+                _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download bulk upload withdrawal tech spec document. Method: DownloadWithdrawlnDataTemplateAsync(FileName: {fileName})");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            fileStream.Position = 0;
+            return new FileStreamResult(fileStream, Constants.TextCsv)
+            {
+                FileDownloadName = fileName
+            };
         }
     }
 }

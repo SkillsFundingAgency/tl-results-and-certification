@@ -142,11 +142,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to learner data format and rules guidance template.
+        ///   Looks up a localized string similar to T levels data format and rules for Providers.
         /// </summary>
-        public static string Link_Learner_Data_Format_Rules_Guidance_Template {
+        public static string Link_Name_Tlevels_Data_Format_And_Rules_For_Providers {
             get {
-                return ResourceManager.GetString("Link_Learner_Data_Format_Rules_Guidance_Template", resourceCulture);
+                return ResourceManager.GetString("Link_Name_Tlevels_Data_Format_And_Rules_For_Providers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to https://support.tlevels.gov.uk/hc/en-gb/articles/11509479311634-T-Levels-data-format-and-rules-for-Providers.
+        /// </summary>
+        public static string Link_Tlevels_Data_Format_And_Rules_For_Providers {
+            get {
+                return ResourceManager.GetString("Link_Tlevels_Data_Format_And_Rules_For_Providers", resourceCulture);
             }
         }
         
@@ -241,7 +250,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your file must include the specific column names provided in the .
+        ///   Looks up a localized string similar to Your file must include the specific column names provided in the guidance on .
         /// </summary>
         public static string Your_File_Must_Include_Specific_Column_Names {
             get {

@@ -79,15 +79,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 279KB.
-        /// </summary>
-        public static string File_Size_Kb_Text {
-            get {
-                return ResourceManager.GetString("File_Size_Kb_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to File size too large – must be no more than {0}MB.
         /// </summary>
         public static string File_Size_Too_Large_Validation_Message {
@@ -97,11 +88,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to CSV.
+        /// </summary>
+        public static string File_Type_Csv {
+            get {
+                return ResourceManager.GetString("File_Type_Csv", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to XLSX.
         /// </summary>
-        public static string File_Type {
+        public static string File_Type_Xlsx {
             get {
-                return ResourceManager.GetString("File_Type", resourceCulture);
+                return ResourceManager.GetString("File_Type_Xlsx", resourceCulture);
             }
         }
         
@@ -138,6 +138,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         public static string Link_Tlevels_Results_Data_Format_Rules {
             get {
                 return ResourceManager.GetString("Link_Tlevels_Results_Data_Format_Rules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download T Levels results template ({0}, {1}).
+        /// </summary>
+        public static string Link_Tlevels_Results_Template {
+            get {
+                return ResourceManager.GetString("Link_Tlevels_Results_Template", resourceCulture);
             }
         }
         
@@ -196,7 +205,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If you export data from another system, you must check the data is in the right format. You can download a template with data formats and rules guidance to help you..
+        ///   Looks up a localized string similar to If you export data from another system, you must check the data is in the right format..
         /// </summary>
         public static string Para_If_You_Export_Data_From_Another_System {
             get {
@@ -205,11 +214,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You can add or change results for one or more learners by uploading CSV files..
+        ///   Looks up a localized string similar to You can add or change results for one or more learners by uploading a CSV file..
         /// </summary>
         public static string Para_You_Can_Add_Or_Change_Registration {
             get {
                 return ResourceManager.GetString("Para_You_Can_Add_Or_Change_Registration", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You can download guidance on data formats and rules to help you. Once you have added your results to the template, you can upload your file..
+        /// </summary>
+        public static string Para_You_Can_Download_Guidance_On_Data_Format_And_Rules {
+            get {
+                return ResourceManager.GetString("Para_You_Can_Download_Guidance_On_Data_Format_And_Rules", resourceCulture);
             }
         }
         
@@ -223,20 +241,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to published 16 May 2023.
+        ///   Looks up a localized string similar to published 30 June 2024.
         /// </summary>
-        public static string Results_Published_On {
+        public static string Published_On {
             get {
-                return ResourceManager.GetString("Results_Published_On", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Version 1.6.
-        /// </summary>
-        public static string Results_Version {
-            get {
-                return ResourceManager.GetString("Results_Version", resourceCulture);
+                return ResourceManager.GetString("Published_On", resourceCulture);
             }
         }
         
@@ -246,6 +255,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         public static string Select_File_To_Upload_Required_Validation_Message {
             get {
                 return ResourceManager.GetString("Select_File_To_Upload_Required_Validation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 290KB.
+        /// </summary>
+        public static string Tlevels_Results_Data_Format_Rules_File_Size_Kb {
+            get {
+                return ResourceManager.GetString("Tlevels_Results_Data_Format_Rules_File_Size_Kb", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 0.6KB.
+        /// </summary>
+        public static string Tlevels_Results_Template_File_Size_Kb {
+            get {
+                return ResourceManager.GetString("Tlevels_Results_Template_File_Size_Kb", resourceCulture);
             }
         }
         
@@ -273,6 +300,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         public static string Upload_Processing_Spinner_Text {
             get {
                 return ResourceManager.GetString("Upload_Processing_Spinner_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version 2.0.
+        /// </summary>
+        public static string Version {
+            get {
+                return ResourceManager.GetString("Version", resourceCulture);
             }
         }
         

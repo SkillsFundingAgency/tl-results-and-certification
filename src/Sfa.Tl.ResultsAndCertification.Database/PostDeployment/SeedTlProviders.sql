@@ -163,7 +163,7 @@ USING (VALUES
 (155, 10007851, N'University Of Derby', N'University Of Derby'),
 (156, 10007945, N'Portsmouth College', N'Portsmouth College'),
 (157, 10008007, N'St Francis Xavier Sixth Form College', N'St Francis Xavier Sixth Form College'),
-(158, 10015295, N'Capital City Academy', N'Capital City Academy'),
+(158, 10015295, N'Harris Lowe Academy', N'Harris Lowe Academy'),
 (159, 10015885, N'Walsall Academy', N'Walsall Academy'),
 (160, 10030656, N'The Jcb Academy', N'The Jcb Academy'),
 (161, 10032198, N'Garforth Academy', N'Garforth Academy'),

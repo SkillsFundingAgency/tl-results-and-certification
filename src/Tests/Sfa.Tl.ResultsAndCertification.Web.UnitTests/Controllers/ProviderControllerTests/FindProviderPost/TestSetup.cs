@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
@@ -16,6 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
     {
         // DI Mock objects
         protected IProviderLoader ProviderLoader;
+        protected ICacheService CacheService;
         protected ILogger<ProviderController> Logger;
 
         // input, output and other mock for tes
@@ -32,8 +34,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ProviderContr
         {
             HttpContextAccessor = Substitute.For<IHttpContextAccessor>();
             ProviderLoader = Substitute.For<IProviderLoader>();
+            CacheService = Substitute.For<ICacheService>();
             Logger = Substitute.For<ILogger<ProviderController>>();
-            Controller = new ProviderController(ProviderLoader, Logger);
+            Controller = new ProviderController(ProviderLoader, CacheService, Logger);
 
             // Default value
             ViewModel = new FindProviderViewModel { Search = ProviderName, SelectedProviderId = SelectedProviderId };

@@ -210,8 +210,8 @@
   <data name="Tlevels_Assessment_Entry_Data_Format_And_Rules_File_Name" xml:space="preserve">
     <value>tlevels-assessment-entry-data-format-and-rules.xlsx</value>
   </data>
-  <data name="Tlevels_Industry_Placement_Data_Format_And_Rules_File_Name" xml:space="preserve">
-    <value>tlevels-industry-placement-data-format-and-rules.xlsx</value>
+  <data name="Tlevels_Assessment_Entry_Data_Template_File_Name" xml:space="preserve">
+    <value>tlevels-assessment-entry-template.csv</value>
   </data>
   <data name="Tlevels_Registrations_Data_Format_And_Rules_File_Name" xml:space="preserve">
     <value>tlevels-registrations-data-format-and-rules.xlsx</value>
@@ -221,6 +221,15 @@
   </data>
   <data name="Tlevels_Results_Data_Format_And_Rules_File_Name" xml:space="preserve">
     <value>tlevels-results-data-format-and-rules.xlsx</value>
+  </data>
+  <data name="Tlevels_Results_Template_File_Name" xml:space="preserve">
+    <value>tlevels-results-template.csv</value>
+  </data>
+  <data name="Tlevels_Withdrawals_Data_Format_And_Rules_File_Name" xml:space="preserve">
+    <value>tlevels-withdrawals-data-format-and-rules.xlsx</value>
+  </data>
+  <data name="Tlevels_Withdrawal_Data_Template_File_Name" xml:space="preserve">
+    <value>tlevels-withdrawal-data-template.csv</value>
   </data>
   <data name="Use_The_Correct_Format_For_File_Data_Items_Text" xml:space="preserve">
     <value>use the correct format for file data items</value>
