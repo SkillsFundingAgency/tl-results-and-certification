@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.HelpControlle
 
         public override void Given()
         {
-            _expectedValue = "00:01am on Monday 01 August 2022";
+            _expectedValue = "01:01am on Monday 01 August 2022";
         }
 
         [Fact]
