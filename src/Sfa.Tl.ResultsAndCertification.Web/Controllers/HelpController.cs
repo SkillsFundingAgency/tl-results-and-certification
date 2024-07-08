@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Help;
+using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -72,12 +73,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("service-unavailable", Name = RouteConstants.ServiceUnavailable)]
         public IActionResult ServiceUnavailable()
         {
-            var serviceAvailableFrom = _configuration.FreezePeriodEndDate.AddSeconds(1);
+            DateTime freezePeriodEndDateUtc = _configuration.FreezePeriodEndDate.AddSeconds(1);
+            DateTime freezePeriodEndDateUkTime = GetUkTimeFromUtc(freezePeriodEndDateUtc);
+
             var viewModel = new ServiceUnavailableViewModel
             {
-                ServiceAvailableFrom = $"{serviceAvailableFrom.AddMinutes(1).ToString("HH:mmtt").ToLower()} on {serviceAvailableFrom.DayOfWeek} {serviceAvailableFrom:dd MMMM yyyy}"
+                ServiceAvailableFrom = $"{freezePeriodEndDateUkTime.AddMinutes(1).ToString("HH:mmtt").ToLower()} on {freezePeriodEndDateUkTime.DayOfWeek} {freezePeriodEndDateUkTime:dd MMMM yyyy}"
             };
+
             return View(viewModel);
+        }
+
+        private static DateTime GetUkTimeFromUtc(DateTime utc)
+        {
+            const string GMTStandardTimeId = "GMT Standard Time";
+
+            TimeZoneInfo gmtTimeZoneInfo = TimeZoneInfo.FindSystemTimeZoneById(GMTStandardTimeId);
+            DateTime ukTime = TimeZoneInfo.ConvertTimeFromUtc(utc, gmtTimeZoneInfo);
+
+            return ukTime;
         }
     }
 }
