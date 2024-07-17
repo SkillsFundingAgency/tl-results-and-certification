@@ -82,7 +82,8 @@ jobs:
             -CertificateTrackingExtractTrigger "$(CertificateTrackingExtractTrigger)"
             -enableReplica $(enableReplica)
             -containerLifecyclePolicyRules $(containerLifecyclePolicyRules)
-            -ipSecurityRestrictions $(ipSecurityRestrictions)'
+            -ipSecurityRestrictions $(ipSecurityRestrictions)
+            -pdfGenerationExtractTrigger $(pdfGenerationExtractTrigger)'
           tags: $(Tags) 
           processOutputs: true
       

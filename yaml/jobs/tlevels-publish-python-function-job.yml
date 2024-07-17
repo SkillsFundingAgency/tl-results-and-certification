@@ -1,0 +1,37 @@
+parameters:
+  - name: serviceConnection
+    type: string
+  - name: sharedEnvironmentId
+    type: string
+  - name: dependencies
+    type: object
+jobs:
+- job: PublishPythonFunction
+  variables:
+    functionAppName: $[ dependencies.DeployInfrastructure.outputs['armOutputs.armOutput.functionPythonAppName'] ]
+
+  pool:
+    name: 'Azure Pipelines'
+    vmImage: 'ubuntu-latest'
+  dependsOn:
+    - "${{ each dependency in parameters.dependencies }}":
+        - "${{dependency}}"  
+
+  steps:
+
+  - task: DownloadBuildArtifacts@0
+    inputs:
+      buildType: 'current'
+      downloadType: 'single'
+      artifactName: 'pythondrop'
+      downloadPath: '$(System.ArtifactsDirectory)'
+
+  - task: AzureFunctionApp@1
+    displayName: 'Deploy Function App: $(functionAppName)'
+    inputs:
+      azureSubscription: ${{ parameters.serviceConnection }}
+      appType: 'functionAppLinux'
+      appName: '$(functionAppName)'
+      package: '$(System.ArtifactsDirectory)/pythondrop/test-script.zip'
+      runtimeStack: 'PYTHON|3.11'
+      deploymentMethod: 'auto'

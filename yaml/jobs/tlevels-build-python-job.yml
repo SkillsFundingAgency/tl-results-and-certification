@@ -1,0 +1,43 @@
+jobs:
+- job: 'PythonFunctionAppBuild'
+  pool:
+    name: 'Azure Pipelines'
+    vmImage: 'ubuntu-latest'
+  workspace:
+    clean: all
+  steps:
+  
+  - task: UsePythonVersion@0
+    displayName: 'Use Python 3.11'
+    inputs:
+      versionSpec: '3.11'
+      addToPath: true
+
+  - script: |
+      python -m pip install --upgrade pip setuptools wheel 
+      pip install -r src/Sfa.Tl.ResultsAndCertification.Functions/Python/requirements.txt
+    displayName: 'Install dependencies'
+
+  - task: ArchiveFiles@2
+    displayName: 'Archive Python script'
+    inputs:
+      rootFolderOrFile: 'src/Sfa.Tl.ResultsAndCertification.Functions/Python/test-script.py'
+      includeRootFolder: false
+      archiveType: 'zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/publish/test-script.zip'
+      replaceExistingArchive: true
+
+  - task: CopyFiles@2
+    displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+    inputs:
+      contents: |
+        test-script.zip
+      targetFolder: '$(build.artifactstagingdirectory)/publish'
+      overWrite: true
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact'
+    inputs:
+      PathtoPublish: '$(build.artifactstagingdirectory)/publish'
+      ArtifactName: 'pythondrop'
+      publishLocation: 'Container'

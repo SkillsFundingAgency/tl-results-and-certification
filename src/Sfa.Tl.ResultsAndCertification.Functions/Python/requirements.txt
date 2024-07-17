@@ -1,0 +1,4 @@
+pyodbc
+pandas
+python-dotenv
+reportlab
