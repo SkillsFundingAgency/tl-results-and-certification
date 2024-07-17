@@ -41,9 +41,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
                 SpecialismCode = "ZTLOS003",
                 SpecialismGrade = "None",
 
-                IsEnglishAndMathsAchieved = true,
-                HasLrsEnglishAndMaths = false,
-                IsSendLearner = true,
+                MathsStatus = SubjectStatus.Achieved,
+                EnglishStatus = SubjectStatus.Achieved,
                 IndustryPlacementStatus = IndustryPlacementStatus.Completed,
 
                 HasPathwayResult = true,

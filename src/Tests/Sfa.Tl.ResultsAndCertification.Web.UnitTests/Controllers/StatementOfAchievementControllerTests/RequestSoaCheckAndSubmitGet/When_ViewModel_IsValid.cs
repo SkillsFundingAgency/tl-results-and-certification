@@ -49,9 +49,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
                 SpecialismCode = "ZTLOS003",
                 SpecialismGrade = "None",
 
-                IsEnglishAndMathsAchieved = true,
-                HasLrsEnglishAndMaths = false,
-                IsSendLearner = true,
+                MathsStatus = SubjectStatus.Achieved,
+                EnglishStatus = SubjectStatus.AchievedByLrs,
                 IndustryPlacementStatus = IndustryPlacementStatus.Completed,
 
                 HasPathwayResult = true,
@@ -98,9 +97,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
             model.SpecialismCode.Should().Be(_mockLearnerDetails.SpecialismCode);
             model.SpecialismGrade.Should().Be(_mockLearnerDetails.SpecialismGrade);
 
-            model.IsEnglishAndMathsAchieved.Should().Be(_mockLearnerDetails.IsEnglishAndMathsAchieved);
-            model.HasLrsEnglishAndMaths.Should().Be(_mockLearnerDetails.HasLrsEnglishAndMaths);
-            model.IsSendLearner.Should().Be(_mockLearnerDetails.IsSendLearner);
+            model.MathsStatus.Should().Be(_mockLearnerDetails.MathsStatus);
+            model.EnglishStatus.Should().Be(_mockLearnerDetails.EnglishStatus);
             model.IndustryPlacementStatus.Should().Be(_mockLearnerDetails.IndustryPlacementStatus);
 
             // Uln
@@ -133,7 +131,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
 
             // EnglishAndMaths
             model.SummaryEnglishAndMaths.Title.Should().Be(CheckAndSubmitContent.Title_English_And_Maths_Text);
-            model.SummaryEnglishAndMaths.Value.Should().Be(EnglishAndMathsStatusContent.Achieved_With_Send_Display_Text);
+            model.SummaryEnglishAndMaths.Value.Should().Be(EnglishAndMathsStatusContent.Achieved_Display_Text);
 
             // Industry Placement
             model.SummaryIndustryPlacement.Title.Should().Be(CheckAndSubmitContent.Title_Industry_Placement_Text);

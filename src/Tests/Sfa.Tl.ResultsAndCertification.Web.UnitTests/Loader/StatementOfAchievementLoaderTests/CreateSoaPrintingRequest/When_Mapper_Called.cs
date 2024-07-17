@@ -41,9 +41,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
                 SpecialismCode = "ZTLOS003",
                 SpecialismGrade = "None",
 
-                IsEnglishAndMathsAchieved = true,
-                HasLrsEnglishAndMaths = false,
-                IsSendLearner = true,
+                MathsStatus = SubjectStatus.NotSpecified,
+                EnglishStatus = SubjectStatus.NotSpecified,
                 IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted,
 
                 HasPathwayResult = false,
@@ -71,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
                     }
                 },
                 IndustryPlacement = SoaLearnerRecordDetailsViewModel.IsIndustryPlacementCompleted ? Constants.IndustryPlacementCompleted : Constants.IndustryPlacementNotCompleted,
-                EnglishAndMaths = GetEnglishAndMathsText(SubjectStatus.NotSpecified, SubjectStatus.NotSpecified)
+                EnglishAndMaths = string.Empty
             };
 
             _expectedSoaPrintingDetails = new SoaPrintingDetails
@@ -114,19 +113,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
             result.LearningDetails.Should().BeEquivalentTo(_expectedLearningDetails);
             result.SoaPrintingDetails.Should().BeEquivalentTo(_expectedSoaPrintingDetails);
             result.PerformedBy.Should().Be($"{Givenname} {Surname}");
-        }
-
-        private static string GetEnglishAndMathsText(SubjectStatus? englishStatus, SubjectStatus? mathsStatus)
-        {
-            if ((englishStatus == SubjectStatus.Achieved || englishStatus == SubjectStatus.AchievedByLrs) &&
-                (mathsStatus == SubjectStatus.Achieved || mathsStatus == SubjectStatus.AchievedByLrs))
-                return Constants.MathsAndEnglishAchievedText;
-            else if (mathsStatus == SubjectStatus.Achieved || mathsStatus == SubjectStatus.AchievedByLrs)
-                return Constants.MathsAchievedText;
-            else if (englishStatus == SubjectStatus.Achieved || englishStatus == SubjectStatus.AchievedByLrs)
-                return Constants.EnglishAchievedText;
-            else
-                return string.Empty;
         }
     }
 }
