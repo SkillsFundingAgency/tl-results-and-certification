@@ -21,9 +21,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
                 Uln = 1234567890,
                 LearnerName = "John Smith",
 
-                IsEnglishAndMathsAchieved = true,
-                HasLrsEnglishAndMaths = false,
-                IsSendLearner = true,
+                MathsStatus = SubjectStatus.Achieved,
+                EnglishStatus = SubjectStatus.Achieved,
                 IndustryPlacementStatus = IndustryPlacementStatus.Completed,
 
                 HasPathwayResult = true,

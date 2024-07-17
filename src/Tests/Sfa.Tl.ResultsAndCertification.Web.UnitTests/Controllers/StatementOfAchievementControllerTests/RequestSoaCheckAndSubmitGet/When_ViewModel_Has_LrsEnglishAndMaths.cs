@@ -43,9 +43,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
                 SpecialismName = "Building Services Design (ZTLOS003)",
                 SpecialismGrade = "None",
 
-                IsEnglishAndMathsAchieved = false,
-                HasLrsEnglishAndMaths = true,
-                IsSendLearner = false,
+                MathsStatus = SubjectStatus.NotAchieved,
+                EnglishStatus = SubjectStatus.NotAchievedByLrs,
                 IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration,
 
                 HasPathwayResult = true,
@@ -86,9 +85,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
             model.SpecialismName.Should().Be(_mockLearnerDetails.SpecialismName);
             model.SpecialismGrade.Should().Be(_mockLearnerDetails.SpecialismGrade);
 
-            model.IsEnglishAndMathsAchieved.Should().Be(_mockLearnerDetails.IsEnglishAndMathsAchieved);
-            model.HasLrsEnglishAndMaths.Should().Be(_mockLearnerDetails.HasLrsEnglishAndMaths);
-            model.IsSendLearner.Should().Be(_mockLearnerDetails.IsSendLearner);
+            model.MathsStatus.Should().Be(_mockLearnerDetails.MathsStatus);
+            model.EnglishStatus.Should().Be(_mockLearnerDetails.EnglishStatus);
             model.IndustryPlacementStatus.Should().Be(_mockLearnerDetails.IndustryPlacementStatus);
 
             // Uln
@@ -121,7 +119,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
 
             // EnglishAndMaths
             model.SummaryEnglishAndMaths.Title.Should().Be(CheckAndSubmitContent.Title_English_And_Maths_Text);
-            model.SummaryEnglishAndMaths.Value.Should().Be(EnglishAndMathsStatusContent.Lrs_Not_Achieved_Display_Text);
+            model.SummaryEnglishAndMaths.Value.Should().Be(EnglishAndMathsStatusContent.Not_Achieved_Display_Text);
 
             // Industry Placement
             model.SummaryIndustryPlacement.Title.Should().Be(CheckAndSubmitContent.Title_Industry_Placement_Text);

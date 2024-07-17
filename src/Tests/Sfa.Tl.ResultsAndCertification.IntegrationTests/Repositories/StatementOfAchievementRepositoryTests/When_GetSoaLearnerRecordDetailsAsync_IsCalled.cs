@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
         private SoaLearnerRecordDetails _actualResult;
         private List<long> _profilesWithResults;
         private List<(long uln, bool isRcFeed, bool seedQualificationAchieved, bool isSendQualification, bool isEngishAndMathsAchieved, bool seedIndustryPlacement, bool? isSendLearner, IndustryPlacementStatus ipStatus)> _testCriteriaData;
-        
+
         public override void Given()
         {
             _profiles = new List<TqRegistrationProfile>();
@@ -154,7 +154,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
             _actualResult.Uln.Should().Be(uln);
             _actualResult.Firstname.Should().Be(expectedProfile.Firstname);
             _actualResult.Lastname.Should().Be(expectedProfile.Lastname);
-            _actualResult.DateofBirth.Should().Be(expectedProfile.DateofBirth);            
+            _actualResult.DateofBirth.Should().Be(expectedProfile.DateofBirth);
             _actualResult.ProviderName.Should().Be(expectedProviderName);
             _actualResult.ProviderUkprn.Should().Be(expectedProviderUkprn);
             _actualResult.TlevelTitle.Should().Be(expectedTlevelTitle);
@@ -167,12 +167,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Statement
             _actualResult.SpecialismCode.Should().Be(expectedSpecialim.TlSpecialism.LarId);
             _actualResult.SpecialismGrade.Should().BeNull();
 
-            _actualResult.IsEnglishAndMathsAchieved.Should().Be(expectedProfile.IsEnglishAndMathsAchieved ?? false);
-            _actualResult.IsSendLearner.Should().Be(expectedProfile.IsSendLearner);
-            _actualResult.HasLrsEnglishAndMaths.Should().Be(expectedHasLrsEnglishAndMaths);
+            _actualResult.MathsStatus.Should().Be(expectedProfile.MathsStatus);
+            _actualResult.EnglishStatus.Should().Be(expectedProfile.EnglishStatus);
             _actualResult.IndustryPlacementStatus.Should().Be(expecedIpStatus);
             _actualResult.ProviderAddress.Should().BeEquivalentTo(expectedProviderAddress);
-            _actualResult.Status.Should().Be(expectedStatus);            
+            _actualResult.Status.Should().Be(expectedStatus);
         }
 
         public static IEnumerable<object[]> Data
