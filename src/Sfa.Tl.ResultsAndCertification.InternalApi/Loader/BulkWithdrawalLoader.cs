@@ -104,7 +104,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             }
             catch (Exception ex)
             {
-                var errorMessage = $"Something went wrong while processing bluk withdrawals. Method: ProcessBulkWithdrawalsAsync(BulkRegistrationRequest : {JsonConvert.SerializeObject(request)}), User: {request.PerformedBy}";
+                var errorMessage = $"Something went wrong while processing bulk withdrawals. Method: ProcessBulkWithdrawalsAsync(BulkRegistrationRequest : {JsonConvert.SerializeObject(request)}), User: {request.PerformedBy}";
                 _logger.LogError(LogEvent.BulkRegistrationProcessFailed, ex, errorMessage);
                 await DeleteFileFromProcessingFolderAsync(request);
             }

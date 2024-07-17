@@ -38,6 +38,7 @@
 
         // Bulk Withdrawal Learner Validation Messages
         public const string InactiveUln = "Inactive Uln";
+        public const string InvalidDateOfBirth = "Invalid date of birth";
         public const string InvalidResultState = "Active Romm or Appeal";
 
         // Bulk Registration Stage4 Validation Messages
