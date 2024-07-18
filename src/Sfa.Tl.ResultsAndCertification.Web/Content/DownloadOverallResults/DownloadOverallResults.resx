@@ -126,6 +126,21 @@
   <data name="Download_Filename" xml:space="preserve">
     <value>T-Level-overall-results.csv</value>
   </data>
+  <data name="Download_Link_Results_CSV_Data" xml:space="preserve">
+    <value>Download results ({0})</value>
+  </data>
+  <data name="Download_Link_Result_Slips_PDF_Data" xml:space="preserve">
+    <value>Download learner results slips ({0}, {1} KB)</value>
+  </data>
+  <data name="Download_ResultSlips_Filename" xml:space="preserve">
+    <value>T-Level-overall-result-slips.pdf</value>
+  </data>
+  <data name="File_Type_CSV" xml:space="preserve">
+    <value>CSV</value>
+  </data>
+  <data name="File_Type_PDF" xml:space="preserve">
+    <value>PDF</value>
+  </data>
   <data name="Heading_Download_Tlevel_Results" xml:space="preserve">
     <value>Download T Level results for your learners</value>
   </data>
@@ -139,15 +154,21 @@
     <value>Download T Level results</value>
   </data>
   <data name="Para_Csv_Data_Should_Not_Be_Shared" xml:space="preserve">
-    <value>The results will be available as a CSV file the day before each results day. You must not share these results until results day.</value>
+    <value>The results will be available the day before each results day. You must not share these results until results day.</value>
   </data>
-  <data name="Para_File_Update_Each_Time" xml:space="preserve">
-    <value>The file will update each time you download it. Any changes to results will be updated on the results file on the next working day.</value>
+  <data name="Para_Download_Results_As_CSV_File" xml:space="preserve">
+    <value>Download results as a CSV file for active learners in their final year of their T Level.</value>
+  </data>
+  <data name="Para_Download_Results_Slips_As_PDF_File" xml:space="preserve">
+    <value>Download learner results at 15 August 2024 as a PDF for active learners in their final year of their T Level.</value>
+  </data>
+  <data name="Para_File_Update_Next_Working_Day" xml:space="preserve">
+    <value>Any changes to results will be updated on the on the next working day.</value>
   </data>
   <data name="Para_Results_Updated_After_Results_Day_If" xml:space="preserve">
     <value>The results will be updated after results day if:</value>
   </data>
   <data name="Para_You_Can_Download_Your_Active_Learners" xml:space="preserve">
-    <value>You can download results for your active learners who have finished the second year of their T Level.</value>
+    <value>You can download results or learner results slips for your active learners who have finished the second year of their T Level.</value>
   </data>
 </root>

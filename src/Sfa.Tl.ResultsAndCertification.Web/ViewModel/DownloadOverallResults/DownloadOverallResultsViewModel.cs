@@ -9,7 +9,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.DownloadResults
     public class DownloadOverallResultsViewModel
     {
         public bool IsOverallResultsAvailable { get; set; }
-        
+
+        public long ResultSlipsFileSizeKb { get; set; }
+
         public BreadcrumbModel Breadcrumb
         {
             get
@@ -18,7 +20,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.DownloadResults
                 {
                     BreadcrumbItems = new List<BreadcrumbItem>
                     {
-                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Home }
+                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Home },
+                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Download_Learner_Results }
                     }
                 };
             }

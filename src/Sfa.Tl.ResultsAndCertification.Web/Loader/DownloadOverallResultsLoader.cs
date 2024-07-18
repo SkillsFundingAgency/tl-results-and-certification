@@ -47,5 +47,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             }
             return fileStream;
         }
+
+        public async Task<Stream> DownloadOverallResultSlipsAsync(long providerUkprn)
+        {
+            var fileStream = await _blobStorageService.DownloadFileAsync(new BlobStorageData
+            {
+                ContainerName = DocumentType.ResultSlips.ToString(),
+                SourceFilePath = $"{providerUkprn}",
+                BlobFileName = $"{providerUkprn}.{FileType.Pdf}"
+            });
+
+            if (fileStream == null)
+            {
+                var blobReadError = $"No FileStream found to download overall result slips. Method: DownloadOverallResultSlipsAsync(ContainerName: {DocumentType.ResultSlips}, BlobFileName = {providerUkprn}.{FileType.Pdf}, SourceFilePath = {providerUkprn})";
+                _logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
+            }
+            return fileStream;
+        }
     }
 }
