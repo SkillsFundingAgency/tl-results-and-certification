@@ -179,7 +179,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.DownloadOverallResults {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download results as a CSV file for active learners in their final year of their T Level..
+        ///   Looks up a localized string similar to Download results as a CSV file for active learners in the final year of their T Level..
         /// </summary>
         public static string Para_Download_Results_As_CSV_File {
             get {
@@ -188,7 +188,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.DownloadOverallResults {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download learner results at 15 August 2024 as a PDF for active learners in their final year of their T Level..
+        ///   Looks up a localized string similar to Download learner results at 15 August 2024 as a PDF..
         /// </summary>
         public static string Para_Download_Results_Slips_As_PDF_File {
             get {
@@ -197,7 +197,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.DownloadOverallResults {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Any changes to results will be updated on the on the next working day..
+        ///   Looks up a localized string similar to Any changes to results will be updated on the next working day..
         /// </summary>
         public static string Para_File_Update_Next_Working_Day {
             get {

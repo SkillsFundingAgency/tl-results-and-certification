@@ -157,13 +157,13 @@
     <value>The results will be available the day before each results day. You must not share these results until results day.</value>
   </data>
   <data name="Para_Download_Results_As_CSV_File" xml:space="preserve">
-    <value>Download results as a CSV file for active learners in their final year of their T Level.</value>
+    <value>Download results as a CSV file for active learners in the final year of their T Level.</value>
   </data>
   <data name="Para_Download_Results_Slips_As_PDF_File" xml:space="preserve">
-    <value>Download learner results at 15 August 2024 as a PDF for active learners in their final year of their T Level.</value>
+    <value>Download learner results at 15 August 2024 as a PDF.</value>
   </data>
   <data name="Para_File_Update_Next_Working_Day" xml:space="preserve">
-    <value>Any changes to results will be updated on the on the next working day.</value>
+    <value>Any changes to results will be updated on the next working day.</value>
   </data>
   <data name="Para_Results_Updated_After_Results_Day_If" xml:space="preserve">
     <value>The results will be updated after results day if:</value>
