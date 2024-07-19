@@ -89,6 +89,51 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.DownloadOverallResults {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download learner results slips ({0}, {1} KB).
+        /// </summary>
+        public static string Download_Link_Result_Slips_PDF_Data {
+            get {
+                return ResourceManager.GetString("Download_Link_Result_Slips_PDF_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download results ({0}).
+        /// </summary>
+        public static string Download_Link_Results_CSV_Data {
+            get {
+                return ResourceManager.GetString("Download_Link_Results_CSV_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to T-Level-overall-result-slips.pdf.
+        /// </summary>
+        public static string Download_ResultSlips_Filename {
+            get {
+                return ResourceManager.GetString("Download_ResultSlips_Filename", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to CSV.
+        /// </summary>
+        public static string File_Type_CSV {
+            get {
+                return ResourceManager.GetString("File_Type_CSV", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PDF.
+        /// </summary>
+        public static string File_Type_PDF {
+            get {
+                return ResourceManager.GetString("File_Type_PDF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download T Level results for your learners.
         /// </summary>
         public static string Heading_Download_Tlevel_Results {
@@ -125,7 +170,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.DownloadOverallResults {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The results will be available as a CSV file the day before each results day. You must not share these results until results day..
+        ///   Looks up a localized string similar to The results will be available the day before each results day. You must not share these results until results day..
         /// </summary>
         public static string Para_Csv_Data_Should_Not_Be_Shared {
             get {
@@ -134,11 +179,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.DownloadOverallResults {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The file will update each time you download it. Any changes to results will be updated on the results file on the next working day..
+        ///   Looks up a localized string similar to Download results as a CSV file for active learners in the final year of their T Level..
         /// </summary>
-        public static string Para_File_Update_Each_Time {
+        public static string Para_Download_Results_As_CSV_File {
             get {
-                return ResourceManager.GetString("Para_File_Update_Each_Time", resourceCulture);
+                return ResourceManager.GetString("Para_Download_Results_As_CSV_File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download learner results at 15 August 2024 as a PDF..
+        /// </summary>
+        public static string Para_Download_Results_Slips_As_PDF_File {
+            get {
+                return ResourceManager.GetString("Para_Download_Results_Slips_As_PDF_File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Any changes to results will be updated on the next working day..
+        /// </summary>
+        public static string Para_File_Update_Next_Working_Day {
+            get {
+                return ResourceManager.GetString("Para_File_Update_Next_Working_Day", resourceCulture);
             }
         }
         
@@ -152,7 +215,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.DownloadOverallResults {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You can download results for your active learners who have finished the second year of their T Level..
+        ///   Looks up a localized string similar to You can download results or learner results slips for your active learners who have finished the second year of their T Level..
         /// </summary>
         public static string Para_You_Can_Download_Your_Active_Learners {
             get {
