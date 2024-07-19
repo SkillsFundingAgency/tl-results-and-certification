@@ -390,6 +390,7 @@
         #region Download Tlevel Results
         public const string DownloadOverallResultsPage = "DownloadOverallResultsPage";
         public const string DownloadOverallResultsFile = "DownloadOverallResultsFile";
+        public const string DownloadOverallResultSlipsFile = "DownloadOverallResultSlipsFile";
         #endregion
 
         #region Industry Placement Import

@@ -97,6 +97,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download learner results.
+        /// </summary>
+        public static string Download_Learner_Results {
+            get {
+                return ResourceManager.GetString("Download_Learner_Results", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download registrations data.
         /// </summary>
         public static string Download_Registrations_Data {

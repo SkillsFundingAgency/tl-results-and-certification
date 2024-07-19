@@ -28,10 +28,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DownloadOvera
             model.IsOverallResultsAvailable.Should().BeFalse();
 
             model.Breadcrumb.Should().NotBeNull();
-            model.Breadcrumb.BreadcrumbItems.Should().HaveCount(1);
+            model.Breadcrumb.BreadcrumbItems.Should().HaveCount(2);
 
             model.Breadcrumb.BreadcrumbItems[0].RouteName.Should().Be(RouteConstants.Home);
             model.Breadcrumb.BreadcrumbItems[0].DisplayName.Should().Be(BreadcrumbContent.Home);
+
+            model.Breadcrumb.BreadcrumbItems[1].DisplayName.Should().Be(BreadcrumbContent.Download_Learner_Results);
         }
     }
 }
