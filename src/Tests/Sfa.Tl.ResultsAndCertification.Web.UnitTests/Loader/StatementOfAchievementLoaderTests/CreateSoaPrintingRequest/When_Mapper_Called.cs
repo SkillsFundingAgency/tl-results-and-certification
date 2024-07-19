@@ -1,13 +1,13 @@
 ﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement;
 using System;
 using System.Collections.Generic;
 using Xunit;
-using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchievementLoaderTests.CreateSoaPrintingRequest
 {
@@ -84,7 +84,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
                 CoreGrade = SoaLearnerRecordDetailsViewModel.PathwayGrade,
                 Specialism = SoaLearnerRecordDetailsViewModel.SpecialismDisplayName,
                 SpecialismGrade = SoaLearnerRecordDetailsViewModel.SpecialismGrade,
-                EnglishAndMaths = SoaLearnerRecordDetailsViewModel.GetEnglishAndMathsStatusDisplayText,
                 IndustryPlacement = SoaLearnerRecordDetailsViewModel.GetIndustryPlacementDisplayText,
                 ProviderAddress = new Models.Contracts.ProviderAddress.Address
                 {

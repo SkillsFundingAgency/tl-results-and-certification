@@ -38,7 +38,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
                 Specialism = "Building Services Design (ZTLOS003)",
                 SpecialismGrade = "None",
 
-                EnglishAndMaths = "Achieved minimum standard",
                 IndustryPlacement = "Placement completed",
 
                 ProviderAddress = _address
@@ -84,7 +83,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
             model.SnapshotDetails.CoreGrade.Should().Be(_soaPrintDetails.CoreGrade);
             model.SnapshotDetails.Specialism.Should().Be(_soaPrintDetails.Specialism);
             model.SnapshotDetails.SpecialismGrade.Should().Be(_soaPrintDetails.SpecialismGrade);
-            model.SnapshotDetails.EnglishAndMaths.Should().Be(_soaPrintDetails.EnglishAndMaths);
             model.SnapshotDetails.IndustryPlacement.Should().Be(_soaPrintDetails.IndustryPlacement);
 
             // Uln
@@ -109,6 +107,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
 
             model.Breadcrumb.BreadcrumbItems[0].DisplayName.Should().Be(BreadcrumbContent.Home);
             model.Breadcrumb.BreadcrumbItems[0].RouteName.Should().Be(RouteConstants.Home);
-            model.Breadcrumb.BreadcrumbItems[1].DisplayName.Should().Be(BreadcrumbContent.Request_Statement_Of_Achievement);        }
+            model.Breadcrumb.BreadcrumbItems[1].DisplayName.Should().Be(BreadcrumbContent.Request_Statement_Of_Achievement);
+        }
     }
 }

@@ -72,6 +72,7 @@
 
   <ItemGroup>
     <Folder Include="Controllers\HelpControllerTests\ServiceUnavailable\" />
+    <Folder Include="Mapper\Converter\SubjectStatusConverter\" />
   </ItemGroup>
 
   <ItemGroup>

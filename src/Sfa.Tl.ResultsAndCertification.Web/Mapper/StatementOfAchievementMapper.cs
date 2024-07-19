@@ -1,10 +1,12 @@
 ﻿using AutoMapper;
 using Newtonsoft.Json;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
+using Sfa.Tl.ResultsAndCertification.Web.Mapper.Converter;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement;
@@ -45,7 +47,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.IsLearnerRegistered, opts => opts.MapFrom(s => s.IsLearnerRegistered))
                .ForMember(d => d.IsNotWithdrawn, opts => opts.MapFrom(s => s.IsNotWithdrawn))
                .ForMember(d => d.IsIndustryPlacementCompleted, opts => opts.MapFrom(s => s.IsIndustryPlacementCompleted))
-               .ForMember(d => d.LastPrintRequestedDate, opts => opts.MapFrom(s => s.LastRequestedOn));
+               .ForMember(d => d.LastPrintRequestedDate, opts => opts.MapFrom(s => s.LastRequestedOn))
+               .ForMember(d => d.MathsStatusText, opts => opts.ConvertUsing(new SubjectStatusConverter(), s => s.MathsStatus))
+               .ForMember(d => d.EnglishStatusText, opts => opts.ConvertUsing(new SubjectStatusConverter(), s => s.EnglishStatus));
 
             CreateMap<Address, AddressViewModel>()
                 .ForMember(d => d.AddressId, opts => opts.MapFrom(s => s.AddressId))
@@ -77,11 +81,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.IndustryPlacement, opts => opts.MapFrom(s => (s.IndustryPlacementStatus == IndustryPlacementStatus.Completed
                                                                              || s.IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
                                                                              ? Constants.IndustryPlacementCompleted : Constants.IndustryPlacementNotCompleted))
-                //    .ForMember(d => d.EnglishAndMaths, opts => opts.MapFrom(s => s.GetEnglishAndMathsStatusDisplayText));
-
-                //.ForMember(d => d.EnglishAndMaths, opts => opts.MapFrom(s => s.g.GetEnglishA.EnglishStatus, profile.MathsStatus));
-
-
                 .ForMember(d => d.EnglishAndMaths, opts => opts.MapFrom(s => GetEnglishAndMathsText(s.EnglishStatus, s.MathsStatus)));
 
             CreateMap<SoaLearnerRecordDetailsViewModel, IList<OccupationalSpecialismDetails>>()
@@ -108,7 +107,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.Specialism, opts => opts.MapFrom(s => s.SpecialismDisplayName))
                 .ForMember(d => d.SpecialismGrade, opts => opts.MapFrom(s => s.SpecialismGrade))
                 .ForMember(d => d.IndustryPlacement, opts => opts.MapFrom(s => s.GetIndustryPlacementDisplayText))
-                .ForMember(d => d.EnglishAndMaths, opts => opts.MapFrom(s => s.GetEnglishAndMathsStatusDisplayText))
                 .ForMember(d => d.ProviderAddress, opts => opts.MapFrom(s => s.ProviderAddress));
 
             CreateMap<PrintRequestSnapshot, RequestSoaAlreadySubmittedViewModel>()
