@@ -1187,11 +1187,6 @@
 			<AutoGen>True</AutoGen>
 			<DependentUpon>ChangeBackToActiveStatusHaveYouToldAwardingOrganisation.resx</DependentUpon>
 		</Compile>
-		<Compile Update="Content\TrainingProvider\EnglishAndMathsStatus.Designer.cs">
-			<DesignTime>True</DesignTime>
-			<AutoGen>True</AutoGen>
-			<DependentUpon>EnglishAndMathsStatus.resx</DependentUpon>
-		</Compile>
 		<Compile Update="Content\TrainingProvider\IndustryPlacementStatus.Designer.cs">
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
@@ -2240,10 +2235,6 @@
 		<EmbeddedResource Update="Content\TrainingProvider\EnglishAndMathsQuestion - Copy.resx">
 			<LastGenOutput>EnglishAndMathsQuestion.Designer.cs</LastGenOutput>
 			<Generator>PublicResXFileCodeGenerator</Generator>
-		</EmbeddedResource>
-		<EmbeddedResource Update="Content\TrainingProvider\EnglishAndMathsStatus.resx">
-			<Generator>PublicResXFileCodeGenerator</Generator>
-			<LastGenOutput>EnglishAndMathsStatus.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\TrainingProvider\EnterUniqueLearnerReferenceAddedAlready.resx">
 			<LastGenOutput>EnterUniqueLearnerReferenceNotFound.Designer.cs</LastGenOutput>

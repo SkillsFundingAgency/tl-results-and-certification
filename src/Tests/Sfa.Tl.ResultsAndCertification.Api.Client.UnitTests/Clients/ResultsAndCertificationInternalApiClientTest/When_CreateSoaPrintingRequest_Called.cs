@@ -75,7 +75,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                     CoreGrade = "B",
                     Specialism = "Surveying and Design for Construction and the Built Environment (ZT456897)",
                     SpecialismGrade = "Merit",
-                    EnglishAndMaths = "Achieved minimum standard",
                     IndustryPlacement = "Not completed",
                     ProviderAddress = new Models.Contracts.ProviderAddress.Address
                     {

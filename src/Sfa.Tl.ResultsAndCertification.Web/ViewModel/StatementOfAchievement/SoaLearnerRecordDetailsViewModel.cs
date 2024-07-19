@@ -8,7 +8,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
-using EnglishAndMathsStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.EnglishAndMathsStatus;
 using IndustryPlacementStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.IndustryPlacementStatus;
 using IpStatus = Sfa.Tl.ResultsAndCertification.Common.Enum.IndustryPlacementStatus;
 using RequestSoaCheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement.RequestSoaCheckAndSubmit;
@@ -42,8 +41,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         public string SpecialismGrade { get; set; }
 
         //Learner's T level component achievements
-        public SubjectStatus? MathsStatus { get; set; }
-        public SubjectStatus? EnglishStatus { get; set; }
+        public SubjectStatus MathsStatus { get; set; }
+        public SubjectStatus EnglishStatus { get; set; }
+
+        public string MathsStatusText { get; set; }
+        public string EnglishStatusText { get; set; }
+
         public IpStatus IndustryPlacementStatus { get; set; }
 
         // Provider Organisation's postal address
@@ -107,11 +110,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
             IsRawHtml = true
         };
 
-        public SummaryItemModel SummaryEnglishAndMaths => new SummaryItemModel
+        public SummaryItemModel SummaryMathsStatus => new()
         {
-            Id = "englishandmaths",
-            Title = RequestSoaCheckAndSubmitContent.Title_English_And_Maths_Text,
-            Value = GetEnglishAndMathsStatusDisplayText
+            Id = "mathsstatus",
+            Title = RequestSoaCheckAndSubmitContent.Title_Maths_Text,
+            Value = MathsStatusText
+        };
+
+        public SummaryItemModel SummaryEnglishStatus => new()
+        {
+            Id = "englishstatus",
+            Title = RequestSoaCheckAndSubmitContent.Title_English_Text,
+            Value = EnglishStatusText
         };
 
         public SummaryItemModel SummaryIndustryPlacement => new SummaryItemModel
@@ -172,25 +182,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
                     IpStatus.NotCompleted => IndustryPlacementStatusContent.NotCompleted_Display_Text,
                     _ => string.Empty,
                 };
-            }
-        }
-
-        public string GetEnglishAndMathsStatusDisplayText
-        {
-            get
-            {
-                SubjectStatus?[] statuses = new[] { MathsStatus, EnglishStatus };
-
-                if (statuses.Any(s => !s.HasValue || IsStatus(s, SubjectStatus.NotSpecified)))
-                    return string.Empty;
-
-                if (statuses.Any(s => IsStatus(s, SubjectStatus.NotAchieved) || IsStatus(s, SubjectStatus.NotAchievedByLrs)))
-                    return EnglishAndMathsStatusContent.Not_Achieved_Display_Text;
-
-                return EnglishAndMathsStatusContent.Achieved_Display_Text;
-
-                static bool IsStatus(SubjectStatus? status, SubjectStatus compareToStatus)
-                    => status.HasValue && status.Value == compareToStatus;
             }
         }
     }
