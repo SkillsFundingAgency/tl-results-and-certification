@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class EnglishAndMathsStatus {
@@ -67,42 +67,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         public static string Achieved_Display_Text {
             get {
                 return ResourceManager.GetString("Achieved_Display_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Achieved minimum standard for learners with SEND.
-        /// </summary>
-        public static string Achieved_With_Send_Display_Text {
-            get {
-                return ResourceManager.GetString("Achieved_With_Send_Display_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Achieved minimum standard (Data from the Learning Records Service - LRS).
-        /// </summary>
-        public static string Lrs_Achieved_Display_Text {
-            get {
-                return ResourceManager.GetString("Lrs_Achieved_Display_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Achieved minimum standard for learners with SEND (Data from the Learning Records Service - LRS and provider declaration).
-        /// </summary>
-        public static string Lrs_Achieved_With_Send_Display_Text {
-            get {
-                return ResourceManager.GetString("Lrs_Achieved_With_Send_Display_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Not achieved minimum standard (Data from the Learning Records Service - LRS).
-        /// </summary>
-        public static string Lrs_Not_Achieved_Display_Text {
-            get {
-                return ResourceManager.GetString("Lrs_Not_Achieved_Display_Text", resourceCulture);
             }
         }
         

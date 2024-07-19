@@ -36,9 +36,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
                 SpecialismCode = "ZTLOS003",
                 SpecialismGrade = "None",
 
-                IsEnglishAndMathsAchieved = false,
-                HasLrsEnglishAndMaths = true,
-                IsSendLearner = false,
+                MathsStatus = SubjectStatus.NotAchieved,
+                EnglishStatus = SubjectStatus.Achieved,
                 IndustryPlacementStatus = IndustryPlacementStatus.CompletedWithSpecialConsideration,
 
                 ProviderAddress = _address,
@@ -72,9 +71,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
             ActualResult.SpecialismCode.Should().Be(_expectedApiResult.SpecialismCode);
             ActualResult.SpecialismGrade.Should().Be(_expectedApiResult.SpecialismGrade);
 
-            ActualResult.IsEnglishAndMathsAchieved.Should().Be(_expectedApiResult.IsEnglishAndMathsAchieved);
-            ActualResult.HasLrsEnglishAndMaths.Should().Be(_expectedApiResult.HasLrsEnglishAndMaths);
-            ActualResult.IsSendLearner.Should().Be(_expectedApiResult.IsSendLearner);
+            ActualResult.MathsStatus.Should().Be(_expectedApiResult.MathsStatus);
+            ActualResult.EnglishStatus.Should().Be(_expectedApiResult.EnglishStatus);
             ActualResult.IndustryPlacementStatus.Should().Be(_expectedApiResult.IndustryPlacementStatus);
             ActualResult.ProviderAddress.Should().BeEquivalentTo(_address);
 
