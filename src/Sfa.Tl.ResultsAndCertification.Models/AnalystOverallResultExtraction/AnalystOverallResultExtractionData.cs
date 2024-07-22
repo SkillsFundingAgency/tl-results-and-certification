@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CsvHelper.Configuration.Attributes;
+using System;
 using System.ComponentModel;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.AnalystOverallResultExtraction
@@ -24,6 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.AnalystOverallResultExtraction
         public string FirstName { get; set; }
 
         [DisplayName(AnalystOverallResultExtractionHeader.DateOfBirth)]
+        [Format("dd-MM-yyyy")]
         public DateOnly DateOfBirth { get; set; }
 
         [DisplayName(AnalystOverallResultExtractionHeader.Gender)]
