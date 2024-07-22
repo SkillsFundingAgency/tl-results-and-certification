@@ -264,59 +264,61 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         private static void EndRegistrationWithStatus(TqRegistrationPathway pathway, RegistrationPathwayStatus status, string performedBy)
         {
-            if (pathway != null)
+            if (pathway == null)
+                return;
+
+            DateTime utcNow = DateTime.UtcNow;
+
+            // Pathway
+            pathway.Status = status;
+            pathway.IsPendingWithdrawal = false;
+            pathway.EndDate = utcNow;
+            pathway.ModifiedBy = performedBy;
+            pathway.ModifiedOn = utcNow;
+
+            pathway.TqPathwayAssessments.Where(s => s.IsOptedin && s.EndDate == null).ToList().ForEach(pa =>
             {
-                // Pathway
-                pathway.Status = status;
-                pathway.IsPendingWithdrawal = false;
-                pathway.EndDate = DateTime.UtcNow;
-                pathway.ModifiedBy = performedBy;
-                pathway.ModifiedOn = DateTime.UtcNow;
+                pa.EndDate = utcNow;
+                pa.ModifiedBy = performedBy;
+                pa.ModifiedOn = utcNow;
 
-                pathway.TqPathwayAssessments.Where(s => s.IsOptedin && s.EndDate == null).ToList().ForEach(pa =>
+                pa.TqPathwayResults.Where(r => r.IsOptedin && r.EndDate == null).ToList().ForEach(pr =>
                 {
-                    pa.EndDate = DateTime.UtcNow;
-                    pa.ModifiedBy = performedBy;
-                    pa.ModifiedOn = DateTime.UtcNow;
+                    pr.EndDate = utcNow;
+                    pr.ModifiedBy = performedBy;
+                    pr.ModifiedOn = utcNow;
+                });
+            });
 
-                    pa.TqPathwayResults.Where(r => r.IsOptedin && r.EndDate == null).ToList().ForEach(pr =>
+            // Specialisms
+            pathway.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null).ToList().ForEach(s =>
+            {
+                s.EndDate = utcNow;
+                s.ModifiedBy = performedBy;
+                s.ModifiedOn = utcNow;
+
+                s.TqSpecialismAssessments.Where(sa => sa.IsOptedin && sa.EndDate == null).ToList().ForEach(sa =>
+                {
+                    sa.EndDate = utcNow;
+                    sa.ModifiedBy = performedBy;
+                    sa.ModifiedOn = utcNow;
+
+                    sa.TqSpecialismResults.Where(sr => sr.IsOptedin && sr.EndDate == null).ToList().ForEach(sr =>
                     {
-                        pr.EndDate = DateTime.UtcNow;
-                        pr.ModifiedBy = performedBy;
-                        pr.ModifiedOn = DateTime.UtcNow;
+                        sr.EndDate = utcNow;
+                        sr.ModifiedBy = performedBy;
+                        sr.ModifiedOn = utcNow;
                     });
                 });
+            });
 
-                // Specialisms
-                pathway.TqRegistrationSpecialisms.Where(s => s.IsOptedin && s.EndDate == null).ToList().ForEach(s =>
-                {
-                    s.EndDate = DateTime.UtcNow;
-                    s.ModifiedBy = performedBy;
-                    s.ModifiedOn = DateTime.UtcNow;
-
-                    s.TqSpecialismAssessments.Where(sa => sa.IsOptedin && sa.EndDate == null).ToList().ForEach(sa =>
-                    {
-                        sa.EndDate = DateTime.UtcNow;
-                        sa.ModifiedBy = performedBy;
-                        sa.ModifiedOn = DateTime.UtcNow;
-
-                        sa.TqSpecialismResults.Where(sr => sr.IsOptedin && sr.EndDate == null).ToList().ForEach(sr =>
-                        {
-                            sr.EndDate = DateTime.UtcNow;
-                            sr.ModifiedBy = performedBy;
-                            sr.ModifiedOn = DateTime.UtcNow;
-                        });
-                    });
-                });
-
-                // Overall Results
-                var overallResult = pathway.OverallResults.FirstOrDefault(x => x.IsOptedin && x.EndDate == null);
-                if (overallResult != null)
-                {
-                    overallResult.EndDate = DateTime.UtcNow;
-                    overallResult.ModifiedBy = performedBy;
-                    overallResult.ModifiedOn = DateTime.UtcNow;
-                }
+            // Overall Results
+            var overallResult = pathway.OverallResults.FirstOrDefault(x => x.IsOptedin && x.EndDate == null);
+            if (overallResult != null)
+            {
+                overallResult.EndDate = utcNow;
+                overallResult.ModifiedBy = performedBy;
+                overallResult.ModifiedOn = utcNow;
             }
         }
 
