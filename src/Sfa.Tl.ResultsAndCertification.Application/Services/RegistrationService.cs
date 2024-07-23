@@ -973,6 +973,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 Details = x.Details,
                 ResultAwarded = x.ResultAwarded,
+                SpecialismResultAwarded = x.SpecialismResultAwarded,
                 PublishDate = x.PublishDate,
                 PrintAvailableFrom = x.PrintAvailableFrom,
                 CalculationStatus = x.CalculationStatus,
