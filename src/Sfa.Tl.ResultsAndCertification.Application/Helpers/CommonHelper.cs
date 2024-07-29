@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Helpers
             return startYearOffset;
         }
 
-        public static bool IsValidNextAssessmentSeries(string assessmentEntryName, int regAcademicYear, int tlevelStartYear, ComponentType componentType, IList<AssessmentSeries> dbAssessmentSeries)
+        public static bool IsValidNextAssessmentSeries(string assessmentEntryName, int regAcademicYear, ComponentType componentType, IList<AssessmentSeries> dbAssessmentSeries)
         {
             var currentDate = DateTime.UtcNow.Date;
 

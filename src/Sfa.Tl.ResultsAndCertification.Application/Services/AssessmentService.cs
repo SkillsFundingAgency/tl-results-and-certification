@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly ILogger<IAssessmentRepository> _logger;
 
         public AssessmentService(IAssessmentRepository assessmentRepository,
-            IRepository<TqPathwayAssessment> pathwayAssessmentRepository, 
+            IRepository<TqPathwayAssessment> pathwayAssessmentRepository,
             IRepository<TqSpecialismAssessment> specialismAssessmentRepository,
             IRepository<AssessmentSeries> assessmentSeries, IMapper mapper, ILogger<IAssessmentRepository> logger)
         {
@@ -111,7 +111,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         validationErrors.Add(BuildValidationError(assessment, ValidationMessages.InvalidCoreAssessmentEntry));
                     else
                     {
-                        var isValidNextAssessmentSeries = CommonHelper.IsValidNextAssessmentSeries(assessment.CoreAssessmentEntry, dbRegistration.AcademicYear, dbRegistration.TqProvider.TqAwardingOrganisation.TlPathway.StartYear, ComponentType.Core, dbAssessmentSeries);
+                        var isValidNextAssessmentSeries = CommonHelper.IsValidNextAssessmentSeries(assessment.CoreAssessmentEntry, dbRegistration.AcademicYear, ComponentType.Core, dbAssessmentSeries);
                         if (!isValidNextAssessmentSeries)
                             validationErrors.Add(BuildValidationError(assessment, ValidationMessages.InvalidNextCoreAssessmentEntry));
                     }
@@ -125,7 +125,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         validationErrors.Add(BuildValidationError(assessment, ValidationMessages.InvalidSpecialismAssessmentEntry));
                     else
                     {
-                        var isValidNextAssessmentSeries = CommonHelper.IsValidNextAssessmentSeries(assessment.SpecialismAssessmentEntry, dbRegistration.AcademicYear, dbRegistration.TqProvider.TqAwardingOrganisation.TlPathway.StartYear, ComponentType.Specialism, dbAssessmentSeries);
+                        var isValidNextAssessmentSeries = CommonHelper.IsValidNextAssessmentSeries(assessment.SpecialismAssessmentEntry, dbRegistration.AcademicYear, ComponentType.Specialism, dbAssessmentSeries);
                         if (!isValidNextAssessmentSeries)
                             validationErrors.Add(BuildValidationError(assessment, ValidationMessages.InvalidNextSpecialismAssessmentEntry));
                     }
@@ -150,10 +150,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     });
                 }
             }
-            
+
             return response;
         }
-        
+
         public (IList<TqPathwayAssessment>, IList<TqSpecialismAssessment>) TransformAssessmentsModel(IList<AssessmentRecordResponse> assessmentsData, string performedBy)
         {
             var pathwayAssessments = new List<TqPathwayAssessment>();
@@ -284,7 +284,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             return existingPathwayAssessmentsFromDb.OrderByDescending(x => x.AssessmentSeries.StartDate)
                                                    .FirstOrDefault(existingPathwayAssessment => existingPathwayAssessment.TqRegistrationPathwayId == amendedOrNewPathwayAssessment.TqRegistrationPathwayId);
-        }        
+        }
 
         private AssessmentProcessResponse ValidateStage4RulesForCore(TqPathwayAssessment existingPathwayAssessment, TqPathwayAssessment amendedOrNewPathwayAssessment, AssessmentProcessResponse response)
         {
@@ -402,7 +402,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 }
             };
         }
-        
+
         private BulkProcessValidationError BuildValidationError(AssessmentCsvRecordResponse assessment, string message)
         {
             return new BulkProcessValidationError { RowNum = assessment.RowNum.ToString(), Uln = assessment.Uln.ToString(), ErrorMessage = message };
@@ -432,7 +432,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (!isValid) return null;
 
             return _mapper.Map<AvailableAssessmentSeries>(currentOpenSeries, opt => opt.Items["profileId"] = profileId);
-        }        
+        }
 
         public async Task<AddAssessmentEntryResponse> AddAssessmentEntryAsync(AddAssessmentEntryRequest request)
         {
@@ -472,7 +472,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 var specialismAssessmentsToAdd = new List<TqSpecialismAssessment>();
 
-                foreach(var specialismId in request.SpecialismIds)
+                foreach (var specialismId in request.SpecialismIds)
                 {
                     specialismAssessmentsToAdd.Add(new TqSpecialismAssessment
                     {
@@ -486,8 +486,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     });
                 }
 
-                if(specialismAssessmentsToAdd.Any())
-                status = await _specialismAssessmentRepository.CreateManyAsync(specialismAssessmentsToAdd);
+                if (specialismAssessmentsToAdd.Any())
+                    status = await _specialismAssessmentRepository.CreateManyAsync(specialismAssessmentsToAdd);
             }
 
             return new AddAssessmentEntryResponse { Uln = tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber, IsSuccess = status > 0 };
@@ -496,7 +496,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public async Task<AssessmentEntryDetails> GetActivePathwayAssessmentEntryDetailsAsync(long aoUkprn, int pathwayAssessmentId)
         {
             var pathwayAssessment = await _assessmentRepository.GetPathwayAssessmentDetailsAsync(aoUkprn, pathwayAssessmentId);
-            
+
             if (!IsValidActivePathwayAssessment(pathwayAssessment))
                 return null;
 
@@ -536,7 +536,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (model.SpecialismAssessmentIds == null) return false;
 
             var specialismAssessments = await _specialismAssessmentRepository.GetManyAsync(sa => model.SpecialismAssessmentIds.Contains(sa.Id) && sa.IsOptedin
-                                                                                    && sa.EndDate == null 
+                                                                                    && sa.EndDate == null
                                                                                     && sa.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active
                                                                                     && sa.TqRegistrationSpecialism.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == model.AoUkprn).ToListAsync();
             if (specialismAssessments == null || !specialismAssessments.Any()) return false;
@@ -553,7 +553,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<IList<AssessmentSeriesDetails>> GetAssessmentSeriesAsync()
         {
-            var assessmentSeries =  await _assessmentSeriesRepository.GetManyAsync().ToListAsync();
+            var assessmentSeries = await _assessmentSeriesRepository.GetManyAsync().ToListAsync();
             return _mapper.Map<IList<AssessmentSeriesDetails>>(assessmentSeries);
         }
 

@@ -126,7 +126,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     else
                     {
                         // 7.1. Core - Assessment series is not open 
-                        var isValidNextAssessmentSeries = CommonHelper.IsValidNextAssessmentSeries(result.CoreAssessmentSeries, dbRegistration.AcademicYear, dbRegistration.TqProvider.TqAwardingOrganisation.TlPathway.StartYear, ComponentType.Core, dbAssessmentSeries.Where(x => x.ComponentType == ComponentType.Core).ToList());
+                        var isValidNextAssessmentSeries = CommonHelper.IsValidNextAssessmentSeries(result.CoreAssessmentSeries, dbRegistration.AcademicYear, ComponentType.Core, dbAssessmentSeries.Where(x => x.ComponentType == ComponentType.Core).ToList());
                         if (!isValidNextAssessmentSeries)
                             validationErrors.Add(BuildValidationError(result, ValidationMessages.CoreSeriesNotCurrentlyOpen));
                     }
@@ -181,7 +181,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 // 12. Specialim - Assessment series is not open 
                 if (isSpecialismAndAssesssmentSeriesValid && hasActivSpecialismAssessmentEntry && !string.IsNullOrWhiteSpace(result.SpecialismAssessmentSeries))
                 {
-                    var isValidNextAssessmentSeries = CommonHelper.IsValidNextAssessmentSeries(result.SpecialismAssessmentSeries, dbRegistration.AcademicYear, dbRegistration.TqProvider.TqAwardingOrganisation.TlPathway.StartYear, ComponentType.Specialism, dbAssessmentSeries.Where(x => x.ComponentType == ComponentType.Specialism).ToList());
+                    var isValidNextAssessmentSeries = CommonHelper.IsValidNextAssessmentSeries(result.SpecialismAssessmentSeries, dbRegistration.AcademicYear, ComponentType.Specialism, dbAssessmentSeries.Where(x => x.ComponentType == ComponentType.Specialism).ToList());
                     if (!isValidNextAssessmentSeries)
                         validationErrors.Add(BuildValidationError(result, ValidationMessages.SpecialismSeriesNotCurrentlyOpen));
                 }
