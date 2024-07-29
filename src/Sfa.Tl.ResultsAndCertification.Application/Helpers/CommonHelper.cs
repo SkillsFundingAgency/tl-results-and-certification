@@ -22,13 +22,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Helpers
         {
             var currentDate = DateTime.UtcNow.Date;
 
-            var startYearOffset = GetStartYearOffset(regAcademicYear, tlevelStartYear, componentType);
-
             var isValidNextAssessmentSeries = dbAssessmentSeries.Any(s => s.ComponentType == componentType &&
                                                                      s.Name.Equals(assessmentEntryName, StringComparison.InvariantCultureIgnoreCase) &&
                                                                      currentDate >= s.StartDate &&
                                                                      currentDate <= s.EndDate &&
-                                                                     s.Year > regAcademicYear + startYearOffset &&
+                                                                     s.Year > regAcademicYear &&
                                                                      s.Year <= regAcademicYear + Constants.AssessmentEndInYears);
 
             return isValidNextAssessmentSeries;
