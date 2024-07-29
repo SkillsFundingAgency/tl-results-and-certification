@@ -169,6 +169,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Change industry placement details.
+        /// </summary>
+        public static string Notification_Link_Change_Ip {
+            get {
+                return ResourceManager.GetString("Notification_Link_Change_Ip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Important.
         /// </summary>
         public static string Notification_Title {
