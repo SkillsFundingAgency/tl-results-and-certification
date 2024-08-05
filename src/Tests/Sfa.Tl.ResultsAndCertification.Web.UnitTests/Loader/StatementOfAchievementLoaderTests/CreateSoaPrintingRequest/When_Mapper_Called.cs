@@ -1,13 +1,13 @@
 ﻿using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement;
 using System;
 using System.Collections.Generic;
 using Xunit;
-using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchievementLoaderTests.CreateSoaPrintingRequest
 {
@@ -41,9 +41,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
                 SpecialismCode = "ZTLOS003",
                 SpecialismGrade = "None",
 
-                IsEnglishAndMathsAchieved = true,
-                HasLrsEnglishAndMaths = false,
-                IsSendLearner = true,
+                MathsStatus = SubjectStatus.NotSpecified,
+                EnglishStatus = SubjectStatus.NotSpecified,
                 IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted,
 
                 HasPathwayResult = false,
@@ -71,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
                     }
                 },
                 IndustryPlacement = SoaLearnerRecordDetailsViewModel.IsIndustryPlacementCompleted ? Constants.IndustryPlacementCompleted : Constants.IndustryPlacementNotCompleted,
-                EnglishAndMaths = GetEnglishAndMathsText(SubjectStatus.NotSpecified, SubjectStatus.NotSpecified)
+                EnglishAndMaths = string.Empty
             };
 
             _expectedSoaPrintingDetails = new SoaPrintingDetails
@@ -85,7 +84,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
                 CoreGrade = SoaLearnerRecordDetailsViewModel.PathwayGrade,
                 Specialism = SoaLearnerRecordDetailsViewModel.SpecialismDisplayName,
                 SpecialismGrade = SoaLearnerRecordDetailsViewModel.SpecialismGrade,
-                EnglishAndMaths = SoaLearnerRecordDetailsViewModel.GetEnglishAndMathsStatusDisplayText,
                 IndustryPlacement = SoaLearnerRecordDetailsViewModel.GetIndustryPlacementDisplayText,
                 ProviderAddress = new Models.Contracts.ProviderAddress.Address
                 {
@@ -114,19 +112,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
             result.LearningDetails.Should().BeEquivalentTo(_expectedLearningDetails);
             result.SoaPrintingDetails.Should().BeEquivalentTo(_expectedSoaPrintingDetails);
             result.PerformedBy.Should().Be($"{Givenname} {Surname}");
-        }
-
-        private static string GetEnglishAndMathsText(SubjectStatus? englishStatus, SubjectStatus? mathsStatus)
-        {
-            if ((englishStatus == SubjectStatus.Achieved || englishStatus == SubjectStatus.AchievedByLrs) &&
-                (mathsStatus == SubjectStatus.Achieved || mathsStatus == SubjectStatus.AchievedByLrs))
-                return Constants.MathsAndEnglishAchievedText;
-            else if (mathsStatus == SubjectStatus.Achieved || mathsStatus == SubjectStatus.AchievedByLrs)
-                return Constants.MathsAchievedText;
-            else if (englishStatus == SubjectStatus.Achieved || englishStatus == SubjectStatus.AchievedByLrs)
-                return Constants.EnglishAchievedText;
-            else
-                return string.Empty;
         }
     }
 }

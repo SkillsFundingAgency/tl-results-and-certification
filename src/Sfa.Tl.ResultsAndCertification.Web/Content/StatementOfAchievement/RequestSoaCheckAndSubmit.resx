@@ -210,11 +210,14 @@
   <data name="Title_Department_Text" xml:space="preserve">
     <value>Department</value>
   </data>
-  <data name="Title_English_And_Maths_Text" xml:space="preserve">
-    <value>English and maths</value>
+  <data name="Title_English_Text" xml:space="preserve">
+    <value>English</value>
   </data>
   <data name="Title_Industry_Placement_Text" xml:space="preserve">
     <value>Industry placement</value>
+  </data>
+  <data name="Title_Maths_Text" xml:space="preserve">
+    <value>Maths</value>
   </data>
   <data name="Title_Name_Text" xml:space="preserve">
     <value>Name</value>

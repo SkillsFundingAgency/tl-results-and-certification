@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class RequestSoaCheckAndSubmit {
@@ -341,11 +341,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to English and maths.
+        ///   Looks up a localized string similar to English.
         /// </summary>
-        public static string Title_English_And_Maths_Text {
+        public static string Title_English_Text {
             get {
-                return ResourceManager.GetString("Title_English_And_Maths_Text", resourceCulture);
+                return ResourceManager.GetString("Title_English_Text", resourceCulture);
             }
         }
         
@@ -355,6 +355,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         public static string Title_Industry_Placement_Text {
             get {
                 return ResourceManager.GetString("Title_Industry_Placement_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maths.
+        /// </summary>
+        public static string Title_Maths_Text {
+            get {
+                return ResourceManager.GetString("Title_Maths_Text", resourceCulture);
             }
         }
         

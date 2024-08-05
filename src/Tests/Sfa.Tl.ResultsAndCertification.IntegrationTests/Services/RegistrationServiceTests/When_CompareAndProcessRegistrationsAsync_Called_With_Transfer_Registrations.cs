@@ -231,14 +231,19 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         {
             actualAssessment.Should().NotBeNull();
             actualAssessment.TqRegistrationPathwayId.Should().Be(expectedAssessment.TqRegistrationPathwayId);
-            actualAssessment.AssessmentSeriesId.Should().Be(expectedAssessment.AssessmentSeriesId); 
-            actualAssessment.IsOptedin.Should().BeTrue();
+            actualAssessment.AssessmentSeriesId.Should().Be(expectedAssessment.AssessmentSeriesId);
             actualAssessment.IsBulkUpload.Should().BeTrue();
 
-            if (actualAssessment.TqRegistrationPathway.Status == Common.Enum.RegistrationPathwayStatus.Active)
+            if (actualAssessment.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active)
+            {
+                actualAssessment.IsOptedin.Should().BeTrue();
                 actualAssessment.EndDate.Should().BeNull();
+            }
             else
+            {
+                actualAssessment.IsOptedin.Should().BeFalse();
                 actualAssessment.EndDate.Should().NotBeNull();
+            }
         }
 
         private static void AssertPathwayResults(TqPathwayResult actualResult, TqPathwayResult expectedResult)
@@ -247,34 +252,43 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             actualResult.TqPathwayAssessmentId.Should().Be(expectedResult.TqPathwayAssessmentId);
             actualResult.TlLookupId.Should().Be(expectedResult.TlLookupId);
             actualResult.PrsStatus.Should().Be(expectedResult.PrsStatus);
-            actualResult.IsOptedin.Should().BeTrue();
             actualResult.IsBulkUpload.Should().BeTrue();
 
-            if (actualResult.TqPathwayAssessment.TqRegistrationPathway.Status == Common.Enum.RegistrationPathwayStatus.Active)
+            if (actualResult.TqPathwayAssessment.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active)
+            {
+                actualResult.IsOptedin.Should().BeTrue();
                 actualResult.EndDate.Should().BeNull();
+            }
             else
+            {
+                actualResult.IsOptedin.Should().BeFalse();
                 actualResult.EndDate.Should().NotBeNull();
+            }
         }
 
         private void AssertSpecialismAssessments(IEnumerable<TqSpecialismAssessment> actualAssessments, IEnumerable<TqSpecialismAssessment> expectedAssessments)
         {
             actualAssessments.Should().NotBeEmpty();
             actualAssessments.Should().HaveSameCount(expectedAssessments);
-            
+
             foreach (var expectedAssessment in expectedAssessments)
             {
                 var actualAssessment = actualAssessments.FirstOrDefault(x => x.TqRegistrationSpecialismId == expectedAssessment.TqRegistrationSpecialismId);
-                actualAssessment.Should().NotBeNull(); 
+                actualAssessment.Should().NotBeNull();
                 actualAssessment.TqRegistrationSpecialismId.Should().Be(expectedAssessment.TqRegistrationSpecialismId);
                 actualAssessment.AssessmentSeriesId.Should().Be(expectedAssessment.AssessmentSeriesId);
-                actualAssessment.IsOptedin.Should().BeTrue();
                 actualAssessment.IsBulkUpload.Should().BeTrue();
 
-                if (actualAssessment.TqRegistrationSpecialism.TqRegistrationPathway.Status == Common.Enum.RegistrationPathwayStatus.Active)
+                if (actualAssessment.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active)
+                {
+                    actualAssessment.IsOptedin.Should().BeTrue();
                     actualAssessment.EndDate.Should().BeNull();
+                }
                 else
+                {
+                    actualAssessment.IsOptedin.Should().BeFalse();
                     actualAssessment.EndDate.Should().NotBeNull();
-
+                }
             }
         }
 
@@ -290,13 +304,18 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 actualResult.TqSpecialismAssessmentId.Should().Be(expectedResult.TqSpecialismAssessmentId);
                 actualResult.TlLookupId.Should().Be(expectedResult.TlLookupId);
                 actualResult.PrsStatus.Should().Be(expectedResult.PrsStatus);
-                actualResult.IsOptedin.Should().BeTrue();
                 actualResult.IsBulkUpload.Should().BeTrue();
 
-                if (actualResult.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.Status == Common.Enum.RegistrationPathwayStatus.Active)
+                if (actualResult.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active)
+                {
+                    actualResult.IsOptedin.Should().BeTrue();
                     actualResult.EndDate.Should().BeNull();
+                }
                 else
+                {
+                    actualResult.IsOptedin.Should().BeFalse();
                     actualResult.EndDate.Should().NotBeNull();
+                }
             }
         }
 

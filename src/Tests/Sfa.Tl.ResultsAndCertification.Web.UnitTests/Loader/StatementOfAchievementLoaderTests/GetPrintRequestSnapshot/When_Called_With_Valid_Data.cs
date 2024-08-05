@@ -1,11 +1,11 @@
 ﻿using FluentAssertions;
+using Newtonsoft.Json;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
 using System;
 using Xunit;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
-using Newtonsoft.Json;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchievementLoaderTests.GetPrintRequestSnapshot
 {
@@ -31,7 +31,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
                 Specialism = "Optical Care Services (38234567)",
                 SpecialismGrade = "None",
 
-                EnglishAndMaths = "Achieved minimum standard (Data from the Learning Records Service - LRS)",
                 IndustryPlacement = "Placement completed",
                 ProviderAddress = _expectedAddress
             };
@@ -66,7 +65,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
             actualSnapshotDetails.CoreGrade.Should().Be(_expectedSnapshotDetails.CoreGrade);
             actualSnapshotDetails.Specialism.Should().Be(_expectedSnapshotDetails.Specialism);
             actualSnapshotDetails.SpecialismGrade.Should().Be(_expectedSnapshotDetails.SpecialismGrade);
-            actualSnapshotDetails.EnglishAndMaths.Should().Be(_expectedSnapshotDetails.EnglishAndMaths);
             actualSnapshotDetails.IndustryPlacement.Should().Be(_expectedSnapshotDetails.IndustryPlacement);
 
             var actualSnapshotAddress = ActualResult.SnapshotDetails.ProviderAddress;
