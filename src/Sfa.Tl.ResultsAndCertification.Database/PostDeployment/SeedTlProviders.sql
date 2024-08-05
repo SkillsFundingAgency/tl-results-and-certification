@@ -124,7 +124,7 @@ USING (VALUES
 (116, 10000952, N'The SMB Group', N'The SMB Group'),
 (117, 10001004, N'Burton And South Derbyshire College', N'Burton And South Derbyshire College'),
 (118, 10001201, N'Carmel College', N'Carmel College'),
-(119, 10001353, N'Chelsmford College', N'Chelsmford College'),
+(119, 10001353, N'Chelmsford College', N'Chelmsford College'),
 (120, 10001416, N'Christ The King Sixth Form College', N'Christ The King Sixth Form College'),
 (121, 10001743, N'Craven College', N'Craven College'),
 (122, 10001778, N'Croydon College', N'Croydon College'),

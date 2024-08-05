@@ -24,6 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess
         public long ProviderUkprn { get; set; }
 
         public int AcademicYear { get; set; }
+
         public string AcademicYearName { get; set; }
 
         public string CoreCode { get; set; }

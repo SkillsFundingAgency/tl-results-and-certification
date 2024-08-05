@@ -14,32 +14,30 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Sfa.Tl.ResultsAndCertification.Domain;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
 {
     public class WithdrawalService : IWithdrawalService
     {
-        private readonly IProviderRepository _tqProviderRepository;
-        private readonly IRegistrationRepository _tqRegistrationRepository;
+        private readonly IProviderRepository _providerRepository;
+        private readonly IRegistrationRepository _registrationRepository;
         private readonly IRepository<TqRegistrationPathway> _tqRegistrationPathwayRepository;
-        private readonly IRepository<TqRegistrationSpecialism> _tqRegistrationSpecialismRepository;
         private readonly ICommonService _commonService;
         private readonly IMapper _mapper;
-        private readonly ILogger<IRegistrationRepository> _logger;
+        private readonly ILogger<WithdrawalService> _logger;
 
-        public WithdrawalService(IProviderRepository providerRespository,
-            IRegistrationRepository tqRegistrationRepository,
+        public WithdrawalService(
+            IProviderRepository providerRespository,
+            IRegistrationRepository registrationRepository,
             IRepository<TqRegistrationPathway> tqRegistrationPathwayRepository,
-            IRepository<TqRegistrationSpecialism> tqRegistrationSpecialismRepository,
             ICommonService commonService,
             IMapper mapper,
-            ILogger<IRegistrationRepository> logger
-            )
+            ILogger<WithdrawalService> logger)
         {
-            _tqProviderRepository = providerRespository;
-            _tqRegistrationRepository = tqRegistrationRepository;
+            _providerRepository = providerRespository;
+            _registrationRepository = registrationRepository;
             _tqRegistrationPathwayRepository = tqRegistrationPathwayRepository;
-            _tqRegistrationSpecialismRepository = tqRegistrationSpecialismRepository;
             _commonService = commonService;
             _mapper = mapper;
             _logger = logger;
@@ -50,54 +48,50 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var response = new List<WithdrawalRecordResponse>();
             int rowNum = 1;
 
-            var registrationProfiles = await _tqRegistrationRepository.GetRegistrationProfilesAsync(validWithdrawalsData.Select(e => new TqRegistrationProfile()
+            var registrationProfiles = await _registrationRepository.GetRegistrationProfilesAsync(validWithdrawalsData.Select(e => new TqRegistrationProfile
             {
                 UniqueLearnerNumber = e.Uln
             }).ToList());
 
-            foreach (var withdrawalData in registrationProfiles)
+            foreach (TqRegistrationProfile currentRegistrationProfile in registrationProfiles)
             {
                 rowNum++;
 
-                // Withdrawn Learner
-                if (withdrawalData.TqRegistrationPathways.All(e => e.Status != RegistrationPathwayStatus.Active))
+                bool isRegistrationActive = IsRegistrationActive(currentRegistrationProfile);
+                if (!isRegistrationActive)
                 {
-                    response.Add(AddStage3ValidationError(rowNum, withdrawalData.UniqueLearnerNumber, ValidationMessages.InactiveUln));
+                    response.Add(AddStage3ValidationError(rowNum, currentRegistrationProfile.UniqueLearnerNumber, ValidationMessages.InactiveUln));
                     continue;
                 }
 
-                var pathway = withdrawalData.TqRegistrationPathways.FirstOrDefault(p => p.Status == RegistrationPathwayStatus.Active);
-
-                // Pathway Validation
-                var pathwaycount = pathway.TqPathwayAssessments.Where(a => a.IsOptedin && a.EndDate == null
-                                        && a.TqPathwayResults.Any(r => r.IsOptedin && r.EndDate == null
-                                        && (r.PrsStatus == PrsStatus.UnderReview || r.PrsStatus == PrsStatus.BeingAppealed))).Count();
-
-                if (pathwaycount > 0)
+                bool isDobValid = ValidateDateOfBirth(currentRegistrationProfile, validWithdrawalsData);
+                if (!isDobValid)
                 {
-                    response.Add(AddStage3ValidationError(rowNum, withdrawalData.UniqueLearnerNumber, ValidationMessages.InvalidResultState));
+                    response.Add(AddStage3ValidationError(rowNum, currentRegistrationProfile.UniqueLearnerNumber, ValidationMessages.InvalidDateOfBirth));
                     continue;
                 }
 
-                // Specialism Validation
-                var specialisms = pathway.TqRegistrationSpecialisms.Where(s => s.TqSpecialismAssessments.Any(sa => sa.IsOptedin && sa.EndDate == null));
-
-                var specialismcount = specialisms.Where(s => s.TqSpecialismAssessments.Any(sa => sa.TqSpecialismResults.Any(sr => sr.IsOptedin
-                                        && sr.EndDate == null
-                                        && (sr.PrsStatus == PrsStatus.UnderReview || sr.PrsStatus == PrsStatus.BeingAppealed)))).Count();
-
-                if (specialismcount > 0)
+                bool arePathwayResultsValid = ValidatePathwayResults(currentRegistrationProfile);
+                if (!arePathwayResultsValid)
                 {
-                    response.Add(AddStage3ValidationError(rowNum, withdrawalData.UniqueLearnerNumber, ValidationMessages.InvalidResultState));
+                    response.Add(AddStage3ValidationError(rowNum, currentRegistrationProfile.UniqueLearnerNumber, ValidationMessages.InvalidResultState));
                     continue;
                 }
 
-                response.Add(new WithdrawalRecordResponse()
+                bool areSpecialismResultsValid = ValidateSpecialismResults(currentRegistrationProfile);
+                if (!areSpecialismResultsValid)
                 {
-                    Uln = withdrawalData.UniqueLearnerNumber,
-                    ProfileId = withdrawalData.Id
+                    response.Add(AddStage3ValidationError(rowNum, currentRegistrationProfile.UniqueLearnerNumber, ValidationMessages.InvalidResultState));
+                    continue;
+                }
+
+                response.Add(new WithdrawalRecordResponse
+                {
+                    Uln = currentRegistrationProfile.UniqueLearnerNumber,
+                    ProfileId = currentRegistrationProfile.Id
                 });
             }
+
             return response;
         }
 
@@ -185,11 +179,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             int processed = 0;
             IList<TqRegistrationPathway> pathways = new List<TqRegistrationPathway>();
 
-            var registrationProfiles = await _tqRegistrationRepository.GetRegistrationProfilesAsync(registrations);
+            var registrationProfiles = await _registrationRepository.GetRegistrationProfilesAsync(registrations);
 
             foreach (var profile in registrationProfiles)
             {
-                var registration = await _tqRegistrationRepository.GetRegistrationLiteAsync(AoUkprn, profile.Id, false, includeOverallResults: false);
+                var registration = await _registrationRepository.GetRegistrationLiteAsync(AoUkprn, profile.Id, false, includeOverallResults: false);
 
                 if (registration == null || registration.Status != RegistrationPathwayStatus.Active)
                 {
@@ -219,7 +213,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         private async Task<IList<TechnicalQualificationDetails>> GetAllTLevelsByAoUkprnAsync(long ukprn)
         {
-            var result = await _tqProviderRepository.GetManyAsync(p => p.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == ukprn
+            var result = await _providerRepository.GetManyAsync(p => p.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == ukprn
                                                                     && p.TqAwardingOrganisation.TlAwardingOrganisaton.IsActive
                                                                     && p.TqAwardingOrganisation.TlPathway.IsActive,
                p => p.TlProvider, p => p.TqAwardingOrganisation, p => p.TqAwardingOrganisation.TlAwardingOrganisaton,
@@ -231,11 +225,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         private WithdrawalRecordResponse AddStage3ValidationError(int rowNum, long uln, string errorMessage)
         {
-            return new WithdrawalRecordResponse()
+            return new WithdrawalRecordResponse
             {
                 ValidationErrors = new List<BulkProcessValidationError>()
                 {
-                    new BulkProcessValidationError
+                    new()
                     {
                         RowNum = rowNum.ToString(),
                         Uln = uln.ToString(),
@@ -326,5 +320,29 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }
         }
 
+        private static bool IsRegistrationActive(TqRegistrationProfile profile)
+            => profile.TqRegistrationPathways.Any(e => e.Status == RegistrationPathwayStatus.Active);
+
+        private static bool ValidateDateOfBirth(TqRegistrationProfile profile, IEnumerable<WithdrawalCsvRecordResponse> validWithdrawalsData)
+        {
+            WithdrawalCsvRecordResponse withdrawalCsvRecord = validWithdrawalsData.FirstOrDefault(p => p.Uln == profile.UniqueLearnerNumber);
+            return withdrawalCsvRecord != null && profile.DateofBirth.Date == withdrawalCsvRecord.DateOfBirth.Date;
+        }
+
+        private static bool ValidatePathwayResults(TqRegistrationProfile profile)
+            => profile.TqRegistrationPathways.WhereActive()
+                .SelectMany(rp => rp.TqPathwayAssessments.WhereActive())
+                .SelectMany(pa => pa.TqPathwayResults.WhereActive())
+                .All(res => !IsRommOrAppeal(res.PrsStatus));
+
+        private static bool ValidateSpecialismResults(TqRegistrationProfile profile)
+            => profile.TqRegistrationPathways.WhereActive()
+                .SelectMany(p => p.TqRegistrationSpecialisms.WhereActive())
+                .SelectMany(p => p.TqSpecialismAssessments.WhereActive())
+                .SelectMany(p => p.TqSpecialismResults.WhereActive())
+                .All(res => !IsRommOrAppeal(res.PrsStatus));
+
+        private static bool IsRommOrAppeal(PrsStatus? prsStatus)
+            => prsStatus.HasValue && (prsStatus.Value == PrsStatus.UnderReview || prsStatus.Value == PrsStatus.BeingAppealed);
     }
 }
