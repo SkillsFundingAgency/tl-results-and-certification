@@ -28,9 +28,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement
         public string SpecialismGrade { get; set; }
 
         //Learner's T level component achievements
-        public bool IsEnglishAndMathsAchieved { get; set; }
-        public bool HasLrsEnglishAndMaths { get; set; }
-        public bool? IsSendLearner { get; set; }
         public IndustryPlacementStatus IndustryPlacementStatus { get; set; }
 
         // Provider Organisation's postal address

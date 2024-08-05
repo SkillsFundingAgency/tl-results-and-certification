@@ -226,7 +226,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.StatementOfAc
                     CoreGrade = pathwayResult?.TlLookup.Value,
                     Specialism = $"{specialism.TlSpecialism.Name} ({specialism.TlSpecialism.LarId})",
                     SpecialismGrade = null,
-                    EnglishAndMaths = "Achieved minimum standard",
                     IndustryPlacement = "Not completed",
                     ProviderAddress = new Address
                     {

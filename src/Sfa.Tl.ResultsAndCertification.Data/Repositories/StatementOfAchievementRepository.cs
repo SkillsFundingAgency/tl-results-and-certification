@@ -66,8 +66,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                           {
                                               ProfileId = tqProfile.Id,
                                               Uln = tqProfile.UniqueLearnerNumber,
-                                              MathsStatus = tqProfile.MathsStatus,
-                                              EnglishStatus = tqProfile.EnglishStatus,
                                               Firstname = tqProfile.Firstname,
                                               Lastname = tqProfile.Lastname,
                                               DateofBirth = tqProfile.DateofBirth,
@@ -81,9 +79,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                               SpecialismName = specialism != null ? specialism.TlSpecialism.Name : null,
                                               SpecialismCode = specialism != null ? specialism.TlSpecialism.LarId : null,
 
-                                              IsEnglishAndMathsAchieved = tqProfile.IsEnglishAndMathsAchieved ?? false,
-                                              IsSendLearner = tqProfile.IsSendLearner,
-                                              HasLrsEnglishAndMaths = tqProfile.IsRcFeed == false,
+                                              MathsStatus = tqProfile.MathsStatus,
+                                              EnglishStatus = tqProfile.EnglishStatus,
                                               IndustryPlacementStatus = ipRecord != null ? ipRecord.Status : IndustryPlacementStatus.NotSpecified,
 
                                               ProviderAddress = tlProvider.TlProviderAddresses.Where(pa => pa.IsActive)
