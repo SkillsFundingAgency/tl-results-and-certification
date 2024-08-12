@@ -7,7 +7,7 @@
 }
 
 @section NavigationBar {
-<vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
 }
 
 <div class="govuk-grid-row">
@@ -23,14 +23,42 @@
             <li>@DownloadOverallResults.Item_Grade_Changed</li>
             <li>@DownloadOverallResults.Item_Completed_Industry_Placement</li>
         </ul>
-        <p class="govuk-body">@DownloadOverallResults.Para_File_Update_Each_Time</p>
+    </div>
+</div>
 
-        <div class="govuk-button-group">
-            @if (Model.IsOverallResultsAvailable)
-            {
-                <a class="govuk-button" role="button" asp-route="@RouteConstants.DownloadOverallResultsFile">@DownloadOverallResults.Button_Download_Results_File</a>
-            }
-            <a class="govuk-button govuk-button--secondary" role="button" asp-route="@RouteConstants.Home">@DownloadOverallResults.Button_Back_To_Home</a>
-        </div>
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <section class="gem-c-attachment">
+            <p class="govuk-body govuk-!-margin-top-6">@DownloadOverallResults.Para_Download_Results_As_CSV_File</p>
+            <p class="govuk-body">@DownloadOverallResults.Para_File_Update_Next_Working_Day</p>
+            <div class="gem-c-attachment__thumbnail">
+                <a class="govuk-link" target="_self" tabindex="-1" aria-hidden="true" asp-route="DownloadOverallResultsFile">
+                    <svg class="gem-c-attachment__thumbnail-image" version="1.1" viewBox="0 0 99 140" width="99" height="140" aria-hidden="true">
+                        <path d="M12 12h75v27H12zM12 59h9v9h-9zM12 77h9v9h-9zM12 95h9v9h-9zM12 113h9v9h-9zM30 59h57v9H30zM30 77h39v9H30zM30 95h57v9H30zM30 113h48v9H30z" stroke-width="0"></path>
+                    </svg>
+                </a>
+            </div>
+            <h3 class="govuk-heading-s">
+                <a class="govuk-link" target="_self" asp-route="DownloadOverallResultsFile">
+                    @string.Format(@DownloadOverallResults.Download_Link_Results_CSV_Data, @DownloadOverallResults.File_Type_CSV)
+                </a>
+            </h3>
+        </section>
+
+        <section class="gem-c-attachment">
+            <p class="govuk-body govuk-!-margin-top-6">@DownloadOverallResults.Para_Download_Results_Slips_As_PDF_File</p>
+            <div class="gem-c-attachment__thumbnail">
+                <a class="govuk-link" target="_self" tabindex="-1" aria-hidden="true" asp-route="DownloadOverallResultSlipsFile">
+                    <svg class="gem-c-attachment__thumbnail-image" version="1.1" viewBox="0 0 99 140" width="99" height="140" aria-hidden="true">
+                        <path d="M12 12h75v27H12zM12 59h9v9h-9zM12 77h9v9h-9zM12 95h9v9h-9zM12 113h9v9h-9zM30 59h57v9H30zM30 77h39v9H30zM30 95h57v9H30zM30 113h48v9H30z" stroke-width="0"></path>
+                    </svg>
+                </a>
+            </div>
+            <h3 class="govuk-heading-s">
+                <a class="govuk-link" target="_self" asp-route="DownloadOverallResultSlipsFile">
+                    @string.Format(@DownloadOverallResults.Download_Link_Result_Slips_PDF_Data, @DownloadOverallResults.File_Type_PDF, Model.ResultSlipsFileSizeKb)
+                </a>
+            </h3>
+        </section>
     </div>
 </div>

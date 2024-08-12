@@ -32,45 +32,40 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.CoreComponent, opts => opts.ConvertUsing(new DoubleQuotedStringConverter(), s => s.TqProvider.TqAwardingOrganisation.TlPathway.Name))
                 .ForMember(d => d.CoreCode, opts => opts.MapFrom(s => s.TqProvider.TqAwardingOrganisation.TlPathway.LarId))
                 .ForMember(d => d.CoreResult, opts => opts.ConvertUsing(new PathwayResultStringConverter(), p => p.TqPathwayAssessments))
-                .ForMember(d => d.OccupationalSpecialism, opts => opts.ConvertUsing(new SpecialismNameConverter(), p => p.TqRegistrationSpecialisms.Where(w => w.IsOptedin && w.EndDate == null)))
-                .ForMember(d => d.SpecialismCode, opts => opts.ConvertUsing(new SpecialismCodeConverter(), p => p.TqRegistrationSpecialisms.Where(w => w.IsOptedin && w.EndDate == null)))
-                .ForMember(d => d.SpecialismResult, opts => opts.MapFrom(s => GetSpecialismResult(s)))
+                .ForMember(d => d.OccupationalSpecialism, opts => opts.ConvertUsing(new SpecialismNameConverter(), p => p.TqRegistrationSpecialisms))
+                .ForMember(d => d.SpecialismCode, opts => opts.ConvertUsing(new SpecialismCodeConverter(), p => p.TqRegistrationSpecialisms))
+                .ForMember(d => d.SpecialismResult, opts => opts.MapFrom(s => GetSpecialismResultAwarded(s)))
                 .ForMember(d => d.IndustryPlacementStatus, opts => opts.ConvertUsing(new IndustryPlacementStatusStringConverter(), p => p.IndustryPlacements))
-                .ForMember(d => d.OverallResult, opts => opts.MapFrom(s => GetOverallResult(s)))
+                .ForMember(d => d.OverallResult, opts => opts.MapFrom(s => GetResultAwarded(s)))
                 .AfterMap<AnalystOverallResultExtractionEmptyToNullTextAction>();
         }
 
-        private static string GetSpecialismResult(TqRegistrationPathway registrationPathway)
+        private static string GetResultAwarded(TqRegistrationPathway registrationPathway)
         {
-            return GetOverallResultProperty(registrationPathway, p => p.SpecialismResultAwarded);
+            OverallResult overallResult = GetOverallResult(registrationPathway);
+            return overallResult != null ? overallResult.ResultAwarded : string.Empty;
         }
 
-        private static string GetOverallResult(TqRegistrationPathway registrationPathway)
+        private static string GetSpecialismResultAwarded(TqRegistrationPathway registrationPathway)
         {
-            return GetOverallResultAwardedProperty(registrationPathway, p => p.ResultAwarded);
-        }
+            OverallResult overallResult = GetOverallResult(registrationPathway);
 
-        private static string GetOverallResultProperty(TqRegistrationPathway registrationPathway, Func<OverallResult, string> getPropertyValue)
-        {
-            if (registrationPathway.OverallResults.IsNullOrEmpty())
+            if (overallResult == null)
                 return string.Empty;
 
-            OverallResult overallResult = registrationPathway.OverallResults.OrderByDescending(r => r.Id).First();
-            var overallResultDetails = JsonConvert.DeserializeObject<OverallResultDetail>(overallResult.Details);
+            if (!string.IsNullOrEmpty(overallResult.SpecialismResultAwarded))
+                return overallResult.SpecialismResultAwarded;
 
-            return overallResult != null ? string.IsNullOrEmpty(overallResult.SpecialismResultAwarded) ?
-                overallResultDetails.SpecialismDetails.FirstOrDefault()?.SpecialismResult :
-                getPropertyValue(overallResult) : string.Empty;
+            OverallResultDetail overallResultDetails = JsonConvert.DeserializeObject<OverallResultDetail>(overallResult.Details);
+            return overallResultDetails.SpecialismDetails.FirstOrDefault()?.SpecialismResult;
         }
 
-        private static string GetOverallResultAwardedProperty(TqRegistrationPathway registrationPathway, Func<OverallResult, string> getPropertyValue)
+        private static OverallResult GetOverallResult(TqRegistrationPathway registrationPathway)
         {
             if (registrationPathway.OverallResults.IsNullOrEmpty())
-                return string.Empty;
+                return null;
 
-            OverallResult overallResult = registrationPathway.OverallResults.OrderByDescending(r => r.Id).First();
-
-            return overallResult != null ? getPropertyValue(overallResult) : string.Empty;
+            return registrationPathway.OverallResults.OrderByDescending(r => r.Id).First();
         }
     }
 }

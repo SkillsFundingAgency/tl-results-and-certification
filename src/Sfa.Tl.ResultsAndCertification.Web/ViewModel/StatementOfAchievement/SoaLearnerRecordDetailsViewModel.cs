@@ -7,12 +7,10 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using IpStatus = Sfa.Tl.ResultsAndCertification.Common.Enum.IndustryPlacementStatus;
 using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
-using RequestSoaCheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement.RequestSoaCheckAndSubmit;
-using EnglishAndMathsStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.EnglishAndMathsStatus;
 using IndustryPlacementStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.IndustryPlacementStatus;
-using AutoMapper;
+using IpStatus = Sfa.Tl.ResultsAndCertification.Common.Enum.IndustryPlacementStatus;
+using RequestSoaCheckAndSubmitContent = Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement.RequestSoaCheckAndSubmit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
 {
@@ -21,9 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         public bool IsValid { get { return IsLearnerRegistered && !IsNotWithdrawn && IsIndustryPlacementAdded && !(HasPathwayResult == false && !IsIndustryPlacementCompleted); } }
 
         //Learner's registration details
-        public int ProfileId { get; set; }      
-        public SubjectStatus? MathsStatus { get; set; }
-        public SubjectStatus? EnglishStatus { get; set; }
+        public int ProfileId { get; set; }
         public long Uln { get; set; }
         public string LearnerName { get; set; }
         public DateTime DateofBirth { get; set; }
@@ -45,10 +41,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         public string SpecialismGrade { get; set; }
 
         //Learner's T level component achievements
-        public bool IsEnglishAndMathsAchieved { get; set; }
-        public bool HasLrsEnglishAndMaths { get; set; }
-        public bool? IsSendLearner { get; set; }
-        public IndustryPlacementStatus IndustryPlacementStatus { get; set; }
+        public SubjectStatus MathsStatus { get; set; }
+        public SubjectStatus EnglishStatus { get; set; }
+
+        public string MathsStatusText { get; set; }
+        public string EnglishStatusText { get; set; }
+
+        public IpStatus IndustryPlacementStatus { get; set; }
 
         // Provider Organisation's postal address
         public AddressViewModel ProviderAddress { get; set; }
@@ -111,11 +110,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
             IsRawHtml = true
         };
 
-        public SummaryItemModel SummaryEnglishAndMaths => new SummaryItemModel
+        public SummaryItemModel SummaryMathsStatus => new()
         {
-            Id = "englishandmaths",
-            Title = RequestSoaCheckAndSubmitContent.Title_English_And_Maths_Text,
-            Value = GetEnglishAndMathsStatusDisplayText
+            Id = "mathsstatus",
+            Title = RequestSoaCheckAndSubmitContent.Title_Maths_Text,
+            Value = MathsStatusText
+        };
+
+        public SummaryItemModel SummaryEnglishStatus => new()
+        {
+            Id = "englishstatus",
+            Title = RequestSoaCheckAndSubmitContent.Title_English_Text,
+            Value = EnglishStatusText
         };
 
         public SummaryItemModel SummaryIndustryPlacement => new SummaryItemModel
@@ -176,41 +182,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
                     IpStatus.NotCompleted => IndustryPlacementStatusContent.NotCompleted_Display_Text,
                     _ => string.Empty,
                 };
-            }
-        }        
-
-        public string GetEnglishAndMathsStatusDisplayText
-        {
-            get
-            {
-                if (HasLrsEnglishAndMaths)
-                {
-                    if (IsEnglishAndMathsAchieved && IsSendLearner == true)
-                    {
-                        return EnglishAndMathsStatusContent.Lrs_Achieved_With_Send_Display_Text;
-                    }
-                    else
-                    {
-                        return IsEnglishAndMathsAchieved && !IsSendLearner.HasValue
-                            ? EnglishAndMathsStatusContent.Lrs_Achieved_Display_Text
-                            : EnglishAndMathsStatusContent.Lrs_Not_Achieved_Display_Text;
-                    }
-                }
-                else
-                {
-                    if (IsEnglishAndMathsAchieved && IsSendLearner == true)
-                    {
-                        return EnglishAndMathsStatusContent.Achieved_With_Send_Display_Text;
-                    }
-                    else if (IsEnglishAndMathsAchieved)
-                    {
-                        return EnglishAndMathsStatusContent.Achieved_Display_Text;
-                    }
-                    else
-                    {
-                        return !IsEnglishAndMathsAchieved ? EnglishAndMathsStatusContent.Not_Achieved_Display_Text : string.Empty;
-                    }
-                }
             }
         }
     }

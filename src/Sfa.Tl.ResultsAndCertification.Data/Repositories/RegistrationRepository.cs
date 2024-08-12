@@ -141,14 +141,22 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                             .Include(p => p.TqPathwayAssessments)
                                 .ThenInclude(p => p.TqPathwayResults.Where(p => p.IsOptedin))
                                 .ThenInclude(p => p.TlLookup)
-                            .Include(p => p.TqRegistrationSpecialisms.Where(p => p.IsOptedin))
+                            .Include(p => p.TqRegistrationSpecialisms
+                                .Where(p => 
+                                    // If the learner is withdrawn and the specialism IS NOT DUAL we pick the one with the latest end date.
+                                    (p.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn && !p.TlSpecialism.TlDualSpecialismToSpecialisms.Any()
+                                    && p.IsOptedin && !_dbContext.TqRegistrationSpecialism.Any(p2 => p2.TqRegistrationPathwayId == p.TqRegistrationPathwayId && p2.EndDate > p.EndDate))
+                                    // If the learner is withdrawn and the specialisms ARE DUAL we pick the ones with the latest end date.
+                                    || (p.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn && p.TlSpecialism.TlDualSpecialismToSpecialisms.Any()
+                                    && p.IsOptedin && !_dbContext.TqRegistrationSpecialism.Any(p2 => p2.TqRegistrationPathwayId == p.TqRegistrationPathwayId && p2.TlSpecialismId == p.TlSpecialismId && p2.EndDate > p.EndDate))
+                                    // If the learner is NOT withdrawn we pick the ones with no end date.
+                                    || (p.TqRegistrationPathway.Status != RegistrationPathwayStatus.Withdrawn && p.IsOptedin && !p.EndDate.HasValue)))
                                 .ThenInclude(p => p.TlSpecialism)
                                 .ThenInclude(s => s.TlDualSpecialismToSpecialisms)
                                 .ThenInclude(s => s.DualSpecialism)
                             .Include(p => p.IndustryPlacements)
-                            .Include(p => p.OverallResults)
-                            .Where(p => academicYears.Contains(p.AcademicYear)
-                                &&  !_dbContext.TqRegistrationPathway.Any(p2 => p2.TqRegistrationProfileId == p.TqRegistrationProfileId && p2.Id > p.Id))
+                            .Include(p => p.OverallResults.Where(p => p.IsOptedin))
+                            .Where(p => academicYears.Contains(p.AcademicYear))
                             .OrderBy(p => p.AcademicYear)
                             .ThenBy(p => p.TqRegistrationProfile.UniqueLearnerNumber);
 
