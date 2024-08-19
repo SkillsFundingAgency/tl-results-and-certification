@@ -114,7 +114,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                         // Redirect the user to the /auth/cb endpoint. ASP.NET Core middleware interprets this by default
                         // as a successful authentication and throws in surprise when it doesn't find an authorization code.
                         // This override ensures that these cases redirect to the root.
-                        OnMessageReceived = async context =>
+                        OnMessageReceived = context =>
                         {
                             bool isSpuriousAuthCbRequest =
                                 context.Request.Path == options.CallbackPath &&
@@ -134,6 +134,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                                 context.HandleResponse();
                                 context.Response.Redirect("/");
                             }
+
+                            return Task.CompletedTask;
                         },
 
                         // Sometimes the auth flow fails. The most commonly observed causes for this are
