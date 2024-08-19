@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -18,12 +19,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
 {
     public static class AuthenticationExtensions
     {
-        private static ILogger Logger { get; set; }
-        public static IServiceCollection AddWebAuthentication(this IServiceCollection services, ResultsAndCertificationConfiguration config, IWebHostEnvironment env, ILogger logger)
+        public static IServiceCollection AddWebAuthentication(this IServiceCollection services, ResultsAndCertificationConfiguration config, IWebHostEnvironment env)
         {
             var cookieSecurePolicy = env.IsDevelopment() ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always;
-            Logger = logger;
-            Logger.LogTrace("Inside Authentication");
 
             if (config.BypassDfeSignIn)
             {
@@ -135,12 +133,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                         // Cookie correlation failures, caused by obscure load balancing stuff.
                         // In these cases, rather than send user to a 500 page, prompt them to re-authenticate.
                         // This is derived from the recommended approach: https://github.com/aspnet/Security/issues/1165
-                        OnRemoteFailure = ctx =>
+                        OnRemoteFailure = context =>
                         {
-                            Logger.LogTrace("Inside On Remote failure");
-                            Logger.LogTrace(ctx.Failure?.Message?.ToString());
-                            ctx.Response.Redirect("/");
-                            ctx.HandleResponse();
+                            var logger = context.GetLogger();
+
+                            string message = context.Failure?.Message;
+                            logger.LogInformation(context.Failure, "[On Remote Failure]: {Message}", message);
+
+                            context.HandleResponse();
+                            context.Response.Redirect("/");
+
                             return Task.CompletedTask;
                         },
 
@@ -149,6 +151,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                         // and validated the identity token
                         OnTokenValidated = context =>
                         {
+                            var logger = context.GetLogger();
+
+                            string message = context.Principal.ToString();
+                            logger.LogInformation(new FormatException(message), "[On Token Validated]: {Message}", message);
+
                             var resolver = context.GetService<TokenValidatedStrategyResolver>();
                             ITokenValidatedStrategy strategy = resolver(config.FreezePeriodStartDate, config.FreezePeriodEndDate);
 
@@ -162,5 +169,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
 
         private static TService GetService<TService>(this TokenValidatedContext context) where TService : class
              => context?.HttpContext?.RequestServices?.GetService<TService>();
+
+        private static ILogger GetLogger(this RemoteFailureContext context)
+        {
+            var loggerProvider = context?.HttpContext?.RequestServices?.GetService<ILoggerProvider>();
+            return loggerProvider.CreateLogger("Authentication");
+        }
+
+        private static ILogger GetLogger(this TokenValidatedContext context)
+        {
+            var loggerProvider = context?.HttpContext?.RequestServices?.GetService<ILoggerProvider>();
+            return loggerProvider.CreateLogger("Authentication");
+        }
     }
 }
