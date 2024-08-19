@@ -114,20 +114,27 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                         // Redirect the user to the /auth/cb endpoint. ASP.NET Core middleware interprets this by default
                         // as a successful authentication and throws in surprise when it doesn't find an authorization code.
                         // This override ensures that these cases redirect to the root.
-                        OnMessageReceived = context =>
-                            {
-                                var isSpuriousAuthCbRequest =
-                                    context.Request.Path == options.CallbackPath &&
-                                    context.Request.Method == "GET" &&
-                                    !context.Request.Query.ContainsKey("code");
+                        OnMessageReceived = async context =>
+                        {
+                            bool isSpuriousAuthCbRequest =
+                                context.Request.Path == options.CallbackPath &&
+                                context.Request.Method == "GET" &&
+                                !context.Request.Query.ContainsKey("code");
 
-                                if (isSpuriousAuthCbRequest)
-                                {
-                                    context.HandleResponse();
-                                    context.Response.Redirect("/");
-                                }
-                                return Task.CompletedTask;
-                            },
+                            if (isSpuriousAuthCbRequest)
+                            {
+                                HttpRequest request = context.Request;
+
+                                var logger = context.GetLogger();
+                                logger.LogError("[On Message Received]: IsSpurious: {IsSpuriousAuthCbRequest} " +
+                                    "| Request method: {Method} " +
+                                    "| Request path: {Path} " +
+                                    "| Request query: {Query} ", isSpuriousAuthCbRequest, request.Method, request.Path, request.Query);
+
+                                context.HandleResponse();
+                                context.Response.Redirect("/");
+                            }
+                        },
 
                         // Sometimes the auth flow fails. The most commonly observed causes for this are
                         // Cookie correlation failures, caused by obscure load balancing stuff.
@@ -138,7 +145,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                             var logger = context.GetLogger();
 
                             string message = context.Failure?.Message;
-                            logger.LogInformation(context.Failure, "[On Remote Failure]: {Message}", message);
+                            logger.LogError(context.Failure, "[On Remote Failure]: {Message}", message);
 
                             context.HandleResponse();
                             context.Response.Redirect("/");
@@ -154,7 +161,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                             var logger = context.GetLogger();
 
                             string message = context.Principal.ToString();
-                            logger.LogInformation(new FormatException(message), "[On Token Validated]: {Message}", message);
+                            logger.LogError(new FormatException(message), "[On Token Validated]: {Message}", message);
 
                             var resolver = context.GetService<TokenValidatedStrategyResolver>();
                             ITokenValidatedStrategy strategy = resolver(config.FreezePeriodStartDate, config.FreezePeriodEndDate);
@@ -177,6 +184,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
         }
 
         private static ILogger GetLogger(this TokenValidatedContext context)
+        {
+            var loggerProvider = context?.HttpContext?.RequestServices?.GetService<ILoggerProvider>();
+            return loggerProvider.CreateLogger("Authentication");
+        }
+
+        private static ILogger GetLogger(this MessageReceivedContext context)
         {
             var loggerProvider = context?.HttpContext?.RequestServices?.GetService<ILoggerProvider>();
             return loggerProvider.CreateLogger("Authentication");
