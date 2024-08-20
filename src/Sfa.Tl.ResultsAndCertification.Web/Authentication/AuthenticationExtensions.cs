@@ -160,11 +160,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                         // and validated the identity token
                         OnTokenValidated = context =>
                         {
-                            var logger = context.GetLogger();
-
-                            string message = context.Principal.ToString();
-                            logger.LogError(new FormatException(message), "[On Token Validated]: {Message}", message);
-
                             var resolver = context.GetService<TokenValidatedStrategyResolver>();
                             ITokenValidatedStrategy strategy = resolver(config.FreezePeriodStartDate, config.FreezePeriodEndDate);
 
@@ -180,20 +175,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
              => context?.HttpContext?.RequestServices?.GetService<TService>();
 
         private static ILogger GetLogger(this RemoteFailureContext context)
-        {
-            var loggerProvider = context?.HttpContext?.RequestServices?.GetService<ILoggerProvider>();
-            return loggerProvider.CreateLogger("Authentication");
-        }
-
-        private static ILogger GetLogger(this TokenValidatedContext context)
-        {
-            var loggerProvider = context?.HttpContext?.RequestServices?.GetService<ILoggerProvider>();
-            return loggerProvider.CreateLogger("Authentication");
-        }
+            => GetLogger(context.HttpContext);
 
         private static ILogger GetLogger(this MessageReceivedContext context)
+            => GetLogger(context.HttpContext);
+
+        private static ILogger GetLogger(this HttpContext context)
         {
-            var loggerProvider = context?.HttpContext?.RequestServices?.GetService<ILoggerProvider>();
+            var loggerProvider = context?.RequestServices?.GetService<ILoggerProvider>();
             return loggerProvider.CreateLogger("Authentication");
         }
     }
