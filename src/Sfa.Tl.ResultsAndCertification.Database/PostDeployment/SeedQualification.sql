@@ -741,7 +741,10 @@ USING (VALUES
   (646, 26, 9, N'500/2674/4', N'ASCENTIS Level 1 Award in Functional Skills Mathematics (QCF)', 1, 0),
   (647, 26, 9, N'500/2525/9', N'ASDAN Level 1 Award in Functional Skills Mathematics (QCF)', 1, 0),
   (648, 26, 9, N'500/2927/7', N'WJEC Level 1 Award in Functional Skills Mathematics (QCF)', 1, 0),
-  (649, 26, 9, N'500/7891/4', N'NOCN Level 1 Award in Functional Skills Mathematics (QCF)', 1, 0)
+  (649, 26, 9, N'500/7891/4', N'NOCN Level 1 Award in Functional Skills Mathematics (QCF)', 1, 0),
+
+  -- Functional Skills (Maths)
+  (650, 3, 9, N'60342687', N'Functional Skills Qualification in Mathematics Level 2', 0, 1)
   )
   AS Source ([Id], [QualificationTypeId], [TlLookupId], [Code], [Title], [IsSendQualification], [IsActive]) 
 ON Target.[Id] = Source.[Id] 
