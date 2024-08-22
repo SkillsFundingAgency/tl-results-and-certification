@@ -145,7 +145,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             RedirectToRouteResult result = RedirectToRoute(RouteConstants.AdminSearchLearnersRecords, new { pageNumber = viewModel?.SearchLearnerCriteria?.PageNumber });
 
             string routeValues = JsonConvert.SerializeObject(result.RouteValues);
-            _logger.LogInformation("[AdminDashboard Search Redirect]: Route name: {RouteName} Route values: {RouteValues}", result.RouteName, routeValues);
+            _logger.LogInformation("[AdminDashboard Search Redirect]: Route name: {RouteName} Route values: {RouteValues} User: {Email}", result.RouteName, routeValues, User.GetUserEmail());
 
             return result;
         }
