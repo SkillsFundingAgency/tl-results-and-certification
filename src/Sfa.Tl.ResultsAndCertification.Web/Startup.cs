@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
@@ -31,7 +30,6 @@ using Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper;
 using StackExchange.Redis;
 using System;
 using System.Globalization;
-using ILogger = Microsoft.Extensions.Logging.ILogger;
 
 namespace Sfa.Tl.ResultsAndCertification.Web
 {
@@ -39,8 +37,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web
     {
         private readonly IConfiguration _config;
         private readonly IWebHostEnvironment _env;
-        internal static ILoggerFactory LogFactory { get; set; }
-        private ILogger _logger { get; set; }
 
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
@@ -130,15 +126,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                     : serviceProvider.GetService<TokenValidatedStrategy>();
             });
 
-            using var loggerFactory = LoggerFactory.Create(builder =>
-            {
-                builder.SetMinimumLevel(LogLevel.Information);
-                builder.AddConsole();
-                builder.AddEventSourceLogger();
-            });
-            _logger = loggerFactory.CreateLogger<Startup>();
-
-            services.AddWebAuthentication(ResultsAndCertificationConfiguration, _env, _logger);
+            services.AddWebAuthentication(ResultsAndCertificationConfiguration, _env);
             services.AddAuthorization(options =>
             {
                 // Awarding Organisation Access Policies
@@ -165,12 +153,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app)
         {
             var cultureInfo = new CultureInfo("en-GB");
             CultureInfo.DefaultThreadCurrentCulture = cultureInfo;
             CultureInfo.DefaultThreadCurrentUICulture = cultureInfo;
-            LogFactory = loggerFactory;
 
             if (_env.IsDevelopment())
             {
