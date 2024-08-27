@@ -216,7 +216,7 @@
         public const string OverallResultXNoResultCode = "OR7";
         public const string OverallResultQpendingCode = "OR8";
 
-        public const string GCSEQualificationType = "GCSE (9 to 1)";
+        public const string WJECEduqasEnglishLanguageQualificationCode = "601/4505/5";
 
         // Content types
         public const string TextCsv = "text/csv";
