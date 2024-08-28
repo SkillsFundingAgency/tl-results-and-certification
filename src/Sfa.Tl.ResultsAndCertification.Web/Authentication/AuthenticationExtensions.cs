@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -18,12 +19,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
 {
     public static class AuthenticationExtensions
     {
-        private static ILogger Logger { get; set; }
-        public static IServiceCollection AddWebAuthentication(this IServiceCollection services, ResultsAndCertificationConfiguration config, IWebHostEnvironment env, ILogger logger)
+        public static IServiceCollection AddWebAuthentication(this IServiceCollection services, ResultsAndCertificationConfiguration config, IWebHostEnvironment env)
         {
             var cookieSecurePolicy = env.IsDevelopment() ? CookieSecurePolicy.SameAsRequest : CookieSecurePolicy.Always;
-            Logger = logger;
-            Logger.LogTrace("Inside Authentication");
 
             if (config.BypassDfeSignIn)
             {
@@ -117,30 +115,43 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                         // as a successful authentication and throws in surprise when it doesn't find an authorization code.
                         // This override ensures that these cases redirect to the root.
                         OnMessageReceived = context =>
-                            {
-                                var isSpuriousAuthCbRequest =
-                                    context.Request.Path == options.CallbackPath &&
-                                    context.Request.Method == "GET" &&
-                                    !context.Request.Query.ContainsKey("code");
+                        {
+                            bool isSpuriousAuthCbRequest =
+                                context.Request.Path == options.CallbackPath &&
+                                context.Request.Method == "GET" &&
+                                !context.Request.Query.ContainsKey("code");
 
-                                if (isSpuriousAuthCbRequest)
-                                {
-                                    context.HandleResponse();
-                                    context.Response.Redirect("/");
-                                }
-                                return Task.CompletedTask;
-                            },
+                            if (isSpuriousAuthCbRequest)
+                            {
+                                HttpRequest request = context.Request;
+
+                                var logger = context.GetLogger();
+                                logger.LogError("[On Message Received]: IsSpurious: {IsSpuriousAuthCbRequest} " +
+                                    "| Request method: {Method} " +
+                                    "| Request path: {Path} " +
+                                    "| Request query: {Query} ", isSpuriousAuthCbRequest, request.Method, request.Path, request.Query);
+
+                                context.HandleResponse();
+                                context.Response.Redirect("/");
+                            }
+
+                            return Task.CompletedTask;
+                        },
 
                         // Sometimes the auth flow fails. The most commonly observed causes for this are
                         // Cookie correlation failures, caused by obscure load balancing stuff.
                         // In these cases, rather than send user to a 500 page, prompt them to re-authenticate.
                         // This is derived from the recommended approach: https://github.com/aspnet/Security/issues/1165
-                        OnRemoteFailure = ctx =>
+                        OnRemoteFailure = context =>
                         {
-                            Logger.LogTrace("Inside On Remote failure");
-                            Logger.LogTrace(ctx.Failure?.Message?.ToString());
-                            ctx.Response.Redirect("/");
-                            ctx.HandleResponse();
+                            var logger = context.GetLogger();
+
+                            string message = context.Failure?.Message;
+                            logger.LogError(context.Failure, "[On Remote Failure]: {Message}", message);
+
+                            context.HandleResponse();
+                            context.Response.Redirect("/");
+
                             return Task.CompletedTask;
                         },
 
@@ -162,5 +173,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
 
         private static TService GetService<TService>(this TokenValidatedContext context) where TService : class
              => context?.HttpContext?.RequestServices?.GetService<TService>();
+
+        private static ILogger GetLogger(this RemoteFailureContext context)
+            => GetLogger(context.HttpContext);
+
+        private static ILogger GetLogger(this MessageReceivedContext context)
+            => GetLogger(context.HttpContext);
+
+        private static ILogger GetLogger(this HttpContext context)
+        {
+            var loggerProvider = context?.RequestServices?.GetService<ILoggerProvider>();
+            return loggerProvider.CreateLogger("Authentication");
+        }
     }
 }
