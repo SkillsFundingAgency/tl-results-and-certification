@@ -13,7 +13,8 @@ USING (VALUES
   (5, N'Legal, Finance and Accounting'),
   (6, N'Engineering and Manufacturing'),
   (7, N'Business and Administration'),
-  (8, N'Agriculture, Environment and Animal Care')
+  (8, N'Agriculture, Environment and Animal Care'),
+  (9, N'Creative and Design')
   )
   AS Source ([Id], [Name]) 
 ON Target.[Id] = Source.[Id] 
