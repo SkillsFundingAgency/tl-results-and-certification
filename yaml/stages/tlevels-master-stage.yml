@@ -55,32 +55,6 @@ stages:
       applicationName: resac
       variableTemplates: 
         - ./Automation/variables/vars-non-prd.yml@devopsTemplates
-
-######################## TEST 3 ##############################################
-  - template: tlevels-shared-stage.yml
-    parameters:
-      environmentTagName: Test3
-      stageName: Test3
-      dependencies:
-        - build
-      environmentName: tst3
-      sharedEnvironmentId: t03
-      serviceConnection: $(testServiceConnection)
-      applicationName: resac
-    
-  - template: tlevels-stage.yml
-    parameters:
-      environmentTagName: Test3
-      stageName: Test3
-      dependencies:
-        - DeploySharedInfrastructure_t03
-      environmentName: tst3
-      environmentId: t03
-      sharedEnvironmentId: t03
-      serviceConnection: $(testServiceConnection)
-      applicationName: resac
-      variableTemplates: 
-        - ./Automation/variables/vars-non-prd.yml@devopsTemplates
       
 ######################## Pre Prod ##############################################
   - template: tlevels-shared-stage.yml
