@@ -24,7 +24,7 @@ USING (VALUES
   (16, N'61001115', N'T Level in Management and Administration', N'Management and Administration', 2022, 7),
   (17, N'61022263', N'T Level in Legal Services', N'Legal Services', 2023, 5),
   (18, N'61029336', N'T Level in Agriculture, Land Management and Production', N'Agriculture, Land Management and Production', 2023, 8),
-  (19, N'61041580', N'T Level in Animal care and Management', N'Animal care and Management', 2024, 8),
+  (19, N'61041580', N'T Level in Animal Care and Management', N'Animal Care and Management', 2024, 8),
   (20, N'61040915', N'T Level in Craft and Design', N'Craft and Design', 2024, 9),
   (21, N'61040927', N'T Level in Media, Broadcast and Production', N'Media, Broadcast and Production', 2024, 9)
   )
