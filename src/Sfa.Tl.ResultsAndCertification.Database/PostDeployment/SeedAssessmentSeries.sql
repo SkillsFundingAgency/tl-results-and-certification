@@ -18,7 +18,7 @@ USING (VALUES
   (10, 1, N'Summer 2024', N'Summer 2024', 2024, N'2024-03-12', N'2024-08-05', N'2024-09-26', N'2024-10-31', 2022, N'2024-08-14', N'2024-11-01'),
   (11, 1, N'Autumn 2024', N'Autumn 2024', 2024, N'2024-08-06', N'2025-03-10', N'2025-05-01', N'2025-05-31', 2022, N'2025-03-19', N'2025-06-01'),
   (12, 1, N'Summer 2025', N'Summer 2025', 2025, N'2025-03-11', N'2025-08-11', N'2025-10-02', N'2025-10-31', 2023, N'2025-08-20', N'2025-11-01'),
-  (13, 2, N'Summer 2025', N'Summer 2025', 2025, N'2025-03-11', N'2025-08-11', N'2025-10-02', N'2025-10-31', NULL, N'2025-08-20', N'2025-11-01')
+  (13, 2, N'Summer 2025', N'Summer 2025', 2025, N'2024-08-06', N'2025-08-11', N'2025-10-02', N'2025-10-31', NULL, NULL, NULL)
   )
   AS Source ([Id], [ComponentType], [Name], [Description], [Year], [StartDate], [EndDate], [RommEndDate], [AppealEndDate], [ResultCalculationYear], [ResultPublishDate], [PrintAvailableDate]) 
 ON Target.[Id] = Source.[Id] 
