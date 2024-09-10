@@ -134,12 +134,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             foreach (var learnerEvent in learnerRecord.LearningEventDetails)
             {
-                var qualification = qualifications.FirstOrDefault(q => q.IsActive && q.Code.Equals(learnerEvent.QualificationCode, StringComparison.InvariantCultureIgnoreCase));
+                Qualification qualification = qualifications.FirstOrDefault(q => q.IsActive && q.Code.Equals(learnerEvent.QualificationCode, StringComparison.InvariantCultureIgnoreCase));
+                IEnumerable<QualificationGrade> grades = qualification?.QualificationType?.QualificationGrades?.Where(g => g.IsActive);
 
-                var qualificationGrade = qualification?.QualificationType?.Name == Constants.GCSEQualificationType && learnerEvent.Grade.Length > 1
-                    ? qualification?.QualificationType?.QualificationGrades?.FirstOrDefault(g => g.IsActive && g.Grade.Equals(learnerEvent.Grade.Remove(learnerEvent.Grade.Length - 1), StringComparison.InvariantCultureIgnoreCase))
-                    : qualification?.QualificationType?.QualificationGrades?.FirstOrDefault(g => g.IsActive && g.Grade.Equals(learnerEvent.Grade, StringComparison.InvariantCultureIgnoreCase));
-
+                QualificationGrade qualificationGrade = qualification?.Code == Constants.WJECEduqasEnglishLanguageQualificationCode && learnerEvent.Grade.Length > 1
+                    ? grades?.FirstOrDefault(g => g.Grade.Equals(learnerEvent.Grade.Remove(learnerEvent.Grade.Length - 1), StringComparison.InvariantCultureIgnoreCase))
+                    : grades?.FirstOrDefault(g => g.Grade.Equals(learnerEvent.Grade, StringComparison.InvariantCultureIgnoreCase));
 
                 if (qualification != null && qualificationGrade != null)
                 {
