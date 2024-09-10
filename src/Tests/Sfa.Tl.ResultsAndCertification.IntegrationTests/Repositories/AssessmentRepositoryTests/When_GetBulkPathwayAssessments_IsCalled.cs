@@ -106,9 +106,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Assessmen
             {
                 return new[]
                 {
-                    new object[] { 1111111111, $"Autumn", "A*" },
-                    new object[] { 1111111112, $"Autumn", null },
-                    new object[] { 1111111113, $"Autumn", null },
+                    new object[] { 1111111111, $"Summer", "B" },
+                    new object[] { 1111111112, $"Summer", null },
+                    new object[] { 1111111113, $"Summer", null },
                     new object[] { 1111111114, $"Summer", "A*" },
                     new object[] { 1111111115, $"Summer", null },
                     new object[] { 1111111116, null, null }
