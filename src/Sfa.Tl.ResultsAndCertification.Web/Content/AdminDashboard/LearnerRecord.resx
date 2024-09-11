@@ -273,4 +273,13 @@
   <data name="Uln_Text" xml:space="preserve">
     <value>ULN </value>
   </data>
+  <data name="Section_Heading_TLevel_Overall_Result" xml:space="preserve">
+    <value>Overall T Level Result</value>
+  </data>
+  <data name="Title_Result" xml:space="preserve">
+    <value>Result</value>
+  </data>
+  <data name="Label_Overall_Result_Not_Calculated" xml:space="preserve">
+    <value>Result not calculated</value>
+  </data>
 </root>
