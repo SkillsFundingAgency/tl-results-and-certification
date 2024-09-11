@@ -23,7 +23,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.IsPendingWithdrawl, opts => opts.MapFrom(s => s.IsPendingWithdrawal))
                 .ForMember(d => d.Pathway, opts => opts.MapFrom(s => s))
                 .ForMember(d => d.AwardingOrganisation, opts => opts.MapFrom(s => s.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton))
-                .ForMember(d => d.OverallCalculationStatus, opts => opts.MapFrom(s => GetOverallCalculationStatus(s.OverallResults)));
+                .ForMember(d => d.OverallCalculationStatus, opts => opts.MapFrom(s => GetOverallCalculationStatus(s.OverallResults)))
+                .ForMember(d => d.OverallResult, opts => opts.MapFrom(s => GetOverallResult(s.OverallResults)));
 
             CreateMap<TlAwardingOrganisation, AwardingOrganisation>()
                 .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
@@ -41,6 +42,17 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
 
             OverallResult overallResult = overallResults.First();
             return overallResult.CalculationStatus;
+        }
+
+        private string GetOverallResult(ICollection<OverallResult> overallResults)
+        {
+            if (overallResults.IsNullOrEmpty())
+            {
+                return null;
+            }
+
+            OverallResult overallResult = overallResults.First();
+            return overallResult.ResultAwarded;
         }
     }
 }

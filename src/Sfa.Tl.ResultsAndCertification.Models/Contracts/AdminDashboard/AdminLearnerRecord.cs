@@ -30,5 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
         public Pathway Pathway { get; set; }
 
         public AwardingOrganisation AwardingOrganisation { get; set; }
+
+        public string OverallResult { get; set; }
     }
 }
