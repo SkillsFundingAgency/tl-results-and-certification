@@ -96,6 +96,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                 config.Filters.Add<CustomExceptionFilterAttribute>();
             });
 
+            IHealthChecksBuilder healthCheckBuilder = services.AddHealthChecks();
+
             if (_env.IsDevelopment())
             {
                 services.AddSingleton<ICacheService, InMemoryCacheService>();
@@ -103,8 +105,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             }
             else
             {
-                services.AddSingleton<IConnectionMultiplexer>(x => ConnectionMultiplexer.Connect(ResultsAndCertificationConfiguration.RedisSettings.CacheConnection));
+                string redisConnection = ResultsAndCertificationConfiguration.RedisSettings.CacheConnection;
+
+                services.AddSingleton<IConnectionMultiplexer>(x => ConnectionMultiplexer.Connect(redisConnection));
                 services.AddSingleton<ICacheService, RedisCacheService>();
+
+                healthCheckBuilder.AddRedis(redisConnection);
             }
 
             services.AddSingleton<TokenValidatedStrategy>();
@@ -194,6 +200,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapDefaultControllerRoute();
+                endpoints.MapHealthChecks("/health");
             });
         }
 

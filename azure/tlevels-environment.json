@@ -621,7 +621,7 @@
               },
               {
                 "name": "WEBSITE_SWAP_WARMUP_PING_PATH",
-                "value": "/api/HealthCheck"
+                "value": "/api/healthcheck"
               },
               {
                 "name": "WEBSITE_SWAP_WARMUP_PING_STATUSES",
@@ -639,7 +639,7 @@
             "value": "SystemAssigned"
           },
           "healthCheckPath": {
-            "value": "/api/HealthCheck"
+            "value": "/api/healthcheck"
           }
         }
       },
