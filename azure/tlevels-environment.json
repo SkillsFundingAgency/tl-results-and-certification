@@ -276,7 +276,7 @@
       }
     },
     {
-      "apiVersion": "2017-05-10",
+      "apiVersion": "2022-09-01",
       "name": "[concat('ui-app-service','-', parameters('environmentNameAbbreviation'))]",
       "type": "Microsoft.Resources/deployments",
       "properties": {
@@ -319,7 +319,7 @@
               },
               {
                 "name": "WEBSITE_SWAP_WARMUP_PING_STATUSES",
-                "value": "200, 202"
+                "value": "200"
               },
               {
                 "name": "WEBSITE_SWAP_WARMUP_PING_PATH",
@@ -382,7 +382,7 @@
       }
     },
     {
-      "apiVersion": "2017-05-10",
+      "apiVersion": "2022-09-01",
       "name": "[concat('internal-api-app-service','-',parameters('environmentNameAbbreviation'))]",
       "type": "Microsoft.Resources/deployments",
       "properties": {
@@ -429,7 +429,7 @@
               },
               {
                 "name": "WEBSITE_SWAP_WARMUP_PING_STATUSES",
-                "value": "200, 202"
+                "value": "200"
               }
             ]
           },
@@ -486,7 +486,7 @@
       }
     },
     {
-      "apiVersion": "2017-05-10",
+      "apiVersion": "2022-09-01",
       "name": "[concat('function-app','-', parameters('environmentNameAbbreviation'))]",
       "type": "Microsoft.Resources/deployments",
       "properties": {
@@ -621,11 +621,11 @@
               },
               {
                 "name": "WEBSITE_SWAP_WARMUP_PING_PATH",
-                "value": "/api/HealthCheck"
+                "value": "/api/healthcheck"
               },
               {
                 "name": "WEBSITE_SWAP_WARMUP_PING_STATUSES",
-                "value": "200, 202"
+                "value": "200"
               }
             ]
           },
@@ -639,7 +639,7 @@
             "value": "SystemAssigned"
           },
           "healthCheckPath": {
-            "value": "/api/HealthCheck"
+            "value": "/api/healthcheck"
           }
         }
       },
