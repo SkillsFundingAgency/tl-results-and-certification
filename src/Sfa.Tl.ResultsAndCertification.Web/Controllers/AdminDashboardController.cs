@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
@@ -141,7 +142,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             action(viewModel);
 
             await _cacheService.SetAsync(CacheKey, viewModel);
-            return RedirectToRoute(RouteConstants.AdminSearchLearnersRecords, new { pageNumber = viewModel.SearchLearnerCriteria.PageNumber });
+            RedirectToRouteResult result = RedirectToRoute(RouteConstants.AdminSearchLearnersRecords, new { pageNumber = viewModel?.SearchLearnerCriteria?.PageNumber });
+
+            string routeValues = JsonConvert.SerializeObject(result.RouteValues);
+            string searchKey = viewModel?.SearchLearnerCriteria?.SearchKey;
+            string filters = JsonConvert.SerializeObject(viewModel?.SearchLearnerCriteria?.SearchLearnerFilters);
+
+            _logger.LogInformation("[AdminDashboard Search Redirect]: Endpoint: {Endpoint} | User:{Email} | Route name:{RouteName} | Route values: {RouteValues} | Search key:{SearchKey} | Filters:{Filters}", endpoint, User.GetUserEmail(), result.RouteName, routeValues, searchKey, filters);
+
+            return result;
         }
 
         private async Task<int?> GetFilterProviderId(string providerName)
