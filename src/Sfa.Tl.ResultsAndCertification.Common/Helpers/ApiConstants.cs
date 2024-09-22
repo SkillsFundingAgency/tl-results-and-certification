@@ -84,6 +84,7 @@
         public const string FindPrsLearnerRecordByProfileIdUri = "/api/postresultsservice/FindPrsLearnerRecordByProfileId/{0}/{1}";
         public const string PrsActivityUri = "/api/postresultsservice/PrsActivity";
         public const string PrsGradeChangeRequestUri = "/api/postresultsservice/PrsGradeChangeRequest";
+        public const string ProcessBulkRommsUri = "/api/postresultsservice/ProcessBulkRomms";
 
         //LRS Api Uri's
         public const string LearnerServiceUri = "/LearnerService.svc";

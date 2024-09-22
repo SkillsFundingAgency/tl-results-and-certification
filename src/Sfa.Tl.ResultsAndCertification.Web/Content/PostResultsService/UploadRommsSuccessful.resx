@@ -117,64 +117,79 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Button_Continue" xml:space="preserve">
-    <value>Continue</value>
+  <data name="Add" xml:space="preserve">
+    <value>add</value>
   </data>
-  <data name="Heading_Before_You_Start" xml:space="preserve">
-    <value>Before you start</value>
+  <data name="Amended_Romms_Singular_Text" xml:space="preserve">
+    <value>{0} amended romms</value>
   </data>
-  <data name="Heading_Prs_Review_Appeal_Grade_Change" xml:space="preserve">
-    <value>Reviews, appeals and grade changes</value>
+  <data name="Amended_Romms_Text" xml:space="preserve">
+    <value>{0} amended romms</value>
   </data>
-  <data name="List_Active_Registration" xml:space="preserve">
-    <value>an active registration, not withdrawn</value>
+  <data name="Assessment_Periods" xml:space="preserve">
+    <value>assessment periods</value>
   </data>
-  <data name="List_Grade_Recorded" xml:space="preserve">
-    <value>a grade recorded in this system.</value>
+  <data name="Button_Home" xml:space="preserve">
+    <value>Back to home</value>
   </data>
-  <data name="List_Learner_Requested_Appeal" xml:space="preserve">
-    <value>that a learner has requested an appeal</value>
+  <data name="Button_Upload_Another_File" xml:space="preserve">
+    <value>Upload another file</value>
   </data>
-  <data name="List_Learner_Requested_ROMM" xml:space="preserve">
-    <value>that a learner has requested a review of marking or moderation (ROMM)</value>
+  <data name="By_Searching_For_A_Learner" xml:space="preserve">
+    <value>by searching for a learner</value>
   </data>
-  <data name="List_Outcome_Of_Any_Appeal" xml:space="preserve">
-    <value>the outcome of any appeal</value>
+  <data name="For_Registered_Learners" xml:space="preserve">
+    <value>for registered learners</value>
   </data>
-  <data name="List_Outcome_Of_Any_ROMM" xml:space="preserve">
-    <value>the outcome of any ROMM</value>
+  <data name="Manage_Individual_Romms" xml:space="preserve">
+    <value>manage individual romms</value>
+  </data>
+  <data name="New_Romms_Singular_Text" xml:space="preserve">
+    <value>{0} new romms</value>
+  </data>
+  <data name="New_Romms_Text" xml:space="preserve">
+    <value>{0} new romms</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Post-results reviews, appeals and grade changes</value>
+    <value>Romms upload success</value>
   </data>
-  <data name="Para_Certificate_Cannot_Issues_While_Prs" xml:space="preserve">
-    <value>A certificate cannot be issued while a ROMM or an appeal is logged with no outcome.</value>
+  <data name="Para_You_Can_Now" xml:space="preserve">
+    <value>You can now</value>
   </data>
-  <data name="Para_Need_Information_For_Certificate" xml:space="preserve">
-    <value>We need this information to issue the learner’s certificate with the correct overall T Level grade.</value>
+  <data name="Section_Heading" xml:space="preserve">
+    <value>Withdrawals uploaded successfully</value>
   </data>
-  <data name="Para_The_Learner_Mush_Have" xml:space="preserve">
-    <value>The learner must have:</value>
+  <data name="Successfully_Sent_Amended_Romms_Singular_Text" xml:space="preserve">
+    <value>You successfully sent {0} amended romm</value>
   </data>
-  <data name="Para_You_Must_Tell_Us" xml:space="preserve">
-    <value>You must tell us:</value>
+  <data name="Successfully_Sent_Amended_Romms_Text" xml:space="preserve">
+    <value>You successfully sent {0} amended romms</value>
   </data>
-  <data name="Para_Tell_Us_About_Reviews_Moderations_Appeals_And_Report_Outcomes" xml:space="preserve">
-    <value>Tell us about any reviews of marking or moderations (RoMMs) or appeals and report their outcomes.</value>
+  <data name="Successfully_Sent_New_Romms_Singular_Text" xml:space="preserve">
+    <value>You successfully sent {0} new romm</value>
   </data>
-  <data name="Heading_In_This_Section" xml:space="preserve">
-    <value>In this section</value>
+  <data name="Successfully_Sent_New_Romms_Text" xml:space="preserve">
+    <value>You successfully sent {0} new romms</value>
   </data>
-  <data name="Card_Heading_Manage_Learners_Romms_Appeals_And_Outcomes" xml:space="preserve">
-    <value>Manage a learner's RoMMs, appeals and outcomes</value>
+  <data name="Successfully_Sent_Total_Romms_Text" xml:space="preserve">
+    <value>You successfully sent {0} romms. This included:</value>
   </data>
-  <data name="Card_Content_Search_For_Learner_Who_Requested_Review" xml:space="preserve">
-    <value>Search for a learner who has requested a review.</value>
+  <data name="Successfully_Sent_Unchanged_Romms_Singular_Text" xml:space="preserve">
+    <value>You successfully sent {0} unchanged romms</value>
   </data>
-  <data name="Card_Heading_Upload_Multiple_Romms" xml:space="preserve">
-    <value>Upload multiple ROMMs</value>
+  <data name="Successfully_Sent_Unchanged_Romms_Text" xml:space="preserve">
+    <value>You successfully sent {0} unchanged romms</value>
   </data>
-  <data name="Card_Content_Open_Or_Add_Romm_Outcomes_By_Uploading_CSV_file" xml:space="preserve">
-    <value>Open ROMM or add ROMM outcomes for learners by uploading a CSV file.</value>
+  <data name="Unchanged_Romms_Singular_Text" xml:space="preserve">
+    <value>{0} unchanged romm</value>
+  </data>
+  <data name="Unchanged_Romms_Text" xml:space="preserve">
+    <value>{0} unchanged romms</value>
+  </data>
+  <data name="Upload_Another_Multiple_Romms_File" xml:space="preserve">
+    <value>upload another multiple romms file</value>
+  </data>
+  <data name="What_Happens_Next" xml:space="preserve">
+    <value>What happens next</value>
   </data>
 </root>

@@ -1,0 +1,87 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService.UploadRommsRequestViewModel
+@addTagHelper *, NWebsec.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = @UploadRomms.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+@section Scripts {
+    <script nws-csp-add-nonce="true" src="~/javascripts/romms-upload.min.js"></script>
+}
+
+<div id="uploadWithdrwalsContainer">
+    
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <div class="govuk-form-group">
+                <partial name="_ValidationSummary" />
+                <h1 class="govuk-heading-l">@UploadRomms.Page_Heading</h1>
+            </div>
+        </div>
+    </div>
+
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-two-thirds">
+
+            <p class="govuk-body">@UploadRomms.Para_You_Can_Withdraw_Learners</p>
+
+            <form id="uploadRommsForm" class="form" asp-route="SubmitUploadRommsFile" enctype="multipart/form-data">
+                <div class="govuk-form-group" sfa-validation-for="File" sfa-validation-class="govuk-form-group--error">
+                    <label for="file" class="govuk-label govuk-!-font-size-19 govuk-!-padding-top-5 govuk-!-font-weight-bold">
+                        @UploadRomms.Upload_File_Text
+                    </label>
+                    <span sfa-validation-for="File"></span>
+                    <input class="govuk-file-upload" id="file" asp-for="File" type="file" accept=".csv">
+                </div>
+                <button id="uploadRommsButton" class="govuk-button tl-show-on-js-only" data-module="govuk-button" type="submit" data-prevent-double-click="true">@UploadRomms.Upload_File_Button_Text</button>
+                <partial name="~/Views/PostResultsService/Partials/_uploadRommsNoScriptSubmit.cshtml" />
+            </form>
+
+            <h2 class="govuk-heading-m">@UploadRomms.Heading_Before_You_Start</h2>
+            <p class="govuk-body">@UploadRomms.Para_If_You_Export_Data_From_Another_System</p>
+            <p class="govuk-body">@UploadRomms.Para_You_Can_Download_Template_With_Formats_And_Rules</p>
+
+            <section class="gem-c-attachment">
+                <div class="gem-c-attachment__thumbnail">
+                    <a class="govuk-link" target="_self" tabindex="-1" aria-hidden="true" asp-route="DownloadRommDataFormatAndRulesGuide">
+                        <svg class="gem-c-attachment__thumbnail-image" version="1.1" viewBox="0 0 99 140" width="99" height="140" aria-hidden="true">
+                            <path d="M12 12h75v27H12zM12 59h9v9h-9zM12 77h9v9h-9zM12 95h9v9h-9zM12 113h9v9h-9zM30 59h57v9H30zM30 77h39v9H30zM30 95h57v9H30zM30 113h48v9H30z" stroke-width="0"></path>
+                        </svg>
+                    </a>
+                </div>
+                <h3 class="govuk-heading-s">
+                    <a class="govuk-link" target="_self" asp-route="DownloadRommDataFormatAndRulesGuide">
+                        @string.Format(@UploadRomms.Link_Tlevels_Romms_Data_Format_Rules, @UploadRomms.File_Type_XLSX, @UploadRomms.File_Size_Kb_Text)
+                    </a>
+                </h3>
+                <p class="govuk-body-s">@UploadRomms.Romms_Version, @UploadRomms.Romms_Published_On</p>
+            </section>
+
+            <section class="gem-c-attachment">
+                <div class="gem-c-attachment__thumbnail">
+                    <a class="govuk-link" target="_self" tabindex="-1" aria-hidden="true" asp-route="DownloadRommDataTemplate">
+                        <svg class="gem-c-attachment__thumbnail-image" version="1.1" viewBox="0 0 99 140" width="99" height="140" aria-hidden="true">
+                            <path d="M12 12h75v27H12zM12 59h9v9h-9zM12 77h9v9h-9zM12 95h9v9h-9zM12 113h9v9h-9zM30 59h57v9H30zM30 77h39v9H30zM30 95h57v9H30zM30 113h48v9H30z" stroke-width="0"></path>
+                        </svg>
+                    </a>
+                </div>
+                <h3 class="govuk-heading-s">
+                    <a class="govuk-link" target="_self" asp-route="DownloadRommDataTemplate">
+                        @string.Format(@UploadRomms.Link_Tlevels_Romms_Data_Template, @UploadRomms.File_Type_CSV, @UploadRomms.File_Size_Kb_Text_Template)
+                    </a>
+                </h3>
+                <p class="govuk-body-s">@UploadRomms.Romms_Template_Version, @UploadRomms.Romms_Template_Published_On</p>
+            </section>
+         
+            <p class="govuk-body">@UploadRomms.List_Data_Not_Formatted_Correctly</p>
+
+        </div>
+    </div>
+</div>
+
+<partial name="~/Views/PostResultsService/Partials/_uploadRommsProgress.cshtml" />

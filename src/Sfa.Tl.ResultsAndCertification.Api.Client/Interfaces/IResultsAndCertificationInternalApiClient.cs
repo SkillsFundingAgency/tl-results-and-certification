@@ -93,6 +93,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<FindPrsLearnerRecord> FindPrsLearnerRecordAsync(long aoUkprn, long? uln, int? profileId = null);
         Task<bool> PrsActivityAsync(PrsActivityRequest request);
         Task<bool> PrsGradeChangeRequestAsync(PrsGradeChangeRequest request);
+        Task<BulkProcessResponse> ProcessBulkRommsAsync(BulkProcessRequest model);
 
         #region IndustryPlacement
         Task<IList<IpLookupData>> GetIpLookupDataAsync(IpLookupType ipLookupType, int? pathwayId = null);

@@ -5,7 +5,7 @@ using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewCompone
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
 {
-    public class StartReviewsAndAppealsViewModel
+    public class ResultReviewsAndAppealsViewModel
     {
         public BreadcrumbModel Breadcrumb
             => new()
@@ -13,8 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
                 BreadcrumbItems = new List<BreadcrumbItem>
                 {
                     new() { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Home },
-                    new() { DisplayName = BreadcrumbContent.ResultReviewsAndAppeals, RouteName = RouteConstants.ResultReviewsAndAppeals },
-                    new() { DisplayName = BreadcrumbContent.StartPostResultsService }
+                    new() { DisplayName = BreadcrumbContent.ResultReviewsAndAppeals }
                 }
             };
     }

@@ -117,50 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Button_Continue" xml:space="preserve">
-    <value>Continue</value>
-  </data>
-  <data name="Heading_Before_You_Start" xml:space="preserve">
-    <value>Before you start</value>
-  </data>
   <data name="Heading_Prs_Review_Appeal_Grade_Change" xml:space="preserve">
     <value>Reviews, appeals and grade changes</value>
   </data>
-  <data name="List_Active_Registration" xml:space="preserve">
-    <value>an active registration, not withdrawn</value>
-  </data>
-  <data name="List_Grade_Recorded" xml:space="preserve">
-    <value>a grade recorded in this system.</value>
-  </data>
-  <data name="List_Learner_Requested_Appeal" xml:space="preserve">
-    <value>that a learner has requested an appeal</value>
-  </data>
-  <data name="List_Learner_Requested_ROMM" xml:space="preserve">
-    <value>that a learner has requested a review of marking or moderation (ROMM)</value>
-  </data>
-  <data name="List_Outcome_Of_Any_Appeal" xml:space="preserve">
-    <value>the outcome of any appeal</value>
-  </data>
-  <data name="List_Outcome_Of_Any_ROMM" xml:space="preserve">
-    <value>the outcome of any ROMM</value>
-  </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Post-results reviews, appeals and grade changes</value>
-  </data>
-  <data name="Para_Certificate_Cannot_Issues_While_Prs" xml:space="preserve">
-    <value>A certificate cannot be issued while a ROMM or an appeal is logged with no outcome.</value>
-  </data>
-  <data name="Para_Need_Information_For_Certificate" xml:space="preserve">
-    <value>We need this information to issue the learner’s certificate with the correct overall T Level grade.</value>
-  </data>
-  <data name="Para_The_Learner_Mush_Have" xml:space="preserve">
-    <value>The learner must have:</value>
-  </data>
-  <data name="Para_You_Must_Tell_Us" xml:space="preserve">
-    <value>You must tell us:</value>
-  </data>
-  <data name="Para_Tell_Us_About_Reviews_Moderations_Appeals_And_Report_Outcomes" xml:space="preserve">
-    <value>Tell us about any reviews of marking or moderations (RoMMs) or appeals and report their outcomes.</value>
+    <value>Results reviews, appeals and grade changes</value>
   </data>
   <data name="Heading_In_This_Section" xml:space="preserve">
     <value>In this section</value>
@@ -176,5 +137,8 @@
   </data>
   <data name="Card_Content_Open_Or_Add_Romm_Outcomes_By_Uploading_CSV_file" xml:space="preserve">
     <value>Open ROMM or add ROMM outcomes for learners by uploading a CSV file.</value>
+  </data>
+  <data name="Para_Tell_Us_About_Reviews_Moderations_Appeals_And_Report_Outcomes" xml:space="preserve">
+    <value>Tell us about any reviews of marking or moderations (RoMMs) or appeals and report their outcomes.</value>
   </data>
 </root>
