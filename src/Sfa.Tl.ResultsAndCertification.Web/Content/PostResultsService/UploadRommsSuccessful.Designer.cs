@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} amended romms.
+        ///   Looks up a localized string similar to {0} amended ROMM.
         /// </summary>
         public static string Amended_Romms_Singular_Text {
             get {
@@ -80,7 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} amended romms.
+        ///   Looks up a localized string similar to {0} amended ROMMs.
         /// </summary>
         public static string Amended_Romms_Text {
             get {
@@ -134,7 +134,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to manage individual romms.
+        ///   Looks up a localized string similar to manage individual ROMMs.
         /// </summary>
         public static string Manage_Individual_Romms {
             get {
@@ -143,7 +143,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} new romms.
+        ///   Looks up a localized string similar to {0} new ROMM.
         /// </summary>
         public static string New_Romms_Singular_Text {
             get {
@@ -152,7 +152,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} new romms.
+        ///   Looks up a localized string similar to {0} new ROMMs.
         /// </summary>
         public static string New_Romms_Text {
             get {
@@ -161,7 +161,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Romms upload success.
+        ///   Looks up a localized string similar to ROMMs upload success.
         /// </summary>
         public static string Page_Title {
             get {
@@ -179,7 +179,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Withdrawals uploaded successfully.
+        ///   Looks up a localized string similar to ROMMs uploaded successfully.
         /// </summary>
         public static string Section_Heading {
             get {
@@ -188,7 +188,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You successfully sent {0} amended romm.
+        ///   Looks up a localized string similar to You successfully sent {0} amended ROMM.
         /// </summary>
         public static string Successfully_Sent_Amended_Romms_Singular_Text {
             get {
@@ -197,7 +197,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You successfully sent {0} amended romms.
+        ///   Looks up a localized string similar to You successfully sent {0} amended ROMMs.
         /// </summary>
         public static string Successfully_Sent_Amended_Romms_Text {
             get {
@@ -206,7 +206,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You successfully sent {0} new romm.
+        ///   Looks up a localized string similar to You successfully sent {0} new ROMM.
         /// </summary>
         public static string Successfully_Sent_New_Romms_Singular_Text {
             get {
@@ -215,7 +215,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You successfully sent {0} new romms.
+        ///   Looks up a localized string similar to You successfully sent {0} new ROMMs.
         /// </summary>
         public static string Successfully_Sent_New_Romms_Text {
             get {
@@ -224,7 +224,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You successfully sent {0} romms. This included:.
+        ///   Looks up a localized string similar to You successfully sent {0} ROMMs. This included:.
         /// </summary>
         public static string Successfully_Sent_Total_Romms_Text {
             get {
@@ -233,7 +233,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You successfully sent {0} unchanged romms.
+        ///   Looks up a localized string similar to You successfully sent {0} unchanged ROMMs.
         /// </summary>
         public static string Successfully_Sent_Unchanged_Romms_Singular_Text {
             get {
@@ -242,7 +242,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You successfully sent {0} unchanged romms.
+        ///   Looks up a localized string similar to You successfully sent {0} unchanged ROMMs.
         /// </summary>
         public static string Successfully_Sent_Unchanged_Romms_Text {
             get {
@@ -251,7 +251,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} unchanged romm.
+        ///   Looks up a localized string similar to {0} unchanged ROMM.
         /// </summary>
         public static string Unchanged_Romms_Singular_Text {
             get {
@@ -260,7 +260,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} unchanged romms.
+        ///   Looks up a localized string similar to {0} unchanged ROMMs.
         /// </summary>
         public static string Unchanged_Romms_Text {
             get {
@@ -269,7 +269,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to upload another multiple romms file.
+        ///   Looks up a localized string similar to upload another multiple ROMMs file.
         /// </summary>
         public static string Upload_Another_Multiple_Romms_File {
             get {

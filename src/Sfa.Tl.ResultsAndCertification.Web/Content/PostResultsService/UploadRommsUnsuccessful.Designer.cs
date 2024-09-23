@@ -80,7 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to romms error report.
+        ///   Looks up a localized string similar to ROMMs error report.
         /// </summary>
         public static string Error_Report {
             get {
@@ -125,7 +125,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Romms upload error.
+        ///   Looks up a localized string similar to ROMMs upload error.
         /// </summary>
         public static string Page_Title {
             get {

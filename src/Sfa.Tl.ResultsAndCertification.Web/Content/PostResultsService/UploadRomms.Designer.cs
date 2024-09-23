@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to File must contain between one and {0} registrations.
+        ///   Looks up a localized string similar to File must contain between one and {0} ROMMs.
         /// </summary>
         public static string File_Max_Record_Count_Validation_Message {
             get {
