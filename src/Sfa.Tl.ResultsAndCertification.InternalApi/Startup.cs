@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddApplicationInsightsTelemetry();
             services.AddControllers();
             services.AddSwaggerGen();
-
+            
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 //options.SuppressModelStateInvalidFilter = true;
@@ -91,6 +91,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
                 });
                 services.AddApiAuthentication(ResultsAndCertificationConfiguration).AddApiAuthorization();
             }
+
+            services
+                .AddHealthChecks()
+                .AddDbContextCheck<ResultsAndCertificationDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -116,6 +120,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHealthChecks("/health");
             });
         }
 
