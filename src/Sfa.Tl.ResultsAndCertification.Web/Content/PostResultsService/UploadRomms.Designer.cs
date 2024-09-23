@@ -151,7 +151,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download T Levels Romms data format and rules ({0}, {1}).
+        ///   Looks up a localized string similar to Download T Levels multiple ROMMs data format and rules ({0}, {1}).
         /// </summary>
         public static string Link_Tlevels_Romms_Data_Format_Rules {
             get {
@@ -160,7 +160,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download T Levels Romms data template ({0}, {1}).
+        ///   Looks up a localized string similar to Download T Levels multiple ROMMs data template ({0}, {1}).
         /// </summary>
         public static string Link_Tlevels_Romms_Data_Template {
             get {
@@ -223,7 +223,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload multiple romms.
+        ///   Looks up a localized string similar to Upload multiple ROMMs.
         /// </summary>
         public static string Page_Heading {
             get {
@@ -232,7 +232,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload multiple romms.
+        ///   Looks up a localized string similar to Upload multiple ROMMs.
         /// </summary>
         public static string Page_Title {
             get {
@@ -250,7 +250,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You can download guidance on data formats and rules to help you. Once you have added your withdrawals details to the template, you can upload your file..
+        ///   Looks up a localized string similar to You can download guidance on data formats and rules to help you. Once you have added your ROMM details to the template, you can upload your file..
         /// </summary>
         public static string Para_You_Can_Download_Template_With_Formats_And_Rules {
             get {
@@ -259,16 +259,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You can withdraw one or more learners by uploading a CSV file. This will remove the learner from the course but will not delete the registration permanently..
+        ///   Looks up a localized string similar to You can open ROMMs for one of more learners by uploading a CSV file..
         /// </summary>
-        public static string Para_You_Can_Withdraw_Learners {
+        public static string Para_You_Can_Open_ROMMs {
             get {
-                return ResourceManager.GetString("Para_You_Can_Withdraw_Learners", resourceCulture);
+                return ResourceManager.GetString("Para_You_Can_Open_ROMMs", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to published 30 June 2024.
+        ///   Looks up a localized string similar to published 30 August 2024.
         /// </summary>
         public static string Romms_Published_On {
             get {
@@ -277,7 +277,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to published 30 June 2024.
+        ///   Looks up a localized string similar to published 30  August 2024.
         /// </summary>
         public static string Romms_Template_Published_On {
             get {

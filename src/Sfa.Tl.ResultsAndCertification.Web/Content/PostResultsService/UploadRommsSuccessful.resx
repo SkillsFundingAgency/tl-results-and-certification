@@ -121,10 +121,10 @@
     <value>add</value>
   </data>
   <data name="Amended_Romms_Singular_Text" xml:space="preserve">
-    <value>{0} amended romms</value>
+    <value>{0} amended ROMM</value>
   </data>
   <data name="Amended_Romms_Text" xml:space="preserve">
-    <value>{0} amended romms</value>
+    <value>{0} amended ROMMs</value>
   </data>
   <data name="Assessment_Periods" xml:space="preserve">
     <value>assessment periods</value>
@@ -142,52 +142,52 @@
     <value>for registered learners</value>
   </data>
   <data name="Manage_Individual_Romms" xml:space="preserve">
-    <value>manage individual romms</value>
+    <value>manage individual ROMMs</value>
   </data>
   <data name="New_Romms_Singular_Text" xml:space="preserve">
-    <value>{0} new romms</value>
+    <value>{0} new ROMM</value>
   </data>
   <data name="New_Romms_Text" xml:space="preserve">
-    <value>{0} new romms</value>
+    <value>{0} new ROMMs</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Romms upload success</value>
+    <value>ROMMs upload success</value>
   </data>
   <data name="Para_You_Can_Now" xml:space="preserve">
     <value>You can now</value>
   </data>
   <data name="Section_Heading" xml:space="preserve">
-    <value>Withdrawals uploaded successfully</value>
+    <value>ROMMs uploaded successfully</value>
   </data>
   <data name="Successfully_Sent_Amended_Romms_Singular_Text" xml:space="preserve">
-    <value>You successfully sent {0} amended romm</value>
+    <value>You successfully sent {0} amended ROMM</value>
   </data>
   <data name="Successfully_Sent_Amended_Romms_Text" xml:space="preserve">
-    <value>You successfully sent {0} amended romms</value>
+    <value>You successfully sent {0} amended ROMMs</value>
   </data>
   <data name="Successfully_Sent_New_Romms_Singular_Text" xml:space="preserve">
-    <value>You successfully sent {0} new romm</value>
+    <value>You successfully sent {0} new ROMM</value>
   </data>
   <data name="Successfully_Sent_New_Romms_Text" xml:space="preserve">
-    <value>You successfully sent {0} new romms</value>
+    <value>You successfully sent {0} new ROMMs</value>
   </data>
   <data name="Successfully_Sent_Total_Romms_Text" xml:space="preserve">
-    <value>You successfully sent {0} romms. This included:</value>
+    <value>You successfully sent {0} ROMMs. This included:</value>
   </data>
   <data name="Successfully_Sent_Unchanged_Romms_Singular_Text" xml:space="preserve">
-    <value>You successfully sent {0} unchanged romms</value>
+    <value>You successfully sent {0} unchanged ROMMs</value>
   </data>
   <data name="Successfully_Sent_Unchanged_Romms_Text" xml:space="preserve">
-    <value>You successfully sent {0} unchanged romms</value>
+    <value>You successfully sent {0} unchanged ROMMs</value>
   </data>
   <data name="Unchanged_Romms_Singular_Text" xml:space="preserve">
-    <value>{0} unchanged romm</value>
+    <value>{0} unchanged ROMM</value>
   </data>
   <data name="Unchanged_Romms_Text" xml:space="preserve">
-    <value>{0} unchanged romms</value>
+    <value>{0} unchanged ROMMs</value>
   </data>
   <data name="Upload_Another_Multiple_Romms_File" xml:space="preserve">
-    <value>upload another multiple romms file</value>
+    <value>upload another multiple ROMMs file</value>
   </data>
   <data name="What_Happens_Next" xml:space="preserve">
     <value>What happens next</value>
