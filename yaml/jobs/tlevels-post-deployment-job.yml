@@ -1,6 +1,8 @@
 parameters:
   - name: dependencies
     type: object
+  - name: serviceConnection
+    type: string    
 jobs:
   - job: PostDeployment
     pool:
@@ -8,8 +10,19 @@ jobs:
         vmImage: 'windows-2019'
     dependsOn:
       - "${{ each dependency in parameters.dependencies }}":
-         - "${{dependency}}" 
+         - "${{dependency}}"
     steps:
+      - checkout: devopsTools
+      - task: AzureCLI@2
+        displayName: 'Add internal API (web app) IP restrictions'
+        inputs:
+          azureSubscription: ${{ parameters.serviceConnection }}
+          scriptType: 'pscore'
+          scriptLocation: 'ScriptPath'
+          ScriptPath: ./Powershell/AppServiceRestrictions/AddAppServiceIPRestrictions.ps1
+          ScriptArguments: '-SubscriptionId $(SubscriptionId) -ResourceGroupName $(ResourceGroupName) -InternalAPIAppServiceName $(InternalAPIAppServiceName) -FrontendAppServiceName $(FrontendAppServiceName)'
+          azurePowerShellVersion: 'LatestVersion'
+
       - task: GitHubRelease@1
         displayName: 'GitHub release (create)'
         condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master') , eq(variables['System.JobAttempt'], '1'), eq(variables['environmentName'], 'prd'))
