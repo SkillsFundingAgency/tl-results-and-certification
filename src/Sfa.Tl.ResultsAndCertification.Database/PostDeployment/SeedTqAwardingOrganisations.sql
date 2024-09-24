@@ -23,7 +23,10 @@ USING (VALUES
 	(15, 3, 15, 1),
 	(16, 3, 16, 1),
 	(17,2,17,1),
-	(18,3,18,1)
+	(18,3,18,1),
+	(19,3,19,1),
+	(20,2,20,1),
+	(21,2,21,1)
   )
 AS Source ([Id], [TlAwardingOrganisatonId], [TlPathwayId], [ReviewStatus]) 
 ON Target.[Id] = Source.[Id] 
