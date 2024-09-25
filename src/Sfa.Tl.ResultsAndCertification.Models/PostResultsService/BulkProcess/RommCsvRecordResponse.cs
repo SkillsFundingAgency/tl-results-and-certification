@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.PostResultsService.BulkProcess
 
         public string SpecialismCode { get; set; }
 
-        public string SpecialismRommOpen { get; set; }
+        public bool SpecialismRommOpen { get; set; }
 
         public string SpecialismRommOutcome { get; set; }
     }

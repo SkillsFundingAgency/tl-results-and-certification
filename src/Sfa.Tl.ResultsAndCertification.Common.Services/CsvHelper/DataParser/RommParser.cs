@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
                 CoreRommOpen = reg.CoreRommOpen.Trim().ConvertYesNoToBool(),
                 CoreRommOutcome = reg.CoreRommOutcome.Trim(),
                 SpecialismCode = reg.Specialism.Trim(),
-                SpecialismRommOpen = reg.SpecialismRommOpen.Trim(),
+                SpecialismRommOpen = reg.SpecialismRommOpen.Trim().ConvertYesNoToBool(),
                 SpecialismRommOutcome = reg.SpecialismRommOutcome.Trim(),
                 RowNum = rownum,
                 ValidationErrors = new List<BulkProcessValidationError>()

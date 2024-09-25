@@ -102,6 +102,7 @@
         public const string SpecialismSeriesDoesNotMatchTheSeriesOnTheRegistration = "Assessment series does not match the series on the registration";
         public const string SpecialismGradeIsNotValid = "Specialism grade not valid";
         public const string SpecialismSeriesNotCurrentlyOpen = "Incorrect Assessment series";
+        public const string InvalidSpecialismComponentGrade = "Enter a valid grade for the specialism component. The grade must be Distinction, Merit, Pass, Unclassified, Q - pending result or X - no result.";
 
         // Results - Bulk stage 4 validations
         public const string ResultCannotBeChanged = "This learner's grade cannot be changed. Please remove this learner and try again.";
