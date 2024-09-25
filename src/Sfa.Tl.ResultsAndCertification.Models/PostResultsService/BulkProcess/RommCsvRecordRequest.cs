@@ -31,11 +31,27 @@ namespace Sfa.Tl.ResultsAndCertification.Models.PostResultsService.BulkProcess
         public string AcademicYear { get; set; }
 
         [Column(RommHeader.Core, Order = 6)]
-        [Display(Name = RommFluentHeader.Core)]
+        [Display(Name = RommFluentHeader.CoreRommOpen)]
         public string Core { get; set; }
 
-        [Column(RommHeader.Specialisms, Order = 7)]
-        [Display(Name = RommFluentHeader.Specialisms)]
-        public string Specialisms { get; set; }
+        [Column(RommHeader.CoreRommOpen, Order = 7)]
+        [Display(Name = RommFluentHeader.CoreRommOpen)]
+        public string CoreRommOpen { get; set; }
+
+        [Column(RommHeader.CoreRommOutcome, Order = 8)]
+        [Display(Name = RommFluentHeader.CoreRommOutcome)]
+        public string CoreRommOutcome { get; set; }
+
+        [Column(RommHeader.Specialism, Order = 9)]
+        [Display(Name = RommFluentHeader.Specialism)]
+        public string Specialism { get; set; }
+
+        [Column(RommHeader.SpecialismRommOpen, Order = 10)]
+        [Display(Name = RommFluentHeader.SpecialismRommOpen)]
+        public string SpecialismRommOpen { get; set; }
+
+        [Column(RommHeader.SpecialismRommOutcome, Order = 11)]
+        [Display(Name = RommFluentHeader.SpecialismRommOutcome)]
+        public string SpecialismRommOutcome { get; set; }
     }
 }

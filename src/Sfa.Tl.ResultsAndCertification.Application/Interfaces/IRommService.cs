@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
     {
         Task<IList<RommsRecordResponse>> ValidateRommTlevelsAsync(long aoUkprn, IEnumerable<RommCsvRecordResponse> withdrawalsData);
 
-        Task<RommsProcessResponse> ProcessRommsAsync(long AoUkprn, IList<TqRegistrationProfile> registrations, string performedBy);
+        Task<RommsProcessResponse> ProcessRommsAsync(long AoUkprn, IList<TqRegistrationProfile> registrations, IEnumerable<RommsRecordResponse> rommData, string performedBy);
 
         IList<TqRegistrationProfile> TransformRommModel(IList<RommsRecordResponse> withdrawalsData, string performedBy);
 

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Globalization;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
 {
@@ -117,5 +116,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
 
         public static string ToTripleQuotesWrappedString(this string value)
             => $"\"\"\"{value}\"\"\"";
+
+        public static bool ConvertYesNoToBool(this string value) => value.Equals("Yes", StringComparison.InvariantCultureIgnoreCase) ? true : false;
     }
 }

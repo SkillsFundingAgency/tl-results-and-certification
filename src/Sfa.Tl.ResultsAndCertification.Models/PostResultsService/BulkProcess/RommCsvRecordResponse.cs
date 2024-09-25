@@ -1,16 +1,10 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using System;
-using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.PostResultsService.BulkProcess
 {
     public class RommCsvRecordResponse : ValidationState<BulkProcessValidationError>
     {
-        public RommCsvRecordResponse()
-        {
-            SpecialismCodes = new List<string>();
-        }
-
         public int RowNum { get; set; }
 
         public long Uln { get; set; }
@@ -29,6 +23,14 @@ namespace Sfa.Tl.ResultsAndCertification.Models.PostResultsService.BulkProcess
 
         public string CoreCode { get; set; }
 
-        public IEnumerable<string> SpecialismCodes { get; set; }
+        public bool CoreRommOpen { get; set; }
+
+        public string CoreRommOutcome { get; set; }
+
+        public string SpecialismCode { get; set; }
+
+        public string SpecialismRommOpen { get; set; }
+
+        public string SpecialismRommOutcome { get; set; }
     }
 }

@@ -96,7 +96,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
                 var tqRegistrationProfiles = _rommService.TransformRommModel(stage4RommsResponse, request.PerformedBy);
 
                 // Step: Process Stage 4 validation and DB operation                
-                var rommProcessResult = await _rommService.ProcessRommsAsync(request.AoUkprn, tqRegistrationProfiles, request.PerformedBy);
+                var rommProcessResult = await _rommService.ProcessRommsAsync(request.AoUkprn, tqRegistrationProfiles, stage4RommsResponse, request.PerformedBy);
 
                 return rommProcessResult.IsValid ?
                     await ProcessRommResponse(request, response, rommProcessResult) :

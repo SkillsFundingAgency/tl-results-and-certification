@@ -23,7 +23,11 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser
                 ProviderUkprn = reg.Ukprn.Trim().ToLong(),
                 AcademicYearName = reg.AcademicYear.Trim(),
                 CoreCode = reg.Core.Trim(),
-                SpecialismCodes = CsvStringToListParser.Parse(reg.Specialisms),
+                CoreRommOpen = reg.CoreRommOpen.Trim().ConvertYesNoToBool(),
+                CoreRommOutcome = reg.CoreRommOutcome.Trim(),
+                SpecialismCode = reg.Specialism.Trim(),
+                SpecialismRommOpen = reg.SpecialismRommOpen.Trim(),
+                SpecialismRommOutcome = reg.SpecialismRommOutcome.Trim(),
                 RowNum = rownum,
                 ValidationErrors = new List<BulkProcessValidationError>()
             };

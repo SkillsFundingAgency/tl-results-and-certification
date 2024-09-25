@@ -8,7 +8,11 @@
         public const string DateOfBirth = "Date of birth";
         public const string Ukprn = "UKPRN";
         public const string AcademicYear = "Academic year";
-        public const string Core = "Core code";
-        public const string Specialisms = "Specialism code(s)";
+        public const string Core = "Core component code";
+        public const string CoreRommOpen = "Core ROMM open";
+        public const string CoreRommOutcome = "Core ROMM outcome";
+        public const string Specialism = "Specialism component code";
+        public const string SpecialismRommOpen = "Specialism ROMM open";
+        public const string SpecialismRommOutcome = "Specialism ROMM outcome";
     }
 }

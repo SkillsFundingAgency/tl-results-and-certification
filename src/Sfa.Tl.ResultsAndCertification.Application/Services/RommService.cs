@@ -80,19 +80,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     continue;
                 }
 
-                bool arePathwayResultsValid = ValidatePathwayResults(currentRegistrationProfile);
-                if (!arePathwayResultsValid)
-                {
-                    response.Add(AddStage3ValidationError(rowNum, currentRegistrationProfile.UniqueLearnerNumber, ValidationMessages.InvalidResultState));
-                    continue;
-                }
-
-                bool areSpecialismResultsValid = ValidateSpecialismResults(currentRegistrationProfile);
-                if (!areSpecialismResultsValid)
-                {
-                    response.Add(AddStage3ValidationError(rowNum, currentRegistrationProfile.UniqueLearnerNumber, ValidationMessages.InvalidResultState));
-                    continue;
-                }
+                //bool areSpecialismResultsValid = ValidateSpecialismResults(currentRegistrationProfile);
+                //if (!areSpecialismResultsValid)
+                //{
+                //    response.Add(AddStage3ValidationError(rowNum, currentRegistrationProfile.UniqueLearnerNumber, ValidationMessages.InvalidResultState));
+                //    continue;
+                //}
 
                 response.Add(new RommsRecordResponse
                 {
@@ -109,6 +102,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var response = new List<RommsRecordResponse>();
             var aoProviderTlevels = await GetAllTLevelsByAoUkprnAsync(aoUkprn);
             var academicYears = await _commonService.GetAcademicYearsAsync();
+            var gradesLookup = await _commonService.GetLookupDataAsync(LookupCategory.PathwayComponentGrade);
+
+            var registrationProfiles = await _registrationRepository.GetRegistrationProfilesAsync(validRommsData.Select(e => new TqRegistrationProfile
+            {
+                UniqueLearnerNumber = e.Uln
+            }).ToList());
 
             foreach (var rommData in validRommsData)
             {
@@ -135,24 +134,42 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     continue;
                 }
 
-                if (rommData.SpecialismCodes.Count() > 0)
+                var specialismCode = technicalQualification.TlSpecialismLarIds.FirstOrDefault(x => x.Value == rommData.SpecialismCode).Value;
+                if (specialismCode == null)
                 {
-                    var specialismCodes = technicalQualification.TlSpecialismLarIds.Select(x => x.Value);
-                    var invalidSpecialismCodes = rommData.SpecialismCodes.Except(specialismCodes, StringComparer.InvariantCultureIgnoreCase);
+                    response.Add(AddStage3ValidationError(rommData.RowNum, rommData.Uln, ValidationMessages.SpecialismNotValidWithCore));
+                    continue;
+                }
 
-                    if (invalidSpecialismCodes.Any())
+                bool openCoreRomm = rommData.CoreRommOpen;
+                bool addCoreOutcome = !string.IsNullOrEmpty(rommData.CoreRommOutcome);
+
+                if (openCoreRomm)
+                {
+                    var profile = registrationProfiles.FirstOrDefault(p => p.UniqueLearnerNumber == rommData.Uln);
+
+                    if (addCoreOutcome)
                     {
-                        response.Add(AddStage3ValidationError(rommData.RowNum, rommData.Uln, ValidationMessages.SpecialismNotValidWithCore));
-                        continue;
-                    }
-
-                    var isSpecialismPartOfCouplets = IsSpecialismPartOfCouplet(technicalQualification.TlSpecialismCombinations, rommData.SpecialismCodes);
-
-                    if (isSpecialismPartOfCouplets)
-                    {
-                        if (!IsValidCouplet(technicalQualification.TlSpecialismCombinations, rommData.SpecialismCodes))
+                        var isPathwayComponentGrade = gradesLookup.FirstOrDefault(g => g.Value.Equals(rommData.CoreRommOutcome));
+                        if (isPathwayComponentGrade == null)
                         {
-                            response.Add(AddStage3ValidationError(rommData.RowNum, rommData.Uln, rommData.SpecialismCodes.Count() == 1 ? ValidationMessages.SpecialismCannotBeSelectedAsSingleOption : ValidationMessages.SpecialismIsNotValid));
+                            response.Add(AddStage3ValidationError(rommData.RowNum, rommData.Uln, ValidationMessages.InvalidCoreComponentGrade));
+                            continue;
+                        }
+
+                        bool arePathwayResultsValid = ValidatePathwayResultStatus<TqPathwayResult>(profile.TqRegistrationPathways, p => !p.PrsStatus.HasValue || p.PrsStatus == PrsStatus.UnderReview);
+                        if (!arePathwayResultsValid)
+                        {
+                            response.Add(AddStage3ValidationError(rommData.RowNum, profile.UniqueLearnerNumber, ValidationMessages.InvalidResultState));
+                            continue;
+                        }
+                    }
+                    else
+                    {
+                        bool arePathwayResultsValid = ValidatePathwayResultStatus<TqPathwayResult>(profile.TqRegistrationPathways, p => !p.PrsStatus.HasValue);
+                        if (!arePathwayResultsValid)
+                        {
+                            response.Add(AddStage3ValidationError(rommData.RowNum, profile.UniqueLearnerNumber, ValidationMessages.InvalidResultState));
                             continue;
                         }
                     }
@@ -160,7 +177,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                 response.Add(new RommsRecordResponse
                 {
-                    Uln = rommData.Uln
+                    Uln = rommData.Uln,
+                    OpenCoreRomm = rommData.CoreRommOpen,
+                    AddCoreRommOutcome = !string.IsNullOrEmpty(rommData.CoreRommOutcome),
+                    CoreRommOutcome = rommData.CoreRommOutcome
                 });
             };
 
@@ -182,13 +202,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return registrationProfiles;
         }
 
-        public async Task<RommsProcessResponse> ProcessRommsAsync(long AoUkprn, IList<TqRegistrationProfile> registrations, string performedBy)
+        public async Task<RommsProcessResponse> ProcessRommsAsync(long AoUkprn, IList<TqRegistrationProfile> registrations, IEnumerable<RommsRecordResponse> rommData, string performedBy)
         {
             RommsProcessResponse response = new();
             bool success = false;
             int processed = 0;
-            IList<TqPathwayResult> results = new List<TqPathwayResult>();
-            var resultsRepository = _repositoryFactory.GetRepository<TqPathwayResult>();
 
             var registrationProfiles = await _registrationRepository.GetRegistrationProfilesAsync(registrations);
 
@@ -201,15 +219,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     _logger.LogWarning(LogEvent.NoDataFound, $"No record found for ProfileId = {profile.Id}. Method: ProcessRommsAsync({AoUkprn}, {profile.Id})");
                     response.IsSuccess = false;
                 }
-
-                var pathwayResult = registration.TqPathwayAssessments
-                    .FirstOrDefault(p => p.IsOptedin && p.EndDate is null)
-                    .TqPathwayResults.FirstOrDefault();
-
-                success = await OpenCoreRomm(pathwayResult, performedBy);
+                var romm = rommData.FirstOrDefault(r => r.Uln == profile.UniqueLearnerNumber);
+                if (romm.OpenCoreRomm)
+                    success = await OpenCoreRomm(registration, performedBy, romm.AddCoreRommOutcome, romm.CoreRommOutcome);
 
                 processed++;
-                results.Add(pathwayResult);
             }
 
             response.IsSuccess = success;
@@ -227,11 +241,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return response;
         }
 
-        private async Task<bool> OpenCoreRomm(TqPathwayResult pathwayResult, string createdBy)
+        private async Task<bool> OpenCoreRomm(TqRegistrationPathway pathway, string createdBy, bool addOutcome = false, string grade = null)
         {
             var pathwayResultRepo = _repositoryFactory.GetRepository<TqPathwayResult>();
 
-            TqPathwayResult existingPathwayResult = await pathwayResultRepo.GetFirstOrDefaultAsync(p => p.Id == pathwayResult.Id);
+            var assessment = pathway.TqPathwayAssessments.WhereActive().FirstOrDefault();
+            var result = assessment.TqPathwayResults.WhereActive().FirstOrDefault();
+
+            TqPathwayResult existingPathwayResult = await pathwayResultRepo.GetFirstOrDefaultAsync(p => p.Id == result.Id);
             if (existingPathwayResult == null)
             {
                 return false;
@@ -246,8 +263,45 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return false;
             }
 
-
             var newPathwayResult = CreatePathwayRequest(existingPathwayResult.TlLookupId, existingPathwayResult.TqPathwayAssessmentId, PrsStatus.UnderReview, createdBy);
+
+            var newPathwayResultId = await pathwayResultRepo.CreateAsync(newPathwayResult);
+
+            bool created = (newPathwayResultId > 0);
+            if (!created)
+            {
+                return false;
+            }
+
+            if (addOutcome)
+                return await AddCoreRommOutcome(newPathwayResultId, grade, createdBy);
+
+            return created;
+        }
+
+        private async Task<bool> AddCoreRommOutcome(int pathwayResultId, string rommOutcome, string createdBy)
+        {
+            var pathwayResultRepo = _repositoryFactory.GetRepository<TqPathwayResult>();
+            var lookupRepo = _repositoryFactory.GetRepository<TlLookup>();
+
+            var grade = await lookupRepo.GetFirstOrDefaultAsync(e => e.Value.Equals(rommOutcome) &&
+                                                    e.IsActive
+                                                    && e.Category.Equals(LookupCategory.PathwayComponentGrade.ToString()));
+
+            TqPathwayResult existingPathwayResult = await pathwayResultRepo.GetFirstOrDefaultAsync(p => p.Id == pathwayResultId);
+            if (existingPathwayResult == null)
+            {
+                return false;
+            }
+
+            var updated = await UpdatePathwayResultAsync(pathwayResultRepo, existingPathwayResult, createdBy);
+
+            if (!updated)
+            {
+                return false;
+            }
+
+            var newPathwayResult = CreatePathwayRequest(grade.Id, existingPathwayResult.TqPathwayAssessmentId, PrsStatus.Reviewed, createdBy);
 
             bool created = await pathwayResultRepo.CreateAsync(newPathwayResult) > 0;
             if (!created)
@@ -255,7 +309,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return false;
             }
 
-            return true;
+            return created;
         }
 
         private TqPathwayResult CreatePathwayRequest(int tlLookUpId, int TqPathwayAssessmentId, PrsStatus prsStatus, string createdBy)
@@ -291,13 +345,80 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 p => p.ModifiedOn) > 0;
         }
 
+        private async Task<bool> OpenSpecialismRomm(TqSpecialismResult specialismResult, string createdBy)
+        {
+            var specialismResultRepo = _repositoryFactory.GetRepository<TqSpecialismResult>();
+
+            TqSpecialismResult existingSpecialismResult = await specialismResultRepo.GetFirstOrDefaultAsync(p => p.Id == specialismResult.Id);
+            if (existingSpecialismResult == null)
+            {
+                return false;
+            }
+
+            DateTime utcNow = _systemProvider.UtcNow;
+
+            existingSpecialismResult.IsOptedin = false;
+            existingSpecialismResult.EndDate = utcNow;
+            existingSpecialismResult.ModifiedBy = createdBy;
+            existingSpecialismResult.ModifiedOn = utcNow;
+
+            var updated = await UpdateSpecialismResultAsync(specialismResultRepo, existingSpecialismResult, createdBy);
+
+            if (!updated)
+            {
+                return false;
+            }
+
+            var newSpecialismResult = CreateSpecialismRequest(existingSpecialismResult.TlLookupId, existingSpecialismResult.TqSpecialismAssessmentId, utcNow, PrsStatus.UnderReview, createdBy);
+
+            bool created = await specialismResultRepo.CreateAsync(newSpecialismResult) > 0;
+
+            if (!created)
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        private static TqSpecialismResult CreateSpecialismRequest(int tlLookUpId, int TqSpecialismAssessmentId, DateTime utcNow, PrsStatus prsStatus, string createdBy)
+        {
+            return new TqSpecialismResult
+            {
+                TqSpecialismAssessmentId = TqSpecialismAssessmentId,
+                TlLookupId = tlLookUpId,
+                PrsStatus = prsStatus,
+                IsOptedin = true,
+                StartDate = utcNow,
+                IsBulkUpload = false,
+                CreatedBy = createdBy,
+                CreatedOn = utcNow
+            };
+        }
+
+        private async Task<bool> UpdateSpecialismResultAsync(IRepository<TqSpecialismResult> specialismResultRepo, TqSpecialismResult existingSpecialismResult, string createdBy)
+        {
+            DateTime utcNow = _systemProvider.UtcNow;
+
+            existingSpecialismResult.IsOptedin = false;
+            existingSpecialismResult.EndDate = utcNow;
+            existingSpecialismResult.ModifiedBy = createdBy;
+            existingSpecialismResult.ModifiedOn = utcNow;
+
+            return await specialismResultRepo.UpdateWithSpecifedColumnsOnlyAsync(existingSpecialismResult,
+                p => p.IsOptedin,
+                p => p.EndDate,
+                p => p.ModifiedBy,
+                p => p.ModifiedOn) > 0;
+        }
+
         private async Task<IList<TechnicalQualificationDetails>> GetAllTLevelsByAoUkprnAsync(long ukprn)
         {
             var result = await _providerRepository.GetManyAsync(p => p.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == ukprn
                                                                     && p.TqAwardingOrganisation.TlAwardingOrganisaton.IsActive
                                                                     && p.TqAwardingOrganisation.TlPathway.IsActive,
                p => p.TlProvider, p => p.TqAwardingOrganisation, p => p.TqAwardingOrganisation.TlAwardingOrganisaton,
-               p => p.TqAwardingOrganisation.TlPathway, p => p.TqAwardingOrganisation.TlPathway.TlPathwaySpecialismCombinations.Where(p => p.IsActive),
+               p => p.TqAwardingOrganisation.TlPathway,
                p => p.TqAwardingOrganisation.TlPathway.TlSpecialisms.Where(p => p.IsActive)).ToListAsync();
 
             return _mapper.Map<IList<TechnicalQualificationDetails>>(result);
@@ -317,18 +438,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     }
                 }
             };
-        }
-
-        private bool IsSpecialismPartOfCouplet(IEnumerable<KeyValuePair<int, string>> coupletPairs, IEnumerable<string> specialismCodesToRegister)
-        {
-            if (!coupletPairs.Any() || !specialismCodesToRegister.Any()) return false;
-
-            var coupletSpecialismCodes = new List<string>();
-
-            coupletPairs.Select(x => x.Value).ToList().ForEach(c => { coupletSpecialismCodes.AddRange(c.Split(Constants.PipeSeperator)); });
-
-            var result = specialismCodesToRegister.Any(s => coupletSpecialismCodes.Any(c => c.Equals(s, StringComparison.InvariantCultureIgnoreCase)));
-            return result;
         }
 
         private bool IsValidCouplet(IEnumerable<KeyValuePair<int, string>> coupletPairs, IEnumerable<string> specialismCodesToRegister)
@@ -351,22 +460,30 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return rommCsvRecord != null && profile.DateofBirth.Date == rommCsvRecord.DateOfBirth.Date;
         }
 
+        private bool ValidatePathwayResultStatus<TResult>(IEnumerable<TqRegistrationPathway> pathway, Func<TqPathwayResult, bool> getValue)
+        {
+            var result = pathway
+                .SelectMany(p => p.TqPathwayAssessments.WhereActive())
+                .SelectMany(p => p.TqPathwayResults.WhereActive())
+                .FirstOrDefault();
+
+            return getValue(result);
+        }
+
         private static bool ValidatePathwayResults(TqRegistrationProfile profile)
             => profile.TqRegistrationPathways.WhereActive()
                 .SelectMany(rp => rp.TqPathwayAssessments.WhereActive())
                 .SelectMany(pa => pa.TqPathwayResults.WhereActive())
-                .Any(res => IsResult(res));
+                .Any(res => HasCoreResult(res));
 
         private static bool ValidateSpecialismResults(TqRegistrationProfile profile)
             => profile.TqRegistrationPathways.WhereActive()
                 .SelectMany(p => p.TqRegistrationSpecialisms.WhereActive())
                 .SelectMany(p => p.TqSpecialismAssessments.WhereActive())
                 .SelectMany(p => p.TqSpecialismResults.WhereActive())
-                .All(res => !IsRommOrAppeal(res.PrsStatus));
+                .Any(res => HasSpecialismResult(res));
 
-        private static bool IsRommOrAppeal(PrsStatus? prsStatus)
-            => prsStatus.HasValue && (prsStatus.Value == PrsStatus.UnderReview || prsStatus.Value == PrsStatus.BeingAppealed);
-
-        private static bool IsResult(TqPathwayResult res) => res.PrsStatus is null && res.IsOptedin == true && res.EndDate is null;
+        private static bool HasCoreResult(TqPathwayResult res) => res.PrsStatus is null && res.IsOptedin == true && res.EndDate is null;
+        private static bool HasSpecialismResult(TqSpecialismResult res) => res.PrsStatus is null && res.IsOptedin == true && res.EndDate is null;
     }
 }
