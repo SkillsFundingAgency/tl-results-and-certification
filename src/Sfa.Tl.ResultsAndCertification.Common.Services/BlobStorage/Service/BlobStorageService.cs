@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
+using Azure.Identity;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Service
 {
@@ -61,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Service
         {
             var sourceBlobClient = await GetBlobClient(blobStorageData.ContainerName, blobStorageData.SourceFilePath, blobStorageData.BlobFileName);
 
-            if(await sourceBlobClient.ExistsAsync())
+            if (await sourceBlobClient.ExistsAsync())
             {
                 var lease = sourceBlobClient.GetBlobLeaseClient();
                 await lease.AcquireAsync(TimeSpan.FromSeconds(-1));
@@ -78,11 +79,11 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Service
                 return await sourceBlobClient.DeleteIfExistsAsync();
             }
             return false;
-        }   
+        }
 
         public async Task<bool> DeleteFileAsync(BlobStorageData blobStorageData)
         {
-            var blobClient= await GetBlobClient(blobStorageData.ContainerName, blobStorageData.SourceFilePath, blobStorageData.BlobFileName);
+            var blobClient = await GetBlobClient(blobStorageData.ContainerName, blobStorageData.SourceFilePath, blobStorageData.BlobFileName);
             return await blobClient.DeleteIfExistsAsync();
         }
 
@@ -96,11 +97,11 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Service
 
         private async Task<BlobContainerClient> GetContainerAsync(string containerName)
         {
-            var blobServiceClient = new BlobServiceClient(_configuration.BlobStorageConnectionString);
-            var containerClient = blobServiceClient.GetBlobContainerClient(containerName?.ToLowerInvariant());
+            string fullContainerName = $"https://s126d01resacdevstr.blob.core.windows.net/{containerName.ToLower()}";
+            var containerUri = new Uri(fullContainerName);
 
-            if (!await containerClient.ExistsAsync())
-                await containerClient.CreateAsync();
+            var containerClient = new BlobContainerClient(containerUri, new DefaultAzureCredential());
+            await containerClient.CreateIfNotExistsAsync();
 
             return containerClient;
         }
