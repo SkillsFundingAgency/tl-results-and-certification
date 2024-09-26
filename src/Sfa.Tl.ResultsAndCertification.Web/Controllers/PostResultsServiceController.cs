@@ -754,7 +754,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("download-romms-errors", Name = RouteConstants.DownloadRommsErrors)]
+        [Route("download-romm-errors", Name = RouteConstants.DownloadRommErrors)]
         public async Task<IActionResult> DownloadRommsErrors(string id)
         {
             if (id.IsGuid())

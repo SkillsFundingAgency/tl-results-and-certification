@@ -195,7 +195,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             {
                 var fileStream = await _blobStorageService.DownloadFileAsync(new BlobStorageData
                 {
-                    ContainerName = DocumentType.Withdrawals.ToString(),
+                    ContainerName = DocumentType.Romms.ToString(),
                     BlobFileName = tlevelDetails.BlobFileName,
                     SourceFilePath = $"{aoUkprn}/{BulkProcessStatus.ValidationErrors}"
                 });

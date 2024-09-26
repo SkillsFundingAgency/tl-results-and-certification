@@ -372,7 +372,7 @@
         public const string RommsUploadSuccessful = "RommsUploadSuccessful";
         public const string RommsUploadUnsuccessful = "RommsUploadUnsuccessful";
         public const string ProblemWithRommsUpload = "ProblemWithRommsUpload";
-        public const string DownloadRommsErrors = "DownloadRommsrrors";
+        public const string DownloadRommErrors = "DownloadRommErrors";
 
         #endregion
 

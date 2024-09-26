@@ -1,9 +1,7 @@
 ﻿using FluentValidation;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
-using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataParser;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.PostResultsService.BulkProcess;
-using System.Linq;
 using Const = Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Constants;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidators
@@ -49,22 +47,31 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
                 .Required()
                 .MustBeInAcademicYearPattern();
 
-            // Core
+            // Core Component Code
             RuleFor(r => r.Core)
                 .Cascade(CascadeMode.Stop)
                 .Required()
                 .MustBeStringWithLength(Const.CoreCodeLength);
 
+            // Core Component Open
+            RuleFor(r => r.CoreRommOpen)
+                .Cascade(CascadeMode.Stop)
+                .Required()
+                .MustBeYesOrNoValidation();
+
             // Specialisms
             RuleFor(r => r.Specialism)
-                .Must(x => CsvStringToListParser.Parse(x).All(a => a.Length == Const.SpecialismCodeLength))
+                .MustBeStringWithLength(Const.SpecialismCodeLength)
                 .WithMessage(string.Format(ValidationMessages.MustBeStringWithLength, "{PropertyName}", Const.SpecialismCodeLength))
                 .When(r => !string.IsNullOrWhiteSpace(r.Specialism));
 
-            RuleFor(r => r.Specialism)
-                .NotDuplicatesInCommaSeparatedString()
-                .WithMessage(ValidationMessages.SpecialismIsNotValid)
-                .When(r => !string.IsNullOrWhiteSpace(r.Specialism) && CsvStringToListParser.Parse(r.Specialism).Count > 1);
+            // Specialism Component Open
+            RuleFor(r => r.SpecialismRommOpen)
+                .Cascade(CascadeMode.Stop)
+                .Required()
+                .MustBeYesOrNoValidation();
+
+
         }
     }
 }

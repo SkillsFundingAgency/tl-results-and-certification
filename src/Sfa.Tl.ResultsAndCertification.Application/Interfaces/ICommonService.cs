@@ -11,6 +11,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
     {
         Task<IEnumerable<LookupData>> GetLookupDataAsync(LookupCategory lookupCategory);
 
+        Task<IEnumerable<LookupData>> GetLookupDataAsync(LookupCategory lookupCategory, List<string> codoes);
+
         Task<LoggedInUserTypeInfo> GetLoggedInUserTypeInfoAsync(long ukprn);
 
         // FunctionLog
