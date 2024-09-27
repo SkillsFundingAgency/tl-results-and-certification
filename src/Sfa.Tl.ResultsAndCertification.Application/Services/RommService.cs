@@ -200,7 +200,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     var isPathwayComponentGrade = gradesLookup.FirstOrDefault(g => g.Value.Equals(rommData.CoreRommOutcome));
                     if (isPathwayComponentGrade == null)
                     {
-                        response.Add(AddStage3ValidationError(rommData.RowNum, rommData.Uln, ValidationMessages.InvalidCoreComponentGrade));
+                        response.Add(AddStage3ValidationError(rommData.RowNum, rommData.Uln, ValidationMessages.InvalidCoreRommComponentGrade));
                         continue;
                     }
 
@@ -236,7 +236,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     var isSpecialismComponentGrade = gradesLookup.FirstOrDefault(g => g.Value.Equals(rommData.SpecialismRommOutcome));
                     if (isSpecialismComponentGrade == null)
                     {
-                        response.Add(AddStage3ValidationError(rommData.RowNum, rommData.Uln, ValidationMessages.InvalidSpecialismComponentGrade));
+                        response.Add(AddStage3ValidationError(rommData.RowNum, rommData.Uln, ValidationMessages.InvalidSpecialismRommComponentGrade));
                         continue;
                     }
 
