@@ -385,6 +385,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PostAsync<PrsGradeChangeRequest, bool>(requestUri, request);
         }
 
+        public async Task<BulkProcessResponse> ProcessBulkRommsAsync(BulkProcessRequest model)
+        {
+            var requestUri = ApiConstants.ProcessBulkRommsUri;
+            return await PostAsync<BulkProcessRequest, BulkProcessResponse>(requestUri, model);
+        }
+
         #endregion
 
         #region IndustryPlacement

@@ -142,7 +142,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                 .ThenInclude(p => p.TqPathwayResults.Where(p => p.IsOptedin))
                                 .ThenInclude(p => p.TlLookup)
                             .Include(p => p.TqRegistrationSpecialisms
-                                .Where(p => 
+                                .Where(p =>
                                     // If the learner is withdrawn and the specialism IS NOT DUAL we pick the one with the latest end date.
                                     (p.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn && !p.TlSpecialism.TlDualSpecialismToSpecialisms.Any()
                                     && p.IsOptedin && !_dbContext.TqRegistrationSpecialism.Any(p2 => p2.TqRegistrationPathwayId == p.TqRegistrationPathwayId && p2.EndDate > p.EndDate))
@@ -235,8 +235,18 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                         .ThenInclude(x => x.TqSpecialismAssessments)
                             .ThenInclude(x => x.TqSpecialismResults)
                 .Include(x => x.TqRegistrationPathways)
+                    .ThenInclude(x => x.TqRegistrationSpecialisms)
+                        .ThenInclude(x => x.TqSpecialismAssessments)
+                            .ThenInclude(x => x.AssessmentSeries)
+                 .Include(x => x.TqRegistrationPathways)
+                    .ThenInclude(x => x.TqRegistrationSpecialisms)
+                        .ThenInclude(x => x.TlSpecialism)
+                .Include(x => x.TqRegistrationPathways)
                     .ThenInclude(x => x.TqPathwayAssessments)
                         .ThenInclude(x => x.TqPathwayResults)
+                .Include(x => x.TqRegistrationPathways)
+                    .ThenInclude(x => x.TqPathwayAssessments)
+                        .ThenInclude(x => x.AssessmentSeries)
                 .Include(x => x.TqRegistrationPathways)
                     .ThenInclude(x => x.TqProvider)
                         .ThenInclude(x => x.TqAwardingOrganisation)

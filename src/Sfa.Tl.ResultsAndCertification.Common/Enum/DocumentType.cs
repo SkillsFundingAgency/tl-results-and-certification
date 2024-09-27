@@ -17,6 +17,7 @@
         ProviderAddressess = 13,
         CertificateTracking = 14,
         Withdrawals = 15,
-        ResultSlips = 16
+        ResultSlips = 16,
+        Romms = 17
     }
 }

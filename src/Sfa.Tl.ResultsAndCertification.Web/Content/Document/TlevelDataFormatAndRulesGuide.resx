@@ -234,4 +234,10 @@
   <data name="Use_The_Correct_Format_For_File_Data_Items_Text" xml:space="preserve">
     <value>use the correct format for file data items</value>
   </data>
+  <data name="Tlevels_Romm_Data_Template_File_Name" xml:space="preserve">
+    <value>tlevels-romm-data-template.csv</value>
+  </data>
+  <data name="Tlevels_Romm_Data_Format_And_Rules_File_Name" xml:space="preserve">
+    <value>tlevels-romm-data-format-and-rules.xlsx</value>
+  </data>
 </root>

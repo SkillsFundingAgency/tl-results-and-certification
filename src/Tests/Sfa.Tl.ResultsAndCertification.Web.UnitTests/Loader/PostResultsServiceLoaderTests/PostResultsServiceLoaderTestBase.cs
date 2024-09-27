@@ -1,7 +1,9 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
@@ -20,9 +22,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
 
         // Dependencies
         protected IResultsAndCertificationInternalApiClient InternalApiClient;
+        private readonly IBlobStorageService BlobStorageService;
         protected IMapper Mapper;
         protected IHttpContextAccessor HttpContextAccessor;
         protected PostResultsServiceLoader Loader;
+        protected ILogger<PostResultsServiceLoader> Logger;
 
         public override void Setup()
         {
@@ -40,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
             CreateMapper();
 
             InternalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();
-            Loader = new PostResultsServiceLoader(InternalApiClient, Mapper);
+            Loader = new PostResultsServiceLoader(InternalApiClient, Logger, BlobStorageService, Mapper);
         }
 
         public virtual void CreateMapper()
