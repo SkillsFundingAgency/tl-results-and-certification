@@ -53,6 +53,18 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return _mapper.Map<IEnumerable<LookupData>>(lookupData);
         }
 
+        public async Task<IEnumerable<LookupData>> GetLookupDataAsync(LookupCategory lookupCategory, List<string> codes)
+        {
+            var lookupData = await _tlLookupRepository.GetManyAsync(x => x.IsActive && x.Category == lookupCategory.ToString())
+                                                      .OrderBy(x => x.SortOrder)
+                                                      .ToListAsync();
+
+
+            var filteredLookups = lookupData.ExceptBy(codes, e => e.Code).ToList();
+
+            return _mapper.Map<IEnumerable<LookupData>>(filteredLookups);
+        }
+
         public async Task<bool> CreateFunctionLog(FunctionLogDetails model)
         {
             if (model != null)

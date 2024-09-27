@@ -1,6 +1,8 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
+using System;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
@@ -18,5 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<bool> PrsAppealActivityAsync(long aoUkprn, PrsAppealCheckAndSubmitViewModel model);
         Task<bool> PrsGradeChangeRequestAsync(PrsGradeChangeRequestViewModel model);
         T TransformLearnerDetailsTo<T>(FindPrsLearnerRecord prsLearnerRecord);
+        Task<UploadRommsResponseViewModel> ProcessBulkRommsAsync(UploadRommsRequestViewModel viewModel);
+        Task<Stream> GetRommValidationErrorsFileAsync(long aoUkprn, Guid blobUniqueReference);
     }
 }
