@@ -791,7 +791,7 @@
             "value": "[reference(concat('internal-api-app-service','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]"
           },
           "assignmentType": {
-            "value": "StorageBlobDataContributor"
+            "value": "StorageBlobDataOwner"
           },
           "resourceName": {
             "value": "[variables('storageAccountName')]"
@@ -814,7 +814,7 @@
             "value": "[reference(concat('function-app','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]"
           },
           "assignmentType": {
-            "value": "StorageBlobDataContributor"
+            "value": "StorageBlobDataOwner"
           },
           "resourceName": {
             "value": "[variables('storageAccountName')]"
