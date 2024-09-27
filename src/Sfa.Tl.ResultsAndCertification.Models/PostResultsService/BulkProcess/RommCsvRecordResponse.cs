@@ -21,11 +21,15 @@ namespace Sfa.Tl.ResultsAndCertification.Models.PostResultsService.BulkProcess
 
         public string AcademicYearName { get; set; }
 
+        public string AssessmentSeriesCore { get; set; }
+
         public string CoreCode { get; set; }
 
         public bool CoreRommOpen { get; set; }
 
         public string CoreRommOutcome { get; set; }
+
+        public string AssessmentSeriesSpecialism { get; set; }
 
         public string SpecialismCode { get; set; }
 

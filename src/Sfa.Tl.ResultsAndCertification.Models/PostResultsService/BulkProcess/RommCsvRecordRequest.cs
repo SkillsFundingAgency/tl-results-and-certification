@@ -30,27 +30,35 @@ namespace Sfa.Tl.ResultsAndCertification.Models.PostResultsService.BulkProcess
         [Display(Name = RommFluentHeader.AcademicYear)]
         public string AcademicYear { get; set; }
 
-        [Column(RommHeader.Core, Order = 6)]
+        [Column(RommHeader.AssessmentSeriesCore, Order = 6)]
+        [Display(Name = RommFluentHeader.AssessmentSeriesCore)]
+        public string AssessmentSeriesCore { get; set; }
+
+        [Column(RommHeader.Core, Order = 7)]
         [Display(Name = RommFluentHeader.CoreRommOpen)]
         public string Core { get; set; }
 
-        [Column(RommHeader.CoreRommOpen, Order = 7)]
+        [Column(RommHeader.CoreRommOpen, Order = 8)]
         [Display(Name = RommFluentHeader.CoreRommOpen)]
         public string CoreRommOpen { get; set; }
 
-        [Column(RommHeader.CoreRommOutcome, Order = 8)]
+        [Column(RommHeader.CoreRommOutcome, Order = 9)]
         [Display(Name = RommFluentHeader.CoreRommOutcome)]
         public string CoreRommOutcome { get; set; }
 
-        [Column(RommHeader.Specialism, Order = 9)]
+        [Column(RommHeader.AssessmentSeriesSpecialism, Order = 10)]
+        [Display(Name = RommFluentHeader.AssessmentSeriesSpecialism)]
+        public string AssessmentSeriesSpecialism { get; set; }
+
+        [Column(RommHeader.Specialism, Order = 11)]
         [Display(Name = RommFluentHeader.Specialism)]
         public string Specialism { get; set; }
 
-        [Column(RommHeader.SpecialismRommOpen, Order = 10)]
+        [Column(RommHeader.SpecialismRommOpen, Order = 12)]
         [Display(Name = RommFluentHeader.SpecialismRommOpen)]
         public string SpecialismRommOpen { get; set; }
 
-        [Column(RommHeader.SpecialismRommOutcome, Order = 11)]
+        [Column(RommHeader.SpecialismRommOutcome, Order = 13)]
         [Display(Name = RommFluentHeader.SpecialismRommOutcome)]
         public string SpecialismRommOutcome { get; set; }
     }
