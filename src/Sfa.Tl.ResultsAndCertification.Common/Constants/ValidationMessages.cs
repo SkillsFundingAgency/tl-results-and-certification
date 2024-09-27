@@ -41,6 +41,8 @@
         public const string InactiveUln = "Inactive Uln";
         public const string InvalidDateOfBirth = "Invalid date of birth";
         public const string InvalidResultState = "Active Romm or Appeal";
+        public const string InvalidRommResultState = "Active Romm, Appeal or no result unavailable.";
+        public const string RommWindowExpired = "Invalid Romm period.";
 
         // Bulk Registration Stage4 Validation Messages
         public const string ActiveUlnWithDifferentAo = "Active ULN with a different awarding organisation";

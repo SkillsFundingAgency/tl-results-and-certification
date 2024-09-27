@@ -103,6 +103,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             foreach (var rommData in validRommsData)
             {
+                var profile = registrationProfiles.FirstOrDefault(p => p.UniqueLearnerNumber == rommData.Uln);
+
                 var academicYear = academicYears.FirstOrDefault(x => x.Name.Equals(rommData.AcademicYearName, StringComparison.InvariantCultureIgnoreCase));
                 if (academicYear == null)
                 {
@@ -111,6 +113,43 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 }
                 else
                     rommData.AcademicYear = academicYear.Year;
+
+                var hasActiveCoreAssessmentEntry = profile.TqRegistrationPathways
+                    .SelectMany(p => p.TqPathwayAssessments)
+                    .FirstOrDefault(p => p.IsOptedin && p.EndDate is null);
+
+                if (hasActiveCoreAssessmentEntry == null)
+                {
+                    response.Add(AddStage3ValidationError(rommData.RowNum, rommData.Uln, ValidationMessages.NoCoreAssessmentEntryCurrentlyActive));
+                    continue;
+                }
+
+                var assessmentSeriesCore = hasActiveCoreAssessmentEntry.AssessmentSeries;
+                bool isValidCoreRommWindow = _systemProvider.Today == assessmentSeriesCore.RommEndDate;
+                if (!isValidCoreRommWindow)
+                {
+                    response.Add(AddStage3ValidationError(rommData.RowNum, rommData.Uln, ValidationMessages.RommWindowExpired));
+                    continue;
+                }
+
+                var hasActiveSpecialismAssessmentEntry = profile.TqRegistrationPathways
+                    .SelectMany(p => p.TqRegistrationSpecialisms)
+                    .SelectMany(p => p.TqSpecialismAssessments)
+                    .FirstOrDefault(p => p.IsOptedin && p.EndDate is null);
+
+                if (hasActiveSpecialismAssessmentEntry == null)
+                {
+                    response.Add(AddStage3ValidationError(rommData.RowNum, rommData.Uln, ValidationMessages.NoSpecialismAssessmentEntryCurrentlyActive));
+                    continue;
+                }
+
+                var assessmentSeriesSpecialism = hasActiveSpecialismAssessmentEntry.AssessmentSeries;
+                bool isValidSpecialismRommWindow = _systemProvider.Today == assessmentSeriesSpecialism.RommEndDate;
+                if (!isValidCoreRommWindow)
+                {
+                    response.Add(AddStage3ValidationError(rommData.RowNum, rommData.Uln, ValidationMessages.RommWindowExpired));
+                    continue;
+                }
 
                 var isProviderRegisteredWithAwardingOrganisation = aoProviderTlevels.Any(t => t.ProviderUkprn == rommData.ProviderUkprn);
                 if (!isProviderRegisteredWithAwardingOrganisation)
@@ -138,87 +177,86 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 }
 
                 bool openCoreRomm = rommData.CoreRommOpen;
-                bool addCoreOutcome = !string.IsNullOrEmpty(rommData.CoreRommOutcome);
+                bool openCoreRommWithOutcome = !string.IsNullOrEmpty(rommData.CoreRommOutcome);
 
-                if (openCoreRomm)
+                bool openCoreRommOnly = openCoreRomm && !openCoreRommWithOutcome;
+                bool openCoreRommAndAddOutcome = openCoreRomm && openCoreRommWithOutcome;
+
+                if (openCoreRommOnly)
                 {
-                    var profile = registrationProfiles.FirstOrDefault(p => p.UniqueLearnerNumber == rommData.Uln);
-
-                    if (addCoreOutcome)
+                    bool arePathwayResultsValid = ValidatePathwayResultStatus<TqPathwayResult>(profile.TqRegistrationPathways, p => !p.PrsStatus.HasValue);
+                    if (!arePathwayResultsValid)
                     {
-                        var gradesLookup = await _commonService.GetLookupDataAsync(LookupCategory.PathwayComponentGrade
-                            , new() { Constants.PathwayComponentGradeQpendingResultCode, Constants.PathwayComponentGradeXNoResultCode });
-
-                        var isPathwayComponentGrade = gradesLookup.FirstOrDefault(g => g.Value.Equals(rommData.CoreRommOutcome));
-                        if (isPathwayComponentGrade == null)
-                        {
-                            response.Add(AddStage3ValidationError(rommData.RowNum, rommData.Uln, ValidationMessages.InvalidCoreComponentGrade));
-                            continue;
-                        }
-
-                        bool arePathwayResultsValid = ValidatePathwayResultStatus<TqPathwayResult>(profile.TqRegistrationPathways, p => !p.PrsStatus.HasValue || p.PrsStatus == PrsStatus.UnderReview);
-                        if (!arePathwayResultsValid)
-                        {
-                            response.Add(AddStage3ValidationError(rommData.RowNum, profile.UniqueLearnerNumber, ValidationMessages.InvalidResultState));
-                            continue;
-                        }
+                        response.Add(AddStage3ValidationError(rommData.RowNum, profile.UniqueLearnerNumber, ValidationMessages.InvalidResultState));
+                        continue;
                     }
-                    else
+                }
+
+                if (openCoreRommAndAddOutcome)
+                {
+                    var gradesLookup = await _commonService.GetLookupDataAsync(LookupCategory.PathwayComponentGrade
+                        , new() { Constants.PathwayComponentGradeQpendingResultCode, Constants.PathwayComponentGradeXNoResultCode });
+
+                    var isPathwayComponentGrade = gradesLookup.FirstOrDefault(g => g.Value.Equals(rommData.CoreRommOutcome));
+                    if (isPathwayComponentGrade == null)
                     {
-                        bool arePathwayResultsValid = ValidatePathwayResultStatus<TqPathwayResult>(profile.TqRegistrationPathways, p => !p.PrsStatus.HasValue);
-                        if (!arePathwayResultsValid)
-                        {
-                            response.Add(AddStage3ValidationError(rommData.RowNum, profile.UniqueLearnerNumber, ValidationMessages.InvalidResultState));
-                            continue;
-                        }
+                        response.Add(AddStage3ValidationError(rommData.RowNum, rommData.Uln, ValidationMessages.InvalidCoreComponentGrade));
+                        continue;
+                    }
+
+                    bool arePathwayResultsValid = ValidatePathwayResultStatus<TqPathwayResult>(profile.TqRegistrationPathways, p => !p.PrsStatus.HasValue || p.PrsStatus == PrsStatus.UnderReview);
+                    if (!arePathwayResultsValid)
+                    {
+                        response.Add(AddStage3ValidationError(rommData.RowNum, profile.UniqueLearnerNumber, ValidationMessages.InvalidResultState));
+                        continue;
                     }
                 }
 
                 bool openSpecialismRomm = rommData.SpecialismRommOpen && isSpecialismCodeProvided;
-                bool addSpecialismOutcome = !string.IsNullOrEmpty(rommData.SpecialismRommOutcome);
+                bool openSpecialismRommWithOutcome = !string.IsNullOrEmpty(rommData.SpecialismRommOutcome);
 
-                if (openSpecialismRomm)
+                bool openSpecialismRommOnly = openSpecialismRomm && !openSpecialismRommWithOutcome;
+                bool openSpecialismRommAndAddOutcome = openSpecialismRomm && openSpecialismRommWithOutcome;
+
+                if (openSpecialismRommOnly)
                 {
-                    var profile = registrationProfiles.FirstOrDefault(p => p.UniqueLearnerNumber == rommData.Uln);
-
-                    if (addSpecialismOutcome)
+                    bool arePathwayResultsValid = ValidateSpecialismResultStatus<TqSpecialismResult>(profile.TqRegistrationPathways, rommData.SpecialismCode, p => !p.PrsStatus.HasValue);
+                    if (!arePathwayResultsValid)
                     {
-                        var gradesLookup = await _commonService.GetLookupDataAsync(LookupCategory.SpecialismComponentGrade,
-                            new() { Constants.SpecialismComponentGradeQpendingResultCode, Constants.SpecialismComponentGradeXNoResultCode });
-
-                        var isSpecialismComponentGrade = gradesLookup.FirstOrDefault(g => g.Value.Equals(rommData.SpecialismRommOutcome));
-                        if (isSpecialismComponentGrade == null)
-                        {
-                            response.Add(AddStage3ValidationError(rommData.RowNum, rommData.Uln, ValidationMessages.InvalidSpecialismComponentGrade));
-                            continue;
-                        }
-
-                        bool arePathwayResultsValid = ValidateSpecialismResultStatus<TqSpecialismResult>(profile.TqRegistrationPathways, rommData.SpecialismCode, p => !p.PrsStatus.HasValue || p.PrsStatus == PrsStatus.UnderReview);
-                        if (!arePathwayResultsValid)
-                        {
-                            response.Add(AddStage3ValidationError(rommData.RowNum, profile.UniqueLearnerNumber, ValidationMessages.InvalidResultState));
-                            continue;
-                        }
-                    }
-                    else
-                    {
-                        bool arePathwayResultsValid = ValidateSpecialismResultStatus<TqSpecialismResult>(profile.TqRegistrationPathways, rommData.SpecialismCode, p => !p.PrsStatus.HasValue);
-                        if (!arePathwayResultsValid)
-                        {
-                            response.Add(AddStage3ValidationError(rommData.RowNum, profile.UniqueLearnerNumber, ValidationMessages.InvalidResultState));
-                            continue;
-                        }
+                        response.Add(AddStage3ValidationError(rommData.RowNum, profile.UniqueLearnerNumber, ValidationMessages.InvalidResultState));
+                        continue;
                     }
                 }
+
+                if (openSpecialismRommAndAddOutcome)
+                {
+                    var gradesLookup = await _commonService.GetLookupDataAsync(LookupCategory.SpecialismComponentGrade,
+                        new() { Constants.SpecialismComponentGradeQpendingResultCode, Constants.SpecialismComponentGradeXNoResultCode });
+
+                    var isSpecialismComponentGrade = gradesLookup.FirstOrDefault(g => g.Value.Equals(rommData.SpecialismRommOutcome));
+                    if (isSpecialismComponentGrade == null)
+                    {
+                        response.Add(AddStage3ValidationError(rommData.RowNum, rommData.Uln, ValidationMessages.InvalidSpecialismComponentGrade));
+                        continue;
+                    }
+
+                    bool arePathwayResultsValid = ValidateSpecialismResultStatus<TqSpecialismResult>(profile.TqRegistrationPathways, rommData.SpecialismCode, p => !p.PrsStatus.HasValue || p.PrsStatus == PrsStatus.UnderReview);
+                    if (!arePathwayResultsValid)
+                    {
+                        response.Add(AddStage3ValidationError(rommData.RowNum, profile.UniqueLearnerNumber, ValidationMessages.InvalidResultState));
+                        continue;
+                    }
+                }
+
 
                 response.Add(new RommsRecordResponse
                 {
                     Uln = rommData.Uln,
                     OpenCoreRomm = openCoreRomm,
-                    AddCoreRommOutcome = !string.IsNullOrEmpty(rommData.CoreRommOutcome),
+                    AddCoreRommOutcome = openCoreRommWithOutcome,
                     CoreRommOutcome = rommData.CoreRommOutcome,
                     OpenSpecialismRomm = openSpecialismRomm,
-                    AddSpecialismRommOutcome = !string.IsNullOrEmpty(rommData.SpecialismRommOutcome),
+                    AddSpecialismRommOutcome = openSpecialismRommWithOutcome,
                     SpecialismRommOutcome = rommData.SpecialismRommOutcome,
                     SpecialismCode = rommData.SpecialismCode
                 });
