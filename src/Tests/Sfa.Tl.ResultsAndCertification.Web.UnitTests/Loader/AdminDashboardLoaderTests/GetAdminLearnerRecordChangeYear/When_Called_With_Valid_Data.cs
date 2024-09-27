@@ -2,10 +2,11 @@
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoaderTests.AdminChangeStartYear
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoaderTests.GetAdminLearnerRecordChangeYear
 {
     public class When_Called_With_Valid_Data : AdminDashboardLoaderTestsBase
     {
@@ -17,18 +18,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
         public override void Given()
         {
             _apiResult = CreateAdminLearnerRecord(RegistrationPathwayId);
+
             ApiClient.GetAdminLearnerRecordAsync(RegistrationPathwayId).Returns(_apiResult);
+            ApiClient.GetAllowedChangeAcademicYearsAsync(_apiResult.Pathway.AcademicYear, _apiResult.Pathway.StartYear).Returns(new List<int> { 2022, 2021 });
         }
 
         public async override Task When()
         {
-            _result = await Loader.GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(RegistrationPathwayId);
+            _result = await Loader.GetAdminLearnerRecordChangeYearAsync(RegistrationPathwayId);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
             ApiClient.Received(1).GetAdminLearnerRecordAsync(RegistrationPathwayId);
+            ApiClient.Received(1).GetAllowedChangeAcademicYearsAsync(_apiResult.Pathway.AcademicYear, _apiResult.Pathway.StartYear);
         }
 
         [Fact]
@@ -36,7 +40,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
         {
             _result.Should().NotBeNull();
             _result.RegistrationPathwayId.Should().Be(_apiResult.RegistrationPathwayId);
-            _result.PathwayId.Should().Be(_apiResult.Pathway.Id);
             _result.FirstName.Should().Be(_apiResult.Firstname);
             _result.LastName.Should().Be(_apiResult.Lastname);
             _result.Uln.Should().Be(_apiResult.Uln);

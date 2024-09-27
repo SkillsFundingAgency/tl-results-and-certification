@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
         public int AcademicYear { get; set; }
         public string AcademicYearTo { get; set; }
         public string DisplayAcademicYear { get; set; }
-        public string Learner => $"{FirstName} {LastName}";       
+        public string Learner => $"{FirstName} {LastName}";
 
         [Required(ErrorMessageResourceType = typeof(ErrorResource.ReviewChangeStartYear), ErrorMessageResourceName = "Validation_Contact_Name_Blank_Text")]
         public string ContactName { get; set; }
@@ -40,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
         public BackLinkModel BackLink => new()
         {
             RouteName = RouteConstants.ChangeStartYear,
-            RouteAttributes = new Dictionary<string, string>() { { Constants.PathwayId, RegistrationPathwayId.ToString() }, { Constants.IsBack, "true" } }
+            RouteAttributes = new Dictionary<string, string>() { { Constants.RegistrationPathwayId, RegistrationPathwayId.ToString() } }
         };
 
         public SummaryItemModel SummaryLearner => new()
@@ -78,7 +78,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
             Value2 = $"{AcademicYearTo} to {(int.TryParse(AcademicYearTo, out int academicYearToInt) ? academicYearToInt + 1 : default)}",
             ActionText = ReviewChangeStartYear.Link_Change_Text,
             RouteName = RouteConstants.ChangeStartYear,
-            RouteAttributes = new Dictionary<string, string>() { { Constants.PathwayId, RegistrationPathwayId.ToString() }, { Constants.IsBack, "true" } }
+            RouteAttributes = new Dictionary<string, string>() { { Constants.RegistrationPathwayId, RegistrationPathwayId.ToString() } }
         };
 
         public SummaryItemModel SummaryContactName => new()

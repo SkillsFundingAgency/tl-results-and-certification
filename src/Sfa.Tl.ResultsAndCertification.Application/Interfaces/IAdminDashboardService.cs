@@ -1,5 +1,6 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
@@ -11,6 +12,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
         Task<PagedResponse<AdminSearchLearnerDetail>> GetAdminSearchLearnerDetailsAsync(AdminSearchLearnerRequest request);
 
         Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int registrationPathwayId);
+
+        Task<IList<int>> GetAllowedChangeAcademicYearsAsync(int learnerAcademicYear, int pathwayStartYear);
 
         Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearRequest request);
 

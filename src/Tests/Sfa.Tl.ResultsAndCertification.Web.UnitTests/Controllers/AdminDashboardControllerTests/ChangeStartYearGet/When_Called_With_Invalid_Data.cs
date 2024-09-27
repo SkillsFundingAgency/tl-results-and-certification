@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 
         public override void Given()
         {
-            AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(RegistrationPathwayId).Returns(null as AdminChangeStartYearViewModel);
+            AdminDashboardLoader.GetAdminLearnerRecordChangeYearAsync(RegistrationPathwayId).Returns(null as AdminChangeStartYearViewModel);
         }
 
         public async override Task When()
@@ -24,7 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            AdminDashboardLoader.Received(1).GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(RegistrationPathwayId);
+            AdminDashboardLoader.Received(1).GetAdminLearnerRecordChangeYearAsync(RegistrationPathwayId);
         }
 
         [Fact]

@@ -466,6 +466,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<AdminLearnerRecord>(requestUri);
         }
 
+        public Task<IList<int>> GetAllowedChangeAcademicYearsAsync(int learnerAcademicYear, int pathwayStartYear)
+        {
+            var requestUri = string.Format(ApiConstants.GetAllowedChangeAcademicYearsUri, learnerAcademicYear, pathwayStartYear);
+            return GetAsync<IList<int>>(requestUri);
+        }
+
         public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearRequest request)
         {
             return await PostAsync<ReviewChangeStartYearRequest, bool>(ApiConstants.ProcessChangeStartYearUri, request);

@@ -101,7 +101,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 
             CreateMap<AdminLearnerRecord, AdminChangeStartYearViewModel>()
                 .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
-                .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.Pathway.Id))
                 .ForMember(d => d.FirstName, opts => opts.MapFrom(s => s.Firstname))
                 .ForMember(d => d.LastName, opts => opts.MapFrom(s => s.Lastname))
                 .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
@@ -111,7 +110,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.TlevelStartYear, opts => opts.MapFrom(s => s.Pathway.StartYear))
                 .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.Pathway.AcademicYear))
                 .ForMember(d => d.DisplayAcademicYear, opts => opts.MapFrom(s => GetDisplayAcademicYear(s.Pathway.AcademicYear)))
-                .ForMember(d => d.AcademicStartYearsToBe, opts => opts.MapFrom(s => GetChangeAcademicYearOptions(s.Pathway.AcademicYear, s.Pathway.StartYear)))
                 .ForMember(d => d.LearnerRegistrationPathwayStatus, opts => opts.MapFrom(s => s.Pathway.Status))
                 .ForMember(d => d.OverallCalculationStatus, opts => opts.MapFrom(s => s.OverallCalculationStatus));
 
@@ -597,18 +595,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 
         private string GetDisplayAcademicYear(int academicYear)
             => string.Format(AdminSearchLearnerDetails.Start_Year_Value, academicYear, academicYear + 1);
-
-        private List<int> GetChangeAcademicYearOptions(int academicYear, int tLevelStartYear)
-        {
-            var options = new List<int>();
-
-            for (int i = academicYear - 1, j = 1; i >= tLevelStartYear && j <= 2; i--, j++)
-            {
-                options.Add(i);
-            }
-
-            return options;
-        }
 
         private string GetPrsDisplayText(Assessment assessment)
         {

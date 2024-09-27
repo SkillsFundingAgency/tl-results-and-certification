@@ -16,5 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
         Task<TqRegistrationPathway> GetLearnerRecordAsync(int registrationPathwayId);
 
         Task<PagedResponse<AdminSearchLearnerDetail>> SearchLearnerDetailsAsync(AdminSearchLearnerRequest request);
+
+        Task<IList<int>> GetAllowedChangeAcademicYearsAsync(Func<DateTime> getToday, int learnerAcademicYear, int pathwayStartYear);
     }
 }

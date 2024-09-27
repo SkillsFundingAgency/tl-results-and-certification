@@ -14,7 +14,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
     {
         public int ProfileId { get; set; }
         public int RegistrationPathwayId { get; set; }
-        public int PathwayId { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public long Uln { get; set; }
@@ -24,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
         public int TlevelStartYear { get; set; }
         public int AcademicYear { get; set; }
         public string DisplayAcademicYear { get; set; }
-        public List<int> AcademicStartYearsToBe { get; set; }
+        public IList<int> AcademicStartYearsToBe { get; set; }
         public string Learner => $"{FirstName} {LastName}";
         public string LearnerRegistrationPathwayStatus { get; set; }
 
