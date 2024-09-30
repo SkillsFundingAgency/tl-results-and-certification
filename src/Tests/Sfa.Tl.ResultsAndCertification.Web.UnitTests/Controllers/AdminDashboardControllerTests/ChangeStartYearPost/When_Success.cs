@@ -11,16 +11,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
     public class When_Success : TestSetup
     {
         private AdminChangeStartYearViewModel MockResult = null;
+
         public override void Given()
         {
-            AdminChangeStartYearViewModel = new AdminChangeStartYearViewModel()
+            AdminChangeStartYearViewModel = new AdminChangeStartYearViewModel
             {
-                PathwayId = 1,
+                RegistrationPathwayId = 1,
             };
 
-            MockResult = new AdminChangeStartYearViewModel()
+            MockResult = new AdminChangeStartYearViewModel
             {
-                PathwayId = 1,
+                RegistrationPathwayId = 1,
                 FirstName = "John",
                 LastName = "Smith",
                 Uln = 1100000001,
@@ -32,14 +33,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 DisplayAcademicYear = "2021 to 2022",
                 AcademicStartYearsToBe = new List<int>() { 2020 }
             };
-            
-            AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(Arg.Any<int>()).Returns(MockResult);
-        }
 
-        [Fact]
-        public void Then_Expected_Methods_AreCalled()
-        {
-            AdminDashboardLoader.Received(1).GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(Arg.Any<int>());
+            AdminDashboardLoader.GetAdminLearnerRecordChangeYearAsync(Arg.Any<int>()).Returns(MockResult);
         }
 
         [Fact]
@@ -47,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         {
             var route = Result as RedirectToActionResult;
             route.ActionName.Should().Be(nameof(RouteConstants.ReviewChangeStartYear));
-            route.RouteValues[Constants.PathwayId].Should().Be(AdminChangeStartYearViewModel.PathwayId);
+            route.RouteValues[Constants.PathwayId].Should().Be(AdminChangeStartYearViewModel.RegistrationPathwayId);
         }
     }
 }
