@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.PostResultsService.BulkProcess
 
         public string AcademicYearName { get; set; }
 
-        public string AssessmentSeriesCore { get; set; }
+        public string CoreAssessmentSeries { get; set; }
 
         public string CoreCode { get; set; }
 
@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.PostResultsService.BulkProcess
 
         public string CoreRommOutcome { get; set; }
 
-        public string AssessmentSeriesSpecialism { get; set; }
+        public string SpecialismAssessmentSeries { get; set; }
 
         public string SpecialismCode { get; set; }
 
