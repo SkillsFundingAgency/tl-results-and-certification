@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
         public void Then_Redirected_To_Expected_Page()
         {
             var routeName = (Result as RedirectToRouteResult).RouteName;
-            routeName.Should().Be(RouteConstants.PageNotFound);
+            routeName.Should().Be(RouteConstants.PostalAddressMissing);
         }
     }
 }
