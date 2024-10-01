@@ -196,6 +196,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Start year updated.
+        /// </summary>
+        public static string Change_Year_Notification_Success {
+            get {
+                return ResourceManager.GetString("Change_Year_Notification_Success", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Core component: {0}.
         /// </summary>
         public static string Core_Heading_Text {
@@ -246,15 +255,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         public static string Link_Add_An_Occupational_Specialism {
             get {
                 return ResourceManager.GetString("Link_Add_An_Occupational_Specialism", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;b&gt;Start year updated&lt;/b&gt;.
-        /// </summary>
-        public static string Message_Notification_Success {
-            get {
-                return ResourceManager.GetString("Message_Notification_Success", resourceCulture);
             }
         }
         

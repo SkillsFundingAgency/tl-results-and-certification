@@ -7,7 +7,7 @@
 }
 
 @section NavigationBar
-    {
+{
     <vc:back-link model=Model.BackLink></vc:back-link>
 }
 
@@ -15,16 +15,18 @@
     <div class="govuk-grid-column-two-thirds-from-desktop">
 
         <form asp-route="@RouteConstants.SubmitChangeStartYear" method="post">
-            <input type="hidden" asp-for="PathwayId" />
-            <input type="hidden" asp-for="Learner" />
+            <input type="hidden" asp-for="RegistrationPathwayId" />
             <input type="hidden" asp-for="Uln" />
+            <input type="hidden" asp-for="FirstName" />
+            <input type="hidden" asp-for="LastName" />
             <input type="hidden" asp-for="ProviderName" />
             <input type="hidden" asp-for="ProviderUkprn" />
             <input type="hidden" asp-for="TlevelName" />
             <input type="hidden" asp-for="TlevelStartYear" />
             <input type="hidden" asp-for="AcademicYear" />
             <input type="hidden" asp-for="DisplayAcademicYear" />
-            @for (int i = 0; i < @Model.AcademicStartYearsToBe.Count(); i++)
+
+            @for (int i = 0; i < @Model.AcademicStartYearsToBe.Count; i++)
             {
                 <input type="hidden" asp-for="AcademicStartYearsToBe[i]" />
             }
@@ -49,7 +51,7 @@
 
             <div class="govuk-form-group" sfa-validation-for="AcademicYearTo" sfa-validation-class="govuk-form-group--error">
                 @{
-                    if (Model.AcademicStartYearsToBe.Count() > 0 && !Model.IsOverallResultCalculated && !Model.IsLearnerWithdrawn && !Model.IsLearnerRegisteredFourYearsAgo && !Model.IsTlevelStartedSameAsStartYear)
+                    if (Model.AcademicStartYearsToBe.Count > 0 && !Model.IsOverallResultCalculated && !Model.IsLearnerWithdrawn && !Model.IsLearnerRegisteredFourYearsAgo && !Model.IsTlevelStartedSameAsStartYear)
                     {
                         <partial name="Partials/_academicYearsSelection.cshtml" model="Model" />
                     }

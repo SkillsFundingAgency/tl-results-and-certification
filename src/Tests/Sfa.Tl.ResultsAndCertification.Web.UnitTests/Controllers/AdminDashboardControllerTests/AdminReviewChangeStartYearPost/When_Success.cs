@@ -40,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         public void Then_Expected_Methods_AreCalled()
         {
             AdminDashboardLoader.Received(1).ProcessChangeStartYearAsync(ReviewChangeStartYearViewModel);
-            CacheService.Received(1).SetAsync(CacheKey, Arg.Is<NotificationBannerModel>(p => p.Message == LearnerRecord.Message_Notification_Success), CacheExpiryTime.XSmall);
+            CacheService.Received(1).SetAsync(CacheKey, Arg.Is<AdminNotificationBannerModel>(p => p.Message.Contains(LearnerRecord.Change_Year_Notification_Success)), CacheExpiryTime.XSmall);
         }
 
         [Fact]

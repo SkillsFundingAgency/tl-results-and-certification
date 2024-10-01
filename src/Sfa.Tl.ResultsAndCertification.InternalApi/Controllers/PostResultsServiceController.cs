@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
+using Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using System.Threading.Tasks;
 
@@ -11,10 +13,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
     public class PostResultsServiceController : ControllerBase, IPostResultsServiceController
     {
         protected IPostResultsServiceService _postResultsServiceService;
+        private readonly IBulkRommLoader _bulkRommProcess;
 
-        public PostResultsServiceController(IPostResultsServiceService postResultsServiceService)
+        public PostResultsServiceController(IPostResultsServiceService postResultsServiceService, IBulkRommLoader bulkRommProcess)
         {
             _postResultsServiceService = postResultsServiceService;
+            _bulkRommProcess = bulkRommProcess;
         }
 
         [HttpGet]
@@ -43,6 +47,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         public async Task<bool> PrsGradeChangeRequestAsync(PrsGradeChangeRequest request)
         {
             return await _postResultsServiceService.PrsGradeChangeRequestAsync(request);
+        }
+
+        [HttpPost]
+        [Route("ProcessBulkRomms")]
+        public async Task<BulkProcessResponse> ProcessBulkRommsAsync(BulkProcessRequest request)
+        {
+            return await _bulkRommProcess.ProcessAsync(request);
         }
     }
 }

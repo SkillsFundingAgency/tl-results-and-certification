@@ -1,0 +1,51 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService.ResultReviewsAndAppealsViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SearchRegistration.Enum
+
+@{
+    ViewData["Title"] = ResultReviewsAndAppeals.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <div class="govuk-form-group">
+            <h1 class="govuk-heading-l">@ResultReviewsAndAppeals.Heading_Prs_Review_Appeal_Grade_Change</h1>
+            <p class="govuk-body">@ResultReviewsAndAppeals.Para_Tell_Us_About_Reviews_Moderations_Appeals_And_Report_Outcomes</p>
+        </div>
+    </div>
+</div>
+
+<section class="homepage-section--services-and-info">
+    <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <h2 class="gem-c-heading govuk-heading-m govuk-!-margin-bottom-6">@ResultReviewsAndAppeals.Heading_In_This_Section</h2>
+            <ul class="two-column-services-and-info__list">
+                <li class="chevron-card">
+                    <div class="chevron-card__wrapper">
+                        <h3 class="gem-c-heading govuk-heading-s govuk-!-margin-bottom-2">
+                            <a class="govuk-link chevron-card__link" asp-route="@RouteConstants.StartReviewsAndAppeals">
+                                @ResultReviewsAndAppeals.Card_Heading_Manage_Learners_Romms_Appeals_And_Outcomes
+                            </a>
+                        </h3>
+                        <p class="govuk-body chevron-card__description">@ResultReviewsAndAppeals.Card_Content_Search_For_Learner_Who_Requested_Review</p>
+                    </div>
+                </li>
+                <li class="chevron-card">
+                    <div class="chevron-card__wrapper">
+                        <h3 class="gem-c-heading govuk-heading-s govuk-!-margin-bottom-2">
+                            <a class="govuk-link chevron-card__link" asp-route="@RouteConstants.UploadRommsFile">
+                                @ResultReviewsAndAppeals.Card_Heading_Upload_Multiple_Romms
+                             </a>
+                        </h3>
+                        <p class="govuk-body chevron-card__description"><p class="govuk-body chevron-card__description">@ResultReviewsAndAppeals.Card_Content_Open_Or_Add_Romm_Outcomes_By_Uploading_CSV_file</p></p>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>

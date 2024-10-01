@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
@@ -20,6 +21,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
         protected ICacheService CacheService;
         protected ILogger<PostResultsServiceController> Logger;
         protected PostResultsServiceController Controller;
+        protected IPostResultsServiceLoader PostResultsServiceLoader;
+        protected TempDataDictionary TempData;
 
         // HttpContext
         protected long AoUkprn;

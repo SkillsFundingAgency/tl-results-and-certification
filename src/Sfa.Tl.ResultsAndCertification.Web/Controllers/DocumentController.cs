@@ -186,5 +186,43 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 FileDownloadName = fileName
             };
         }
+
+        [HttpGet]
+        [Route("tlevels-romm-data-format-and-rules", Name = RouteConstants.DownloadRommDataFormatAndRulesGuide)]
+        public async Task<IActionResult> DownloadRommDataFormatAndRulesGuideAsync()
+        {
+            var fileName = DocumentResource.TlevelDataFormatAndRulesGuide.Tlevels_Romm_Data_Format_And_Rules_File_Name;
+            var fileStream = await _documentLoader.GetBulkUploadRommTechSpecFileAsync(fileName);
+            if (fileStream == null)
+            {
+                _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download bulk upload romm tech spec document. Method: DownloadRommDataFormatAndRulesGuideAsync(FileName: {fileName})");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            fileStream.Position = 0;
+            return new FileStreamResult(fileStream, Constants.TextXlsx)
+            {
+                FileDownloadName = fileName
+            };
+        }
+
+        [HttpGet]
+        [Route("tlevels-romm-data-template", Name = RouteConstants.DownloadRommDataTemplate)]
+        public async Task<IActionResult> DownloadRommDataTemplateAsync()
+        {
+            var fileName = DocumentResource.TlevelDataFormatAndRulesGuide.Tlevels_Romm_Data_Template_File_Name;
+            var fileStream = await _documentLoader.GetBulkUploadRommTechSpecFileAsync(fileName);
+            if (fileStream == null)
+            {
+                _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download bulk upload romm tech spec document. Method: DownloadRommDataTemplateAsync(FileName: {fileName})");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            fileStream.Position = 0;
+            return new FileStreamResult(fileStream, Constants.TextCsv)
+            {
+                FileDownloadName = fileName
+            };
+        }
     }
 }
