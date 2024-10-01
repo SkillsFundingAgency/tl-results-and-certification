@@ -791,7 +791,7 @@
             "value": "[reference(concat('ui-app-service','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]"
           },
           "assignmentType": {
-            "value": "StorageBlobDataReader"
+            "value": "StorageTableDataContributor"
           },
           "resourceName": {
             "value": "[variables('storageAccountName')]"
