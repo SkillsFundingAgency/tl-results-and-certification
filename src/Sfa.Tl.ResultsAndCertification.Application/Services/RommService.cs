@@ -62,28 +62,40 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 UniqueLearnerNumber = e.Uln
             }).ToList());
 
-            foreach (TqRegistrationProfile currentRegistrationProfile in registrationProfiles)
+            foreach (RommCsvRecordResponse rommRecord in validRommsData)
             {
-                rowNum++;
-
-                bool isRegistrationActive = IsRegistrationActive(currentRegistrationProfile);
-                if (!isRegistrationActive)
+                var profile = registrationProfiles.FirstOrDefault(p => p.UniqueLearnerNumber == rommRecord.Uln);
+                if (profile == null)
                 {
-                    response.Add(AddStage3ValidationError(rowNum, currentRegistrationProfile.UniqueLearnerNumber, ValidationMessages.InactiveUln));
+                    response.Add(AddStage3ValidationError(rowNum, rommRecord.Uln, ValidationMessages.UlnNotRegistered));
                     continue;
                 }
 
-                bool isDobValid = ValidateDateOfBirth(currentRegistrationProfile, validRommsData);
+                bool isRegistrationActive = IsRegistrationActive(profile);
+                if (!isRegistrationActive)
+                {
+                    response.Add(AddStage3ValidationError(rowNum, rommRecord.Uln, ValidationMessages.InactiveUln));
+                    continue;
+                }
+
+                bool isDobValid = ValidateDateOfBirth(profile, validRommsData);
                 if (!isDobValid)
                 {
-                    response.Add(AddStage3ValidationError(rowNum, currentRegistrationProfile.UniqueLearnerNumber, ValidationMessages.InvalidDateOfBirth));
+                    response.Add(AddStage3ValidationError(rowNum, rommRecord.Uln, ValidationMessages.InvalidDateOfBirth));
+                    continue;
+                }
+
+                bool isLastNameValid = ValidateLastName(profile, validRommsData);
+                if (!isLastNameValid)
+                {
+                    response.Add(AddStage3ValidationError(rowNum, rommRecord.Uln, ValidationMessages.InvalidLastName));
                     continue;
                 }
 
                 response.Add(new RommsRecordResponse
                 {
-                    Uln = currentRegistrationProfile.UniqueLearnerNumber,
-                    ProfileId = currentRegistrationProfile.Id
+                    Uln = profile.UniqueLearnerNumber,
+                    ProfileId = profile.Id
                 });
             }
 
@@ -115,6 +127,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 }
                 else
                     rommData.AcademicYear = academicYear.Year;
+
+                var isAcademicYearValid = profile.TqRegistrationPathways.Any(r => r.AcademicYear == rommData.AcademicYear);
+                if (!isAcademicYearValid)
+                {
+                    response.Add(AddStage3ValidationError(rommData.RowNum, rommData.Uln, ValidationMessages.AcademicYearIsNotValid));
+                    continue;
+                }
 
                 // 2. Core Assessment Series
                 var coreAssessmentSeries = assessmentSeries.FirstOrDefault(x => x.ComponentType == ComponentType.Core && x.SeriesName.Equals(rommData.CoreAssessmentSeries, StringComparison.InvariantCultureIgnoreCase));
@@ -175,7 +194,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                     // 9. Validate Specialism RoMM Window Active
                     bool isValidSpecialismRommWindow = _systemProvider.Today <= specialismAssessmentSeries.RommEndDate;
-                    if (!isValidCoreRommWindow)
+                    if (!isValidSpecialismRommWindow && rommData.SpecialismRommOpen)
                     {
                         response.Add(AddStage3ValidationError(rommData.RowNum, rommData.Uln, ValidationMessages.SpecialismRommWindowExpired));
                         continue;
@@ -221,7 +240,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     bool arePathwayResultsValid = ValidatePathwayResultStatus<TqPathwayResult>(profile.TqRegistrationPathways, p => !p.PrsStatus.HasValue);
                     if (!arePathwayResultsValid)
                     {
-                        response.Add(AddStage3ValidationError(rommData.RowNum, profile.UniqueLearnerNumber, ValidationMessages.InvalidResultState));
+                        response.Add(AddStage3ValidationError(rommData.RowNum, profile.UniqueLearnerNumber, ValidationMessages.InvalidCoreResultState));
                         continue;
                     }
                 }
@@ -241,7 +260,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     bool arePathwayResultsValid = ValidatePathwayResultStatus<TqPathwayResult>(profile.TqRegistrationPathways, p => !p.PrsStatus.HasValue || p.PrsStatus == PrsStatus.UnderReview);
                     if (!arePathwayResultsValid)
                     {
-                        response.Add(AddStage3ValidationError(rommData.RowNum, profile.UniqueLearnerNumber, ValidationMessages.InvalidResultState));
+                        response.Add(AddStage3ValidationError(rommData.RowNum, profile.UniqueLearnerNumber, ValidationMessages.InvalidCoreResultState));
                         continue;
                     }
                 }
@@ -257,7 +276,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     bool arePathwayResultsValid = ValidateSpecialismResultStatus<TqSpecialismResult>(profile.TqRegistrationPathways, rommData.SpecialismCode, p => !p.PrsStatus.HasValue);
                     if (!arePathwayResultsValid)
                     {
-                        response.Add(AddStage3ValidationError(rommData.RowNum, profile.UniqueLearnerNumber, ValidationMessages.InvalidResultState));
+                        response.Add(AddStage3ValidationError(rommData.RowNum, profile.UniqueLearnerNumber, ValidationMessages.InvalidSpecialismResultState));
                         continue;
                     }
                 }
@@ -277,7 +296,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     bool arePathwayResultsValid = ValidateSpecialismResultStatus<TqSpecialismResult>(profile.TqRegistrationPathways, rommData.SpecialismCode, p => !p.PrsStatus.HasValue || p.PrsStatus == PrsStatus.UnderReview);
                     if (!arePathwayResultsValid)
                     {
-                        response.Add(AddStage3ValidationError(rommData.RowNum, profile.UniqueLearnerNumber, ValidationMessages.InvalidResultState));
+                        response.Add(AddStage3ValidationError(rommData.RowNum, profile.UniqueLearnerNumber, ValidationMessages.InvalidSpecialismResultState));
                         continue;
                     }
                 }
@@ -664,6 +683,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             RommCsvRecordResponse rommCsvRecord = validRommsData.FirstOrDefault(p => p.Uln == profile.UniqueLearnerNumber);
             return rommCsvRecord != null && profile.DateofBirth.Date == rommCsvRecord.DateOfBirth.Date;
+        }
+
+        private static bool ValidateLastName(TqRegistrationProfile profile, IEnumerable<RommCsvRecordResponse> validRommsData)
+        {
+            RommCsvRecordResponse rommCsvRecord = validRommsData.FirstOrDefault(p => p.Uln == profile.UniqueLearnerNumber);
+            return rommCsvRecord != null && rommCsvRecord.LastName.Equals(profile.Lastname, StringComparison.InvariantCultureIgnoreCase);
         }
 
         private bool ValidatePathwayResultStatus<TResult>(IEnumerable<TqRegistrationPathway> pathway, Func<TqPathwayResult, bool> getValue)
