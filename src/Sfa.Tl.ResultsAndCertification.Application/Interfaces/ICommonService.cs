@@ -1,6 +1,7 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -25,6 +26,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
         Task<IEnumerable<AcademicYear>> GetCurrentAcademicYearsAsync();
 
         Task<IEnumerable<AcademicYear>> GetAcademicYearsAsync();
+
+        Task<IEnumerable<Assessment>> GetAssessmentSeriesAsync();
 
         bool IsIndustryPlacementTriggerDateValid();
 

@@ -2,6 +2,7 @@
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -46,5 +47,15 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     Year = x.Year
                 }).ToListAsync();
         }
+        public async Task<IEnumerable<Assessment>> GetAssessmentSeriesAsync()
+           => await _dbContext.AssessmentSeries.Select(x => new Assessment()
+           {
+               Id = x.Id,
+               SeriesName = x.Name,
+               ComponentType = x.ComponentType,
+               RommEndDate = x.RommEndDate,
+               AppealEndDate = x.AppealEndDate,
+               ResultEndDate = x.EndDate
+           }).ToListAsync();
     }
 }

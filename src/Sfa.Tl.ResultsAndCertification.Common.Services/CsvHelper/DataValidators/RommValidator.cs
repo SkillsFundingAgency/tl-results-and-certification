@@ -47,6 +47,11 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
                 .Required()
                 .MustBeInAcademicYearPattern();
 
+            // Core Assessment Series
+            RuleFor(r => r.AssessmentSeriesCore)
+                .Cascade(CascadeMode.Stop)
+                .Required();
+
             // Core Component Code
             RuleFor(r => r.Core)
                 .Cascade(CascadeMode.Stop)
@@ -63,6 +68,11 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
             RuleFor(r => r.Specialism)
                 .MustBeStringWithLength(Const.SpecialismCodeLength)
                 .WithMessage(string.Format(ValidationMessages.MustBeStringWithLength, "{PropertyName}", Const.SpecialismCodeLength))
+                .When(r => !string.IsNullOrWhiteSpace(r.Specialism));
+
+            // Specialism Assessment Series
+            RuleFor(r => r.AssessmentSeriesSpecialism)
+                .NotNull()
                 .When(r => !string.IsNullOrWhiteSpace(r.Specialism));
 
             // Specialism Component Open
