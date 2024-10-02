@@ -56,6 +56,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return _mapper.Map<AdminLearnerRecord>(tqRegistrationPathway);
         }
 
+        public Task<IList<int>> GetAllowedChangeAcademicYearsAsync(int learnerAcademicYear, int pathwayStartYear)
+            => _adminDashboardRepository.GetAllowedChangeAcademicYearsAsync(() => DateTime.Today, learnerAcademicYear, pathwayStartYear);
+
         public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearRequest request)
         {
             var tqRegistrationPathwayRepository = _repositoryFactory.GetRepository<TqRegistrationPathway>();

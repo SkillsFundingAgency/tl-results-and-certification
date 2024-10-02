@@ -422,6 +422,7 @@
         public const string SubmitAdminSearchLearnerRecordsApplyFilters = "SubmitAdminSearchLearnerRecordsApplyFilters";
         public const string SubmitAdminSearchLearnerClearFilters = "SubmitAdminSearchLearnerClearFilters";
         public const string AdminLearnerRecord = "AdminLearnerRecord";
+        public const string ChangeStartYearClear = "ChangeStartYearClear";
         public const string ChangeStartYear = "ChangeStartYear";
         public const string SubmitChangeStartYear = "SubmitChangeStartYear";
         public const string ReviewChangeStartYear = "ReviewChangeStartYear";

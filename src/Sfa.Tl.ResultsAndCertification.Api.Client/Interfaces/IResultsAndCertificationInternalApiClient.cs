@@ -130,6 +130,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 
         Task<PagedResponse<AdminSearchLearnerDetail>> GetAdminSearchLearnerDetailsAsync(AdminSearchLearnerRequest request);
 
+        Task<IList<int>> GetAllowedChangeAcademicYearsAsync(int learnerAcademicYear, int pathwayStartYear);
+
         Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearRequest request);
 
         Task<bool> ProcessChangeIndustryPlacementAsync(ReviewChangeIndustryPlacementRequest request);

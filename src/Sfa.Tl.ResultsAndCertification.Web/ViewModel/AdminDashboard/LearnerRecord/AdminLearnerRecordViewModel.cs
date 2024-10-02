@@ -101,8 +101,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
             Title = LearnerRecordDetailsContent.Title_StartYear_Text,
             Value = StartYear,
             ActionText = LearnerRecordDetailsContent.Action_Text_Link_Change,
-            RouteName = RouteConstants.ChangeStartYear,
-            RouteAttributes = new Dictionary<string, string> { { Constants.PathwayId, RegistrationPathwayId.ToString() } }
+            RouteName = RouteConstants.ChangeStartYearClear,
+            RouteAttributes = new Dictionary<string, string> { { Constants.RegistrationPathwayId, RegistrationPathwayId.ToString() } }
         };
 
         public SummaryItemModel SummaryAoName => new SummaryItemModel

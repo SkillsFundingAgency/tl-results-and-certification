@@ -1,5 +1,4 @@
 ﻿using AutoMapper;
-using Azure.Core;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
@@ -15,7 +14,6 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -122,6 +120,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 opt.Items[Constants.AdminValidAssessmentSeries] = validAssessments ?? default;
                 opt.Items[Constants.RegistrationPathwayId] = learnerRecord.RegistrationPathwayId;
             });
+
+            return response;
+        }
+
+        public async Task<AdminChangeStartYearViewModel> GetAdminLearnerRecordChangeYearAsync(int registrationPathwayId)
+        {
+            AdminLearnerRecord learnerRecord = await _internalApiClient.GetAdminLearnerRecordAsync(registrationPathwayId);
+
+            if (learnerRecord == null)
+            {
+                return null;
+            }
+
+            AdminChangeStartYearViewModel response = _mapper.Map<AdminChangeStartYearViewModel>(learnerRecord);
+            response.AcademicStartYearsToBe = await _internalApiClient.GetAllowedChangeAcademicYearsAsync(response.AcademicYear, response.TlevelStartYear);
 
             return response;
         }

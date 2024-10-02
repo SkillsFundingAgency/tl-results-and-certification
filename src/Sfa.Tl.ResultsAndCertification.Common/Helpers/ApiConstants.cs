@@ -128,6 +128,7 @@
         public const string GetAdminSearchLearnerFiltersUri = "/api/admindashboard/GetAdminSearchLearnerFilters";
         public const string GetAdminSearchLearnerDetailsUri = "/api/admindashboard/GetAdminSearchLearnerDetails";
         public const string GetAdminLearnerRecordUri = "/api/admindashboard/GetAdminLearnerRecord/{0}";
+        public const string GetAllowedChangeAcademicYearsUri = "/api/admindashboard/GetAllowedChangeAcademicYears/{0}/{1}";
         public const string ProcessChangeStartYearUri = "/api/admindashboard/ProcessChangeStartYear";
         public const string ProcessChangeIPUri = "/api/admindashboard/ProcessChangeIndustryPlacement";
         public const string ProcessAddCoreAssessmentUri = "/api/admindashboard/ProcessAddCoreAssessmentRequest";

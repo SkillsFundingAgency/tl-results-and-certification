@@ -174,8 +174,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     if (coreAssessmentSeries == null)
                     {
                         response.Add(AddStage3ValidationError(rommData.RowNum, rommData.Uln, ValidationMessages.InvalidSpecialismAssessmentSeriesEntry));
-                        continue;
-                    }
+                    continue;
+                }
 
                     // 7. Learner's Active Specialism Assessments
                     var activeSpecialismAssessmentEntry = profile.TqRegistrationPathways
@@ -186,19 +186,19 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     {
                         var activeAssessmentSeriesSpecialism = activeSpecialismAssessmentEntry.AssessmentSeries;
                         if (specialismAssessmentSeries.Id != activeAssessmentSeriesSpecialism.Id)
-                        {
-                            response.Add(AddStage3ValidationError(rommData.RowNum, rommData.Uln, ValidationMessages.NoSpecialismAssessmentEntryCurrentlyActive));
-                            continue;
-                        }
+                {
+                    response.Add(AddStage3ValidationError(rommData.RowNum, rommData.Uln, ValidationMessages.NoSpecialismAssessmentEntryCurrentlyActive));
+                    continue;
+                }
                     }
 
                     // 9. Validate Specialism RoMM Window Active
                     bool isValidSpecialismRommWindow = _systemProvider.Today <= specialismAssessmentSeries.RommEndDate;
                     if (!isValidSpecialismRommWindow && rommData.SpecialismRommOpen)
-                    {
+                {
                         response.Add(AddStage3ValidationError(rommData.RowNum, rommData.Uln, ValidationMessages.SpecialismRommWindowExpired));
-                        continue;
-                    }
+                    continue;
+                }
                 }
 
                 // 10. Awarding Organisation
