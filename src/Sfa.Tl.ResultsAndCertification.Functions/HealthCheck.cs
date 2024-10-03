@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
         }
 
         [FunctionName(Constants.HealthCheck)]
-        public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Function, "get", Route = null)] HttpRequest req, ILogger logger)
+        public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req, ILogger logger)
         {
             try
             {
