@@ -1,14 +1,14 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
 using Xunit;
-using RegistrationContent = Sfa.Tl.ResultsAndCertification.Web.Content.Registration;
+using RommContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.UploadRommsSuccessful
 {
-    public class When_Called_With_One_New_Registrations : TestSetup
+    public class When_Called_With_One_New_Romms : TestSetup
     {
         public override void Given()
         {
@@ -31,10 +31,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.Stats.AmendedRecordsCount.Should().Be(UploadSuccessfulViewModel.Stats.AmendedRecordsCount);
             model.Stats.UnchangedRecordsCount.Should().Be(UploadSuccessfulViewModel.Stats.UnchangedRecordsCount);
             model.HasMoreThanOneStatsToShow.Should().BeFalse();
-            model.HasNewRegistrations.Should().BeTrue();
-            model.HasAmendedRegistrations.Should().BeFalse();
-            model.HasUnchangedRegistrations.Should().BeFalse();
-            model.SuccessfulRegistrationText.Should().Be(string.Format(RegistrationContent.UploadSuccessful.Successfully_Sent_New_Registrations_Singular_Text, UploadSuccessfulViewModel.Stats.NewRecordsCount));
+            model.HasNewRomms.Should().BeTrue();
+            model.HasAmendedRomms.Should().BeFalse();
+            model.HasUnchangedRomms.Should().BeFalse();
+            model.SuccessfulRommText.Should().Be(string.Format(RommContent.UploadRommsSuccessful.Successfully_Sent_New_Romms_Singular_Text, UploadSuccessfulViewModel.Stats.NewRecordsCount));
         }
     }
 }

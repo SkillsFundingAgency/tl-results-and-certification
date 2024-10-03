@@ -10,13 +10,12 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SearchRegistration.Enum;
 using System;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using RegistrationContent = Sfa.Tl.ResultsAndCertification.Web.Content.Registration;
+using RommContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -747,7 +746,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (viewModel == null)
             {
                 _logger.LogWarning(LogEvent.UploadUnsuccessfulPageFailed,
-                    $"Unable to read upload unsuccessful withdrawal response from temp data. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                    $"Unable to read upload unsuccessful romms response from temp data. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
             return View(viewModel);
@@ -762,19 +761,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 var fileStream = await _postResultsServiceLoader.GetRommValidationErrorsFileAsync(User.GetUkPrn(), id.ToGuid());
                 if (fileStream == null)
                 {
-                    _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download withdrawl validation errors. Method: GetWithdrawalValidationErrorsFileAsync(AoUkprn: {User.GetUkPrn()}, BlobUniqueReference = {id})");
+                    _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download withdrawl validation errors. Method: GetRommValidationErrorsFileAsync(AoUkprn: {User.GetUkPrn()}, BlobUniqueReference = {id})");
                     return RedirectToRoute(RouteConstants.PageNotFound);
                 }
 
                 fileStream.Position = 0;
                 return new FileStreamResult(fileStream, "text/csv")
                 {
-                    FileDownloadName = RegistrationContent.UploadWithdrawalsUnsuccessful.Withdrawals_Error_Report_File_Name_Text
+                    FileDownloadName = RommContent.UploadRommsUnsuccessful.Romms_Error_Report_File_Name_Text
                 };
             }
             else
             {
-                _logger.LogWarning(LogEvent.DownloadRommErrorsFailed, $"Not a valid guid to read file.Method: DownloadRegistrationErrors(Id = {id}), Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.DownloadRommErrorsFailed, $"Not a valid guid to read file.Method: DownloadRommErrors(Id = {id}), Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
             }
         }

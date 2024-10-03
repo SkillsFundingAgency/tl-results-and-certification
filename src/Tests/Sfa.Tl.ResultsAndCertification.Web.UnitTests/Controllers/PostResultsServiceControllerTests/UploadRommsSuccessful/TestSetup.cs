@@ -8,7 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
 using System.Threading.Tasks;
 

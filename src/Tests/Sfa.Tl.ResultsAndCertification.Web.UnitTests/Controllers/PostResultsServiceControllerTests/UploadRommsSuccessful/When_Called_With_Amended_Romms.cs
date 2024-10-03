@@ -1,19 +1,19 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
 using Xunit;
-using RegistrationContent = Sfa.Tl.ResultsAndCertification.Web.Content.Registration;
+using RommContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsServiceControllerTests.UploadRommsSuccessful
 {
-    public class When_Called_With_One_Amended_Registration : TestSetup
+    public class When_Called_With_Amended_Romms : TestSetup
     {
         public override void Given()
         {
             BlobUniqueReference = Guid.NewGuid();
-            UploadSuccessfulViewModel = new UploadSuccessfulViewModel { Stats = new ViewModel.BulkUploadStatsViewModel { TotalRecordsCount = 1, AmendedRecordsCount = 1 } };
+            UploadSuccessfulViewModel = new UploadSuccessfulViewModel { Stats = new ViewModel.BulkUploadStatsViewModel { TotalRecordsCount = 10, AmendedRecordsCount = 10 } };
             CacheService.GetAndRemoveAsync<UploadSuccessfulViewModel>(Arg.Any<string>()).Returns(UploadSuccessfulViewModel);
         }
 
@@ -31,10 +31,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
             model.Stats.AmendedRecordsCount.Should().Be(UploadSuccessfulViewModel.Stats.AmendedRecordsCount);
             model.Stats.UnchangedRecordsCount.Should().Be(UploadSuccessfulViewModel.Stats.UnchangedRecordsCount);
             model.HasMoreThanOneStatsToShow.Should().BeFalse();
-            model.HasNewRegistrations.Should().BeFalse();
-            model.HasAmendedRegistrations.Should().BeTrue();
-            model.HasUnchangedRegistrations.Should().BeFalse();
-            model.SuccessfulRegistrationText.Should().Be(string.Format(RegistrationContent.UploadSuccessful.Successfully_Sent_Amended_Registrations_Singular_Text, UploadSuccessfulViewModel.Stats.AmendedRecordsCount));
+            model.HasNewRomms.Should().BeFalse();
+            model.HasAmendedRomms.Should().BeTrue();
+            model.HasUnchangedRomms.Should().BeFalse();
+            model.SuccessfulRommText.Should().Be(string.Format(RommContent.UploadRommsSuccessful.Successfully_Sent_Amended_Romms_Text, UploadSuccessfulViewModel.Stats.AmendedRecordsCount));
         }
     }
 }
