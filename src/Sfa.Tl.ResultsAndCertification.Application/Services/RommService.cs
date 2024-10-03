@@ -144,22 +144,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 }
 
                 // 3. Learner Active Assessments
-                var activeCoreAssessmentEntry = profile.TqRegistrationPathways.SelectMany(p => p.TqPathwayAssessments).FirstOrDefault(p => p.IsOptedin && p.EndDate is null);
+                var activeCoreAssessmentEntry = profile.TqRegistrationPathways.Select(p => p.TqPathwayAssessments.Where(p => p.IsOptedin && p.EndDate is null && p.AssessmentSeriesId == coreAssessmentSeries.Id));
                 if (activeCoreAssessmentEntry == null)
                 {
                     response.Add(AddStage3ValidationError(rommData.RowNum, rommData.Uln, ValidationMessages.NoCoreAssessmentEntryCurrentlyActive));
                     continue;
                 }
 
-                // 4. Active Assessment Series matches Assessment to change
-                var activeAssessmentSeriesCore = activeCoreAssessmentEntry.AssessmentSeries;
-                if (coreAssessmentSeries.Id != activeAssessmentSeriesCore.Id)
-                {
-                    response.Add(AddStage3ValidationError(rommData.RowNum, rommData.Uln, ValidationMessages.NoCoreAssessmentEntryCurrentlyActive));
-                    continue;
-                }
-
-                // 5. Validate Core RoMM Window Active
+                // 4. Validate Core RoMM Window Active
                 bool isValidCoreRommWindow = _systemProvider.Today <= coreAssessmentSeries.RommEndDate;
                 if (!isValidCoreRommWindow)
                 {
@@ -167,41 +159,38 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     continue;
                 }
 
-                // 6. Specialism Assessment Series
+                // 5. Specialism Assessment Series
                 if (!string.IsNullOrEmpty(rommData.SpecialismAssessmentSeries))
                 {
                     var specialismAssessmentSeries = assessmentSeries.FirstOrDefault(x => x.ComponentType == ComponentType.Specialism && x.SeriesName.Equals(rommData.SpecialismAssessmentSeries, StringComparison.InvariantCultureIgnoreCase));
                     if (coreAssessmentSeries == null)
                     {
                         response.Add(AddStage3ValidationError(rommData.RowNum, rommData.Uln, ValidationMessages.InvalidSpecialismAssessmentSeriesEntry));
-                    continue;
-                }
-
-                    // 7. Learner's Active Specialism Assessments
-                    var activeSpecialismAssessmentEntry = profile.TqRegistrationPathways
-                            .SelectMany(p => p.TqRegistrationSpecialisms).SelectMany(p => p.TqSpecialismAssessments).FirstOrDefault(p => p.IsOptedin && p.EndDate is null);
-
-                    // 8. Active Assessment Series matches Assessment to change
-                    if (activeSpecialismAssessmentEntry != null)
-                    {
-                        var activeAssessmentSeriesSpecialism = activeSpecialismAssessmentEntry.AssessmentSeries;
-                        if (specialismAssessmentSeries.Id != activeAssessmentSeriesSpecialism.Id)
-                {
-                    response.Add(AddStage3ValidationError(rommData.RowNum, rommData.Uln, ValidationMessages.NoSpecialismAssessmentEntryCurrentlyActive));
-                    continue;
-                }
+                        continue;
                     }
 
-                    // 9. Validate Specialism RoMM Window Active
+                    // 6. Learner's Active Specialism Assessments
+                    var activeSpecialismAssessmentEntry = profile.TqRegistrationPathways
+                            .SelectMany(p => p.TqRegistrationSpecialisms).Select(p => p.TqSpecialismAssessments
+                            .FirstOrDefault(p => p.IsOptedin && p.EndDate is null && p.AssessmentSeriesId == specialismAssessmentSeries.Id));
+
+                    // 7. Active Assessment Series matches Assessment to change
+                    if (activeSpecialismAssessmentEntry == null)
+                    {
+                        response.Add(AddStage3ValidationError(rommData.RowNum, rommData.Uln, ValidationMessages.NoSpecialismAssessmentEntryCurrentlyActive));
+                        continue;
+                    }
+
+                    // 8. Validate Specialism RoMM Window Active
                     bool isValidSpecialismRommWindow = _systemProvider.Today <= specialismAssessmentSeries.RommEndDate;
                     if (!isValidSpecialismRommWindow && rommData.SpecialismRommOpen)
-                {
+                    {
                         response.Add(AddStage3ValidationError(rommData.RowNum, rommData.Uln, ValidationMessages.SpecialismRommWindowExpired));
-                    continue;
-                }
+                        continue;
+                    }
                 }
 
-                // 10. Awarding Organisation
+                // 9. Awarding Organisation
                 var isProviderRegisteredWithAwardingOrganisation = aoProviderTlevels.Any(t => t.ProviderUkprn == rommData.ProviderUkprn);
                 if (!isProviderRegisteredWithAwardingOrganisation)
                 {
@@ -209,7 +198,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     continue;
                 }
 
-                // 11. Core Code Registered with AO
+                // 10. Core Code Registered with AO
                 var technicalQualification = aoProviderTlevels.FirstOrDefault(tq => tq.ProviderUkprn == rommData.ProviderUkprn && tq.PathwayLarId == rommData.CoreCode);
                 if (technicalQualification == null)
                 {
@@ -217,7 +206,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     continue;
                 }
 
-                // 12. Specialism Code REgistered
+                // 11. Specialism Code REgistered
                 var isSpecialismCodeProvided = !string.IsNullOrEmpty(rommData.SpecialismCode);
                 if (isSpecialismCodeProvided)
                 {
