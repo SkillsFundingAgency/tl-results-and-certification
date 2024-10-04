@@ -1,5 +1,5 @@
 ﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService
-@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.UploadSuccessfulViewModel
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService.UploadSuccessfulViewModel
 
 @{
     ViewData["Title"] = @UploadRommsSuccessful.Page_Title;
@@ -10,21 +10,21 @@
         <div class="govuk-panel govuk-panel--confirmation">
             <h1 class="govuk-panel__title">@UploadRommsSuccessful.Section_Heading</h1>
         </div>
-        <p class="govuk-body govuk-!-padding-top-3">@Model.SuccessfulRegistrationText</p>
+        <p class="govuk-body govuk-!-padding-top-3">@Model.SuccessfulRommText</p>
         @if (Model.HasMoreThanOneStatsToShow)
         {
             <ul class="govuk-list govuk-list--bullet">
-                @if (Model.HasNewRegistrations)
+                @if (Model.HasNewRomms)
                 {
-                    <li>@Model.NewRegistrationsText</li>
+                    <li>@Model.NewRommsText</li>
                 }
-                @if (Model.HasAmendedRegistrations)
+                @if (Model.HasAmendedRomms)
                 {
-                    <li>@Model.AmendedRegistrationsText</li>
+                    <li>@Model.AmendedRommsText</li>
                 }
-                @if (Model.HasUnchangedRegistrations)
+                @if (Model.HasUnchangedRomms)
                 {
-                    <li>@Model.UnchangedRegistrationsText</li>
+                    <li>@Model.UnchangedRommsText</li>
                 }
             </ul>
         }
