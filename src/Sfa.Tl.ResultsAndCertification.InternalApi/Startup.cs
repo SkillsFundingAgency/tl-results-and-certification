@@ -146,6 +146,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
         {
             // Repositories
             services.AddTransient<IBlobStorageService, BlobStorageService>();
+            services.AddTransient<IBlobContainerClientFactory, BlobContainerClientFactory>();
             services.AddTransient<IProviderRepository, ProviderRepository>();
             services.AddTransient<IRegistrationRepository, RegistrationRepository>();
             services.AddTransient<IAssessmentRepository, AssessmentRepository>();
