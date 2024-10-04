@@ -154,7 +154,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                         || p.User.HasLoginUserTypeClaimAndRole(LoginUserType.Admin, RolesExtensions.AdminDashboardAccess)));
             });
 
-            services.AddWebDataProtection(ResultsAndCertificationConfiguration, _env);
+            services.AddWebDataProtection(ResultsAndCertificationConfiguration);
             RegisterDependencies(services);
         }
 
@@ -209,6 +209,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSingleton<IWebConfigurationService, WebConfigurationService>();
             services.AddTransient<IBlobStorageService, BlobStorageService>();
+            services.AddTransient<IBlobContainerClientFactory, BlobContainerClientFactory>();
             services.AddTransient<ITlevelLoader, TlevelLoader>();
             services.AddTransient<IProviderLoader, ProviderLoader>();
             services.AddTransient<IRegistrationLoader, RegistrationLoader>();
