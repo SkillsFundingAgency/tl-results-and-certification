@@ -1,9 +1,9 @@
-﻿using Azure.Storage.Blobs;
-using Azure.Storage.Sas;
+﻿using Azure.Storage.Sas;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Service;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using System;
 using System.IO;
@@ -25,16 +25,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                 services.AddDataProtection()
                         .PersistKeysToAzureBlobStorage(GetDataProtectionBlobTokenUri(config));
             }
+
             return services;
         }
 
         private static Uri GetDataProtectionBlobTokenUri(ResultsAndCertificationConfiguration config)
         {
-            var blobServiceClient = new BlobServiceClient(config.BlobStorageConnectionString);
-            var blobContainerClient = blobServiceClient.GetBlobContainerClient(config.DataProtectionSettings.ContainerName?.ToLowerInvariant());
-            blobContainerClient.CreateIfNotExists();
+            var factory = new BlobContainerClientFactory(config);
+            var blobContainerClient = factory.Create(config.DataProtectionSettings.ContainerName);
+
             var blobClient = blobContainerClient.GetBlobClient(config.DataProtectionSettings.BlobName?.ToLowerInvariant());
             var sasUri = blobClient.GenerateSasUri(BlobSasPermissions.Read | BlobSasPermissions.Write | BlobSasPermissions.Create, DateTime.UtcNow.AddYears(1));
+
             return sasUri;
         }
     }

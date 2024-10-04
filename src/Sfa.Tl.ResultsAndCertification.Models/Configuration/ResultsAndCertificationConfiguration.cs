@@ -13,14 +13,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         public RedisSettings RedisSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets the BLOB storage settings.
-        /// </summary>
-        /// <value>
-        /// The BLOB storage settings.
-        /// </value>
-        public BlobStorageSettings BlobStorageSettings { get; set; }
-
-        /// <summary>
         /// Gets or sets the data protection settings.
         /// </summary>
         /// <value>
@@ -51,6 +43,14 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// The BLOB storage connection string.
         /// </value>
         public string BlobStorageConnectionString { get; set; }
+
+        /// <summary>
+        /// Gets or sets the BLOB storage URI template string.
+        /// </summary>
+        /// <value>
+        /// The BLOB storage URI template string.
+        /// </value>
+        public string BlobContainerUriTemplate { get; set; }
 
         /// <summary>
         /// Gets or sets the gov uk notify API key.
