@@ -15,6 +15,8 @@ namespace Sfa.Tl.ResultsAndCertification.Models.PostResultsService
 
         public string CoreRommOutcome { get; set; }
 
+        public int CoreAssessmentSeriesId { get; set; }
+
         public bool OpenSpecialismRomm { get; set; }
 
         public bool AddSpecialismRommOutcome { get; set; }
@@ -22,5 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.PostResultsService
         public string SpecialismRommOutcome { get; set; }
 
         public string SpecialismCode { get; set; }
+
+        public int SpecialismAssessmentSeriesId { get; set; }
     }
 }

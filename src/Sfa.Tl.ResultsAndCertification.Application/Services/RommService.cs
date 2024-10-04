@@ -108,6 +108,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var aoProviderTlevels = await GetAllTLevelsByAoUkprnAsync(aoUkprn);
             var academicYears = await _commonService.GetAcademicYearsAsync();
             var assessmentSeries = await _commonService.GetAssessmentSeriesAsync();
+            TqSpecialismAssessment activeSpecialismAssessmentEntry = new();
 
             var registrationProfiles = await _registrationRepository.GetRegistrationProfilesAsync(validRommsData.Select(e => new TqRegistrationProfile
             {
@@ -144,7 +145,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 }
 
                 // 3. Learner Active Assessments
-                var activeCoreAssessmentEntry = profile.TqRegistrationPathways.Select(p => p.TqPathwayAssessments.Where(p => p.IsOptedin && p.EndDate is null && p.AssessmentSeriesId == coreAssessmentSeries.Id));
+                var activeCoreAssessmentEntry = profile.TqRegistrationPathways.Select(p => p.TqPathwayAssessments.FirstOrDefault(a => a.IsOptedin && a.EndDate is null && a.AssessmentSeriesId == coreAssessmentSeries.Id)).FirstOrDefault();
+
                 if (activeCoreAssessmentEntry == null)
                 {
                     response.Add(AddStage3ValidationError(rommData.RowNum, rommData.Uln, ValidationMessages.NoCoreAssessmentEntryCurrentlyActive));
@@ -160,7 +162,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 }
 
                 // 5. Specialism Assessment Series
-                if (!string.IsNullOrEmpty(rommData.SpecialismAssessmentSeries))
+                if (!string.IsNullOrEmpty(rommData.SpecialismAssessmentSeries) && rommData.SpecialismRommOpen)
                 {
                     var specialismAssessmentSeries = assessmentSeries.FirstOrDefault(x => x.ComponentType == ComponentType.Specialism && x.SeriesName.Equals(rommData.SpecialismAssessmentSeries, StringComparison.InvariantCultureIgnoreCase));
                     if (coreAssessmentSeries == null)
@@ -170,9 +172,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     }
 
                     // 6. Learner's Active Specialism Assessments
-                    var activeSpecialismAssessmentEntry = profile.TqRegistrationPathways
-                            .SelectMany(p => p.TqRegistrationSpecialisms).Select(p => p.TqSpecialismAssessments
-                            .FirstOrDefault(p => p.IsOptedin && p.EndDate is null && p.AssessmentSeriesId == specialismAssessmentSeries.Id));
+                    activeSpecialismAssessmentEntry = profile.TqRegistrationPathways
+                        .Select(rp => rp.TqRegistrationSpecialisms.WhereActive().FirstOrDefault())
+                        .Select(sa => sa.TqSpecialismAssessments.FirstOrDefault(a => a.AssessmentSeriesId == specialismAssessmentSeries.Id && a.IsOptedin && a.EndDate is null))
+                        .FirstOrDefault();
 
                     // 7. Active Assessment Series matches Assessment to change
                     if (activeSpecialismAssessmentEntry == null)
@@ -183,7 +186,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                     // 8. Validate Specialism RoMM Window Active
                     bool isValidSpecialismRommWindow = _systemProvider.Today <= specialismAssessmentSeries.RommEndDate;
-                    if (!isValidSpecialismRommWindow && rommData.SpecialismRommOpen)
+                    if (!isValidSpecialismRommWindow)
                     {
                         response.Add(AddStage3ValidationError(rommData.RowNum, rommData.Uln, ValidationMessages.SpecialismRommWindowExpired));
                         continue;
@@ -226,7 +229,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                 if (openCoreRommOnly)
                 {
-                    bool arePathwayResultsValid = ValidatePathwayResultStatus<TqPathwayResult>(profile.TqRegistrationPathways, p => !p.PrsStatus.HasValue);
+                    bool arePathwayResultsValid = ValidatePathwayResultStatus<TqPathwayResult>(profile.TqRegistrationPathways, activeCoreAssessmentEntry.Id, p => !p.PrsStatus.HasValue);
                     if (!arePathwayResultsValid)
                     {
                         response.Add(AddStage3ValidationError(rommData.RowNum, profile.UniqueLearnerNumber, ValidationMessages.InvalidCoreResultState));
@@ -246,7 +249,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         continue;
                     }
 
-                    bool arePathwayResultsValid = ValidatePathwayResultStatus<TqPathwayResult>(profile.TqRegistrationPathways, p => !p.PrsStatus.HasValue || p.PrsStatus == PrsStatus.UnderReview);
+                    bool arePathwayResultsValid = ValidatePathwayResultStatus<TqPathwayResult>(profile.TqRegistrationPathways, activeCoreAssessmentEntry.Id, p => !p.PrsStatus.HasValue || p.PrsStatus == PrsStatus.UnderReview);
                     if (!arePathwayResultsValid)
                     {
                         response.Add(AddStage3ValidationError(rommData.RowNum, profile.UniqueLearnerNumber, ValidationMessages.InvalidCoreResultState));
@@ -262,8 +265,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                 if (openSpecialismRommOnly)
                 {
-                    bool arePathwayResultsValid = ValidateSpecialismResultStatus<TqSpecialismResult>(profile.TqRegistrationPathways, rommData.SpecialismCode, p => !p.PrsStatus.HasValue);
-                    if (!arePathwayResultsValid)
+                    bool areSpecialismResultsValid = ValidateSpecialismResultStatus<TqSpecialismResult>(profile.TqRegistrationPathways, activeSpecialismAssessmentEntry.Id, rommData.SpecialismCode, p => !p.PrsStatus.HasValue);
+                    if (!areSpecialismResultsValid)
                     {
                         response.Add(AddStage3ValidationError(rommData.RowNum, profile.UniqueLearnerNumber, ValidationMessages.InvalidSpecialismResultState));
                         continue;
@@ -282,14 +285,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         continue;
                     }
 
-                    bool arePathwayResultsValid = ValidateSpecialismResultStatus<TqSpecialismResult>(profile.TqRegistrationPathways, rommData.SpecialismCode, p => !p.PrsStatus.HasValue || p.PrsStatus == PrsStatus.UnderReview);
-                    if (!arePathwayResultsValid)
+                    bool areSpecialismResultsValid = ValidateSpecialismResultStatus<TqSpecialismResult>(profile.TqRegistrationPathways, activeSpecialismAssessmentEntry.Id, rommData.SpecialismCode, p => !p.PrsStatus.HasValue || p.PrsStatus == PrsStatus.UnderReview);
+                    if (!areSpecialismResultsValid)
                     {
                         response.Add(AddStage3ValidationError(rommData.RowNum, profile.UniqueLearnerNumber, ValidationMessages.InvalidSpecialismResultState));
                         continue;
                     }
                 }
-
 
                 response.Add(new RommsRecordResponse
                 {
@@ -297,10 +299,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     OpenCoreRomm = openCoreRomm,
                     AddCoreRommOutcome = openCoreRommWithOutcome,
                     CoreRommOutcome = rommData.CoreRommOutcome,
+                    CoreAssessmentSeriesId = activeCoreAssessmentEntry.AssessmentSeriesId,
                     OpenSpecialismRomm = openSpecialismRomm,
                     AddSpecialismRommOutcome = openSpecialismRommWithOutcome,
                     SpecialismRommOutcome = rommData.SpecialismRommOutcome,
-                    SpecialismCode = rommData.SpecialismCode
+                    SpecialismCode = rommData.SpecialismCode,
+                    SpecialismAssessmentSeriesId = activeSpecialismAssessmentEntry.AssessmentSeriesId
                 });
             };
 
@@ -342,10 +346,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                 var romm = rommData.FirstOrDefault(r => r.Uln == profile.UniqueLearnerNumber);
                 if (romm.OpenCoreRomm)
-                    success = await OpenCoreRomm(registration, performedBy, romm.AddCoreRommOutcome, romm.CoreRommOutcome);
+                    success = await OpenCoreRomm(registration, performedBy, romm.CoreAssessmentSeriesId, romm.AddCoreRommOutcome, romm.CoreRommOutcome);
 
                 if (romm.OpenSpecialismRomm)
-                    success = await OpenSpecialismRomm(registration, performedBy, romm.SpecialismCode, romm.AddSpecialismRommOutcome, romm.SpecialismRommOutcome);
+                    success = await OpenSpecialismRomm(registration, performedBy, romm.SpecialismAssessmentSeriesId, romm.SpecialismCode, romm.AddSpecialismRommOutcome, romm.SpecialismRommOutcome);
 
                 processed++;
             }
@@ -365,7 +369,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return response;
         }
 
-        private async Task<bool> OpenSpecialismRomm(TqRegistrationPathway pathway, string createdBy, string specilismCode, bool addOutcome = false, string grade = null)
+        private async Task<bool> OpenSpecialismRomm(TqRegistrationPathway pathway, string createdBy, int assessmentSeriesId, string specilismCode, bool addOutcome = false, string grade = null)
         {
             var specialismResultRepo = _repositoryFactory.GetRepository<TqSpecialismResult>();
 
@@ -373,7 +377,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 .Where(p => p.TlSpecialism.LarId == specilismCode)
                 .SelectMany(p => p.TqSpecialismAssessments.WhereActive())
                 .SelectMany(p => p.TqSpecialismResults.WhereActive())
-                .FirstOrDefault();
+                .FirstOrDefault(p => p.TqSpecialismAssessment.AssessmentSeriesId == assessmentSeriesId);
 
             TqSpecialismResult existingSpecialismResult = await specialismResultRepo.GetFirstOrDefaultAsync(p => p.Id == result.Id);
 
@@ -452,12 +456,17 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return created;
         }
 
-        private async Task<bool> OpenCoreRomm(TqRegistrationPathway pathway, string createdBy, bool addOutcome = false, string grade = null)
+        private async Task<bool> OpenCoreRomm(TqRegistrationPathway pathway, string createdBy, int assessmentSeriesId, bool addOutcome = false, string grade = null)
         {
             var pathwayResultRepo = _repositoryFactory.GetRepository<TqPathwayResult>();
 
-            var assessment = pathway.TqPathwayAssessments.WhereActive().FirstOrDefault();
-            var result = assessment.TqPathwayResults.WhereActive().FirstOrDefault();
+            //var assessment = pathway.TqPathwayAssessments.WhereActive().FirstOrDefault(a => a.AssessmentSeriesId == assessmentSeriesId);
+            //var result = assessment.TqPathwayResults.WhereActive().FirstOrDefault();
+
+            var result = pathway.TqPathwayAssessments.WhereActive().FirstOrDefault(a => a.AssessmentSeriesId == assessmentSeriesId).TqPathwayResults.WhereActive().FirstOrDefault();
+
+            //var result = pathway.TqPathwayAssessments.Where(pa => pa.IsOptedin && pa.EndDate is null && pa.AssessmentSeriesId == assessmentSeriesId)
+            //    .Select(r => r.TqPathwayResults.WhereActive()).FirstOrDefault();
 
             TqPathwayResult existingPathwayResult = await pathwayResultRepo.GetFirstOrDefaultAsync(p => p.Id == result.Id);
 
@@ -680,24 +689,24 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return rommCsvRecord != null && rommCsvRecord.LastName.Equals(profile.Lastname, StringComparison.InvariantCultureIgnoreCase);
         }
 
-        private bool ValidatePathwayResultStatus<TResult>(IEnumerable<TqRegistrationPathway> pathway, Func<TqPathwayResult, bool> getValue)
+        private bool ValidatePathwayResultStatus<TResult>(IEnumerable<TqRegistrationPathway> pathway, int assessmentId, Func<TqPathwayResult, bool> getValue)
         {
             var result = pathway
                     .SelectMany(p => p.TqPathwayAssessments.WhereActive())
                     .SelectMany(p => p.TqPathwayResults.WhereActive())
-                .FirstOrDefault();
+                .FirstOrDefault(p => p.TqPathwayAssessmentId == assessmentId);
 
             return result == null ? false : getValue(result);
         }
 
-        private bool ValidateSpecialismResultStatus<TResult>(IEnumerable<TqRegistrationPathway> pathway, string specialismCode, Func<TqSpecialismResult, bool> getValue)
+        private bool ValidateSpecialismResultStatus<TResult>(IEnumerable<TqRegistrationPathway> pathway, int assessmentId, string specialismCode, Func<TqSpecialismResult, bool> getValue)
         {
             var result = pathway
                 .SelectMany(p => p.TqRegistrationSpecialisms.WhereActive())
                 .Where(p => p.TlSpecialism.LarId == specialismCode)
                     .SelectMany(p => p.TqSpecialismAssessments.WhereActive())
                     .SelectMany(p => p.TqSpecialismResults.WhereActive())
-                .SingleOrDefault();
+                .FirstOrDefault(p => p.TqSpecialismAssessmentId == assessmentId);
 
             return result is null ? false : getValue(result);
         }
