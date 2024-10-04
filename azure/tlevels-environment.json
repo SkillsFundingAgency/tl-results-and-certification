@@ -319,7 +319,11 @@
               },
               {
                 "name": "WEBSITE_SWAP_WARMUP_PING_STATUSES",
-                "value": "200"
+                "value": "200, 202"
+              },
+              {
+                "name": "WEBSITE_SWAP_WARMUP_PING_PATH",
+                "value": "/health"
               }
             ]
           },
@@ -338,6 +342,9 @@
           },
           "ipSecurityRestrictionsDefaultAction": {
             "value": "Deny"
+          },
+          "healthCheckPath": {
+            "value": "/health"
           }
         }
       },
@@ -418,11 +425,11 @@
               },
               {
                 "name": "WEBSITE_SWAP_WARMUP_PING_PATH",
-                "value": "/api/tlevel/VerifyTLevel"
+                "value": "/health"
               },
               {
                 "name": "WEBSITE_SWAP_WARMUP_PING_STATUSES",
-                "value": "405"
+                "value": "200, 202"
               }
             ]
           },
@@ -438,6 +445,9 @@
           },
           "ipSecurityRestrictionsDefaultAction": {
             "value": "Allow"
+          },
+          "healthCheckPath": {
+            "value": "/health"
           }
         }
       },
@@ -608,6 +618,14 @@
               {
                 "name": "WEBSITE_LOAD_CERTIFICATES",
                 "value": "1"
+              },
+              {
+                "name": "WEBSITE_SWAP_WARMUP_PING_PATH",
+                "value": "/api/HealthCheck"
+              },
+              {
+                "name": "WEBSITE_SWAP_WARMUP_PING_STATUSES",
+                "value": "200, 202"
               }
             ]
           },
@@ -619,6 +637,9 @@
           },
           "systemAssignedIdentity": {
             "value": "SystemAssigned"
+          },
+          "healthCheckPath": {
+            "value": "/api/HealthCheck"
           }
         }
       },
