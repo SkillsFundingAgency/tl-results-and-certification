@@ -81,7 +81,7 @@ USING (VALUES
 	(75, N'ZTLOS072', N'Creative Media Technician', 21, 1),
 	(76, N'ZTLOS073', N'Events and Venues Technician', 21, 1),
 	(77, N'ZTLOS071', N'Content Creation and Production', 21, 1),
-	(73, N'ZTLOS077', N'Furniture Maker (Upholsterer)', 20, 1)
+	(78, N'ZTLOS077', N'Furniture Maker (Upholsterer)', 20, 1)
   )
   AS Source ([Id], [LarId], [Name], [TlPathwayId], [IsActive]) 
 ON Target.[Id] = Source.[Id] 
