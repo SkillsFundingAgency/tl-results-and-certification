@@ -460,13 +460,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var pathwayResultRepo = _repositoryFactory.GetRepository<TqPathwayResult>();
 
-            //var assessment = pathway.TqPathwayAssessments.WhereActive().FirstOrDefault(a => a.AssessmentSeriesId == assessmentSeriesId);
-            //var result = assessment.TqPathwayResults.WhereActive().FirstOrDefault();
-
             var result = pathway.TqPathwayAssessments.WhereActive().FirstOrDefault(a => a.AssessmentSeriesId == assessmentSeriesId).TqPathwayResults.WhereActive().FirstOrDefault();
-
-            //var result = pathway.TqPathwayAssessments.Where(pa => pa.IsOptedin && pa.EndDate is null && pa.AssessmentSeriesId == assessmentSeriesId)
-            //    .Select(r => r.TqPathwayResults.WhereActive()).FirstOrDefault();
 
             TqPathwayResult existingPathwayResult = await pathwayResultRepo.GetFirstOrDefaultAsync(p => p.Id == result.Id);
 
