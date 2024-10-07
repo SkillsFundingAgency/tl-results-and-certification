@@ -12,8 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Service
 
         public BlobContainerClientFactory(ResultsAndCertificationConfiguration config)
         {
-            // TODO: Read template from configuration.
-            _blobContainerUriTemplate = "https://s126d01resacdevstr.blob.core.windows.net/{0}";
+            _blobContainerUriTemplate = config.BlobContainerUriTemplate;
         }
 
         public BlobContainerClient Create(string containerName)
