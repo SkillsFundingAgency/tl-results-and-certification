@@ -782,6 +782,52 @@
     },
     {
       "apiVersion": "2022-09-01",
+      "name": "[concat('ui-app-service-role-assignment-storage-account','-', parameters('environmentNameAbbreviation'))]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'),'/role-assignments/role-assignment-storage-account.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "principalId": {
+            "value": "[reference(concat('ui-app-service','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]"
+          },
+          "assignmentType": {
+            "value": "StorageBlobDataContributor"
+          },
+          "resourceName": {
+            "value": "[variables('storageAccountName')]"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2022-09-01",
+      "name": "[concat('ui-app-service-role-assignment-storage-account-table','-', parameters('environmentNameAbbreviation'))]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'),'/role-assignments/role-assignment-storage-account.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "principalId": {
+            "value": "[reference(concat('ui-app-service','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]"
+          },
+          "assignmentType": {
+            "value": "StorageTableDataContributor"
+          },
+          "resourceName": {
+            "value": "[variables('storageAccountName')]"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2022-09-01",
       "name": "[concat('internal-api-role-assignment-storage-account','-', parameters('environmentNameAbbreviation'))]",
       "type": "Microsoft.Resources/deployments",
       "properties": {
@@ -873,6 +919,52 @@
           }
         }
       }
+    },
+    {
+      "apiVersion": "2022-09-01",
+      "name": "[concat('staging-ui-app-service-role-assignment-storage-account','-', parameters('environmentNameAbbreviation'))]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'),'/role-assignments/role-assignment-storage-account.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "principalId": {
+            "value": "c6d0863c-aaad-497e-a166-12ee19fa7715"
+          },
+          "assignmentType": {
+            "value": "StorageBlobDataContributor"
+          },
+          "resourceName": {
+            "value": "[variables('storageAccountName')]"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2022-09-01",
+      "name": "[concat('staging-ui-app-service-role-assignment-storage-account-table','-', parameters('environmentNameAbbreviation'))]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'),'/role-assignments/role-assignment-storage-account.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "principalId": {
+            "value": "c6d0863c-aaad-497e-a166-12ee19fa7715"
+          },
+          "assignmentType": {
+            "value": "StorageTableDataContributor"
+          },
+          "resourceName": {
+            "value": "[variables('storageAccountName')]"
+          }
+        }
+      }
     }
   ],
   "outputs": {
@@ -895,6 +987,10 @@
     "functionAppName": {
       "type": "string",
       "value": "[variables('functionAppName')]"
+    },
+    "uiAppServiceManagedServiceIdentityId": {
+      "type": "string",
+      "value": "[reference(concat('ui-app-service','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]"
     },
     "BlobStorageConnectionString": {
       "type": "string",
