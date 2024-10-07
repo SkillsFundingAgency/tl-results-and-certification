@@ -47,6 +47,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
                 return AdminAssessmentResultStatus.AddAppealOutcomeAllowed;
             };
 
+            bool isFinal = prsStatus == PrsStatus.Final;
+            if (isFinal)
+            {
+                return AdminAssessmentResultStatus.Final;
+            }
+
             return AdminAssessmentResultStatus.NotSpecified;
         }
     }

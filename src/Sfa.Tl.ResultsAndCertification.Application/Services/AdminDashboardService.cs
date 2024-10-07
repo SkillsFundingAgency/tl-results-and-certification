@@ -389,6 +389,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             pathwayResult.EndDate = utcNow;
             pathwayResult.IsOptedin = false;
 
+            PrsStatus prstatus = GetPrsStatus(pathwayResult.PrsStatus);
 
             var updated = await pathwayResultRepo.UpdateWithSpecifedColumnsOnlyAsync(pathwayResult, u => u.ModifiedBy, u => u.ModifiedOn, u => u.EndDate, u => u.IsOptedin) > 0;
 
@@ -403,6 +404,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     IsBulkUpload = false,
                     CreatedBy = request.CreatedBy,
                     EndDate = hasEnddate ? utcNow : null,
+                    PrsStatus = prstatus
 
                 };
 
@@ -437,6 +439,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             specialismResult.EndDate = utcNow;
             specialismResult.IsOptedin = false;
 
+            PrsStatus prstatus = GetPrsStatus(specialismResult.PrsStatus);
+
             var updated = await specialismResultRepo.UpdateWithSpecifedColumnsOnlyAsync(specialismResult, u => u.ModifiedBy, u => u.ModifiedOn, u => u.EndDate, u => u.IsOptedin) > 0;
 
             if (request.SelectedGradeId > 0)
@@ -450,7 +454,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     IsBulkUpload = false,
                     CreatedBy = request.CreatedBy,
                     EndDate = hasEnddate ? utcNow : null,
-
+                    PrsStatus = prstatus
                 };
 
                 bool created = await specialismResultRepo.CreateAsync(createSpecialsimResult) > 0;
@@ -486,5 +490,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             return changeLog;
         }
+
+        private static PrsStatus GetPrsStatus(PrsStatus? prsStatus) => prsStatus != PrsStatus.Final ? default : PrsStatus.Final;
     }
 }
