@@ -320,6 +320,10 @@
               {
                 "name": "WEBSITE_SWAP_WARMUP_PING_STATUSES",
                 "value": "200"
+              },
+              {
+                "name": "ASPNETCORE_DETAILEDERRORS",
+                "value": "true"
               }
             ]
           },
