@@ -919,52 +919,6 @@
           }
         }
       }
-    },
-    {
-      "apiVersion": "2022-09-01",
-      "name": "[concat('staging-ui-app-service-role-assignment-storage-account','-', parameters('environmentNameAbbreviation'))]",
-      "type": "Microsoft.Resources/deployments",
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[concat(variables('deploymentUrlBase'),'/role-assignments/role-assignment-storage-account.json')]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "principalId": {
-            "value": "c6d0863c-aaad-497e-a166-12ee19fa7715"
-          },
-          "assignmentType": {
-            "value": "StorageBlobDataContributor"
-          },
-          "resourceName": {
-            "value": "[variables('storageAccountName')]"
-          }
-        }
-      }
-    },
-    {
-      "apiVersion": "2022-09-01",
-      "name": "[concat('staging-ui-app-service-role-assignment-storage-account-table','-', parameters('environmentNameAbbreviation'))]",
-      "type": "Microsoft.Resources/deployments",
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[concat(variables('deploymentUrlBase'),'/role-assignments/role-assignment-storage-account.json')]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "principalId": {
-            "value": "c6d0863c-aaad-497e-a166-12ee19fa7715"
-          },
-          "assignmentType": {
-            "value": "StorageTableDataContributor"
-          },
-          "resourceName": {
-            "value": "[variables('storageAccountName')]"
-          }
-        }
-      }
     }
   ],
   "outputs": {
