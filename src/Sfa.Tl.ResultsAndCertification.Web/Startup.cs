@@ -154,7 +154,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                         || p.User.HasLoginUserTypeClaimAndRole(LoginUserType.Admin, RolesExtensions.AdminDashboardAccess)));
             });
 
-            services.AddWebDataProtection(ResultsAndCertificationConfiguration, _env);
+            services.AddWebDataProtection(ResultsAndCertificationConfiguration);
             RegisterDependencies(services);
         }
 
