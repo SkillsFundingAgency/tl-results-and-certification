@@ -39,6 +39,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Assessment.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.IndustryPlacement.BulkProcess;
+using Sfa.Tl.ResultsAndCertification.Models.PostResultsService.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Result.BulkProcess;
 using System.Linq;
@@ -70,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddApplicationInsightsTelemetry();
             services.AddControllers();
             services.AddSwaggerGen();
-
+            
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 //options.SuppressModelStateInvalidFilter = true;
@@ -90,6 +91,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
                 });
                 services.AddApiAuthentication(ResultsAndCertificationConfiguration).AddApiAuthorization();
             }
+
+            services
+                .AddHealthChecks()
+                .AddDbContextCheck<ResultsAndCertificationDbContext>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -115,6 +120,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHealthChecks("/health");
             });
         }
 
@@ -179,6 +185,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<IBulkWithdrawalLoader, BulkWithdrawalLoader>();
             services.AddTransient<IRegistrationService, RegistrationService>();
             services.AddTransient<IWithdrawalService, WithdrawalService>();
+
+
+            services.AddTransient<IDataParser<RommCsvRecordResponse>, RommParser>();
+            services.AddTransient<IValidator<RommsCsvRecordRequest>, RommValidator>();
+            services.AddTransient<ICsvHelperService<RommsCsvRecordRequest, CsvResponseModel<RommCsvRecordResponse>, RommCsvRecordResponse>, CsvHelperService<RommsCsvRecordRequest, CsvResponseModel<RommCsvRecordResponse>, RommCsvRecordResponse>>();
+            services.AddTransient<IBulkRommLoader, BulkRommLoader>();
+            services.AddTransient<IRommService, RommService>();
 
             // Bulk Assessments
             services.AddTransient<IDataParser<AssessmentCsvRecordResponse>, AssessmentParser>();

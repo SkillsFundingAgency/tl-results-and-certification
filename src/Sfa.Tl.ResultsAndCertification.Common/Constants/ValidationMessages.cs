@@ -13,6 +13,7 @@
         public const string DateNotinFuture = "{0} must be in the past";
         public const string MustBeNumberWithInRange = "{0} must be between {1} and {2} digit number";
         public const string CannotHaveValue = "{0} cannot have a value";
+        public const string MustBeYesOrNo = "{0} must be a Yes or No";
 
         public const string MustBeInFormat = "{0} must be in the format {1}";
 
@@ -39,7 +40,13 @@
         // Bulk Withdrawal Learner Validation Messages
         public const string InactiveUln = "Inactive Uln";
         public const string InvalidDateOfBirth = "Invalid date of birth";
+        public const string InvalidLastName = "Invalid last name";
         public const string InvalidResultState = "Active Romm or Appeal";
+        public const string InvalidRommResultState = "Active Romm, Appeal or no result unavailable.";
+        public const string CoreRommWindowExpired = "Invalid Core Romm period.";
+        public const string SpecialismRommWindowExpired = "Invalid Specialism Romm period.";
+        public const string InvalidCoreResultState = "Active Core Romm, Appeal or no result unavailable.";
+        public const string InvalidSpecialismResultState = "Active Specialism Romm, Appeal or no result unavailable.";
 
         // Bulk Registration Stage4 Validation Messages
         public const string ActiveUlnWithDifferentAo = "Active ULN with a different awarding organisation";
@@ -93,6 +100,7 @@
         public const string InvalidCoreAssessmentSeriesEntry = "Assessment series does not exist - see results data format and rules guide for examples of valid series";
         public const string NoCoreAssessmentEntryCurrentlyActive = "No assessment entry is currently active for the core component on this registration - needs adding first through assessment entries file upload or manual entry";
         public const string AssessmentSeriesDoesNotMatchTheSeriesOnTheRegistration = "Assessment series does not match the series on the registration";
+        public const string InvalidCoreRommComponentGrade = "Enter a valid grade for the core component. The grade must be A* to E, Unclassified.";
         public const string InvalidCoreComponentGrade = "Enter a valid grade for the core component. The grade must be A* to E, unclassified, Q - pending result or X - no result.";
         public const string CoreSeriesNotCurrentlyOpen = "Incorrect Assessment series";
 
@@ -102,6 +110,7 @@
         public const string SpecialismSeriesDoesNotMatchTheSeriesOnTheRegistration = "Assessment series does not match the series on the registration";
         public const string SpecialismGradeIsNotValid = "Specialism grade not valid";
         public const string SpecialismSeriesNotCurrentlyOpen = "Incorrect Assessment series";
+        public const string InvalidSpecialismRommComponentGrade = "Enter a valid grade for the specialism component. The grade must be Distinction, Merit, Pass, Unclassified.";
 
         // Results - Bulk stage 4 validations
         public const string ResultCannotBeChanged = "This learner's grade cannot be changed. Please remove this learner and try again.";

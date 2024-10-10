@@ -130,6 +130,9 @@
     <value>Postal address missing page</value>
   </data>
   <data name="Para_Before_Request_SOA_You_Must_Tell_Us" xml:space="preserve">
-    <value>Before you can request a statement of achievement you must tell us your organisation's postal address so we know where to send them.</value>
+    <value>Add the address you want certificates and statements of achievement sent to.</value>
+  </data>
+  <data name="Para_Once_You_Have_Complete_Post_Address_Return_To_SOA" xml:space="preserve">
+    <value>Once you have completed your postal address, return to the Request statement of achievement page to submit your request.</value>
   </data>
 </root>

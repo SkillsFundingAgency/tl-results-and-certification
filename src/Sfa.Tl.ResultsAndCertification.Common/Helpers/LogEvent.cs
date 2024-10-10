@@ -62,5 +62,9 @@
 
         public const int BulkIndustryPlacementProcessFailed = 10001;
 
+        // Post results events
+        public const int DownloadRommErrorsFailed = 11001;
+        public const int BulkRommProcessFailed = 11002;
+
     }
 }

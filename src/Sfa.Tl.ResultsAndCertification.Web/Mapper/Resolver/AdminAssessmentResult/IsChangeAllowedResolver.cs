@@ -15,7 +15,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver.AdminAssessmentResu
         private readonly AdminAssessmentResultStatus[] _trueResultStatuses = new[]
         {
             AdminAssessmentResultStatus.OpenRommAllowed,
-            AdminAssessmentResultStatus.OpenAppealAllowed
+            AdminAssessmentResultStatus.OpenAppealAllowed,
+            AdminAssessmentResultStatus.Final
         };
 
         public IsChangeAllowedResolver(ISystemProvider systemProvider)

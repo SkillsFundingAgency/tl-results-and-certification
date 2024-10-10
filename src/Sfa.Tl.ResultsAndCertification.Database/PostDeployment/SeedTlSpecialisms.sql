@@ -76,11 +76,12 @@ USING (VALUES
 	(70, N'ZTLOS075', N'Animal Management and Science', 19, 1),
 	(71, N'ZTLOS068', N'Jewellery Maker', 20, 1),
 	(72, N'ZTLOS069', N'Ceramics Maker', 20, 1),
-	(73, N'ZTLOS070', N'Furniture Maker', 20, 1),
+	(73, N'ZTLOS076', N'Furniture Maker (Maker)', 20, 1),
 	(74, N'ZTLOS067', N'Textiles and Fashion Maker', 20, 1),
 	(75, N'ZTLOS072', N'Creative Media Technician', 21, 1),
 	(76, N'ZTLOS073', N'Events and Venues Technician', 21, 1),
-	(77, N'ZTLOS071', N'Content Creation and Production', 21, 1)
+	(77, N'ZTLOS071', N'Content Creation and Production', 21, 1),
+	(78, N'ZTLOS077', N'Furniture Maker (Upholsterer)', 20, 1)
   )
   AS Source ([Id], [LarId], [Name], [TlPathwayId], [IsActive]) 
 ON Target.[Id] = Source.[Id] 

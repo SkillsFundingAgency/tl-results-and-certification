@@ -1,7 +1,11 @@
 ﻿using AutoMapper;
+using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
+using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
@@ -9,6 +13,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -17,11 +22,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
     public class PostResultsServiceLoader : IPostResultsServiceLoader
     {
         private readonly IResultsAndCertificationInternalApiClient _internalApiClient;
+        private readonly IBlobStorageService _blobStorageService;
         private readonly IMapper _mapper;
+        private readonly ILogger<PostResultsServiceLoader> _logger;
 
-        public PostResultsServiceLoader(IResultsAndCertificationInternalApiClient internalApiClient, IMapper mapper)
+        public PostResultsServiceLoader(IResultsAndCertificationInternalApiClient internalApiClient, ILogger<PostResultsServiceLoader> logger, IBlobStorageService blobStorageService, IMapper mapper)
         {
             _internalApiClient = internalApiClient;
+            _logger = logger;
+            _blobStorageService = blobStorageService;
             _mapper = mapper;
         }
 
@@ -153,9 +162,56 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         private async Task<IList<LookupData>> GetGradesApplicable(ComponentType componentType)
         {
             var grades = await _internalApiClient.GetLookupDataAsync(componentType == ComponentType.Core ? LookupCategory.PathwayComponentGrade : LookupCategory.SpecialismComponentGrade);
-            
+
             return grades.Where(x => (componentType == ComponentType.Core && !x.Code.Equals(Constants.PathwayComponentGradeQpendingResultCode, StringComparison.InvariantCultureIgnoreCase)) ||
                                      (componentType == ComponentType.Specialism && !x.Code.Equals(Constants.SpecialismComponentGradeQpendingResultCode, StringComparison.InvariantCultureIgnoreCase))).ToList();
+        }
+
+        public async Task<UploadRommsResponseViewModel> ProcessBulkRommsAsync(UploadRommsRequestViewModel viewModel)
+        {
+            var bulkRommsRequest = _mapper.Map<BulkProcessRequest>(viewModel);
+
+            using (var fileStream = viewModel.File.OpenReadStream())
+            {
+                await _blobStorageService.UploadFileAsync(new BlobStorageData
+                {
+                    ContainerName = bulkRommsRequest.DocumentType.ToString(),
+                    BlobFileName = bulkRommsRequest.BlobFileName,
+                    SourceFilePath = $"{bulkRommsRequest.AoUkprn}/{BulkProcessStatus.Processing}",
+                    FileStream = fileStream,
+                    UserName = bulkRommsRequest.PerformedBy
+                });
+            }
+
+            var bulkRommsResponse = await _internalApiClient.ProcessBulkRommsAsync(bulkRommsRequest);
+            return _mapper.Map<UploadRommsResponseViewModel>(bulkRommsResponse);
+        }
+
+        public async Task<Stream> GetRommValidationErrorsFileAsync(long aoUkprn, Guid blobUniqueReference)
+        {
+            var tlevelDetails = await _internalApiClient.GetDocumentUploadHistoryDetailsAsync(aoUkprn, blobUniqueReference);
+
+            if (tlevelDetails != null && tlevelDetails.Status == (int)DocumentUploadStatus.Failed)
+            {
+                var fileStream = await _blobStorageService.DownloadFileAsync(new BlobStorageData
+                {
+                    ContainerName = DocumentType.Romms.ToString(),
+                    BlobFileName = tlevelDetails.BlobFileName,
+                    SourceFilePath = $"{aoUkprn}/{BulkProcessStatus.ValidationErrors}"
+                });
+
+                if (fileStream == null)
+                {
+                    var blobReadError = $"No FileStream found to download withdrawal validation errors. Method: DownloadFileAsync(ContainerName: {DocumentType.Withdrawals}, BlobFileName = {tlevelDetails.BlobFileName}, SourceFilePath = {aoUkprn}/{BulkProcessStatus.ValidationErrors})";
+                    _logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
+                }
+                return fileStream;
+            }
+            else
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No DocumentUploadHistoryDetails found or the request is not valid. Method: GetDocumentUploadHistoryDetailsAsync(AoUkprn: {aoUkprn}, BlobUniqueReference = {blobUniqueReference})");
+                return null;
+            }
         }
     }
 }

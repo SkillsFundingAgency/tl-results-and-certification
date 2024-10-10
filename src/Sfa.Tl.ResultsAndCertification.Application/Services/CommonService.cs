@@ -9,6 +9,7 @@ using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -29,10 +30,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public DateTime CurrentDate => DateTime.UtcNow.Date;
 
-        public CommonService(ILogger<CommonService> logger, IMapper mapper,
+        public CommonService(ILogger<CommonService> logger,
+            IMapper mapper,
             IRepository<TlLookup> tlLookupRepository,
             IRepository<FunctionLog> functionLogRepository,
-            ICommonRepository commonRepository, INotificationService notificationService,
+            ICommonRepository commonRepository,
+            INotificationService notificationService,
             ResultsAndCertificationConfiguration configuration,
             IRepository<ChangeLog> changeLogRepository)
         {
@@ -51,6 +54,18 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                                       .OrderBy(x => x.SortOrder).ToListAsync();
 
             return _mapper.Map<IEnumerable<LookupData>>(lookupData);
+        }
+
+        public async Task<IEnumerable<LookupData>> GetLookupDataAsync(LookupCategory lookupCategory, List<string> codes)
+        {
+            var lookupData = await _tlLookupRepository.GetManyAsync(x => x.IsActive && x.Category == lookupCategory.ToString())
+                                                      .OrderBy(x => x.SortOrder)
+                                                      .ToListAsync();
+
+
+            var filteredLookups = lookupData.ExceptBy(codes, e => e.Code).ToList();
+
+            return _mapper.Map<IEnumerable<LookupData>>(filteredLookups);
         }
 
         public async Task<bool> CreateFunctionLog(FunctionLogDetails model)
@@ -135,5 +150,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             return await _commonRepository.GetAcademicYearsAsync();
         }
+
+        public async Task<IEnumerable<Assessment>> GetAssessmentSeriesAsync()
+            => await _commonRepository.GetAssessmentSeriesAsync();
+
     }
 }

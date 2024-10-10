@@ -84,6 +84,7 @@
         public const string FindPrsLearnerRecordByProfileIdUri = "/api/postresultsservice/FindPrsLearnerRecordByProfileId/{0}/{1}";
         public const string PrsActivityUri = "/api/postresultsservice/PrsActivity";
         public const string PrsGradeChangeRequestUri = "/api/postresultsservice/PrsGradeChangeRequest";
+        public const string ProcessBulkRommsUri = "/api/postresultsservice/ProcessBulkRomms";
 
         //LRS Api Uri's
         public const string LearnerServiceUri = "/LearnerService.svc";
@@ -127,6 +128,7 @@
         public const string GetAdminSearchLearnerFiltersUri = "/api/admindashboard/GetAdminSearchLearnerFilters";
         public const string GetAdminSearchLearnerDetailsUri = "/api/admindashboard/GetAdminSearchLearnerDetails";
         public const string GetAdminLearnerRecordUri = "/api/admindashboard/GetAdminLearnerRecord/{0}";
+        public const string GetAllowedChangeAcademicYearsUri = "/api/admindashboard/GetAllowedChangeAcademicYears/{0}/{1}";
         public const string ProcessChangeStartYearUri = "/api/admindashboard/ProcessChangeStartYear";
         public const string ProcessChangeIPUri = "/api/admindashboard/ProcessChangeIndustryPlacement";
         public const string ProcessAddCoreAssessmentUri = "/api/admindashboard/ProcessAddCoreAssessmentRequest";

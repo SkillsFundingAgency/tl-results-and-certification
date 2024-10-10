@@ -61,6 +61,26 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return fileStream;
         }
 
+        public async Task<Stream> GetBulkUploadRommTechSpecFileAsync(string fileName)
+        {
+            if (string.IsNullOrWhiteSpace(fileName))
+                return null;
+
+            var fileStream = await _blobStorageService.DownloadFileAsync(new BlobStorageData
+            {
+                ContainerName = DocumentType.Documents.ToString(),
+                BlobFileName = fileName,
+                SourceFilePath = $"{BlobStorageConstants.TechSpecFolderName}/{BlobStorageConstants.RommsFolderName}"
+            });
+
+            if (fileStream == null)
+            {
+                var blobReadError = $"No FileStream found to download bulkupload registration tech spec. Method: DownloadFileAsync(ContainerName: {DocumentType.Documents}, BlobFileName = {fileName}, SourceFilePath = {BlobStorageConstants.TechSpecFolderName}/{BlobStorageConstants.RommsFolderName})";
+                _logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
+            }
+            return fileStream;
+        }
+
         public async Task<Stream> GetBulkUploadAssessmentEntriesTechSpecFileAsync(string fileName)
         {
             if (string.IsNullOrWhiteSpace(fileName))

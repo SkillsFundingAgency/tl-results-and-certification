@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
 
             PrsStatus? prsStatus = result.PrsStatus;
 
-            bool isOpenRommAllowed = (!prsStatus.HasValue || prsStatus == PrsStatus.NotSpecified) && CommonHelper.IsAppealsAllowed(assessment.AppealEndDate, today);
+            bool isOpenRommAllowed = (!prsStatus.HasValue || prsStatus == PrsStatus.NotSpecified);
             if (isOpenRommAllowed)
             {
                 return AdminAssessmentResultStatus.OpenRommAllowed;
@@ -35,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
                 return AdminAssessmentResultStatus.AddRommOutcomeAllowed;
             }
 
-            bool isOpenAppealAllowed = prsStatus == PrsStatus.Reviewed && CommonHelper.IsAppealsAllowed(assessment.AppealEndDate, today);
+            bool isOpenAppealAllowed = prsStatus == PrsStatus.Reviewed;
             if (isOpenAppealAllowed)
             {
                 return AdminAssessmentResultStatus.OpenAppealAllowed;
@@ -46,6 +46,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
             {
                 return AdminAssessmentResultStatus.AddAppealOutcomeAllowed;
             };
+
+            bool isFinal = prsStatus == PrsStatus.Final;
+            if (isFinal)
+            {
+                return AdminAssessmentResultStatus.Final;
+            }
 
             return AdminAssessmentResultStatus.NotSpecified;
         }

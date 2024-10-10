@@ -95,5 +95,10 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Exten
 
         public static IRuleBuilderOptions<T, string> NotDuplicatesInCommaSeparatedString<T>(this IRuleBuilder<T, string> ruleBuilder)
             => ruleBuilder.Must(r => CsvStringToListParser.Parse(r).GroupBy(spl => spl).All(c => c.Count() == 1));
+
+        public static IRuleBuilderOptions<T, string> MustBeYesOrNoValidation<T>(this IRuleBuilder<T, string> ruleBuilder)
+            => ruleBuilder
+                .Must(r => r == "Yes" || r == "No")
+                .WithMessage(string.Format(ValidationMessages.MustBeYesOrNo, "{PropertyName}"));
     }
 }

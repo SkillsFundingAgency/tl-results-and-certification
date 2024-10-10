@@ -187,6 +187,7 @@
         public const string AnalystCoreResultExtract = "AnalystCoreResultExtract";
         public const string SpecialismRommExtract = "SpecialismRommExtract";
         public const string CertificateTrackingExtract = "CertificateTrackingExtract";
+        public const string HealthCheck = "HealthCheck";
         public const string AnalystOverallResultExtractsFolder = "extracts";
         public const string AnalystCoreResultExtractsFolder = "extracts";
         public const string SpecialismRommFolder = "extracts";
