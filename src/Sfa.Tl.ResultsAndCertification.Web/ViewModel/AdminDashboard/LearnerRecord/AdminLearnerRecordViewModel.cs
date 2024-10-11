@@ -7,7 +7,6 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using IndustryPlacementStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.IndustryPlacementStatus;
 using IpStatus = Sfa.Tl.ResultsAndCertification.Common.Enum.IndustryPlacementStatus;
 using LearnerRecordDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.LearnerRecord;
@@ -30,6 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
         public string AwardingOrganisationName { get; set; }
         public SubjectStatus MathsStatus { get; set; }
         public SubjectStatus EnglishStatus { get; set; }
+        public string OverallResult { get; set; }
 
         public int IndustryPlacementId { get; set; }
         public IpStatus IndustryPlacementStatus { get; set; }
@@ -101,8 +101,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
             Title = LearnerRecordDetailsContent.Title_StartYear_Text,
             Value = StartYear,
             ActionText = LearnerRecordDetailsContent.Action_Text_Link_Change,
-            RouteName = RouteConstants.ChangeStartYear,
-            RouteAttributes = new Dictionary<string, string> { { Constants.PathwayId, RegistrationPathwayId.ToString() } }
+            RouteName = RouteConstants.ChangeStartYearClear,
+            RouteAttributes = new Dictionary<string, string> { { Constants.RegistrationPathwayId, RegistrationPathwayId.ToString() } }
         };
 
         public SummaryItemModel SummaryAoName => new SummaryItemModel
@@ -110,6 +110,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
             Id = "aoname",
             Title = LearnerRecordDetailsContent.Title_AoName_Text,
             Value = AwardingOrganisationName
+        };
+
+        public SummaryItemModel SummaryOverallResult => new SummaryItemModel
+        {
+            Id = "result",
+            Title = LearnerRecordDetailsContent.Title_Result,
+            Value = OverallResult ?? LearnerRecordDetailsContent.Label_Overall_Result_Not_Calculated
         };
 
         #endregion

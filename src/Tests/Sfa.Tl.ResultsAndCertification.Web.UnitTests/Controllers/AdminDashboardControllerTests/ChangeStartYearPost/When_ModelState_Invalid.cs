@@ -1,12 +1,8 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
-using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Registration.Uln;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using System.Collections.Generic;
-using System.Configuration.Provider;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.ChangeStartYearPost
@@ -17,9 +13,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 
         public override void Given()
         {
-            AdminChangeStartYearViewModel = new AdminChangeStartYearViewModel()
+            AdminChangeStartYearViewModel = new AdminChangeStartYearViewModel
             {
-                PathwayId = 1,
+                RegistrationPathwayId = 1,
                 FirstName = "John",
                 LastName = "Smith",
                 Uln = 1100000001,
@@ -32,9 +28,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 AcademicStartYearsToBe = new List<int> { 2020 }
             };
 
-            MockResult = new AdminChangeStartYearViewModel()
+            MockResult = new AdminChangeStartYearViewModel
             {
-                PathwayId = 1,
+                RegistrationPathwayId = 1,
                 FirstName = "John",
                 LastName = "Smith",
                 Uln = 1100000001,
@@ -47,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 AcademicStartYearsToBe = new List<int>() { 2020 }
             };
 
-            AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(Arg.Any<int>()).Returns(MockResult);
+            AdminDashboardLoader.GetAdminLearnerRecordChangeYearAsync(Arg.Any<int>()).Returns(MockResult);
             Controller.ModelState.AddModelError(nameof(AdminChangeStartYearViewModel.AcademicYearTo), Content.AdminDashboard.ChangeStartYear.Validation_Message);
         }
 
@@ -62,7 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             var model = viewResult.Model as AdminChangeStartYearViewModel;
 
             model.Should().NotBeNull();
-            model.PathwayId.Should().Be(AdminChangeStartYearViewModel.PathwayId);
+            model.RegistrationPathwayId.Should().Be(AdminChangeStartYearViewModel.RegistrationPathwayId);
             model.FirstName.Should().Be(AdminChangeStartYearViewModel.FirstName);
             model.LastName.Should().Be(AdminChangeStartYearViewModel.LastName);
             model.Uln.Should().Be(AdminChangeStartYearViewModel.Uln);

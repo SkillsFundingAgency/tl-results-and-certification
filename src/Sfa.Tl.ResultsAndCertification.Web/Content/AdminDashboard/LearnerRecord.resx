@@ -177,8 +177,8 @@
   <data name="Link_Add_An_Occupational_Specialism" xml:space="preserve">
     <value>Add an occupational specialism to this learner's record</value>
   </data>
-  <data name="Message_Notification_Success" xml:space="preserve">
-    <value>&lt;b&gt;Start year updated&lt;/b&gt;</value>
+  <data name="Change_Year_Notification_Success" xml:space="preserve">
+    <value>Start year updated</value>
   </data>
   <data name="No_Assessment_Entries_Have_Been_Recorded" xml:space="preserve">
     <value>No assessment entries have yet been recorded.</value>
@@ -272,5 +272,14 @@
   </data>
   <data name="Uln_Text" xml:space="preserve">
     <value>ULN </value>
+  </data>
+  <data name="Section_Heading_TLevel_Overall_Result" xml:space="preserve">
+    <value>Overall T Level Result</value>
+  </data>
+  <data name="Title_Result" xml:space="preserve">
+    <value>Result</value>
+  </data>
+  <data name="Label_Overall_Result_Not_Calculated" xml:space="preserve">
+    <value>Result not calculated</value>
   </data>
 </root>

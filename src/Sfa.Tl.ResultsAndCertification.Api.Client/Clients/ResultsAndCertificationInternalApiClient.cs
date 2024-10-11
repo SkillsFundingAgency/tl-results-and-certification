@@ -385,6 +385,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await PostAsync<PrsGradeChangeRequest, bool>(requestUri, request);
         }
 
+        public async Task<BulkProcessResponse> ProcessBulkRommsAsync(BulkProcessRequest model)
+        {
+            var requestUri = ApiConstants.ProcessBulkRommsUri;
+            return await PostAsync<BulkProcessRequest, BulkProcessResponse>(requestUri, model);
+        }
+
         #endregion
 
         #region IndustryPlacement
@@ -464,6 +470,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         {
             var requestUri = string.Format(ApiConstants.GetAdminLearnerRecordUri, pathwayId);
             return await GetAsync<AdminLearnerRecord>(requestUri);
+        }
+
+        public Task<IList<int>> GetAllowedChangeAcademicYearsAsync(int learnerAcademicYear, int pathwayStartYear)
+        {
+            var requestUri = string.Format(ApiConstants.GetAllowedChangeAcademicYearsUri, learnerAcademicYear, pathwayStartYear);
+            return GetAsync<IList<int>>(requestUri);
         }
 
         public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearRequest request)

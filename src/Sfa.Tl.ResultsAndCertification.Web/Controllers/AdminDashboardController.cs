@@ -7,7 +7,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
-using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.InformationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
@@ -182,16 +181,30 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         #region Change Start Year
 
         [HttpGet]
-        [Route("admin/change-start-year/{pathwayId}/{isBack:bool?}", Name = RouteConstants.ChangeStartYear)]
-        public async Task<IActionResult> ChangeStartYearAsync(int pathwayId, bool isBack = false)
+        [Route("admin/change-start-year-clear/{registrationPathwayId}", Name = RouteConstants.ChangeStartYearClear)]
+        public async Task<IActionResult> ChangeStartYearClearAsync(int registrationPathwayId)
         {
-            var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(pathwayId);
+            await _cacheService.RemoveAsync<AdminChangeStartYearViewModel>(CacheKey);
+            return RedirectToRoute(RouteConstants.ChangeStartYear, new { registrationPathwayId });
+        }
+
+        [HttpGet]
+        [Route("admin/change-start-year/{registrationPathwayId}", Name = RouteConstants.ChangeStartYear)]
+        public async Task<IActionResult> ChangeStartYearAsync(int registrationPathwayId)
+        {
+            AdminChangeStartYearViewModel cachedModel = await _cacheService.GetAsync<AdminChangeStartYearViewModel>(CacheKey);
+
+            if (cachedModel != null)
+            {
+                return View(cachedModel);
+            }
+
+            AdminChangeStartYearViewModel viewModel = await _loader.GetAdminLearnerRecordChangeYearAsync(registrationPathwayId);
 
             if (viewModel == null)
+            {
                 return RedirectToRoute(RouteConstants.PageNotFound);
-
-            if (isBack)
-                viewModel.AcademicYearTo = TempData.Get<string>(Constants.AcademicYearTo) ?? viewModel.AcademicYearTo;
+            }
 
             return View(viewModel);
         }
@@ -200,18 +213,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/submit-change-start-year", Name = RouteConstants.SubmitChangeStartYear)]
         public async Task<IActionResult> ChangeStartYearAsync(AdminChangeStartYearViewModel model)
         {
-            var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(model.PathwayId);
-
-            if (viewModel.AcademicStartYearsToBe.Count == 0 && !ModelState.IsValid)
-                ModelState[nameof(model.AcademicYearTo)].ValidationState = Microsoft.AspNetCore.Mvc.ModelBinding.ModelValidationState.Skipped;
-
             if (!ModelState.IsValid)
             {
-                return View(viewModel);
+                return View(model);
             }
 
-            await _cacheService.SetAsync<AdminChangeStartYearViewModel>(CacheKey, model);
-            return RedirectToAction(nameof(RouteConstants.ReviewChangeStartYear), new { pathwayId = model.PathwayId });
+            await _cacheService.SetAsync(CacheKey, model);
+            return RedirectToAction(nameof(RouteConstants.ReviewChangeStartYear), new { pathwayId = model.RegistrationPathwayId });
         }
 
         [HttpGet]
@@ -221,12 +229,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var viewModel = await _loader.GetAdminLearnerRecordAsync<ReviewChangeStartYearViewModel>(pathwayId);
 
             if (viewModel == null)
+            {
                 return RedirectToRoute(RouteConstants.PageNotFound);
+            }
 
             var _cachedModel = await _cacheService.GetAsync<AdminChangeStartYearViewModel>(CacheKey);
-            TempData.Set(Constants.AcademicYearTo, _cachedModel.AcademicYearTo);
-
             viewModel.AcademicYearTo = _cachedModel.AcademicYearTo;
+
             return View(viewModel);
         }
 
@@ -238,21 +247,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return View(model);
             }
-            var isSuccess = await _loader.ProcessChangeStartYearAsync(model);
 
-            if (isSuccess)
+            var success = await _loader.ProcessChangeStartYearAsync(model);
+
+            if (!success)
             {
-                await _cacheService.SetAsync(CacheKey, new NotificationBannerModel
-                {
-                    DisplayMessageBody = true,
-                    Message = LearnerRecord.Message_Notification_Success,
-                    IsRawHtml = true
-                },
-                CacheExpiryTime.XSmall);
-
-                return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
+                return RedirectToRoute(RouteConstants.ProblemWithService);
             }
-            else { return RedirectToRoute(RouteConstants.ProblemWithService); }
+
+            await _cacheService.SetAsync(CacheKey, new AdminNotificationBannerModel(LearnerRecord.Change_Year_Notification_Success), CacheExpiryTime.XSmall);
+
+            return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
         }
 
         #endregion

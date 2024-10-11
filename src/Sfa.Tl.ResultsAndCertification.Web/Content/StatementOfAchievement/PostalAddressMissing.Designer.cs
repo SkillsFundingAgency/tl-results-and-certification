@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class PostalAddressMissing {
@@ -98,11 +98,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Before you can request a statement of achievement you must tell us your organisation&apos;s postal address so we know where to send them..
+        ///   Looks up a localized string similar to Add the address you want certificates and statements of achievement sent to..
         /// </summary>
         public static string Para_Before_Request_SOA_You_Must_Tell_Us {
             get {
                 return ResourceManager.GetString("Para_Before_Request_SOA_You_Must_Tell_Us", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Once you have completed your postal address, return to the Request statement of achievement page to submit your request..
+        /// </summary>
+        public static string Para_Once_You_Have_Complete_Post_Address_Return_To_SOA {
+            get {
+                return ResourceManager.GetString("Para_Once_You_Have_Complete_Post_Address_Return_To_SOA", resourceCulture);
             }
         }
     }

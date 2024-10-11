@@ -5,7 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoaderTests.AdminChangeStartYear
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoaderTests.GetAdminLearnerRecordChangeYear
 {
     public class When_Called_With_Invalid_Data : AdminDashboardLoaderTestsBase
     {
@@ -19,13 +19,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
 
         public async override Task When()
         {
-            _result = await Loader.GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(RegistrationPathwayId);
+            _result = await Loader.GetAdminLearnerRecordChangeYearAsync(RegistrationPathwayId);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
             ApiClient.Received(1).GetAdminLearnerRecordAsync(RegistrationPathwayId);
+            ApiClient.DidNotReceive().GetAllowedChangeAcademicYearsAsync(Arg.Any<int>(), Arg.Any<int>());
         }
 
         [Fact]

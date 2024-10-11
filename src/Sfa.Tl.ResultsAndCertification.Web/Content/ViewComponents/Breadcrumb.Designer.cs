@@ -277,6 +277,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Result reviews and appeals.
+        /// </summary>
+        public static string ResultReviewsAndAppeals {
+            get {
+                return ResourceManager.GetString("ResultReviewsAndAppeals", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Post-results.
         /// </summary>
         public static string Reviews_And_Appeals {
@@ -453,6 +462,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         public static string Upload_Results_File {
             get {
                 return ResourceManager.GetString("Upload_Results_File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload multiple romms.
+        /// </summary>
+        public static string Upload_Romms_File {
+            get {
+                return ResourceManager.GetString("Upload_Romms_File", resourceCulture);
             }
         }
         

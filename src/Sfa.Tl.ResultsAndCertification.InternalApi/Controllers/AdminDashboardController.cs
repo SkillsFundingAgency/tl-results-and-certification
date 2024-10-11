@@ -3,6 +3,7 @@ using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
@@ -39,13 +40,17 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
             return await _adminDashboardService.GetAdminLearnerRecordAsync(registrationPathwayId);
         }
 
+        [HttpGet]
+        [Route("GetAllowedChangeAcademicYears/{learnerAcademicYear}/{pathwayStartYear}")]
+        public Task<IList<int>> GetAllowedChangeAcademicYearsAsync(int learnerAcademicYear, int pathwayStartYear)
+            => _adminDashboardService.GetAllowedChangeAcademicYearsAsync(learnerAcademicYear, pathwayStartYear);
+
         [HttpPost]
         [Route("ProcessChangeStartYear")]
         public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearRequest request)
         {
             return await _adminDashboardService.ProcessChangeStartYearAsync(request);
         }
-
 
         [HttpPost]
         [Route("ProcessChangeIndustryPlacement")]

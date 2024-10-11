@@ -8,10 +8,14 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SearchRegistration.Enum;
+using System;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using RommContent = Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 {
@@ -36,6 +40,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public IActionResult StartReviewsAndAppealsAsync()
         {
             return View(new StartReviewsAndAppealsViewModel());
+        }
+
+        [HttpGet]
+        [Route("results-reviews-appeals-and-grade-changes", Name = RouteConstants.ResultReviewsAndAppeals)]
+        public IActionResult ResultReviewsAndAppealsAsync()
+        {
+            return View(new ResultReviewsAndAppealsViewModel());
         }
 
         [HttpGet]
@@ -666,6 +677,126 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 PrsGradeChangeConfirmationNavigationOptions.SearchForAnotherLearner => RedirectToRoute(RouteConstants.SearchRegistration, new { type = SearchRegistrationType.PostResult.ToString() }),
                 PrsGradeChangeConfirmationNavigationOptions.BackToHome => RedirectToRoute(RouteConstants.Home),
                 _ => RedirectToRoute(RouteConstants.Home)
+            };
+        }
+
+        [HttpGet]
+        [Route("upload-romms-file/{requestErrorTypeId:int?}", Name = RouteConstants.UploadRommsFile)]
+        public IActionResult UploadRommsFile(int? requestErrorTypeId)
+        {
+            var model = new UploadRommsRequestViewModel { RequestErrorTypeId = requestErrorTypeId };
+            model.SetAnyModelErrors(ModelState);
+            return View(model);
+        }
+
+        [HttpPost]
+        [Route("upload-romms-file", Name = RouteConstants.SubmitUploadRommsFile)]
+        public async Task<IActionResult> UploadRommsFileAsync(UploadRommsRequestViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
+            viewModel.AoUkprn = User.GetUkPrn();
+            var response = await _postResultsServiceLoader.ProcessBulkRommsAsync(viewModel);
+
+            if (response.IsSuccess)
+            {
+                var successfulViewModel = new UploadSuccessfulViewModel { Stats = response.Stats };
+                await _cacheService.SetAsync(string.Concat(CacheKey, Constants.UploadSuccessfulViewModel), successfulViewModel, CacheExpiryTime.XSmall);
+
+                return RedirectToRoute(RouteConstants.RommsUploadSuccessful);
+            }
+            else
+            {
+                if (response.ShowProblemWithServicePage)
+                {
+                    return RedirectToRoute(RouteConstants.ProblemWithRommsUpload);
+                }
+                else
+                {
+                    var unsuccessfulViewModel = new UploadUnsuccessfulViewModel { BlobUniqueReference = response.BlobUniqueReference, FileSize = response.ErrorFileSize, FileType = FileType.Csv.ToString().ToUpperInvariant() };
+                    await _cacheService.SetAsync(string.Concat(CacheKey, Constants.UploadUnsuccessfulViewModel), unsuccessfulViewModel, CacheExpiryTime.XSmall);
+                    return RedirectToRoute(RouteConstants.RommsUploadUnsuccessful);
+                }
+            }
+        }
+
+        [HttpGet]
+        [Route("romms-upload-success", Name = RouteConstants.RommsUploadSuccessful)]
+        public async Task<IActionResult> UploadRommsSuccessful()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<UploadSuccessfulViewModel>(string.Concat(CacheKey, Constants.UploadSuccessfulViewModel));
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.UploadSuccessfulPageFailed,
+                    $"Unable to read upload successful romms response from temp data. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("romms-upload-unsuccessful", Name = RouteConstants.RommsUploadUnsuccessful)]
+        public async Task<IActionResult> UploadRommsUnsuccessful()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<UploadUnsuccessfulViewModel>(string.Concat(CacheKey, Constants.UploadUnsuccessfulViewModel));
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.UploadUnsuccessfulPageFailed,
+                    $"Unable to read upload unsuccessful romms response from temp data. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("download-romm-errors", Name = RouteConstants.DownloadRommErrors)]
+        public async Task<IActionResult> DownloadRommsErrors(string id)
+        {
+            if (id.IsGuid())
+            {
+                var fileStream = await _postResultsServiceLoader.GetRommValidationErrorsFileAsync(User.GetUkPrn(), id.ToGuid());
+                if (fileStream == null)
+                {
+                    _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download withdrawl validation errors. Method: GetRommValidationErrorsFileAsync(AoUkprn: {User.GetUkPrn()}, BlobUniqueReference = {id})");
+                    return RedirectToRoute(RouteConstants.PageNotFound);
+                }
+
+                fileStream.Position = 0;
+                return new FileStreamResult(fileStream, "text/csv")
+                {
+                    FileDownloadName = RommContent.UploadRommsUnsuccessful.Romms_Error_Report_File_Name_Text
+                };
+            }
+            else
+            {
+                _logger.LogWarning(LogEvent.DownloadRommErrorsFailed, $"Not a valid guid to read file.Method: DownloadRommErrors(Id = {id}), Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
+            }
+        }
+
+        private async Task<IActionResult> DownloadDataLinkAsync(string id, Func<Task<Stream>> getDataFile, string fileDownloadName, string methodName)
+        {
+            if (!id.IsGuid())
+            {
+                _logger.LogWarning(LogEvent.DocumentDownloadFailed, $"Not a valid guid to read file.Method: {methodName}(Id = {id}), Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
+            }
+
+            var fileStream = await getDataFile();
+            if (fileStream == null)
+            {
+                _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download registration data. Method: {methodName}(AoUkprn: {User.GetUkPrn()}, BlobUniqueReference = {id})");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            fileStream.Position = 0;
+            return new FileStreamResult(fileStream, "text/csv")
+            {
+                FileDownloadName = fileDownloadName
             };
         }
     }

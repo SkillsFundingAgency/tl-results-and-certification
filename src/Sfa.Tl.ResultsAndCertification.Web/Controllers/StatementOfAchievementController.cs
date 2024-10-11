@@ -55,7 +55,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("request-statement-of-achievement-unique-learner-number", Name = RouteConstants.RequestSoaUniqueLearnerNumber)]
         public async Task<IActionResult> RequestSoaUniqueLearnerNumberAsync()
         {
-            if (!IsSoaAvailable() || !await IsAddressAvailable())
+            if (!await IsAddressAvailable())
+                return RedirectToRoute(RouteConstants.PostalAddressMissing);
+
+            if (!IsSoaAvailable())
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             var viewModel = new RequestSoaUniqueLearnerNumberViewModel();
