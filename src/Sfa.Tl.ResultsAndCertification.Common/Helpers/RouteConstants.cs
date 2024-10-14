@@ -237,6 +237,8 @@
         public const string DownloadIndustryPlacementDataFormatAndRulesGuide = "DownloadIndustryPlacementDataFormatAndRulesGuide";
         public const string DownloadWithdrawalsDataFormatAndRulesGuide = "DownloadWithdrawalsDataFormatAndRulesGuide";
         public const string DownloadWithdrawalsDataTemplate = "DownloadWithdrawalsDataTemplate";
+        public const string DownloadRommDataFormatAndRulesGuide = "DownloadRommDataFormatAndRulesGuide";
+        public const string DownloadRommDataTemplate = "DownloadRommDataTemplate";
         public const string DownloadAssessmentEntriesTemplate = "DownloadAssessmentEntriesTemplate";
         public const string DownloadResultsTemplate = "DownloadResultsTemplate";
 
@@ -329,6 +331,7 @@
         #region Post Results Service
 
         public const string StartReviewsAndAppeals = "StartReviewsAndAppeals";
+        public const string ResultReviewsAndAppeals = "ResultReviewsAndAppeals";
         public const string PrsUlnWithdrawn = "PrsUlnWithdrawn";
         public const string PrsLearnerDetails = "PrsLearnerDetails";
         public const string PrsAddRomm = "PrsAddRomm";
@@ -363,6 +366,13 @@
         public const string SubmitPrsCancelGradeChangeRequest = "SubmitPrsCancelGradeChangeRequest";
         public const string PrsGradeChangeRequestConfirmation = "PrsGradeChangeRequestConfirmation";
         public const string SubmitPrsGradeChangeRequestConfirmation = "SubmitPrsGradeChangeRequestConfirmation";
+
+        public const string UploadRommsFile = "UploadRommsFile";
+        public const string SubmitUploadRommsFile = "SubmitUploadRommsFile";
+        public const string RommsUploadSuccessful = "RommsUploadSuccessful";
+        public const string RommsUploadUnsuccessful = "RommsUploadUnsuccessful";
+        public const string ProblemWithRommsUpload = "ProblemWithRommsUpload";
+        public const string DownloadRommErrors = "DownloadRommErrors";
 
         #endregion
 
@@ -412,6 +422,7 @@
         public const string SubmitAdminSearchLearnerRecordsApplyFilters = "SubmitAdminSearchLearnerRecordsApplyFilters";
         public const string SubmitAdminSearchLearnerClearFilters = "SubmitAdminSearchLearnerClearFilters";
         public const string AdminLearnerRecord = "AdminLearnerRecord";
+        public const string ChangeStartYearClear = "ChangeStartYearClear";
         public const string ChangeStartYear = "ChangeStartYear";
         public const string SubmitChangeStartYear = "SubmitChangeStartYear";
         public const string ReviewChangeStartYear = "ReviewChangeStartYear";

@@ -252,4 +252,10 @@
   <data name="Upload_Withdrawls_File" xml:space="preserve">
     <value>Upload multiple withdrawals</value>
   </data>
+  <data name="ResultReviewsAndAppeals" xml:space="preserve">
+    <value>Result reviews and appeals</value>
+  </data>
+  <data name="Upload_Romms_File" xml:space="preserve">
+    <value>Upload multiple romms</value>
+  </data>
 </root>

@@ -71,6 +71,42 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Open ROMM or add ROMM outcomes for learners by uploading a CSV file..
+        /// </summary>
+        public static string Card_Content_Open_Or_Add_Romm_Outcomes_By_Uploading_CSV_file {
+            get {
+                return ResourceManager.GetString("Card_Content_Open_Or_Add_Romm_Outcomes_By_Uploading_CSV_file", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Search for a learner who has requested a review..
+        /// </summary>
+        public static string Card_Content_Search_For_Learner_Who_Requested_Review {
+            get {
+                return ResourceManager.GetString("Card_Content_Search_For_Learner_Who_Requested_Review", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage a learner&apos;s RoMMs, appeals and outcomes.
+        /// </summary>
+        public static string Card_Heading_Manage_Learners_Romms_Appeals_And_Outcomes {
+            get {
+                return ResourceManager.GetString("Card_Heading_Manage_Learners_Romms_Appeals_And_Outcomes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload multiple ROMMs.
+        /// </summary>
+        public static string Card_Heading_Upload_Multiple_Romms {
+            get {
+                return ResourceManager.GetString("Card_Heading_Upload_Multiple_Romms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Before you start.
         /// </summary>
         public static string Heading_Before_You_Start {
@@ -80,7 +116,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Post-results reviews, appeals and grade changes.
+        ///   Looks up a localized string similar to In this section.
+        /// </summary>
+        public static string Heading_In_This_Section {
+            get {
+                return ResourceManager.GetString("Heading_In_This_Section", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Reviews, appeals and grade changes.
         /// </summary>
         public static string Heading_Prs_Review_Appeal_Grade_Change {
             get {
@@ -166,6 +211,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         public static string Para_Need_Information_For_Certificate {
             get {
                 return ResourceManager.GetString("Para_Need_Information_For_Certificate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tell us about any reviews of marking or moderations (RoMMs) or appeals and report their outcomes..
+        /// </summary>
+        public static string Para_Tell_Us_About_Reviews_Moderations_Appeals_And_Report_Outcomes {
+            get {
+                return ResourceManager.GetString("Para_Tell_Us_About_Reviews_Moderations_Appeals_And_Report_Outcomes", resourceCulture);
             }
         }
         

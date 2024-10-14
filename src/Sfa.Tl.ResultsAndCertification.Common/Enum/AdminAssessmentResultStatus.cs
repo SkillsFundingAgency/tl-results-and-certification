@@ -7,6 +7,7 @@
         OpenRommAllowed = 2,
         AddRommOutcomeAllowed = 3,
         OpenAppealAllowed = 4,
-        AddAppealOutcomeAllowed = 5
+        AddAppealOutcomeAllowed = 5,
+        Final = 6
     }
 }

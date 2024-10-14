@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver.AdminAssessmentResu
 
         private static TableButtonModel CreateTableButton(int registrationPathwayId, int assessmentId, ComponentType componentType, AdminAssessmentResultStatus status)
         {
-            if (componentType == ComponentType.NotSpecified || status == AdminAssessmentResultStatus.NotSpecified)
+            if (componentType == ComponentType.NotSpecified || status == AdminAssessmentResultStatus.NotSpecified || status == AdminAssessmentResultStatus.Final)
             {
                 return null;
             }

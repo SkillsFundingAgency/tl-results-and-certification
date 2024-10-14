@@ -4,10 +4,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -17,7 +14,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
     {
         public int PathwayId { get; set; }
         public IActionResult Result { get; private set; }
-        public AdminChangeStartYearViewModel AdminChangeStartYearViewModel;
         protected AdminChangeStartYearViewModel Mockresult = null;
 
         public override void Given()
@@ -38,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 LearnerRegistrationPathwayStatus = "Withdrawn"
             };
 
-            AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(PathwayId).Returns(Mockresult);
+            AdminDashboardLoader.GetAdminLearnerRecordChangeYearAsync(PathwayId).Returns(Mockresult);
         }
 
         public async override Task When()
@@ -46,11 +42,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             Result = await Controller.ChangeStartYearAsync(PathwayId);
         }
 
-
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            AdminDashboardLoader.Received(1).GetAdminLearnerRecordAsync<AdminChangeStartYearViewModel>(PathwayId);
+            AdminDashboardLoader.Received(1).GetAdminLearnerRecordChangeYearAsync(PathwayId);
         }
 
         [Fact]
@@ -85,7 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 
             // Provider
             model.SummaryProvider.Title.Should().Be(ChangeStartYear.Title_Provider_Text);
-            model.SummaryProvider.Value.Should().Be($"{Mockresult.ProviderName} ({Mockresult.ProviderUkprn.ToString()})");
+            model.SummaryProvider.Value.Should().Be($"{Mockresult.ProviderName} ({Mockresult.ProviderUkprn})");
 
             // TLevelTitle
             model.SummaryTlevel.Title.Should().Be(ChangeStartYear.Title_TLevel_Text);
@@ -102,9 +97,5 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             model.IsLearnerWithdrawn.Should().BeTrue();
             model.StartYearCannotChangeMessage.Should().Be(ChangeStartYear.Message_Start_Year_Cannot_Be_Changed_Learner_Has_Been_Withdrawn);
         }
-
-
-
-
     }
 }

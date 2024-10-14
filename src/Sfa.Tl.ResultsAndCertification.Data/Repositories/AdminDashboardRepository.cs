@@ -151,5 +151,21 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             List<AdminSearchLearnerDetail> learnerRecords = await learnerRecordsQueryable.ToListAsync();
             return new PagedResponse<AdminSearchLearnerDetail> { Records = learnerRecords, TotalRecords = totalCount, PagerInfo = pager };
         }
+
+        public async Task<IList<int>> GetAllowedChangeAcademicYearsAsync(Func<DateTime> getToday, int learnerAcademicYear, int pathwayStartYear)
+        {
+            DateTime today = getToday();
+
+            IQueryable<int> academicYearsQueryable = _dbContext.AcademicYear
+                                                                .Where(p => today >= p.StartDate
+                                                                    && p.Year >= pathwayStartYear
+                                                                    && p.Year >= learnerAcademicYear - 2
+                                                                    && p.Year <= learnerAcademicYear + 1
+                                                                    && p.Year != learnerAcademicYear)
+                                                                .OrderByDescending(p => p.Year)
+                                                                .Select(p => p.Year);
+
+            return await academicYearsQueryable.ToListAsync();
+        }
     }
 }
