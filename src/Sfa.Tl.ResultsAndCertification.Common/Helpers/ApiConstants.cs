@@ -120,6 +120,7 @@
 
         public const string GetDataExportUri = "/api/DataExport/GetDataExport/{0}/{1}/{2}";
         public const string DownloadOverallResultsDataUri = "/api/DataExport/DownloadOverallResultsData/{0}/{1}";
+        public const string DownloadOverallResultSlipsDataUri = "/api/DataExport/DownloadOverallResultSlipsData/{0}/{1}";
 
         // Industry Placement Upload
         public const string ProcessBulkIndustryPlacementsUri = "/api/industryplacement/ProcessBulkIndustryPlacements";

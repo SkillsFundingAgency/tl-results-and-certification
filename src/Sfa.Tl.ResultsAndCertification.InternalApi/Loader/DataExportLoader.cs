@@ -1,4 +1,5 @@
-﻿using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+﻿using Aspose.Pdf;
+using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
@@ -10,6 +11,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
 using Sfa.Tl.ResultsAndCertification.Models.DataExport;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -42,6 +44,29 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
         {
             var overallResults = await _overallResultCalculationService.DownloadOverallResultsDataAsync(providerUkprn);
             return await ProcessDataExportResponseAsync(overallResults, providerUkprn, DocumentType.OverallResults, DataExportType.NotSpecified, requestedBy, classMapType: typeof(DownloadOverallResultsExportMap), isEmptyFileAllowed: true);
+        }
+
+        public async Task<DataExportResponse> DownloadOverallResultSlipsDataAsync(long providerUkprn, string requestedBy)
+        {
+            var overallResults = await _overallResultCalculationService.DownloadOverallResultsDataAsync(providerUkprn);
+            return await ProcessResultSlipsDataExportResponse(overallResults, providerUkprn, DocumentType.ResultSlips, DataExportType.NotSpecified, requestedBy, classMapType: typeof(DownloadOverallResultsExportMap), isEmptyFileAllowed: true);
+        }
+
+        private async Task<DataExportResponse> ProcessResultSlipsDataExportResponse<T>(IList<T> data, long ukprn, DocumentType documentType, DataExportType requestType, string requestedBy, ComponentType componentType = ComponentType.NotSpecified, Type classMapType = null, bool isEmptyFileAllowed = false)
+        {
+            Document document = new Document();
+            Page page = document.Pages.Add();
+
+            page.Paragraphs.Add(new Aspose.Pdf.Text.TextFragment("Learner's result slip"));
+
+            MemoryStream m = new MemoryStream();
+
+            document.Save(m);
+            var byteData = m.ToArray();
+
+            return await WritePdfToBlobAsync(ukprn, documentType, requestType, requestedBy, byteData, componentType);
+
+
         }
 
         private async Task<IList<DataExportResponse>> ProcessRegistrationsRequestAsync(long aoUkprn, string requestedBy)
@@ -109,6 +134,32 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             var byteData = await CsvExtensions.WriteFileAsync(data, classMapType: classMapType);
             var response = await WriteCsvToBlobAsync(ukprn, documentType, requestType, requestedBy, byteData, componentType);
             return response;
+        }
+
+        private async Task<DataExportResponse> WritePdfToBlobAsync(long ukprn, DocumentType documentType, DataExportType requestType, string requestedBy, byte[] byteData, ComponentType componentType = ComponentType.NotSpecified)
+        {
+            // 3. Save to Blob
+            var sourceFilePath = documentType == DocumentType.ResultSlips ? $"{ukprn}" :
+                componentType == ComponentType.NotSpecified ? $"{ukprn}/{requestType}" : $"{ukprn}/{requestType}/{componentType}";
+
+            var blobUniqueReference = Guid.NewGuid();
+            await _blobStorageService.UploadFromByteArrayAsync(new BlobStorageData
+            {
+                ContainerName = documentType.ToString(),
+                SourceFilePath = sourceFilePath,
+                BlobFileName = $"{blobUniqueReference}.{FileType.Pdf}",
+                FileData = byteData,
+                UserName = requestedBy
+            });
+
+            // 4. Return response
+            return new DataExportResponse
+            {
+                FileSize = Math.Round((byteData.Length / 1024D), 2),
+                BlobUniqueReference = blobUniqueReference,
+                ComponentType = componentType,
+                IsDataFound = true
+            };
         }
 
         private async Task<DataExportResponse> WriteCsvToBlobAsync(long ukprn, DocumentType documentType, DataExportType requestType, string requestedBy, byte[] byteData, ComponentType componentType = ComponentType.NotSpecified)

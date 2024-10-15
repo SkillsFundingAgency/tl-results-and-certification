@@ -65,15 +65,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             };
         }
 
-
         [HttpGet]
         [Route("download-tlevel-result-slips-file", Name = RouteConstants.DownloadOverallResultSlipsFile)]
-        public async Task<IActionResult> DownloadOverallResultSlipsAsync()
+        public async Task<IActionResult> DownloadOverallResultSlipsFileAsync()
         {
-            var fileStream = await _downloadOverallResultsLoader.DownloadOverallResultSlipsAsync(User.GetUkPrn());
+            var fileStream = await _downloadOverallResultsLoader.DownloadOverallResultSlipsDataAsync(User.GetUkPrn(), User.GetUserEmail());
             if (fileStream == null)
             {
-                _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download overall result slips. Method: DownloadOverallResultsDataAsync({User.GetUkPrn()})");
+                _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download overall results. Method: DownloadOverallResultSlipsDataAsync({User.GetUkPrn()}, {User.GetUserEmail()})");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
@@ -83,5 +82,23 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 FileDownloadName = DownloadOverallResultContent.Download_ResultSlips_Filename
             };
         }
+
+        //[HttpGet]
+        //[Route("download-tlevel-result-slips-file", Name = RouteConstants.DownloadOverallResultSlipsFile)]
+        //public async Task<IActionResult> DownloadOverallResultSlipsAsync()
+        //{
+        //    var fileStream = await _downloadOverallResultsLoader.DownloadOverallResultSlipsAsync(User.GetUkPrn());
+        //    if (fileStream == null)
+        //    {
+        //        _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download overall result slips. Method: DownloadOverallResultsDataAsync({User.GetUkPrn()})");
+        //        return RedirectToRoute(RouteConstants.PageNotFound);
+        //    }
+
+        //    fileStream.Position = 0;
+        //    return new FileStreamResult(fileStream, "application/pdf")
+        //    {
+        //        FileDownloadName = DownloadOverallResultContent.Download_ResultSlips_Filename
+        //    };
+        //}
     }
 }
