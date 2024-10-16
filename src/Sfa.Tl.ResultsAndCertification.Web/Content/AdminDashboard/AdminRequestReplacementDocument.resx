@@ -117,172 +117,79 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Action_Button_Add_Outcome" xml:space="preserve">
-    <value>Add outcome</value>
+  <data name="Button_Accept_And_Request" xml:space="preserve">
+    <value>Accept and request</value>
   </data>
-  <data name="Action_Button_Open_Appeal" xml:space="preserve">
-    <value>Open appeal</value>
+  <data name="Button_Cancel" xml:space="preserve">
+    <value>Cancel</value>
   </data>
-  <data name="Action_Button_Open_Romm" xml:space="preserve">
-    <value>Open ROMM</value>
+  <data name="By_Submitting_Request_You_Are_Confirming" xml:space="preserve">
+    <value>By submitting this request you are confirming that, to the best of your knowledge, the details you are providing are correct.</value>
   </data>
-  <data name="Action_Button_Remove_Entry" xml:space="preserve">
-    <value>Remove entry</value>
+  <data name="Caption_Request_Replacement_Document" xml:space="preserve">
+    <value>Request replacement document</value>
   </data>
-  <data name="Action_Button_Request_Change" xml:space="preserve">
-    <value>Request change</value>
+  <data name="Document_Certificate" xml:space="preserve">
+    <value>Certificate</value>
   </data>
-  <data name="Action_Text_Link_Add" xml:space="preserve">
-    <value>Add</value>
+  <data name="Document_Statement_Of_Achievement" xml:space="preserve">
+    <value>Statement of Achievement</value>
   </data>
-  <data name="Action_Text_Link_Change" xml:space="preserve">
-    <value>Change</value>
+  <data name="Heading_Check_Details_Before_Sending" xml:space="preserve">
+    <value>Check the learner's details before sending your request</value>
   </data>
-  <data name="Add_An_Assessment_Entry_For" xml:space="preserve">
-    <value>Add an assessment entry for {0}</value>
+  <data name="List_Item_English_Maths_Achievements" xml:space="preserve">
+    <value>English and maths achievements</value>
   </data>
-  <data name="Add_Result_Action_Link_Text" xml:space="preserve">
-    <value>Add result</value>
+  <data name="List_Item_Grades" xml:space="preserve">
+    <value>grades</value>
   </data>
-  <data name="Add_Result_To_Learners_Previous_Assessment" xml:space="preserve">
-    <value>add a result to this learner's previous assessment</value>
+  <data name="List_Item_Industry_Placement_Status" xml:space="preserve">
+    <value>industry placement status</value>
   </data>
-  <data name="Back_To_Home_Text" xml:space="preserve">
-    <value>&lt; Back to home</value>
-  </data>
-  <data name="Before_Entering_New_Assessment_Details" xml:space="preserve">
-    <value>before entering new assessment details.</value>
-  </data>
-  <data name="Button_Remove_Entry_Action" xml:space="preserve">
-    <value>Remove entry</value>
-  </data>
-  <data name="Button_Remove_Open_Romm_Action" xml:space="preserve">
-    <value>Open ROMM</value>
-  </data>
-  <data name="Change_Result_Action_Link_Text" xml:space="preserve">
-    <value>Change result</value>
-  </data>
-  <data name="Core_Heading_Text" xml:space="preserve">
-    <value>Core component: {0}</value>
-  </data>
-  <data name="Hidden_Action_Text_English" xml:space="preserve">
-    <value> english status</value>
-  </data>
-  <data name="Hidden_Action_Text_Industry_Placement" xml:space="preserve">
-    <value> industry placement information</value>
-  </data>
-  <data name="Hidden_Action_Text_Maths" xml:space="preserve">
-    <value> maths status</value>
-  </data>
-  <data name="Link_Add_An_Occupational_Specialism" xml:space="preserve">
-    <value>Add an occupational specialism to this learner's record</value>
-  </data>
-  <data name="Change_Year_Notification_Success" xml:space="preserve">
-    <value>Start year updated</value>
-  </data>
-  <data name="No_Assessment_Entries_Have_Been_Recorded" xml:space="preserve">
-    <value>No assessment entries have yet been recorded.</value>
-  </data>
-  <data name="Occupational_Specialism_Heading" xml:space="preserve">
-    <value>Occupational specialism</value>
+  <data name="Now_Send_Your_Request" xml:space="preserve">
+    <value>Now send your request</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value> - Learner record – Admin</value>
+    <value>Request a replacement document</value>
   </data>
-  <data name="Personal_Details_Text" xml:space="preserve">
-    <value>Personal details</value>
+  <data name="Para_Check_Data_Before_Submit" xml:space="preserve">
+    <value>Check this data is correct or make any changes before submitting your request.</value>
   </data>
-  <data name="Search_Again_Text" xml:space="preserve">
-    <value>Search again</value>
+  <data name="Para_Request_If_Lost_Or_Damaged" xml:space="preserve">
+    <value>Request a replacement document if it has been lost or damaged.</value>
   </data>
-  <data name="Section_Heading_Core_Component" xml:space="preserve">
-    <value>Core component</value>
+  <data name="Para_This_Means_Result_May_Not_Match" xml:space="preserve">
+    <value>This means that the results in the document may not match the results shown in the learner’s record.</value>
   </data>
-  <data name="Section_Heading_Industry_Placement" xml:space="preserve">
-    <value>Industry placement</value>
+  <data name="Para_Updated_Document_Sent_If_Any_Component_Changes" xml:space="preserve">
+    <value>If any components have changed within this learner’s record, you will automatically be sent an updated document within the next two months.</value>
   </data>
-  <data name="Section_Heading_Level2_Maths_English" xml:space="preserve">
-    <value>Level 2 maths and English</value>
+  <data name="Para_You_Receive_Previous_Certificate_Or_Soa" xml:space="preserve">
+    <value>The document you will receive will be a copy of the previous certificate or statement of achievement. It may not reflect any changes to:</value>
   </data>
-  <data name="Section_Heading_OccupationalSpecialism" xml:space="preserve">
-    <value>Occupational specialism(s)</value>
+  <data name="Postal_Address" xml:space="preserve">
+    <value>Postal address</value>
   </data>
-  <data name="Section_Heading_Overall_Result_Tlevel" xml:space="preserve">
-    <value>Overall T Level result</value>
+  <data name="Success_Header_Replacement_Document_Requested" xml:space="preserve">
+    <value>A replacement document has been requested</value>
   </data>
-  <data name="Specialism_Heading_Text" xml:space="preserve">
-    <value>Occupational specialism: {0}</value>
+  <data name="Success_Message_Replacement_Documents" xml:space="preserve">
+    <value>&lt;p class="govuk-body"&gt;Replacement documents can take up to 3 weeks to arrive.  If you have not received the learner’s document within 3 weeks, please &lt;a class="govuk-notification-banner__link" href="/contact-us"&gt;contact us&lt;/a&gt;.&lt;/p&gt;</value>
   </data>
-  <data name="Start_Year_Value" xml:space="preserve">
-    <value>{0} to {1}</value>
+  <data name="Title_Department" xml:space="preserve">
+    <value>Department</value>
   </data>
-  <data name="Status_Tag_Incomplete" xml:space="preserve">
-    <value>Record Incomplete</value>
+  <data name="Title_Document_Requested" xml:space="preserve">
+    <value>Document requested</value>
   </data>
-  <data name="Status_Tag_Record_Complete" xml:space="preserve">
-    <value>Record Complete</value>
-  </data>
-  <data name="Table_Column_Action" xml:space="preserve">
-    <value>Action</value>
-  </data>
-  <data name="Table_Column_Exam_Period" xml:space="preserve">
-    <value>Exam period</value>
-  </data>
-  <data name="Table_Column_Grade" xml:space="preserve">
-    <value>Grade</value>
-  </data>
-  <data name="Table_Column_Last_Updated" xml:space="preserve">
-    <value>Last updated</value>
-  </data>
-  <data name="Table_Column_Updated_By" xml:space="preserve">
-    <value>Updated by</value>
-  </data>
-  <data name="This_Learner_Does_Not_Have_Occupational_Specialism_Recorded" xml:space="preserve">
-    <value>This learner does not have an occupational specialism recorded on this service.</value>
-  </data>
-  <data name="Title_AoName_Text" xml:space="preserve">
-    <value>Awarding organisation</value>
-  </data>
-  <data name="Title_DateofBirth_Text" xml:space="preserve">
-    <value>Date of birth</value>
-  </data>
-  <data name="Title_English_Text" xml:space="preserve">
-    <value>English</value>
-  </data>
-  <data name="Title_IP_Status_Text" xml:space="preserve">
-    <value>Status</value>
-  </data>
-  <data name="Title_Maths_Text" xml:space="preserve">
-    <value>Maths</value>
+  <data name="Title_Organisation_Address" xml:space="preserve">
+    <value>Organisation's address</value>
   </data>
   <data name="Title_Provider_Ukprn_Name_Text" xml:space="preserve">
     <value>Provider (UKPRN)</value>
   </data>
-  <data name="Title_StartYear_Text" xml:space="preserve">
-    <value>Start year</value>
-  </data>
-  <data name="Title_TLevel_Status_Text" xml:space="preserve">
-    <value>T Level status</value>
-  </data>
-  <data name="Title_TLevel_Text" xml:space="preserve">
-    <value>T Level</value>
-  </data>
-  <data name="TLevel_Status_Pending_Withdrawal_Text" xml:space="preserve">
-    <value>Pending Withdrawal</value>
-  </data>
   <data name="Uln_Text" xml:space="preserve">
-    <value>ULN </value>
-  </data>
-  <data name="Section_Heading_TLevel_Overall_Result" xml:space="preserve">
-    <value>Overall T Level Result</value>
-  </data>
-  <data name="Title_Result" xml:space="preserve">
-    <value>Result</value>
-  </data>
-  <data name="Label_Overall_Result_Not_Calculated" xml:space="preserve">
-    <value>Result not calculated</value>
-  </data>
-  <data name="Button_Request_Replacement_Document" xml:space="preserve">
-    <value>Request replacement document</value>
+    <value>ULN:</value>
   </data>
 </root>

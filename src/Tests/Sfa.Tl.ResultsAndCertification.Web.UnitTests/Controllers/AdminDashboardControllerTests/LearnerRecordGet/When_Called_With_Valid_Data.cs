@@ -44,7 +44,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             };
 
             AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminLearnerRecordViewModel>(RegistrationPathwayId).Returns(_loaderResult);
-            ResultsAndCertificationConfiguration.DocumentRerequestInDays = 21;
         }
 
         public async override Task When()

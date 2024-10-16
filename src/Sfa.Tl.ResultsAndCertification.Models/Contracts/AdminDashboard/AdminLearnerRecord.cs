@@ -1,5 +1,6 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
@@ -32,5 +33,13 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
         public AwardingOrganisation AwardingOrganisation { get; set; }
 
         public string OverallResult { get; set; }
+
+        public int? PrintCertificateId { get; set; }
+
+        public PrintCertificateType? PrintCertificateType { get; set; }
+
+        public DateTime? LastPrintCertificateRequestedDate { get; set; }
+
+        public Address ProviderAddress { get; set; }
     }
 }
