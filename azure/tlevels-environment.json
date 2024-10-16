@@ -549,10 +549,6 @@
                 "value": "[reference(concat('app-insights','-',parameters('environmentNameAbbreviation'))).outputs.InstrumentationKey.value]"
               },
               {
-                "name": "BlobStorageConnectionString",
-                "value": "[reference(concat('storage-account','-',parameters('environmentNameAbbreviation'))).outputs.storageConnectionStringKey2.value]"
-              },
-              {
                 "name": "AzureWebJobsStorage",
                 "value": "[reference(concat('storage-account','-',parameters('environmentNameAbbreviation'))).outputs.storageConnectionStringKey2.value]"
               },
@@ -983,10 +979,6 @@
     "functionAppName": {
       "type": "string",
       "value": "[variables('functionAppName')]"
-    },
-    "BlobStorageConnectionString": {
-      "type": "string",
-      "value": "[reference(concat('storage-account','-', parameters('environmentNameAbbreviation'))).outputs.storageConnectionStringKey2.value]"
     },
     "internalApiManagedServiceIdentityId": {
       "type": "string",
