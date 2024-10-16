@@ -209,7 +209,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSingleton<IWebConfigurationService, WebConfigurationService>();
             services.AddTransient<IBlobStorageService, BlobStorageService>();
-            services.AddTransient<IBlobContainerClientFactory, BlobContainerClientFactory>();
+            services.AddTransient<IBlobClientFactory, BlobClientFactory>();
             services.AddTransient<ITlevelLoader, TlevelLoader>();
             services.AddTransient<IProviderLoader, ProviderLoader>();
             services.AddTransient<IRegistrationLoader, RegistrationLoader>();
