@@ -6,16 +6,25 @@ using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Service
 {
-    public class BlobContainerClientFactory : IBlobContainerClientFactory
+    public class BlobClientFactory : IBlobClientFactory
     {
         private readonly string _blobContainerUriTemplate;
 
-        public BlobContainerClientFactory(ResultsAndCertificationConfiguration config)
+        public BlobClientFactory(ResultsAndCertificationConfiguration config)
         {
             _blobContainerUriTemplate = config.BlobContainerUriTemplate;
         }
 
-        public BlobContainerClient Create(string containerName)
+        public BlobClient Create(string containerName, string filePath, string fileName)
+            => Create(containerName, $"{filePath}/{fileName}");
+
+        public BlobClient Create(string containerName, string blobName)
+        {
+            BlobContainerClient blobContainerClient = CreateBlobContainerClient(containerName);
+            return blobContainerClient.GetBlobClient(blobName.ToLowerInvariant());
+        }
+
+        private BlobContainerClient CreateBlobContainerClient(string containerName)
         {
             var blobContainerUri = new Uri(string.Format(_blobContainerUriTemplate, containerName.ToLowerInvariant()));
 

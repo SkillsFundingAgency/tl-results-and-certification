@@ -20,12 +20,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
 
         private static BlobClient GetBlobClient(ResultsAndCertificationConfiguration config)
         {
-            var factory = new BlobContainerClientFactory(config);
-            
-            BlobContainerClient blobContainerClient = factory.Create(config.DataProtectionSettings.ContainerName);
-            BlobClient blobClient = blobContainerClient.GetBlobClient(config.DataProtectionSettings.BlobName?.ToLowerInvariant());
+            DataProtectionSettings settings = config.DataProtectionSettings;
 
-            return blobClient;
+            var factory = new BlobClientFactory(config);
+            return factory.Create(settings.ContainerName, settings.BlobName);
         }
     }
 }

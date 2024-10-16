@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddApplicationInsightsTelemetry();
             services.AddControllers();
             services.AddSwaggerGen();
-            
+
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 //options.SuppressModelStateInvalidFilter = true;
@@ -146,7 +146,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
         {
             // Repositories
             services.AddTransient<IBlobStorageService, BlobStorageService>();
-            services.AddTransient<IBlobContainerClientFactory, BlobContainerClientFactory>();
+            services.AddTransient<IBlobClientFactory, BlobClientFactory>();
             services.AddTransient<IProviderRepository, ProviderRepository>();
             services.AddTransient<IRegistrationRepository, RegistrationRepository>();
             services.AddTransient<IAssessmentRepository, AssessmentRepository>();
