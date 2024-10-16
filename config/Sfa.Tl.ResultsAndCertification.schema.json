@@ -13,10 +13,6 @@
       "type": "string",
       "environmentVariable": "IntTestSqlConnectionString"
     },
-    "BlobStorageConnectionString": {
-      "type": "string",
-      "environmentVariable": "BlobStorageConnectionString"
-    },
     "BlobContainerUriTemplate": {
       "type": "string",
       "environmentVariable": "BlobContainerUriTemplate"
@@ -552,7 +548,6 @@
   "required": [
     "SqlConnectionString",
     "IntTestSqlConnectionString",
-    "BlobStorageConnectionString",
     "BlobContainerUriTemplate",
     "GovUkNotifyApiKey",
     "TlevelQueriedSupportEmailAddress",
