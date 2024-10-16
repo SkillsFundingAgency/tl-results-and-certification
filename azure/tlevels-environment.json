@@ -805,7 +805,7 @@
         }
       }
     },
-        {
+    {
       "apiVersion": "2022-09-01",
       "name": "[concat('ui-app-service-role-assignment-storage-account','-', parameters('environmentNameAbbreviation'))]",
       "type": "Microsoft.Resources/deployments",
@@ -847,6 +847,30 @@
           },
           "resourceName": {
             "value": "[variables('storageAccountName')]"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2022-09-01",
+      "name": "[concat('ui-app-service-role-assignment-config-storage-account','-', parameters('environmentNameAbbreviation'))]",
+      "resourceGroup": "[parameters('sharedEnvResourceGroup')]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'),'/role-assignments/role-assignment-storage-account.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "principalId": {
+            "value": "[reference(concat('ui-app-service','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]"
+          },
+          "assignmentType": {
+            "value": "StorageTableDataReader"
+          },
+          "resourceName": {
+            "value": "[parameters('configStorageAccountName')]"
           }
         }
       }
@@ -975,7 +999,7 @@
       "type": "string",
       "value": "[reference(concat('function-app','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]"
     },
-        "uiAppServiceManagedServiceIdentityId": {
+    "uiAppServiceManagedServiceIdentityId": {
       "type": "string",
       "value": "[reference(concat('ui-app-service','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]"
     }
