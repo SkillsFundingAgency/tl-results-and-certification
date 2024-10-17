@@ -42,6 +42,7 @@ using Sfa.Tl.ResultsAndCertification.Models.IndustryPlacement.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.PostResultsService.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Result.BulkProcess;
+using System.Configuration;
 using System.Linq;
 using System.Reflection;
 
@@ -62,11 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            ResultsAndCertificationConfiguration = ConfigurationLoader.Load(
-               Configuration[Constants.EnvironmentNameConfigKey],
-               Configuration[Constants.ConfigurationStorageConnectionStringConfigKey],
-               Configuration[Constants.VersionConfigKey],
-               Configuration[Constants.ServiceNameConfigKey]);
+            ResultsAndCertificationConfiguration = ConfigurationLoader.Load(Configuration);
 
             services.AddApplicationInsightsTelemetry();
             services.AddControllers();
@@ -74,7 +71,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
 
             services.Configure<ApiBehaviorOptions>(options =>
             {
-                //options.SuppressModelStateInvalidFilter = true;
                 options.InvalidModelStateResponseFactory = actionContext =>
                 {
                     return new BadRequestObjectResult(new BadRequestResponse(actionContext.ModelState));

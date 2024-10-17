@@ -32,7 +32,7 @@
     "sqlserverlessAutoPauseDelay": {
       "type": "string"
     },
-    "configurationStorageConnectionString": {
+    "tableServiceUri": {
       "type": "securestring"
     },
     "uiCustomHostName": {
@@ -302,8 +302,8 @@
                 "value": "[toUpper(parameters('environmentNameAbbreviation'))]"
               },
               {
-                "name": "ConfigurationStorageConnectionString",
-                "value": "[parameters('configurationStorageConnectionString')]"
+                "name": "TableServiceUri",
+                "value": "[parameters('tableServiceUri')]"
               },
               {
                 "name": "Version",
@@ -412,8 +412,8 @@
                 "value": "[toUpper(parameters('environmentNameAbbreviation'))]"
               },
               {
-                "name": "ConfigurationStorageConnectionString",
-                "value": "[parameters('configurationStorageConnectionString')]"
+                "name": "TableServiceUri",
+                "value": "[parameters('tableServiceUri')]"
               },
               {
                 "name": "Version",
@@ -520,8 +520,8 @@
                 "value": "[toUpper(parameters('environmentNameAbbreviation'))]"
               },
               {
-                "name": "ConfigurationStorageConnectionString",
-                "value": "[parameters('configurationStorageConnectionString')]"
+                "name": "TableServiceUri",
+                "value": "[parameters('tableServiceUri')]"
               },
               {
                 "name": "Version",

@@ -11,7 +11,6 @@ using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
-using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Service;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
@@ -48,12 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            ResultsAndCertificationConfiguration = ConfigurationLoader.Load(
-               _config[Constants.EnvironmentNameConfigKey],
-               _config[Constants.ConfigurationStorageConnectionStringConfigKey],
-               _config[Constants.VersionConfigKey],
-               _config[Constants.ServiceNameConfigKey]);
-
+            ResultsAndCertificationConfiguration = ConfigurationLoader.Load(_config);
             ResultsAndCertificationConfiguration.IsDevevelopment = _env.IsDevelopment();
             ResultsAndCertificationConfiguration.BypassDfeSignIn = false;
 
