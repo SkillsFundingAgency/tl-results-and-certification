@@ -21,11 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.Configuration
                 configuration = new ConfigurationBuilder().AddJsonFile("appsettings.local.json").Build();
             }
 
-            ResultsAndCertificationConfiguration = ConfigurationLoader.Load(
-               configuration[Constants.EnvironmentNameConfigKey],
-               configuration[Constants.ConfigurationStorageConnectionStringConfigKey],
-               configuration[Constants.VersionConfigKey],
-               configuration[Constants.ServiceNameConfigKey]);
+            ResultsAndCertificationConfiguration = ConfigurationLoader.Load(configuration);
         }
 
         public static ResultsAndCertificationDbContext CreateInMemoryDbContext()
