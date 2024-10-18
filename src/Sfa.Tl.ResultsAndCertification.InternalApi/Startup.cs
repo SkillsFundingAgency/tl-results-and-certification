@@ -42,7 +42,6 @@ using Sfa.Tl.ResultsAndCertification.Models.IndustryPlacement.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.PostResultsService.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using Sfa.Tl.ResultsAndCertification.Models.Result.BulkProcess;
-using System.Configuration;
 using System.Linq;
 using System.Reflection;
 
@@ -63,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            ResultsAndCertificationConfiguration = ConfigurationLoader.Load(Configuration);
+            ResultsAndCertificationConfiguration = LoadConfiguration();
 
             services.AddApplicationInsightsTelemetry();
             services.AddControllers();
@@ -142,7 +141,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
         {
             // Repositories
             services.AddTransient<IBlobStorageService, BlobStorageService>();
-            services.AddTransient<IBlobClientFactory, BlobClientFactory>();
+            services.AddTransient<IBlobClientFactory>(s => new BlobClientFactory(ResultsAndCertificationConfiguration.BlobContainerUriTemplate, _env.IsDevelopment()));
             services.AddTransient<IProviderRepository, ProviderRepository>();
             services.AddTransient<IRegistrationRepository, RegistrationRepository>();
             services.AddTransient<IAssessmentRepository, AssessmentRepository>();
@@ -242,6 +241,17 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             // Certificate Printing Service
             services.AddTransient<ICertificateService, CertificateService>();
             services.AddTransient<ICertificateRepository, CertificateRepository>();
+        }
+
+        private ResultsAndCertificationConfiguration LoadConfiguration()
+        {
+            string tableServiceUri = Configuration[Constants.TableServiceUriConfigKey];
+            IConfigurationLoader configurationLoader = ConfigurationLoaderFactory.GetConfigurationLoader(tableServiceUri, _env.IsDevelopment());
+
+            return configurationLoader.Load(
+                Configuration[Constants.EnvironmentNameConfigKey],
+                Configuration[Constants.VersionConfigKey],
+                Configuration[Constants.ServiceNameConfigKey]);
         }
     }
 }
