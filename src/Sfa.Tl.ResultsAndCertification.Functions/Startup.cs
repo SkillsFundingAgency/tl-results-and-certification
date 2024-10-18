@@ -2,6 +2,7 @@
 using Lrs.PersonalLearningRecordService.Api.Client;
 using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Notify.Client;
 using Notify.Interfaces;
@@ -38,12 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
         public override void Configure(IFunctionsHostBuilder builder)
         {
-            _configuration = ConfigurationLoader.Load(
-               Environment.GetEnvironmentVariable(Constants.EnvironmentNameConfigKey),
-               Environment.GetEnvironmentVariable(Constants.TableServiceUriConfigKey),
-               Environment.GetEnvironmentVariable(Constants.VersionConfigKey)
-               ?? Environment.GetEnvironmentVariable(Constants.ServiceVersionConfigKey), // Need ServiceVersion rather than Version in local with .Net 6
-               Environment.GetEnvironmentVariable(Constants.ServiceNameConfigKey));
+            _configuration = LoadConfiguration();
 
             RegisterDependencies(builder.Services);
         }
@@ -143,6 +139,17 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddHttpClient<IUcasApiClient, UcasApiClient>();
             services.AddTransient<IUcasRecordSegment<UcasRecordEntriesSegment>, UcasRecordEntriesSegment>();
             services.AddTransient<IUcasRecordSegment<UcasRecordResultsSegment>, UcasRecordResultsSegment>();
+        }
+
+        private static ResultsAndCertificationConfiguration LoadConfiguration()
+        {
+            string tableServiceUri = Environment.GetEnvironmentVariable(Constants.TableServiceUriConfigKey);
+            IConfigurationLoader configurationLoader = ConfigurationLoaderFactory.GetConfigurationLoader(tableServiceUri, isDevelopment: true);
+
+            return configurationLoader.Load(
+                 Environment.GetEnvironmentVariable(Constants.EnvironmentNameConfigKey),
+                 Environment.GetEnvironmentVariable(Constants.ServiceVersionConfigKey), // Need ServiceVersion rather than Version in local with .Net 6
+                 Environment.GetEnvironmentVariable(Constants.ServiceNameConfigKey));
         }
     }
 }

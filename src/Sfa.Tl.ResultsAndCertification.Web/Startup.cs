@@ -11,6 +11,7 @@ using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Service;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
@@ -47,9 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            ResultsAndCertificationConfiguration = ConfigurationLoader.Load(_config);
-            ResultsAndCertificationConfiguration.IsDevevelopment = _env.IsDevelopment();
-            ResultsAndCertificationConfiguration.BypassDfeSignIn = false;
+            ResultsAndCertificationConfiguration = LoadConfiguration();
 
             services.AddApplicationInsightsTelemetry();
 
@@ -148,7 +147,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                         || p.User.HasLoginUserTypeClaimAndRole(LoginUserType.Admin, RolesExtensions.AdminDashboardAccess)));
             });
 
-            services.AddWebDataProtection(ResultsAndCertificationConfiguration);
+            services.AddWebDataProtection(ResultsAndCertificationConfiguration, _env);
             RegisterDependencies(services);
         }
 
@@ -203,7 +202,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSingleton<IWebConfigurationService, WebConfigurationService>();
             services.AddTransient<IBlobStorageService, BlobStorageService>();
-            services.AddTransient<IBlobClientFactory, BlobClientFactory>();
+            services.AddTransient<IBlobClientFactory>(s => new BlobClientFactory(ResultsAndCertificationConfiguration.BlobContainerUriTemplate, _env.IsDevelopment()));
             services.AddTransient<ITlevelLoader, TlevelLoader>();
             services.AddTransient<IProviderLoader, ProviderLoader>();
             services.AddTransient<IRegistrationLoader, RegistrationLoader>();
@@ -224,6 +223,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             services.AddTransient<ISearchRegistrationLoader, SearchRegistrationLoader>();
             services.AddTransient<IProviderRegistrationsLoader, ProviderRegistrationsLoader>();
             services.AddTransient<IAssessmentSeriesLoader, AssessmentSeriesLoader>();
+        }
+
+        private ResultsAndCertificationConfiguration LoadConfiguration()
+        {
+            string tableServiceUri = _config[Constants.TableServiceUriConfigKey];
+            IConfigurationLoader configurationLoader = ConfigurationLoaderFactory.GetConfigurationLoader(tableServiceUri, _env.IsDevelopment());
+
+            ResultsAndCertificationConfiguration configuration = configurationLoader.Load(
+                _config[Constants.EnvironmentNameConfigKey],
+                _config[Constants.VersionConfigKey],
+                _config[Constants.ServiceNameConfigKey]);
+
+            configuration.IsDevevelopment = _env.IsDevelopment();
+            configuration.BypassDfeSignIn = false;
+
+            return configuration;
         }
     }
 }
