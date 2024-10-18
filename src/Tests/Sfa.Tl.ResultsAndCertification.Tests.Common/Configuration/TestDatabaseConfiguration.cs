@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.Configuration
                 configuration = new ConfigurationBuilder().AddJsonFile("appsettings.local.json").Build();
             }
 
-            ResultsAndCertificationConfiguration = ConfigurationLoader.Load(configuration);
+            ResultsAndCertificationConfiguration = LoadConfiguration(configuration);
         }
 
         public static ResultsAndCertificationDbContext CreateInMemoryDbContext()
@@ -46,6 +46,17 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.Configuration
         public static string GetConnectionString()
         {
             return ResultsAndCertificationConfiguration.IntTestSqlConnectionString;
+        }
+
+        private static ResultsAndCertificationConfiguration LoadConfiguration(IConfiguration configuration)
+        {
+            string tableServiceUri = configuration[Constants.TableServiceUriConfigKey];
+            IConfigurationLoader configurationLoader = ConfigurationLoaderFactory.GetConfigurationLoader(tableServiceUri, isDevelopment: true);
+
+            return configurationLoader.Load(
+                 configuration[Constants.EnvironmentNameConfigKey],
+                 configuration[Constants.VersionConfigKey],
+                 configuration[Constants.ServiceNameConfigKey]);
         }
     }
 }
