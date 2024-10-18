@@ -35,9 +35,6 @@
 	"configurationStorageConnectionString": {
       "type": "securestring"
     },
-    "tableServiceUri": {
-      "type": "securestring"
-    },
     "uiCustomHostName": {
       "type": "string"
     },
@@ -139,6 +136,9 @@
     },
     "ipSecurityRestrictions": {
       "type": "array"
+    },
+	"tableServiceUri": {
+      "type": "string"
     }
   },
   "variables": {
