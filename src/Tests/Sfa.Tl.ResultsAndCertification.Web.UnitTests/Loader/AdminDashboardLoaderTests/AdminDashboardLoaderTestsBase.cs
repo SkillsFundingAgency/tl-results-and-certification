@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
@@ -11,6 +12,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result;
 using System;
@@ -29,10 +31,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
             ApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();
             var mapper = CreateMapper();
 
-            Loader = new AdminDashboardLoader(ApiClient, mapper);
+            var config = new ResultsAndCertificationConfiguration
+            {
+                DocumentRerequestInDays = 21,
+            };
+
+            Loader = new AdminDashboardLoader(ApiClient, mapper, config);
         }
 
-        private AutoMapper.Mapper CreateMapper()
+        private static AutoMapper.Mapper CreateMapper()
         {
             string Givenname = "test";
             string Surname = "user";
@@ -71,6 +78,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
                            else if (type.Equals(typeof(UserNameResolver<AdminAddSpecialismResultReviewChangesViewModel, AddSpecialismResultRequest>)))
                            {
                                return new UserNameResolver<AdminAddSpecialismResultReviewChangesViewModel, AddSpecialismResultRequest>(httpContextAccessor);
+                           }
+                           else if (type.Equals(typeof(UserNameResolver<AdminReviewChangesSpecialismAssessmentViewModel, ReviewAddSpecialismAssessmentRequest>)))
+                           {
+                               return new UserNameResolver<AdminReviewChangesSpecialismAssessmentViewModel, ReviewAddSpecialismAssessmentRequest>(httpContextAccessor);
+                           }
+                           else if (type.Equals(typeof(UserNameResolver<AdminReviewChangesCoreAssessmentViewModel, ReviewAddCoreAssessmentRequest>)))
+                           {
+                               return new UserNameResolver<AdminReviewChangesCoreAssessmentViewModel, ReviewAddCoreAssessmentRequest>(httpContextAccessor);
                            }
                            else
                            {

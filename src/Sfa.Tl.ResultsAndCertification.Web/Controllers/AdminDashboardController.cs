@@ -6,7 +6,9 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.InformationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
@@ -34,6 +36,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private readonly ICacheService _cacheService;
         private readonly ILogger _logger;
 
+        private readonly int _documentRerequestInDays;
+
         private string CacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.AdminDashboardCacheKey); } }
         private string InformationCacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.AdminDashboardInformationCacheKey); } }
 
@@ -42,13 +46,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             IProviderLoader providerLoader,
             IIndustryPlacementLoader industryPlacementLoader,
             ICacheService cacheService,
-            ILogger<AdminDashboardController> logger)
+            ILogger<AdminDashboardController> logger,
+            ResultsAndCertificationConfiguration config)
         {
             _loader = loader;
             _providerLoader = providerLoader;
             _industryPlacementLoader = industryPlacementLoader;
             _cacheService = cacheService;
             _logger = logger;
+
+            _documentRerequestInDays = config.DocumentRerequestInDays;
         }
 
         [HttpGet]
@@ -520,8 +527,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         }
 
-
-
         [HttpPost]
         [Route("admin/submit-add-assessment-entry-specialism", Name = RouteConstants.SubmitOccupationalSpecialisAssessmentEntry)]
         public async Task<IActionResult> AdminOccupationalSpecialismAssessmentEntry(AdminOccupationalSpecialismViewModel model)
@@ -552,7 +557,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             await _cacheService.SetAsync<AdminReviewChangesCoreAssessmentViewModel>(CacheKey, viewModel);
             return View(viewModel);
         }
-
 
         [HttpPost]
         [Route("admin/submit-review-changes-assessment-entry-core", Name = RouteConstants.SubmitReviewChangesCoreAssessmentEntry)]
@@ -624,7 +628,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         }
 
-
         [HttpGet]
         [Route("admin/add-assessment-core-entry-clear/{registrationPathwayId}", Name = RouteConstants.AdminCoreComponentAssessmentEntryClear)]
         public async Task<IActionResult> AdminCoreComponentAssessmentEntryClearAsync(int registrationPathwayId)
@@ -640,7 +643,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             await _cacheService.RemoveAsync<AdminOccupationalSpecialismViewModel>(CacheKey);
             return RedirectToRoute(RouteConstants.AdminOccupationalSpecialisAssessmentEntry, new { registrationPathwayId, specialismsId });
         }
-
 
         #endregion
 
@@ -1002,7 +1004,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         #endregion
 
-        #region change result
+        #region Change result
+
         [HttpGet]
         [Route("admin/change-assessment-result-core/{registrationPathwayId}/{assessmentId}", Name = RouteConstants.AdminChangePathwayResult)]
         public async Task<IActionResult> AdminChangePathwayResultAsync(int registrationPathwayId, int assessmentId)
@@ -1094,7 +1097,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         #endregion
 
-
         #region Review Change Pathway Result
         [HttpGet]
         [Route("admin/change-assessment-result-core-review-changes", Name = RouteConstants.AdminChangePathwayResultReviewChanges)]
@@ -1135,8 +1137,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         #endregion
 
-
-
         [HttpGet]
         [Route("admin/change-assessment-result-specialism-review-changes", Name = RouteConstants.AdminChangeSpecialismResultReviewChanges)]
         public async Task<IActionResult> AdminChangeSpecialismResultReviewChangesAsync()
@@ -1168,6 +1168,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             var notificationBanner = new AdminNotificationBannerModel(AdminChangeSpecialismResultReviewChanges.Notification_Message_Asessment_Result_Updated);
+            await _cacheService.SetAsync<NotificationBannerModel>(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
+
+            return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
+        }
+
+        [HttpGet]
+        [Route("admin/request-replacement-document/{registrationPathwayId}", Name = RouteConstants.AdminRequestReplacementDocument)]
+        public async Task<IActionResult> AdminRequestReplacementDocumentAsync(int registrationPathwayId)
+        {
+            var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminRequestReplacementDocumentViewModel>(registrationPathwayId);
+
+            if (viewModel == null || !_loader.IsDocumentRerequestEligible(_documentRerequestInDays, viewModel.LastDocumentRequestedDate))
+                return RedirectToRoute(RouteConstants.PageNotFound);
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/request-replacement-document", Name = RouteConstants.SubmitAdminRequestReplacementDocument)]
+        public async Task<IActionResult> AdminRequestReplacementDocumentAsync(AdminRequestReplacementDocumentViewModel model)
+        {
+            var isSuccess = await _loader.CreateReplacementDocumentPrintingRequestAsync(model);
+
+            if (!isSuccess)
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            var notificationBanner = new AdminNotificationBannerModel(AdminRequestReplacementDocument.Success_Header_Replacement_Document_Requested);
             await _cacheService.SetAsync<NotificationBannerModel>(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
 
             return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });

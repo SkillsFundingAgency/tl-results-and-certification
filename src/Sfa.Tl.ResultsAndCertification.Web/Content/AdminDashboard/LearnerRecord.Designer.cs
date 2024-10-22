@@ -187,6 +187,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Request replacement document.
+        /// </summary>
+        public static string Button_Request_Replacement_Document {
+            get {
+                return ResourceManager.GetString("Button_Request_Replacement_Document", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change result.
         /// </summary>
         public static string Change_Result_Action_Link_Text {
