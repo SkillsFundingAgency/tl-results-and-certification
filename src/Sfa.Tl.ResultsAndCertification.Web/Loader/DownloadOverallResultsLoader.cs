@@ -63,7 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
             if (fileStream == null)
             {
-                var blobReadError = $"No FileStream found to download overallresults data. Method: DownloadOverallResultsDataAsync(ContainerName: {DocumentType.OverallResults}, BlobFileName = {apiResponse.BlobUniqueReference}, SourceFilePath = {providerUkprn})";
+                var blobReadError = $"No FileStream found to download result slips data. Method: DownloadOverallResultSlipsDataAsync(ContainerName: {DocumentType.ResultSlips}, BlobFileName = {apiResponse.BlobUniqueReference}, SourceFilePath = {providerUkprn})";
                 _logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
             }
             return fileStream;
@@ -85,24 +85,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             if (fileStream == null)
             {
                 var blobReadError = $"No FileStream found to download overallresults data. Method: DownloadOverallResultsDataAsync(ContainerName: {DocumentType.OverallResults}, BlobFileName = {apiResponse.BlobUniqueReference}, SourceFilePath = {providerUkprn})";
-                _logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
-            }
-            return fileStream;
-        }
-
-
-        public async Task<Stream> DownloadOverallResultSlipsAsync(long providerUkprn)
-        {
-            var fileStream = await _blobStorageService.DownloadFileAsync(new BlobStorageData
-            {
-                ContainerName = DocumentType.ResultSlips.ToString(),
-                SourceFilePath = $"{providerUkprn}",
-                BlobFileName = $"{providerUkprn}.{FileType.Pdf}"
-            });
-
-            if (fileStream == null)
-            {
-                var blobReadError = $"No FileStream found to download overall result slips. Method: DownloadOverallResultSlipsAsync(ContainerName: {DocumentType.ResultSlips}, BlobFileName = {providerUkprn}.{FileType.Pdf}, SourceFilePath = {providerUkprn})";
                 _logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
             }
             return fileStream;

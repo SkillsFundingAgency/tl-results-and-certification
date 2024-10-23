@@ -5,19 +5,19 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using System.IO;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DownloadOverallResultsControllerTests.DownloadOverallResultSlips
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DownloadOverallResultsControllerTests.DownloadLearnerOverallResultSlips
 {
     public class When_Called_With_Invalid_Data : TestSetup
     {
         public override void Given()
         {
-            DownloadOverallResultsLoader.DownloadOverallResultSlipsDataAsync(ProviderUkprn, Email).Returns(null as FileStream);
+            DownloadOverallResultsLoader.DownloadLearnerOverallResultSlipsDataAsync(ProviderUkprn, ProfileId, Email).Returns(null as FileStream);
         }
 
         [Fact]
         public void Then_Expected_Methods_Called()
         {
-            DownloadOverallResultsLoader.Received(1).DownloadOverallResultSlipsDataAsync(ProviderUkprn, Email);
+            DownloadOverallResultsLoader.Received(1).DownloadLearnerOverallResultSlipsDataAsync(ProviderUkprn, ProfileId, Email);
         }
 
         [Fact]
