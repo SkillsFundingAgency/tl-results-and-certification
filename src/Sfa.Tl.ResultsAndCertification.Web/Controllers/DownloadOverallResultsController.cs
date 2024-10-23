@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("download-tlevel-results", Name = RouteConstants.DownloadOverallResultsPage)]
-        public async Task<IActionResult> DownloadOverallResults()
+        public IActionResult DownloadOverallResults()
         {
             var viewModel = new DownloadOverallResultsViewModel
             {
@@ -39,8 +39,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                     _configuration.OverallResultsAvailableDate == null ||
                     DateTime.Today >= _configuration.OverallResultsAvailableDate
             };
-
-            var fileStream = await _downloadOverallResultsLoader.DownloadOverallResultSlipsAsync(User.GetUkPrn());
 
             return View(viewModel);
         }
