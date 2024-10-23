@@ -1,5 +1,4 @@
-﻿using Aspose.Pdf;
-using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+﻿using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
@@ -9,9 +8,9 @@ using Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
 using Sfa.Tl.ResultsAndCertification.Models.DataExport;
+using Sfa.Tl.ResultsAndCertification.Models.DownloadOverallResults;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -22,12 +21,17 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
         private readonly IDataExportRepository _dataExportRepository;
         private readonly IBlobStorageService _blobStorageService;
         private readonly IOverallResultCalculationService _overallResultCalculationService;
+        private readonly IResultSlipsGeneratorService _resultSlipsGeneratorService;
 
-        public DataExportLoader(IDataExportRepository dataExportRepository, IBlobStorageService blobStorageService, IOverallResultCalculationService overallResultCalculationService)
+        public DataExportLoader(IDataExportRepository dataExportRepository,
+            IBlobStorageService blobStorageService,
+            IOverallResultCalculationService overallResultCalculationService,
+            IResultSlipsGeneratorService resultSlipsGeneratorService)
         {
             _dataExportRepository = dataExportRepository;
             _blobStorageService = blobStorageService;
             _overallResultCalculationService = overallResultCalculationService;
+            _resultSlipsGeneratorService = resultSlipsGeneratorService;
         }
 
         public Task<IList<DataExportResponse>> ProcessDataExportAsync(long aoUkprn, DataExportType requestType, string requestedBy)
@@ -48,25 +52,28 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
         public async Task<DataExportResponse> DownloadOverallResultSlipsDataAsync(long providerUkprn, string requestedBy)
         {
-            var overallResults = await _overallResultCalculationService.DownloadOverallResultsDataAsync(providerUkprn);
-            return await ProcessResultSlipsDataExportResponse(overallResults, providerUkprn, DocumentType.ResultSlips, DataExportType.NotSpecified, requestedBy, classMapType: typeof(DownloadOverallResultsExportMap), isEmptyFileAllowed: true);
+            var overallResults = await _overallResultCalculationService.DownloadOverallResultSlipsDataAsync(providerUkprn);
+            return await ProcessResultSlipsDataExportResponse(overallResults, providerUkprn, DocumentType.ResultSlips, DataExportType.NotSpecified, requestedBy);
         }
 
-        private async Task<DataExportResponse> ProcessResultSlipsDataExportResponse<T>(IList<T> data, long ukprn, DocumentType documentType, DataExportType requestType, string requestedBy, ComponentType componentType = ComponentType.NotSpecified, Type classMapType = null, bool isEmptyFileAllowed = false)
+        public async Task<DataExportResponse> DownloadLearnerOverallResultSlipsDataAsync(long providerUkprn, long profileId, string requestedBy)
         {
-            Document document = new Document();
-            Page page = document.Pages.Add();
+            var overallResult = await _overallResultCalculationService.DownloadLearnerOverallResultSlipsDataAsync(providerUkprn, profileId);
+            return await ProcessLeanerResultSlipsDataExportResponse(overallResult, providerUkprn, DocumentType.ResultSlips, DataExportType.NotSpecified, requestedBy);
+        }
 
-            page.Paragraphs.Add(new Aspose.Pdf.Text.TextFragment("Learner's result slip"));
-
-            MemoryStream m = new MemoryStream();
-
-            document.Save(m);
-            var byteData = m.ToArray();
-
+        private async Task<DataExportResponse> ProcessResultSlipsDataExportResponse<T>(IList<T> data, long ukprn, DocumentType documentType, DataExportType requestType, string requestedBy, ComponentType componentType = ComponentType.NotSpecified)
+        {
+            Byte[] byteData = _resultSlipsGeneratorService.GetByteData(data.Cast<DownloadOverallResultSlipsData>());
             return await WritePdfToBlobAsync(ukprn, documentType, requestType, requestedBy, byteData, componentType);
+        }
 
+        private async Task<DataExportResponse> ProcessLeanerResultSlipsDataExportResponse(DownloadOverallResultSlipsData data, long ukprn, DocumentType documentType, DataExportType requestType, string requestedBy, ComponentType componentType = ComponentType.NotSpecified)
+        {
+            List<DownloadOverallResultSlipsData> downloadOverallResultSlipsDatas = new() { data };
 
+            Byte[] byteData = _resultSlipsGeneratorService.GetByteData(downloadOverallResultSlipsDatas);
+            return await WritePdfToBlobAsync(ukprn, documentType, requestType, requestedBy, byteData, componentType);
         }
 
         private async Task<IList<DataExportResponse>> ProcessRegistrationsRequestAsync(long aoUkprn, string requestedBy)

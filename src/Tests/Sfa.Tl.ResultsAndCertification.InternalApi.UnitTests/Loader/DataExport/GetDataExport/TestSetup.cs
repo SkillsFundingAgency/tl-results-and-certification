@@ -16,9 +16,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.DataExport
         protected IDataExportRepository DataExportRepository;
         protected IBlobStorageService BlobService;
         protected IOverallResultCalculationService OverallResultCalculationService;
+        protected IResultSlipsGeneratorService ResultSlipsGeneratorService;
         private DataExportLoader _loader;
         protected IList<DataExportResponse> Response { get; private set; }
-        
+
         // params
         protected long AoUkprn = 1234567891;
         protected DataExportType DataExportType;
@@ -33,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.DataExport
 
         public async override Task When()
         {
-            _loader = new DataExportLoader(DataExportRepository, BlobService, OverallResultCalculationService);
+            _loader = new DataExportLoader(DataExportRepository, BlobService, OverallResultCalculationService, ResultSlipsGeneratorService);
             Response = await _loader.ProcessDataExportAsync(AoUkprn, DataExportType, RequestedBy);
         }
     }

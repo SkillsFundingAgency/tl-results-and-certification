@@ -5,7 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Aspose.PDF" Version="24.9.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.20.0" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.7" />
     <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" Version="1.6.2" />
@@ -21,6 +20,10 @@
     <ProjectReference Include="..\Sfa.Tl.ResultsAndCertification.Common.Services\Sfa.Tl.ResultsAndCertification.Common.Services.csproj" />
     <ProjectReference Include="..\Sfa.Tl.ResultsAndCertification.Common\Sfa.Tl.ResultsAndCertification.Common.csproj" />
     <ProjectReference Include="..\Sfa.Tl.ResultsAndCertification.Functions\Sfa.Tl.ResultsAndCertification.Functions.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\images\" />
   </ItemGroup>
 
 </Project>

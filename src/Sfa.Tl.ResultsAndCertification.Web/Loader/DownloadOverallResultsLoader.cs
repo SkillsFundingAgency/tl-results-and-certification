@@ -69,6 +69,28 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return fileStream;
         }
 
+        public async Task<Stream> DownloadLearnerOverallResultSlipsDataAsync(long providerUkprn, int profileId, string requestedBy)
+        {
+            var apiResponse = await _internalApiClient.DownloadLearnerOverallResultSlipsDataAsync(providerUkprn, profileId, requestedBy);
+            if (apiResponse == null || apiResponse.BlobUniqueReference == Guid.Empty)
+                return null;
+
+            var fileStream = await _blobStorageService.DownloadFileAsync(new BlobStorageData
+            {
+                ContainerName = DocumentType.ResultSlips.ToString(),
+                SourceFilePath = $"{providerUkprn}",
+                BlobFileName = $"{apiResponse.BlobUniqueReference}.{FileType.Pdf}"
+            });
+
+            if (fileStream == null)
+            {
+                var blobReadError = $"No FileStream found to download overallresults data. Method: DownloadOverallResultsDataAsync(ContainerName: {DocumentType.OverallResults}, BlobFileName = {apiResponse.BlobUniqueReference}, SourceFilePath = {providerUkprn})";
+                _logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
+            }
+            return fileStream;
+        }
+
+
         public async Task<Stream> DownloadOverallResultSlipsAsync(long providerUkprn)
         {
             var fileStream = await _blobStorageService.DownloadFileAsync(new BlobStorageData
