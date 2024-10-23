@@ -32,7 +32,7 @@
     "sqlserverlessAutoPauseDelay": {
       "type": "string"
     },
-	"configurationStorageConnectionString": {
+    "configurationStorageConnectionString": {
       "type": "securestring"
     },
     "uiCustomHostName": {
@@ -148,7 +148,7 @@
     "IntTestSQLDatabaseName": "[concat(parameters('resourceNamePrefix'), '-inttest-sqldb')]",
     "storageAccountName": "[replace(concat(parameters('resourceNamePrefix'), 'str'), '-', '')]",
     "logAnalyticsName": "[concat(parameters('resourceNamePrefix'), '-la')]",
-	"tableServiceUri": "[concat('https://s126', parameters('resourceNamePrefix'), 'resacconfigstr.table.core.windows.net/')]"
+    "tableServiceUri": "[concat('https://s126', parameters('resourceNamePrefix'), 'resacconfigstr.table.core.windows.net/')]"
   },
   "resources": [
     {
@@ -302,7 +302,7 @@
                 "name": "EnvironmentName",
                 "value": "[toUpper(parameters('environmentNameAbbreviation'))]"
               },
-			  {
+              {
                 "name": "ConfigurationStorageConnectionString",
                 "value": "[parameters('configurationStorageConnectionString')]"
               },
@@ -416,13 +416,13 @@
                 "name": "EnvironmentName",
                 "value": "[toUpper(parameters('environmentNameAbbreviation'))]"
               },
-			  {
+              {
                 "name": "ConfigurationStorageConnectionString",
                 "value": "[parameters('configurationStorageConnectionString')]"
               },
               {
                 "name": "TableServiceUri",
-                "value": "[parameters('tableServiceUri')]"
+                "value": "[variables('tableServiceUri')]"
               },
               {
                 "name": "Version",
@@ -528,13 +528,13 @@
                 "name": "EnvironmentName",
                 "value": "[toUpper(parameters('environmentNameAbbreviation'))]"
               },
-			  {
+              {
                 "name": "ConfigurationStorageConnectionString",
                 "value": "[parameters('configurationStorageConnectionString')]"
               },
               {
                 "name": "TableServiceUri",
-                "value": "[parameters('tableServiceUri')]"
+                "value": "[variables('tableServiceUri')]"
               },
               {
                 "name": "Version",
