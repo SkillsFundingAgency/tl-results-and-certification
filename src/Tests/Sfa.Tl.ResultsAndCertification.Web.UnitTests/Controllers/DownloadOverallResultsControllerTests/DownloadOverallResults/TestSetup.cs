@@ -9,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DownloadOvera
 
         public async override Task When()
         {
-            Result = await Controller.DownloadOverallResults();
+            Result = Controller.DownloadOverallResults();
             await Task.CompletedTask;
         }
     }
