@@ -16,6 +16,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Registration;
 using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -586,6 +587,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 TqPathwayAssessments = MapInactivePathwayAssessmentsAndResults(tqRegistrationPathway, true, false, model.PerformedBy),
                 IndustryPlacements = MapIndustryPlacements(tqRegistrationPathway, model.PerformedBy),
                 OverallResults = MapOverallResults(tqRegistrationPathway, model.PerformedBy),
+                PrintCertificates = MapPrintCertificates(tqRegistrationPathway.PrintCertificates, model.PerformedBy),
                 CreatedBy = model.PerformedBy,
                 CreatedOn = DateTime.UtcNow
             };
@@ -984,6 +986,20 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 CreatedBy = performedBy
             }).ToList();
         }
+
+        private static IList<PrintCertificate> MapPrintCertificates(ICollection<PrintCertificate> printCertificates, string performedBy)
+            => printCertificates.Select(p => new PrintCertificate
+            {
+                PrintBatchItemId = p.PrintBatchItemId,
+                CertificateNumber = p.CertificateNumber,
+                Uln = p.Uln,
+                LearnerName = p.LearnerName,
+                Type = p.Type,
+                LearningDetails = p.LearningDetails,
+                DisplaySnapshot = p.DisplaySnapshot,
+                IsReprint = p.IsReprint,
+                CreatedBy = performedBy
+            }).ToList();
 
         private IEnumerable<TqRegistrationPathway> GetActivePathwayAndSpecialism(TqRegistrationProfile existingRegistration)
         {
