@@ -136,9 +136,6 @@
     },
     "ipSecurityRestrictions": {
       "type": "array"
-    },
-	"tableServiceUri": {
-      "type": "string"
     }
   },
   "variables": {
@@ -150,7 +147,8 @@
     "sqlDatabaseName": "[concat(parameters('resourceNamePrefix'), '-sqldb')]",
     "IntTestSQLDatabaseName": "[concat(parameters('resourceNamePrefix'), '-inttest-sqldb')]",
     "storageAccountName": "[replace(concat(parameters('resourceNamePrefix'), 'str'), '-', '')]",
-    "logAnalyticsName": "[concat(parameters('resourceNamePrefix'), '-la')]"
+    "logAnalyticsName": "[concat(parameters('resourceNamePrefix'), '-la')]",
+	"tableServiceUri": "[concat('https://s126', parameters('resourceNamePrefix'), 'resacconfigstr.table.core.windows.net/')]"
   },
   "resources": [
     {
@@ -310,7 +308,7 @@
               },
               {
                 "name": "TableServiceUri",
-                "value": "[parameters('tableServiceUri')]"
+                "value": "[variables('tableServiceUri')]"
               },
               {
                 "name": "Version",
