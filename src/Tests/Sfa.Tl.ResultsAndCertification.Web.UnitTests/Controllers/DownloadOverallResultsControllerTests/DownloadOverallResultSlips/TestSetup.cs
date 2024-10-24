@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DownloadOvera
 
         public async override Task When()
         {
-            Result = await Controller.DownloadOverallResultSlipsAsync();
+            Result = await Controller.DownloadOverallResultSlipsFileAsync();
         }
     }
 }

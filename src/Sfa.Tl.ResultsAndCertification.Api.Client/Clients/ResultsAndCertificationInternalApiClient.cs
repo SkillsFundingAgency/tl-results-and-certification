@@ -426,6 +426,18 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<DataExportResponse>(requestUri);
         }
 
+        public async Task<DataExportResponse> DownloadOverallResultSlipsDataAsync(long providerUkprn, string requestedBy)
+        {
+            var requestUri = string.Format(ApiConstants.DownloadOverallResultSlipsDataUri, providerUkprn, requestedBy);
+            return await GetAsync<DataExportResponse>(requestUri);
+        }
+
+        public async Task<DataExportResponse> DownloadLearnerOverallResultSlipsDataAsync(long providerUkprn, int profileId, string requestedBy)
+        {
+            var requestUri = string.Format(ApiConstants.DownloadLearnerOverallResultSlipsDataUri, providerUkprn, profileId, requestedBy);
+            return await GetAsync<DataExportResponse>(requestUri);
+        }
+
         #region Industry Placement Bulk Upload
 
         public async Task<BulkIndustryPlacementResponse> ProcessBulkIndustryPlacementsAsync(BulkProcessRequest model)

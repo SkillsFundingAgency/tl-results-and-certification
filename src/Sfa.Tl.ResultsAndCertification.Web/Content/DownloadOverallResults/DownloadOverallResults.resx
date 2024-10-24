@@ -130,7 +130,7 @@
     <value>Download results ({0})</value>
   </data>
   <data name="Download_Link_Result_Slips_PDF_Data" xml:space="preserve">
-    <value>Download learner results slips ({0}, {1} KB)</value>
+    <value>Download learner results slips ({0})</value>
   </data>
   <data name="Download_ResultSlips_Filename" xml:space="preserve">
     <value>T-Level-overall-result-slips.pdf</value>

@@ -32,5 +32,20 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         {
             return await _dataExportLoader.DownloadOverallResultsDataAsync(providerUkprn, requestedBy);
         }
+
+        [HttpGet]
+        [Route("DownloadOverallResultSlipsData/{providerUkprn}/{requestedBy}")]
+        public async Task<DataExportResponse> DownloadOverallResultSlipsDataAsync(long providerUkprn, string requestedBy)
+        {
+            return await _dataExportLoader.DownloadOverallResultSlipsDataAsync(providerUkprn, requestedBy);
+        }
+
+
+        [HttpGet]
+        [Route("DownloadLearnerOverallResultSlipsData/{providerUkprn}/{profileId}/{requestedBy}")]
+        public async Task<DataExportResponse> DownloadLearnerOverallResultSlipsDataAsync(long providerUkprn, int profileId, string requestedBy)
+        {
+            return await _dataExportLoader.DownloadLearnerOverallResultSlipsDataAsync(providerUkprn, profileId, requestedBy);
+        }
     }
 }
