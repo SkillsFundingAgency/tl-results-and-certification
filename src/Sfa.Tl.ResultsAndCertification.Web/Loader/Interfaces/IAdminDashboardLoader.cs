@@ -2,6 +2,7 @@
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result;
+using System;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
@@ -65,7 +66,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<bool> ProcessChangePathwayResultReviewChangesAsync(AdminChangePathwayResultReviewChangesViewModel model);
 
         AdminChangeSpecialismResultReviewChangesViewModel CreateAdminChangeSpecialismResultReviewChanges(AdminChangeSpecialismResultViewModel model);
+
         Task<bool> ProcessChangeSpecialismResultReviewChangesAsync(AdminChangeSpecialismResultReviewChangesViewModel model);
-       
+
+        bool IsDocumentRerequestEligible(int documentRerequestInDays, DateTime? lastPrintRequestedDate);
+
+        Task<bool> CreateReplacementDocumentPrintingRequestAsync(AdminRequestReplacementDocumentViewModel viewModel);
     }
 }

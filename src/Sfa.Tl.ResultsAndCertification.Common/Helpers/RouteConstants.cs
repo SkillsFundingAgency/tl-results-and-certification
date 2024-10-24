@@ -481,6 +481,9 @@
         public const string SubmitAdminChangePathwayResultReviewChanges = "SubmitAdminChangePathwayResultReviewChanges";
         public const string SubmitAdminChangeSpecialismResultReviewChanges = "SubmitAdminChangeSpecialismResultReviewChanges";
 
+        public const string AdminRequestReplacementDocument = "AdminRequestReplacementDocument";
+        public const string SubmitAdminRequestReplacementDocument = "SubmitAdminRequestReplacementDocument";
+
         #endregion
 
         #region Change logs

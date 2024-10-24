@@ -222,5 +222,8 @@
         // Content types
         public const string TextCsv = "text/csv";
         public const string TextXlsx = "text/xlsx";
+
+        // Mapper keys
+        public const string CertificateRerequestDays = "certificateRerequestDays";
     }
 }
