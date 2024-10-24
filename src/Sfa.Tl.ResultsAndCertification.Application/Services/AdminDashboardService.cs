@@ -10,9 +10,11 @@ using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
@@ -471,6 +473,32 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return false;
         }
 
+        public async Task<bool> CreateReplacementDocumentPrintingRequestAsync(ReplacementPrintRequest request)
+        {
+            IRepository<PrintCertificate> printCertificateRepo = _repositoryFactory.GetRepository<PrintCertificate>();
+            IRepository<Batch> batchRepo = _repositoryFactory.GetRepository<Batch>();
+
+            var printCertificate = await printCertificateRepo
+                .GetFirstOrDefaultAsync(p => p.Id == request.PrintCertificateId
+                                        && p.Uln == request.Uln
+                                        && p.PrintBatchItem.TlProviderAddress.TlProvider.UkPrn == request.ProviderUkprn,
+                                        navigationPropertyPath: new Expression<Func<PrintCertificate, object>>[]
+                                        {
+                                            p => p.PrintBatchItem
+                                        });
+
+            if (printCertificate == null)
+                return false;
+
+            var replacementBatchRequest = _mapper.Map<Batch>(printCertificate, opt =>
+            {
+                opt.Items["providerAddressId"] = request.ProviderAddressId;
+                opt.Items["performedBy"] = request.PerformedBy;
+            });
+
+            var result = await batchRepo.CreateAsync(replacementBatchRequest);
+            return result > 0;
+        }
 
         private ChangeLog CreateChangeLog(ReviewChangeRequest request, object details)
         {

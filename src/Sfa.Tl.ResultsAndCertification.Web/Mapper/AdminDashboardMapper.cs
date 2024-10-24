@@ -51,6 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.AssessmentDetails, opts => opts.MapFrom(s => s.Pathway))
                 .ForMember(d => d.IsPendingWithdrawal, opts => opts.MapFrom(s => s.IsPendingWithdrawl))
                 .ForMember(d => d.OverallResult, opts => opts.MapFrom(s => s.OverallResult))
+                .ForMember(d => d.LastPrintCertificateRequestedDate, opts => opts.MapFrom(s => s.LastPrintCertificateRequestedDate))
                 .ForMember(d => d.IsCertificateRerequestEligible, opts => opts.MapFrom((src, dest, destMember, context) => CommonHelper.IsDocumentRerequestEligible((int)context.Items[Constants.CertificateRerequestDays], src.LastPrintCertificateRequestedDate)));
 
             CreateMap<Pathway, AdminAssessmentDetailsViewModel>()

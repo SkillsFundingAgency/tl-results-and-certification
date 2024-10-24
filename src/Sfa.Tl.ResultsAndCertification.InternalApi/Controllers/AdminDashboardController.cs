@@ -3,6 +3,7 @@ using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -102,5 +103,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         [Route("ProcessAdminChangeSpecialismResult")]
         public Task<bool> ProcessAdminChangeSpecialismResultAsync(ChangeSpecialismResultRequest request)
          => _adminDashboardService.ProcessAdminChangeSpecialismResultAsync(request);
+
+        [HttpPost]
+        [Route("ProcessAdminCreateReplacementDocumentPrintingRequest")]
+        public Task<bool> ProcessAdminCreateReplacementDocumentPrintingRequestAsync(ReplacementPrintRequest request)
+            => _adminDashboardService.CreateReplacementDocumentPrintingRequestAsync(request);
     }
 }
