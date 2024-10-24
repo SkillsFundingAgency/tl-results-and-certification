@@ -1,24 +1,24 @@
 ﻿using Aspose.Pdf;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Models.ResultSlips;
+using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Models.DownloadOverallResults;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
 {
-    public class ResultSlipsGeneratorService : IResultSlipsGeneratorService
+    public class ResultSlipsGeneratorService : ResultSlipsGeneratorServiceBase, IResultSlipsGeneratorService
     {
-        private Document Document;
+        public ResultSlipsGeneratorService(IBlobStorageService blobStorageService) : base(blobStorageService)
+        { }
 
         public byte[] GetByteData(IEnumerable<DownloadOverallResultSlipsData> data)
         {
             Document = new();
             MemoryStream stream = new();
 
-            // Limiting to process 4 due to Aspose trial licence restrictions.
-            foreach (DownloadOverallResultSlipsData item in data.Take(4))
+            foreach (DownloadOverallResultSlipsData item in data)
             {
                 var page = AddPageAndSetProperties();
 
