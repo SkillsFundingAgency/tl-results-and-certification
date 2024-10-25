@@ -8,6 +8,7 @@ using Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
 using Sfa.Tl.ResultsAndCertification.Models.DataExport;
+using Sfa.Tl.ResultsAndCertification.Models.DownloadOverallResults;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,12 +21,17 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
         private readonly IDataExportRepository _dataExportRepository;
         private readonly IBlobStorageService _blobStorageService;
         private readonly IOverallResultCalculationService _overallResultCalculationService;
+        private readonly IResultSlipsGeneratorService _resultSlipsGeneratorService;
 
-        public DataExportLoader(IDataExportRepository dataExportRepository, IBlobStorageService blobStorageService, IOverallResultCalculationService overallResultCalculationService)
+        public DataExportLoader(IDataExportRepository dataExportRepository,
+            IBlobStorageService blobStorageService,
+            IOverallResultCalculationService overallResultCalculationService,
+            IResultSlipsGeneratorService resultSlipsGeneratorService)
         {
             _dataExportRepository = dataExportRepository;
             _blobStorageService = blobStorageService;
             _overallResultCalculationService = overallResultCalculationService;
+            _resultSlipsGeneratorService = resultSlipsGeneratorService;
         }
 
         public Task<IList<DataExportResponse>> ProcessDataExportAsync(long aoUkprn, DataExportType requestType, string requestedBy)
@@ -42,6 +48,32 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
         {
             var overallResults = await _overallResultCalculationService.DownloadOverallResultsDataAsync(providerUkprn);
             return await ProcessDataExportResponseAsync(overallResults, providerUkprn, DocumentType.OverallResults, DataExportType.NotSpecified, requestedBy, classMapType: typeof(DownloadOverallResultsExportMap), isEmptyFileAllowed: true);
+        }
+
+        public async Task<DataExportResponse> DownloadOverallResultSlipsDataAsync(long providerUkprn, string requestedBy)
+        {
+            var overallResults = await _overallResultCalculationService.DownloadOverallResultSlipsDataAsync(providerUkprn);
+            return await ProcessResultSlipsDataExportResponse(overallResults, providerUkprn, DocumentType.ResultSlips, DataExportType.NotSpecified, requestedBy);
+        }
+
+        public async Task<DataExportResponse> DownloadLearnerOverallResultSlipsDataAsync(long providerUkprn, long profileId, string requestedBy)
+        {
+            var overallResult = await _overallResultCalculationService.DownloadLearnerOverallResultSlipsDataAsync(providerUkprn, profileId);
+            return await ProcessLeanerResultSlipsDataExportResponse(overallResult, providerUkprn, DocumentType.ResultSlips, DataExportType.NotSpecified, requestedBy);
+        }
+
+        private async Task<DataExportResponse> ProcessResultSlipsDataExportResponse<T>(IList<T> data, long ukprn, DocumentType documentType, DataExportType requestType, string requestedBy, ComponentType componentType = ComponentType.NotSpecified)
+        {
+            Byte[] byteData = _resultSlipsGeneratorService.GetByteData(data.Cast<DownloadOverallResultSlipsData>());
+            return await WritePdfToBlobAsync(ukprn, documentType, requestType, requestedBy, byteData, componentType);
+        }
+
+        private async Task<DataExportResponse> ProcessLeanerResultSlipsDataExportResponse(DownloadOverallResultSlipsData data, long ukprn, DocumentType documentType, DataExportType requestType, string requestedBy, ComponentType componentType = ComponentType.NotSpecified)
+        {
+            List<DownloadOverallResultSlipsData> downloadOverallResultSlipsDatas = new() { data };
+
+            Byte[] byteData = _resultSlipsGeneratorService.GetByteData(downloadOverallResultSlipsDatas);
+            return await WritePdfToBlobAsync(ukprn, documentType, requestType, requestedBy, byteData, componentType);
         }
 
         private async Task<IList<DataExportResponse>> ProcessRegistrationsRequestAsync(long aoUkprn, string requestedBy)
@@ -109,6 +141,32 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             var byteData = await CsvExtensions.WriteFileAsync(data, classMapType: classMapType);
             var response = await WriteCsvToBlobAsync(ukprn, documentType, requestType, requestedBy, byteData, componentType);
             return response;
+        }
+
+        private async Task<DataExportResponse> WritePdfToBlobAsync(long ukprn, DocumentType documentType, DataExportType requestType, string requestedBy, byte[] byteData, ComponentType componentType = ComponentType.NotSpecified)
+        {
+            // 3. Save to Blob
+            var sourceFilePath = documentType == DocumentType.ResultSlips ? $"{ukprn}" :
+                componentType == ComponentType.NotSpecified ? $"{ukprn}/{requestType}" : $"{ukprn}/{requestType}/{componentType}";
+
+            var blobUniqueReference = Guid.NewGuid();
+            await _blobStorageService.UploadFromByteArrayAsync(new BlobStorageData
+            {
+                ContainerName = documentType.ToString(),
+                SourceFilePath = sourceFilePath,
+                BlobFileName = $"{blobUniqueReference}.{FileType.Pdf}",
+                FileData = byteData,
+                UserName = requestedBy
+            });
+
+            // 4. Return response
+            return new DataExportResponse
+            {
+                FileSize = Math.Round((byteData.Length / 1024D), 2),
+                BlobUniqueReference = blobUniqueReference,
+                ComponentType = componentType,
+                IsDataFound = true
+            };
         }
 
         private async Task<DataExportResponse> WriteCsvToBlobAsync(long ukprn, DocumentType documentType, DataExportType requestType, string requestedBy, byte[] byteData, ComponentType componentType = ComponentType.NotSpecified)

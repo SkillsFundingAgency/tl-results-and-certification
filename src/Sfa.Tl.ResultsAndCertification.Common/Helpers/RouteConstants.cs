@@ -401,6 +401,7 @@
         public const string DownloadOverallResultsPage = "DownloadOverallResultsPage";
         public const string DownloadOverallResultsFile = "DownloadOverallResultsFile";
         public const string DownloadOverallResultSlipsFile = "DownloadOverallResultSlipsFile";
+        public const string DownloadLearnerOverallResultSlipsFile = "DownloadLearnerOverallResultSlipsFile";
         #endregion
 
         #region Industry Placement Import
