@@ -353,7 +353,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         public Task<bool> CreateReplacementDocumentPrintingRequestAsync(AdminRequestReplacementDocumentViewModel viewModel)
         {
             var request = _mapper.Map<ReplacementPrintRequest>(viewModel);
-            return _internalApiClient.CreateReplacementDocumentPrintingRequestAsync(request);
+            return _internalApiClient.ProcessAdminCreateReplacementDocumentPrintingRequestAsync(request);
         }
 
         #endregion

@@ -145,6 +145,9 @@
 
         public const string ProcessAdminChangePathwayResult = "/api/admindashboard/ProcessAdminChangePathwayResult";
         public const string ProcessAdminChangeSpecialismResult = "/api/admindashboard/ProcessAdminChangeSpecialismResult";
+
+        public const string ProcessAdminCreateReplacementDocumentPrintingRequestUri = "/api/admindashboard/ProcessAdminCreateReplacementDocumentPrintingRequest";
+
         // Admin change log
         public const string SearchChangeLogsUri = "/api/adminchangelog/SearchChangeLogs";
         public const string GetAdminChangeLogRecord = "/api/adminchangelog/GetAdminChangeLogRecord/{0}";

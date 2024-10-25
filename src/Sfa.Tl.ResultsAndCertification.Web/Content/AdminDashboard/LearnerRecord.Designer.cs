@@ -304,6 +304,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Replacement document requested on {0}. The document may take up to 3 weeks to arrive..
+        /// </summary>
+        public static string Replacement_Doc_Requested_Template {
+            get {
+                return ResourceManager.GetString("Replacement_Doc_Requested_Template", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search again.
         /// </summary>
         public static string Search_Again_Text {
