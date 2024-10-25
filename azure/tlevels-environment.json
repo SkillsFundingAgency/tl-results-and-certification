@@ -148,7 +148,7 @@
     "IntTestSQLDatabaseName": "[concat(parameters('resourceNamePrefix'), '-inttest-sqldb')]",
     "storageAccountName": "[replace(concat(parameters('resourceNamePrefix'), 'str'), '-', '')]",
     "logAnalyticsName": "[concat(parameters('resourceNamePrefix'), '-la')]",
-    "tableServiceUri": "[concat('https://s126', parameters('resourceNamePrefix'), 'resacconfigstr.table.core.windows.net/')]"
+    "tableServiceUri": "https://s126d01resacconfigstr.table.core.windows.net/"
   },
   "resources": [
     {
@@ -972,6 +972,30 @@
         "parameters": {
           "principalId": {
             "value": "[reference(concat('function-app','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]"
+          },
+          "assignmentType": {
+            "value": "StorageTableDataReader"
+          },
+          "resourceName": {
+            "value": "[parameters('configStorageAccountName')]"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2022-09-01",
+      "name": "[concat('sql-server-role-assignment-config-storage-account','-', parameters('environmentNameAbbreviation'))]",
+      "resourceGroup": "[parameters('sharedEnvResourceGroup')]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'),'/role-assignments/role-assignment-storage-account.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "principalId": {
+            "value": "ace59269-054b-49a9-8323-4cfe4e7f00a9"
           },
           "assignmentType": {
             "value": "StorageTableDataReader"
