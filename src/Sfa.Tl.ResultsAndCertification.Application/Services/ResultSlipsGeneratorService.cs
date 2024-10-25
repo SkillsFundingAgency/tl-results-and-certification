@@ -1,20 +1,28 @@
 ﻿using Aspose.Pdf;
+using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Models.ResultSlips;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Models.DownloadOverallResults;
+using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
 {
     public class ResultSlipsGeneratorService : ResultSlipsGeneratorServiceBase, IResultSlipsGeneratorService
     {
-        public ResultSlipsGeneratorService(IBlobStorageService blobStorageService) : base(blobStorageService)
+        public ResultSlipsGeneratorService(IBlobStorageService blobStorageService, ILogger<IResultSlipsGeneratorService> logger) : base(blobStorageService, logger)
         { }
 
         public byte[] GetByteData(IEnumerable<DownloadOverallResultSlipsData> data)
         {
+            if (data == null || !data.Any())
+            {
+                throw new ArgumentNullException($"data cannot be null. {nameof(data)}");
+            }
+
             Document = new();
             MemoryStream stream = new();
 
