@@ -632,12 +632,12 @@
                 "value": "/api/healthcheck"
               },
               {
-                "name": "WEBSITE_SWAP_WARMUP_PING_STATUSES",
-                "value": "200"
-              },
-              {
                 "name": "WEBSITE_ADD_SITENAME_BINDINGS_IN_APPHOST_CONFIG",
                 "value": "1"
+              },
+              {
+                "name": "FUNCTIONS_WORKER_RUNTIME",
+                "value": "dotnet-isolated"
               }
             ]
           },
