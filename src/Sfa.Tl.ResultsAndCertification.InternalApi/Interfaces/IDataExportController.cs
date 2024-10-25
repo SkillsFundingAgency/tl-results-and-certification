@@ -9,5 +9,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
     {
         Task<IList<DataExportResponse>> GetDataExportAsync(long aoUkprn, DataExportType requestType, string requestedBy);
         Task<DataExportResponse> DownloadOverallResultsDataAsync(long providerUkprn, string requestedBy);
+        Task<DataExportResponse> DownloadOverallResultSlipsDataAsync(long providerUkprn, string requestedBy);
     }
 }

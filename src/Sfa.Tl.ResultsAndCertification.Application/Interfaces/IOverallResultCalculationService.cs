@@ -13,5 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
         Task<List<OverallResultResponse>> CalculateOverallResultsAsync(DateTime runDate);
         Task<bool> SaveOverallResultsAsync(IList<OverallResult> overallResults);
         Task<IList<DownloadOverallResultsData>> DownloadOverallResultsDataAsync(long providerUkprn);
+        Task<IList<DownloadOverallResultSlipsData>> DownloadOverallResultSlipsDataAsync(long providerUkprn);
+        Task<DownloadOverallResultSlipsData> DownloadLearnerOverallResultSlipsDataAsync(long providerUkprn, long profileId);
     }
 }

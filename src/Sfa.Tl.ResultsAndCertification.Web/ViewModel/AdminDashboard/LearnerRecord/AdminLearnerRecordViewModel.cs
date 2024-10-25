@@ -30,6 +30,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
         public SubjectStatus MathsStatus { get; set; }
         public SubjectStatus EnglishStatus { get; set; }
         public string OverallResult { get; set; }
+
+        public DateTime? LastPrintCertificateRequestedDate { get; set; }
+
         public bool IsCertificateRerequestEligible { get; set; }
 
         public int IndustryPlacementId { get; set; }
