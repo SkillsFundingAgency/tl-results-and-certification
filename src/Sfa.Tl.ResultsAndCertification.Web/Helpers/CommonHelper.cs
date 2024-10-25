@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Helpers
 
         public static bool IsDocumentRerequestEligible(int documentRerequestInDays, DateTime? lastPrintRequestedDate)
         {
-            return lastPrintRequestedDate.HasValue && DateTime.Today > lastPrintRequestedDate.Value.Date.AddDays(documentRerequestInDays);
+            return !lastPrintRequestedDate.HasValue || DateTime.Today > lastPrintRequestedDate.Value.Date.AddDays(documentRerequestInDays);
         }
 
         public static bool IsRommAllowed(DateTime? rommEndDate)

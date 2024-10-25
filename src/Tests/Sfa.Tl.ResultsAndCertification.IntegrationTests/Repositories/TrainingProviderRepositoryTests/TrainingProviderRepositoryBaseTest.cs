@@ -228,6 +228,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
             var printCertificate = PrintCertificateDataProvider.CreatePrintCertificate(DbContext, new PrintCertificateBuilder().Build(null, tqRegistrationPathway, tlProviderAddress));
             printCertificate.Uln = tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber;
             printCertificate.LearningDetails = JsonConvert.SerializeObject(new LearningDetails());
+            printCertificate.LastRequestedOn = DateTime.UtcNow;
             DbContext.SaveChanges();
             return printCertificate;
         }

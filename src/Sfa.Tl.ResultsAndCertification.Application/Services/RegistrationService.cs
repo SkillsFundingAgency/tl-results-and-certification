@@ -560,7 +560,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<bool> RejoinRegistrationAsync(RejoinRegistrationRequest model)
         {
-            var tqRegistrationPathway = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId, includeProfile: true, includeIndustryPlacements: true, includeOverallResults: true);
+            var tqRegistrationPathway = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId, includeProfile: true, includeIndustryPlacements: true, includeOverallResults: true, includePrintCertificates: true);
 
             if (tqRegistrationPathway == null || tqRegistrationPathway.Status != RegistrationPathwayStatus.Withdrawn)
             {
@@ -998,7 +998,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 LearningDetails = p.LearningDetails,
                 DisplaySnapshot = p.DisplaySnapshot,
                 IsReprint = p.IsReprint,
-                CreatedBy = performedBy
+                CreatedOn = p.CreatedOn,
+                CreatedBy = p.CreatedBy,
+                LastRequestedOn = null
             }).ToList();
 
         private IEnumerable<TqRegistrationPathway> GetActivePathwayAndSpecialism(TqRegistrationProfile existingRegistration)

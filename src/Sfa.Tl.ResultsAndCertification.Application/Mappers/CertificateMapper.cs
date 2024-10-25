@@ -38,7 +38,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.DisplaySnapshot, opts => opts.Ignore())
                 .ForMember(d => d.LearningDetails, opts => opts.MapFrom(s => TransformLearningDetails(s)))
                 .ForMember(d => d.CreatedBy, opts => opts.MapFrom(s => Constants.FunctionPerformedBy))
-                .ForMember(d => d.TqRegistrationPathway, opts => opts.Ignore());
+                .ForMember(d => d.TqRegistrationPathway, opts => opts.Ignore())
+                .ForMember(d => d.LastRequestedOn, opts => opts.MapFrom(s => DateTime.UtcNow));
         }
 
         private static string TransformLearningDetails(OverallResult overallResult)

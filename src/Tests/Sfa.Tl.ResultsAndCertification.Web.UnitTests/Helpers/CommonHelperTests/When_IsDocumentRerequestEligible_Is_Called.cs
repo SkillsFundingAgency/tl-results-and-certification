@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Helpers.CommonHelperTests
                 return new[]
                 {
                     // Object params { documentRerequestInDays, lastPrintRequestedDate, expectedResult}
-                    new object[] { 21, null, false},
+                    new object[] { 21, null, true },
                     new object[] { 21, DateTime.UtcNow, false },
                     new object[] { 21, DateTime.UtcNow.AddDays(-21), false },
                     new object[] { 21, DateTime.UtcNow.AddDays(-22), true },

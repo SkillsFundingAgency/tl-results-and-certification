@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
             // Given
             _bulkRegistrationTestFixture.Uln = 1111111111;
-            _bulkRegistrationTestFixture.SeedTestData(EnumAwardingOrganisation.Pearson);            
+            _bulkRegistrationTestFixture.SeedTestData(EnumAwardingOrganisation.Pearson);
 
             var registrationRecord = _bulkRegistrationTestFixture.SeedRegistrationData(_bulkRegistrationTestFixture.Uln, null, RegistrationPathwayStatus.Withdrawn, isBulkUpload: false, seedIndustryPlacement: true);
 
@@ -63,6 +63,24 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 Details = "{\"TlevelTitle\":\"T Level in Design, Surveying and Planning for Construction\",\"PathwayName\":\"Design, Surveying and Planning\",\"PathwayLarId\":\"10123456\",\"PathwayResult\":\"A*\",\"SpecialismDetails\":[{\"SpecialismName\":\"Surveying and design for construction and the built environment\",\"SpecialismLarId\":\"10123456\",\"SpecialismResult\":\"Distinction\"}],\"IndustryPlacementStatus\":\"Completed\",\"OverallResult\":\"Distinction*\"}",
                 ResultAwarded = "Distinction*", CalculationStatus = CalculationStatus.Completed, CertificateType = PrintCertificateType.Certificate, StartDate = DateTime.UtcNow.AddMonths(-1), IsOptedin = true, EndDate = DateTime.UtcNow, CreatedOn = DateTime.UtcNow } }, true);
 
+
+            // Seed print certificate
+            PrintBatchItem printBatchItem = _bulkRegistrationTestFixture.SeedPrintBatchItem();
+
+            var printCertificate = new PrintCertificate
+            {
+                Uln = registrationRecord.UniqueLearnerNumber,
+                LearnerName = $"{registrationRecord.Firstname} {registrationRecord.Lastname}",
+                Type = PrintCertificateType.Certificate,
+                LearningDetails = "test-learning-details",
+                DisplaySnapshot = "test-display-snapshot",
+                IsReprint = false,
+                LastRequestedOn = new DateTime(2023, 1, 1),
+                TqRegistrationPathway = seededRegistrationPathways.First(),
+                PrintBatchItem = printBatchItem
+            };
+
+            PrintCertificateDataProvider.CreatePrintCertificate(_bulkRegistrationTestFixture.DbContext, printCertificate);
         }
 
         [Fact]
@@ -96,6 +114,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                                                                                                                             .ThenInclude(x => x.IndustryPlacements)
                                                                                                                         .Include(x => x.TqRegistrationPathways)
                                                                                                                             .ThenInclude(x => x.OverallResults)
+                                                                                                                        .Include(x => x.TqRegistrationPathways)
+                                                                                                                            .ThenInclude(x => x.PrintCertificates)
+                                                                                                                            .ThenInclude(x => x.PrintBatchItem)
                                                                                                                        .FirstOrDefault();
             // assert registration profile data
             actualRegistrationProfile.Should().NotBeNull();
@@ -115,30 +136,30 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             // Assert Active Pathway
             var actualActivePathway = actualRegistrationProfile.TqRegistrationPathways.FirstOrDefault(x => x.EndDate == null && x.Status == RegistrationPathwayStatus.Active);
             var expectedActivePathway = expectedRegistrationProfile.TqRegistrationPathways.FirstOrDefault(x => actualRegistrationProfile.TqRegistrationPathways.Any(y => y.TqProviderId == x.TqProviderId));
-            AssertRegistrationPathway(actualActivePathway, expectedActivePathway, false);
+            AssertRegistrationPathway(actualActivePathway, expectedActivePathway);
 
             // Assert Withdrawn PathwayAssessment
             var actualActiveAssessment = actualActivePathway.TqPathwayAssessments.FirstOrDefault(x => x.EndDate == null);
             var expectedPreviousAssessment = expectedActivePathway.TqPathwayAssessments.FirstOrDefault(x => x.EndDate != null);
-            AssertPathwayAssessment(actualActiveAssessment, expectedPreviousAssessment, isRejoin: true);
+            AssertPathwayAssessment(actualActiveAssessment, expectedPreviousAssessment);
 
             // Assert Active PathwayResult
             var actualActiveResult = actualActiveAssessment.TqPathwayResults.FirstOrDefault(x => x.EndDate == null);
             var expectedPreviousResult = expectedPreviousAssessment.TqPathwayResults.FirstOrDefault(x => x.EndDate != null);
-            AssertPathwayResults(actualActiveResult, expectedPreviousResult, isRejoin: true);
+            AssertPathwayResults(actualActiveResult, expectedPreviousResult);
 
             // Assert Withdrawn SpecialismAssessment
             var actualActiveSpecialism = actualActivePathway.TqRegistrationSpecialisms.FirstOrDefault(x => x.EndDate == null);
             var expectedActiveSpecialism = expectedActivePathway.TqRegistrationSpecialisms.FirstOrDefault(x => x.EndDate != null);
-            
+
             var actualActiveSpecialismAssessment = actualActiveSpecialism.TqSpecialismAssessments.FirstOrDefault(x => x.EndDate == null);
             var expectedPreviousSpecialismAssessment = expectedActiveSpecialism.TqSpecialismAssessments.FirstOrDefault(x => x.EndDate != null);
-            AssertSpecialismAssessment(actualActiveSpecialismAssessment, expectedPreviousSpecialismAssessment, isRejoin: true);
+            AssertSpecialismAssessment(actualActiveSpecialismAssessment, expectedPreviousSpecialismAssessment);
 
             // Assert Active SpecialismResult
             var actualActiveSpecialismResult = actualActiveSpecialismAssessment.TqSpecialismResults.FirstOrDefault(x => x.EndDate == null);
             var expectedPreviousSpecialismResult = expectedPreviousSpecialismAssessment.TqSpecialismResults.FirstOrDefault(x => x.EndDate != null);
-            AssertSpecialismResult(actualActiveSpecialismResult, expectedPreviousSpecialismResult, isRejoin: true);
+            AssertSpecialismResult(actualActiveSpecialismResult, expectedPreviousSpecialismResult);
 
             // Assert IndustryPlacement Data
             var actualActiveIndustryPlacement = actualActivePathway.IndustryPlacements.FirstOrDefault();
@@ -150,21 +171,27 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             // Assert Active Overall result
             var actualActiveOverallResult = actualActivePathway.OverallResults.FirstOrDefault(ovr => ovr.EndDate == null);
             var expectedActiveOverallResult = expectedActivePathway.OverallResults.FirstOrDefault(ovr => ovr.EndDate != null);
-            AssertOverallResult(actualActiveOverallResult, expectedActiveOverallResult, isRejoin: true);
+            AssertOverallResult(actualActiveOverallResult, expectedActiveOverallResult);
+
+            // Assert Active Overall result
+            var actualPrintCertificate = actualActivePathway.PrintCertificates.FirstOrDefault();
+            var expectedPrintCertificate = expectedActivePathway.PrintCertificates.FirstOrDefault();
+            AssertPrintCertificate(actualPrintCertificate, expectedPrintCertificate);
         }
 
-        public static void AssertRegistrationPathway(TqRegistrationPathway actualPathway, TqRegistrationPathway expectedPathway, bool assertStatus = true)
+        public static void AssertRegistrationPathway(TqRegistrationPathway actualPathway, TqRegistrationPathway expectedPathway)
         {
             actualPathway.Should().NotBeNull();
+
+            actualPathway.Id.Should().BeGreaterThan(expectedPathway.Id);
             actualPathway.TqProviderId.Should().Be(expectedPathway.TqProviderId);
             actualPathway.AcademicYear.Should().Be(expectedPathway.AcademicYear);
-            if (assertStatus)
-                actualPathway.Status.Should().Be(expectedPathway.Status);
+            actualPathway.Status.Should().Be(RegistrationPathwayStatus.Active);
 
             actualPathway.IsBulkUpload.Should().Be(expectedPathway.IsBulkUpload);
 
             // Assert specialisms
-            actualPathway.TqRegistrationSpecialisms.Count.Should().Be(expectedPathway.TqRegistrationSpecialisms.Count);
+            actualPathway.TqRegistrationSpecialisms.Should().HaveCount(expectedPathway.TqRegistrationSpecialisms.Count);
 
             foreach (var expectedSpecialism in expectedPathway.TqRegistrationSpecialisms)
             {
@@ -177,77 +204,52 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             }
         }
 
-        public static void AssertPathwayAssessment(TqPathwayAssessment actualAssessment, TqPathwayAssessment expectedAssessment, bool isRejoin = false)
+        public static void AssertPathwayAssessment(TqPathwayAssessment actualAssessment, TqPathwayAssessment expectedAssessment)
         {
             actualAssessment.Should().NotBeNull();
-            if (!isRejoin)
-                actualAssessment.TqRegistrationPathwayId.Should().Be(expectedAssessment.TqRegistrationPathwayId);
-
+            actualAssessment.TqRegistrationPathwayId.Should().BeGreaterThan(expectedAssessment.TqRegistrationPathwayId);
             actualAssessment.TqRegistrationPathway.TqProviderId.Should().Be(expectedAssessment.TqRegistrationPathway.TqProviderId);
             actualAssessment.AssessmentSeriesId.Should().Be(expectedAssessment.AssessmentSeriesId);
             actualAssessment.IsOptedin.Should().BeTrue();
             actualAssessment.IsBulkUpload.Should().BeFalse();
-
-            if (actualAssessment.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active)
-                actualAssessment.EndDate.Should().BeNull();
-            else
-                actualAssessment.EndDate.Should().NotBeNull();
+            actualAssessment.EndDate.Should().BeNull();
         }
 
-        public static void AssertPathwayResults(TqPathwayResult actualResult, TqPathwayResult expectedResult, bool isRejoin = false)
+        public static void AssertPathwayResults(TqPathwayResult actualResult, TqPathwayResult expectedResult)
         {
             actualResult.Should().NotBeNull();
-            if (!isRejoin)
-                actualResult.TqPathwayAssessmentId.Should().Be(expectedResult.TqPathwayAssessmentId);
-
+            actualResult.TqPathwayAssessmentId.Should().BeGreaterThan(expectedResult.TqPathwayAssessmentId);
             actualResult.TlLookupId.Should().Be(expectedResult.TlLookupId);
             actualResult.IsOptedin.Should().BeTrue();
             actualResult.IsBulkUpload.Should().BeFalse();
-
-            if (actualResult.TqPathwayAssessment.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active)
-                actualResult.EndDate.Should().BeNull();
-            else
-                actualResult.EndDate.Should().NotBeNull();
+            actualResult.EndDate.Should().BeNull();
         }
 
-        public static void AssertSpecialismAssessment(TqSpecialismAssessment actualAssessment, TqSpecialismAssessment expectedAssessment, bool isRejoin = false, bool isTransferred = false)
+        public static void AssertSpecialismAssessment(TqSpecialismAssessment actualAssessment, TqSpecialismAssessment expectedAssessment)
         {
             actualAssessment.Should().NotBeNull();
-            if (!isRejoin && !isTransferred)
-                actualAssessment.TqRegistrationSpecialismId.Should().Be(expectedAssessment.TqRegistrationSpecialismId);
-
+            actualAssessment.TqRegistrationSpecialismId.Should().BeGreaterThan(expectedAssessment.TqRegistrationSpecialismId);
             actualAssessment.AssessmentSeriesId.Should().Be(expectedAssessment.AssessmentSeriesId);
             actualAssessment.IsOptedin.Should().BeTrue();
             actualAssessment.IsBulkUpload.Should().BeFalse();
-
-            if (actualAssessment.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active)
-                actualAssessment.EndDate.Should().BeNull();
-            else
-                actualAssessment.EndDate.Should().NotBeNull();
+            actualAssessment.EndDate.Should().BeNull();
         }
 
-        public static void AssertSpecialismResult(TqSpecialismResult actualResult, TqSpecialismResult expectedResult, bool isRejoin = false)
+        public static void AssertSpecialismResult(TqSpecialismResult actualResult, TqSpecialismResult expectedResult)
         {
             actualResult.Should().NotBeNull();
-            if (!isRejoin)
-                actualResult.TqSpecialismAssessmentId.Should().Be(expectedResult.TqSpecialismAssessmentId);
-
+            actualResult.TqSpecialismAssessmentId.Should().BeGreaterThan(expectedResult.TqSpecialismAssessmentId);
             actualResult.TlLookupId.Should().Be(expectedResult.TlLookupId);
             actualResult.IsOptedin.Should().BeTrue();
             actualResult.IsBulkUpload.Should().BeFalse();
-
-            if (actualResult.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active)
-                actualResult.EndDate.Should().BeNull();
-            else
-                actualResult.EndDate.Should().NotBeNull();
+            actualResult.EndDate.Should().BeNull();
         }
 
-        private void AssertOverallResult(OverallResult actualOverallResult, OverallResult expectedOverallResult, bool isRejoin = false, bool isTransferred = false)
+        private void AssertOverallResult(OverallResult actualOverallResult, OverallResult expectedOverallResult)
         {
             actualOverallResult.Should().NotBeNull();
-            if (!isRejoin && !isTransferred)
-                expectedOverallResult.TqRegistrationPathwayId.Should().Be(expectedOverallResult.TqRegistrationPathwayId);
 
+            actualOverallResult.TqRegistrationPathwayId.Should().BeGreaterThan(expectedOverallResult.TqRegistrationPathwayId);
             actualOverallResult.TqRegistrationPathway.TqProviderId.Should().Be(expectedOverallResult.TqRegistrationPathway.TqProviderId);
             actualOverallResult.Details.Should().Be(expectedOverallResult.Details);
             actualOverallResult.ResultAwarded.Should().Be(expectedOverallResult.ResultAwarded);
@@ -255,11 +257,34 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             actualOverallResult.CertificateType.Should().Be(expectedOverallResult.CertificateType);
             actualOverallResult.PrintAvailableFrom.Should().Be(expectedOverallResult.PrintAvailableFrom);
             actualOverallResult.PublishDate.Should().Be(expectedOverallResult.PublishDate);
+            actualOverallResult.EndDate.Should().BeNull();
+            actualOverallResult.IsOptedin.Should().BeTrue();
+        }
 
-            if (actualOverallResult.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active)
-                actualOverallResult.EndDate.Should().BeNull();
-            else
-                actualOverallResult.EndDate.Should().NotBeNull();
+        private void AssertPrintCertificate(PrintCertificate actualPrintCertificate, PrintCertificate expectedPrintCertificate)
+        {
+            actualPrintCertificate.Should().NotBeNull();
+
+            actualPrintCertificate.TqRegistrationPathwayId.Should().BeGreaterThan(expectedPrintCertificate.TqRegistrationPathwayId);
+            actualPrintCertificate.Uln.Should().Be(expectedPrintCertificate.Uln);
+            actualPrintCertificate.LearnerName.Should().Be(expectedPrintCertificate.LearnerName);
+            actualPrintCertificate.Type.Should().Be(expectedPrintCertificate.Type);
+            actualPrintCertificate.LearningDetails.Should().Be(expectedPrintCertificate.LearningDetails);
+            actualPrintCertificate.DisplaySnapshot.Should().Be(expectedPrintCertificate.DisplaySnapshot);
+            actualPrintCertificate.IsReprint.Should().Be(expectedPrintCertificate.IsReprint);
+            actualPrintCertificate.LastRequestedOn.Should().BeNull();
+
+            PrintBatchItem actualPrintBatchItem = actualPrintCertificate.PrintBatchItem;
+            PrintBatchItem expectedPrintBatchItem = expectedPrintCertificate.PrintBatchItem;
+
+            actualPrintBatchItem.Should().NotBeNull();
+            actualPrintBatchItem.BatchId.Should().Be(expectedPrintBatchItem.BatchId);
+            actualPrintBatchItem.TlProviderAddressId.Should().Be(expectedPrintBatchItem.TlProviderAddressId);
+            actualPrintBatchItem.Status.Should().Be(expectedPrintBatchItem.Status);
+            actualPrintBatchItem.Reason.Should().Be(expectedPrintBatchItem.Reason);
+            actualPrintBatchItem.TrackingId.Should().Be(expectedPrintBatchItem.TrackingId);
+            actualPrintBatchItem.SignedForBy.Should().Be(expectedPrintBatchItem.SignedForBy);
+            actualPrintBatchItem.StatusChangedOn.Should().Be(expectedPrintBatchItem.StatusChangedOn);
         }
     }
 }
