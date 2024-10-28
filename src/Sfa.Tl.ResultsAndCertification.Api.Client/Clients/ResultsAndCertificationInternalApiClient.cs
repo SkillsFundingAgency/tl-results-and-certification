@@ -595,6 +595,13 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
         #endregion
 
+        #region Request replacement document
+
+        public Task<bool> ProcessAdminCreateReplacementDocumentPrintingRequestAsync(ReplacementPrintRequest request)
+           => PostAsync<ReplacementPrintRequest, bool>(ApiConstants.ProcessAdminCreateReplacementDocumentPrintingRequestUri, request);
+
+        #endregion
+
         #region Private Methods
 
         /// <summary>

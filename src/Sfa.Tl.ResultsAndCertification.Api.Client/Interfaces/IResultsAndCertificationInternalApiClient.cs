@@ -199,5 +199,11 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<DataExportResponse> GetProviderRegistrationsAsync(GetProviderRegistrationsRequest request);
 
         #endregion
+
+        #region Request replacement document
+
+        Task<bool> ProcessAdminCreateReplacementDocumentPrintingRequestAsync(ReplacementPrintRequest request);
+
+        #endregion
     }
 }
