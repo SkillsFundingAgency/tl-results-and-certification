@@ -18,6 +18,7 @@
         CertificateTracking = 14,
         Withdrawals = 15,
         ResultSlips = 16,
-        Romms = 17
+        Romms = 17,
+        Aspose = 18
     }
 }
