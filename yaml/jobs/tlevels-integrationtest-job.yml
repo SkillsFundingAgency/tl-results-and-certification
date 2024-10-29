@@ -78,13 +78,19 @@
         TokenStart: "__"
         TokenEnd: "__"
 
-    - task: VSTest@2
-      displayName: 'Run Integration tests'
+    - task: AzureCLI@2
+      displayName: 'Run Integration Tests using Azure CLI'
       inputs:
-        testAssemblyVer2: '**\Sfa.Tl.ResultsAndCertification.IntegrationTests.dll'
-        searchFolder: '$(Agent.TempDirectory)\IntegrationTests'
-        runInParallel: false
-        failOnMinTestsNotRun: false
+        azureSubscription: ${{ parameters.serviceConnection }}
+        scriptType: 'pscore'
+        scriptLocation: 'inlineScript'
+        inlineScript: |
+            # Set necessary environment variables for the integration tests
+            $env:EnvironmentName = "$(EnvironmentName)"
+            $env:IntTestSqlConnectionString = "$(IntTestSqlConnectionString)"
+        
+            # Run dotnet test command
+            dotnet test "$(Agent.TempDirectory)\IntegrationTests\Sfa.Tl.ResultsAndCertification.IntegrationTests.dll" --no-build --logger "trx" --results-directory "$(Agent.TempDirectory)\TestResults"
 
     - task: AzureCLI@2
       displayName: Remove temporary SQL firewall rule to allow Azure service connections
