@@ -71,11 +71,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
 
             BatchRepositoryLogger = new Logger<GenericRepository<Batch>>(new NullLoggerFactory());
             BatchRepository = new GenericRepository<Batch>(BatchRepositoryLogger, DbContext);
-            
+
             PrintCertificateRepositoryLogger = new Logger<GenericRepository<PrintCertificate>>(new NullLoggerFactory());
             PrintCertificateRepository = new GenericRepository<PrintCertificate>(PrintCertificateRepositoryLogger, DbContext);
-            
-            TrainingProviderService = new TrainingProviderService(RegistrationProfileRepository, TrainingProviderRepository, BatchRepository, PrintCertificateRepository, TrainingProviderMapper, TrainingProviderServiceLogger);
+
+            TrainingProviderService = new TrainingProviderService(RegistrationProfileRepository, TrainingProviderRepository, BatchRepository, PrintCertificateRepository, OverallResultCalculationService, TrainingProviderMapper, TrainingProviderServiceLogger);
         }
 
         public override Task When()

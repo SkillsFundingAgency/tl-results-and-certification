@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
 
             _testCriteriaData = new List<(long uln, SubjectStatus? MathsStatus, SubjectStatus? EnglishStatus)>
             {
-                (1111111111, null, null), 
+                (1111111111, null, null),
                 (1111111112, SubjectStatus.AchievedByLrs, SubjectStatus.AchievedByLrs),
                 (1111111113, null, null),
                 (1111111114, null, null),
@@ -66,7 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             PrintCertificateRepositoryLogger = new Logger<GenericRepository<PrintCertificate>>(new NullLoggerFactory());
             PrintCertificateRepository = new GenericRepository<PrintCertificate>(PrintCertificateRepositoryLogger, DbContext);
 
-            TrainingProviderService = new TrainingProviderService(RegistrationProfileRepository, TrainingProviderRepository, BatchRepository, PrintCertificateRepository, TrainingProviderMapper, TrainingProviderServiceLogger);
+            TrainingProviderService = new TrainingProviderService(RegistrationProfileRepository, TrainingProviderRepository, BatchRepository, PrintCertificateRepository, OverallResultCalculationService, TrainingProviderMapper, TrainingProviderServiceLogger);
         }
 
         public override Task When()

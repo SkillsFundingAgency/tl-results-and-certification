@@ -22,6 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly ITrainingProviderRepository _trainingProviderRepository;
         private readonly IRepository<Batch> _batchRepository;
         private readonly IRepository<PrintCertificate> _printCertificateRepository;
+        private readonly IOverallResultCalculationService _overallResultCalculationService;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
 
@@ -29,6 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             ITrainingProviderRepository trainingProviderRepository,
             IRepository<Batch> batchRepository,
             IRepository<PrintCertificate> printCertificateRepository,
+            IOverallResultCalculationService overallResultCalculationService,
             IMapper mapper,
             ILogger<TrainingProviderService> logger)
         {
@@ -36,6 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _trainingProviderRepository = trainingProviderRepository;
             _batchRepository = batchRepository;
             _printCertificateRepository = printCertificateRepository;
+            _overallResultCalculationService = overallResultCalculationService;
             _mapper = mapper;
             _logger = logger;
         }
@@ -66,7 +69,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<LearnerRecordDetails> GetLearnerRecordDetailsAsync(long providerUkprn, int profileId, int? pathwayId = null)
         {
-            return await _trainingProviderRepository.GetLearnerRecordDetailsAsync(providerUkprn, profileId, pathwayId);
+            var learnerRecord = await _trainingProviderRepository.GetLearnerRecordDetailsAsync(providerUkprn, profileId, pathwayId);
+
+            if (learnerRecord != null)
+                learnerRecord.ResultCalculationAssessmentSeries = await _overallResultCalculationService.GetResultCalculationAssessmentAsync(DateTime.Now);
+
+            return learnerRecord;
         }
 
         public async Task<bool> UpdateLearnerSubjectAsync(UpdateLearnerSubjectRequest request)
@@ -110,8 +118,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (printCertificate == null)
                 return false;
 
-            var replacementBatchRequest = _mapper.Map<Batch>(printCertificate, opt => 
-            { 
+            var replacementBatchRequest = _mapper.Map<Batch>(printCertificate, opt =>
+            {
                 opt.Items["providerAddressId"] = request.ProviderAddressId;
                 opt.Items["performedBy"] = request.PerformedBy;
             });
