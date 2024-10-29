@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
@@ -21,7 +20,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
     public abstract class TrainingProviderServiceBaseTest : BaseTest<TqRegistrationProfile>
     {
         protected TrainingProviderService TrainingProviderService;
-        protected IOverallResultCalculationService OverallResultCalculationService;
         protected ILogger<GenericRepository<TqRegistrationProfile>> RegistrationProfileRepositoryLogger;
         protected IRepository<TqRegistrationProfile> RegistrationProfileRepository;
         protected ILogger<TrainingProviderService> TrainingProviderServiceLogger;
