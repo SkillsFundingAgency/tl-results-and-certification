@@ -20,7 +20,7 @@
     "SpecialismRommExtractTrigger": "0 45 7 * * *",
     "CertificateTrackingExtractTrigger": "0 15 8 * * *",
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
-    "TableServiceUri": "UseDevelopmentStorage=true;",
+    "TableServiceUri": "__TableServiceUri__",
     "EnvironmentName": "LOCAL",
     "ServiceName": "Sfa.Tl.ResultsAndCertification",
     "ServiceVersion": "1.0" // Need ServiceVersion rather than Version in local with .Net 6
