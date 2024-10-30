@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories
         {
             if (_isRelationalDb)
             {
-                DbCheckpoint?.Reset(TestDatabaseConfiguration.GetConnectionString()).GetAwaiter().GetResult();
+                DbCheckpoint?.Reset(TestDatabaseConfiguration.IntTestSqlConnectionString).GetAwaiter().GetResult();
             }
             DbContext?.Dispose();
         }
