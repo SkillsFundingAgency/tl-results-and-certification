@@ -381,6 +381,17 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             return tqSpecialismResults;
         }
 
+        public PrintBatchItem SeedPrintBatchItem()
+        {
+            var printBatchItemBuilder = new PrintBatchItemBuilder();
+            var printBatchItem = printBatchItemBuilder.Build();
+
+            DbContext.Add(printBatchItem);
+            DbContext.SaveChanges();
+
+            return printBatchItem;
+        }
+
         public List<TqSpecialismResult> GetSpecialismResultDataToProcess(TqSpecialismAssessment specialismAssessment, bool seedSpecialismResultsAsActive = true, bool isHistorical = false, bool isBulkUpload = true)
         {
             var tqSpecialismResults = new List<TqSpecialismResult>();

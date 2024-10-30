@@ -78,7 +78,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
             => GetPrintCertificateProperty(printCertificates, p => p?.Type);
 
         private static DateTime? GetLastPrintCertificateRequestedDate(ICollection<PrintCertificate> printCertificates)
-            => GetPrintCertificateProperty(printCertificates, p => p?.CreatedOn);
+            => GetPrintCertificateProperty(printCertificates, p => p?.LastRequestedOn);
 
         private static Address GetProviderAddress(ICollection<TlProviderAddress> addresses)
         {

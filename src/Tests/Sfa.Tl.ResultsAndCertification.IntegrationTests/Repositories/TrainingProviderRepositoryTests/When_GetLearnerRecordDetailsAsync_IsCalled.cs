@@ -161,7 +161,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
             _actualResult.PrintCertificateId.Should().Be(expectedPrintCertificate?.Id);
             _actualResult.PrintCertificateType.Should().Be(expectedPrintCertificate?.Type);
             _actualResult.ProviderAddress.Should().BeEquivalentTo(expectedProviderAddress);
-            _actualResult.LastDocumentRequestedDate.Should().Be(expectedPrintCertificate?.CreatedOn);
+            _actualResult.LastDocumentRequestedDate.Should().Be(expectedPrintCertificate?.LastRequestedOn);
             _actualResult.IsReprint.Should().Be(expectedPrintCertificate?.IsReprint);
         }
 

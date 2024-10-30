@@ -14,6 +14,7 @@
     [CreatedBy] NVARCHAR(50) NULL, 
     [ModifiedOn] DATETIME2 NULL, 
     [ModifiedBy] NVARCHAR(50) NULL,
+    [LastRequestedOn] DATETIME2 NULL
 	CONSTRAINT [PK_PrintCertificate] PRIMARY KEY ([Id]),
     CONSTRAINT [FK_PrintCertificate_PrintBatchItem] FOREIGN KEY ([PrintBatchItemId]) REFERENCES [PrintBatchItem]([Id]),
     CONSTRAINT [FK_PrintCertificate_TqRegistrationPathway] FOREIGN KEY ([TqRegistrationPathwayId]) REFERENCES [TqRegistrationPathway]([Id]),

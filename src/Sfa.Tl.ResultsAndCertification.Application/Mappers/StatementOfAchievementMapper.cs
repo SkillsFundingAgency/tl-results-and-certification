@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
+using System;
 using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
@@ -22,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 {
                     return new List<PrintBatchItem>
                     {
-                        new PrintBatchItem
+                        new()
                         {
                             TlProviderAddressId = m.AddressId,
                             CreatedBy = m.PerformedBy,
@@ -36,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 {
                     return new List<PrintCertificate>
                     {
-                        new PrintCertificate
+                        new()
                         {
                             Uln = m.Uln,
                             LearnerName = m.LearnerName,
@@ -44,7 +45,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                             Type = PrintCertificateType.StatementOfAchievement,
                             LearningDetails = JsonConvert.SerializeObject(m.LearningDetails),
                             DisplaySnapshot = JsonConvert.SerializeObject(m.SoaPrintingDetails),
-                            CreatedBy = m.PerformedBy
+                            CreatedBy = m.PerformedBy,
+                            LastRequestedOn = DateTime.UtcNow
                         }
                     };
                 });
