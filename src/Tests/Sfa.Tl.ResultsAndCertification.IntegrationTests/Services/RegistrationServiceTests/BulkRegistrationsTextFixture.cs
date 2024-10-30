@@ -233,13 +233,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
         public void Dispose()
         {
-            DbCheckpoint.Reset(TestDatabaseConfiguration.GetConnectionString()).GetAwaiter().GetResult();
+            DbCheckpoint.Reset(TestDatabaseConfiguration.IntTestSqlConnectionString).GetAwaiter().GetResult();
             DbContext?.Dispose();
         }
 
         public async Task ResetData()
         {
-            await DbCheckpoint.Reset(TestDatabaseConfiguration.GetConnectionString());
+            await DbCheckpoint.Reset(TestDatabaseConfiguration.IntTestSqlConnectionString);
         }
 
         public List<TqPathwayAssessment> GetPathwayAssessmentsDataToProcess(List<TqRegistrationPathway> pathwayRegistrations, bool seedPathwayAssessmentsAsActive = true, bool isHistorical = false, bool isBulkUpload = true)

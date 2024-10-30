@@ -8,6 +8,7 @@
         public const string VersionConfigKey = "Version";
         public const string ServiceVersionConfigKey = "ServiceVersion";
         public const string ServiceNameConfigKey = "ServiceName";
+        public const string IntTestSqlConnectionString = "IntTestSqlConnectionString";
 
         // LearnerRecordService(LRS) Constants
         public const string LearnerLearningEventsUserType = "LNR";
