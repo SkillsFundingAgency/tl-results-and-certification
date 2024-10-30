@@ -286,6 +286,6 @@
     <value>Request replacement document</value>
   </data>
   <data name="Replacement_Doc_Requested_Template" xml:space="preserve">
-    <value>Replacement document requested on {0}. The document may take up to 3 weeks to arrive.</value>
+    <value>Document requested on {0}. The document may take up to 3 weeks to arrive.</value>
   </data>
 </root>
