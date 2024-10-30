@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.Configuration
 
         static TestDatabaseConfiguration()
         {
-            var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
+            var configuration = new ConfigurationBuilder().AddJsonFile("appsettings.local.json").Build();
             IntTestSqlConnectionString = configuration[Constants.IntTestSqlConnectionString];
         }
 
