@@ -35,6 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.Year, opts => opts.MapFrom(s => s.Year))
                 .ForMember(d => d.StartDate, opts => opts.MapFrom(s => s.StartDate))
                 .ForMember(d => d.EndDate, opts => opts.MapFrom(s => s.EndDate))
+                .ForMember(d => d.ResultPublishDate, opts => opts.MapFrom(s => s.ResultPublishDate))
                 .ForMember(d => d.AppealEndDate, opts => opts.MapFrom(s => s.AppealEndDate));
         }
     }

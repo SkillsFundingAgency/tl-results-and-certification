@@ -10,7 +10,6 @@ using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
-using System;
 using SearchLearnerDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.SearchLearnerDetails;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
@@ -69,7 +68,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.OverallResultPublishDate, opts => opts.MapFrom(s => s.OverallResultPublishDate))
                .ForMember(d => d.LastDocumentRequestedDate, opts => opts.MapFrom(s => s.LastDocumentRequestedDate))
                .ForMember(d => d.Specialisms, opts => opts.MapFrom(s => s.Specialisms))
-               .ForMember(d => d.IsResultsPublishedFromRecentAssessment, opts => opts.MapFrom(s => s.ResultCalculationAssessmentSeries.ResultPublishDate == s.OverallResultPublishDate && DateTime.Today >= s.ResultCalculationAssessmentSeries.ResultPublishDate))
                .ForMember(d => d.IsReprint, opts => opts.MapFrom(s => s.IsReprint == true));
 
             CreateMap<Address, AddressViewModel>()

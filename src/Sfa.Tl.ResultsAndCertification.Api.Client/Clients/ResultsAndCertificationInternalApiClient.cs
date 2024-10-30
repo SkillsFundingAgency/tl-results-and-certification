@@ -241,6 +241,13 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<IList<AssessmentSeriesDetails>>(requestUri);
         }
 
+        // Assessment Series
+        public async Task<AssessmentSeriesDetails> GetResultCalculationAssessmentAsync()
+        {
+            var requestUri = ApiConstants.GetResultCalculationAssessmentUri;
+            return await GetAsync<AssessmentSeriesDetails>(requestUri);
+        }
+
         // Results endpoints
         public async Task<BulkResultResponse> ProcessBulkResultsAsync(BulkProcessRequest model)
         {

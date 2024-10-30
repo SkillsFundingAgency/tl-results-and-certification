@@ -4,6 +4,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using System;
 using System.Collections.Generic;
@@ -60,6 +61,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 
             _routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, Mockresult.ProfileId.ToString() } };
 
+            AssessmentSeriesDetails assessmentSeries = new()
+            {
+                Id = 1,
+                Name = "Test",
+            };
+
+            AssessmentSeriesLoader.GetResultCalculationAssessmentAsync().Returns(assessmentSeries);
+
             TrainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(ProviderUkprn, ProfileId).Returns(Mockresult);
         }
 
@@ -67,6 +76,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         public void Then_Expected_Methods_AreCalled()
         {
             TrainingProviderLoader.Received(1).GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(ProviderUkprn, ProfileId);
+            AssessmentSeriesLoader.Received(1).GetResultCalculationAssessmentAsync();
         }
 
         [Fact]
@@ -169,7 +179,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.SummaryCoreResult.Value.Should().Be(Mockresult.OverallResultDetails.PathwayResult);
 
             // Overall Specialism result details
-            model.SummarySpecialismResult.ForEach(t=>t.Title.Should().Be(Mockresult.OverallResultDetails.SpecialismDetails[0].SpecialismName));
+            model.SummarySpecialismResult.ForEach(t => t.Title.Should().Be(Mockresult.OverallResultDetails.SpecialismDetails[0].SpecialismName));
             model.SummarySpecialismResult.ForEach(t => t.Value.Should().Be(Mockresult.OverallResultDetails.SpecialismDetails[0].SpecialismResult));
 
             // Overall Result

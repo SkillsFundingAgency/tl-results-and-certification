@@ -68,14 +68,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         }
 
         public async Task<LearnerRecordDetails> GetLearnerRecordDetailsAsync(long providerUkprn, int profileId, int? pathwayId = null)
-        {
-            var learnerRecord = await _trainingProviderRepository.GetLearnerRecordDetailsAsync(providerUkprn, profileId, pathwayId);
-
-            if (learnerRecord != null)
-                learnerRecord.ResultCalculationAssessmentSeries = await _overallResultCalculationService.GetResultCalculationAssessmentAsync(DateTime.Now);
-
-            return learnerRecord;
-        }
+            => await _trainingProviderRepository.GetLearnerRecordDetailsAsync(providerUkprn, profileId, pathwayId);
 
         public async Task<bool> UpdateLearnerSubjectAsync(UpdateLearnerSubjectRequest request)
         {

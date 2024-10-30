@@ -44,6 +44,9 @@
         public const string RemoveAssessmentEntryUri = "/api/assessment/RemoveAssessmentEntry";
         public const string GetAssessmentSeriesDetailsUri = "/api/assessment/GetAssessmentSeries";
 
+        // Assessment Series Related Uri's
+        public const string GetResultCalculationAssessmentUri = "/api/assessmentseries/GetResultCalculationAssessment";
+
         // Results Related Uri's
         public const string ProcessBulkResultsUri = "/api/result/ProcessBulkResults";
         public const string GetResultDetailsUri = "/api/result/GetResultDetails/{0}/{1}/{2}";
