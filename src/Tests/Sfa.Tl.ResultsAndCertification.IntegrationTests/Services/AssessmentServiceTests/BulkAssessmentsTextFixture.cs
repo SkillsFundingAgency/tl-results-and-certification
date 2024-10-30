@@ -178,13 +178,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
 
         public void Dispose()
         {
-            DbCheckpoint.Reset(TestDatabaseConfiguration.GetConnectionString()).GetAwaiter().GetResult();
+            DbCheckpoint.Reset(TestDatabaseConfiguration.IntTestSqlConnectionString).GetAwaiter().GetResult();
             DbContext?.Dispose();
         }
 
         public async Task ResetData()
         {
-            await DbCheckpoint.Reset(TestDatabaseConfiguration.GetConnectionString());
+            await DbCheckpoint.Reset(TestDatabaseConfiguration.IntTestSqlConnectionString);
         }
     }
 }
