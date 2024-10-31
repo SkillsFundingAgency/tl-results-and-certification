@@ -59,6 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public bool IsIndustryPlacementStillToBeCompleted => IndustryPlacementStatus == IpStatus.NotSpecified || IndustryPlacementStatus == IpStatus.NotCompleted;
         public RegistrationPathwayStatus RegistrationPathwayStatus { get; set; }
         public bool IsPendingWithdrawal { get; set; }
+        public bool IsResultsPublishedFromRecentAssessment { get; set; }
 
         public bool DisplayOverallResults => OverallResultDetails != null && OverallResultPublishDate.HasValue && DateTime.UtcNow >= OverallResultPublishDate;
         public NotificationBannerModel SuccessBanner { get; set; }
@@ -196,13 +197,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 
         public List<SummaryItemModel> SummarySpecialismResult => GetSummaryItemModels();
 
-
         public SummaryItemModel SummaryOverallResult => new SummaryItemModel
         {
             Id = "overallResult",
             Title = LearnerRecordDetailsContent.Title_OverallResult_Text,
             Value = OverallResultDetails?.OverallResult,
-            ActionText = LearnerRecordDetailsContent.Action_Text_Link_ResultSlip,
+            ActionText = !IsResultsPublishedFromRecentAssessment ? string.Empty : LearnerRecordDetailsContent.Action_Text_Link_ResultSlip,
             RouteName = RouteConstants.DownloadLearnerOverallResultSlipsFile,
             RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } },
             HiddenActionText = LearnerRecordDetailsContent.Hidden_Action_Text_OverallResult

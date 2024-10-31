@@ -62,6 +62,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<bool> RemoveAssessmentEntryAsync(RemoveAssessmentEntryRequest model);
         Task<IList<AssessmentSeriesDetails>> GetAssessmentSeriesAsync();
 
+        // Assessment Series
+        Task<AssessmentSeriesDetails> GetResultCalculationAssessmentAsync();
+
         // Results
         Task<BulkResultResponse> ProcessBulkResultsAsync(BulkProcessRequest model);
         Task<ResultDetails> GetResultDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null);

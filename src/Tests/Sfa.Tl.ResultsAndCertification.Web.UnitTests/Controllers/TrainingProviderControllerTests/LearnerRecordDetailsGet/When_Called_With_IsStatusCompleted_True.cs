@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using Xunit;
 
@@ -17,9 +18,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                 MathsStatus = SubjectStatus.Achieved,
                 EnglishStatus = SubjectStatus.Achieved,
                 IsLearnerRegistered = true,
-                
+
                 IndustryPlacementStatus = IndustryPlacementStatus.Completed
             };
+
+            AssessmentSeriesDetails assessmentSeries = new()
+            {
+                Id = 1,
+                Name = "Test",
+            };
+
+            AssessmentSeriesLoader.GetResultCalculationAssessmentAsync().Returns(assessmentSeries);
+
             TrainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(ProviderUkprn, ProfileId).Returns(Mockresult);
         }
 
@@ -27,6 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         public void Then_Expected_Methods_AreCalled()
         {
             TrainingProviderLoader.Received(1).GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(ProviderUkprn, ProfileId);
+            AssessmentSeriesLoader.Received(1).GetResultCalculationAssessmentAsync();
         }
 
         [Fact]

@@ -1,21 +1,18 @@
 ﻿using FluentAssertions;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProviderControllerTests.LearnerRecordDetailsGet
 {
-    public class When_Called_With_Dual_Specialism_With_NoSpecialismResult:TestSetup
+    public class When_Called_With_Dual_Specialism_With_NoSpecialismResult : TestSetup
     {
         private Dictionary<string, string> _routeAttributes;
         public override void Given()
@@ -48,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                     {
                         new Models.OverallResults.OverallSpecialismDetail
                         {
-                            SpecialismName = "Specialism 1"                          
+                            SpecialismName = "Specialism 1"
                         },
                          new Models.OverallResults.OverallSpecialismDetail
                         {
@@ -63,6 +60,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             };
             _routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, Mockresult.ProfileId.ToString() } };
 
+            AssessmentSeriesDetails assessmentSeries = new()
+            {
+                Id = 1,
+                Name = "Test",
+            };
+
+            AssessmentSeriesLoader.GetResultCalculationAssessmentAsync().Returns(assessmentSeries);
+
             TrainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(ProviderUkprn, ProfileId).Returns(Mockresult);
         }
 
@@ -70,6 +75,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         public void Then_Expected_Methods_AreCalled()
         {
             TrainingProviderLoader.Received(1).GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(ProviderUkprn, ProfileId);
+            AssessmentSeriesLoader.Received(1).GetResultCalculationAssessmentAsync();
         }
 
         [Fact]

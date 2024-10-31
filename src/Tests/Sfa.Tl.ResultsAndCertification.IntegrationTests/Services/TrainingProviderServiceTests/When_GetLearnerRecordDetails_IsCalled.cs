@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
@@ -24,6 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
         private List<TqRegistrationProfile> _profiles;
         private List<PrintCertificate> _printCertificates;
         private LearnerRecordDetails _actualResult;
+        private AssessmentSeries _previousAssessmentSeries;
 
         public override void Given()
         {
@@ -81,11 +83,22 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             PrintCertificateRepositoryLogger = new Logger<GenericRepository<PrintCertificate>>(new NullLoggerFactory());
             PrintCertificateRepository = new GenericRepository<PrintCertificate>(PrintCertificateRepositoryLogger, DbContext);
 
-            TrainingProviderService = new TrainingProviderService(RegistrationProfileRepository, TrainingProviderRepository, BatchRepository, PrintCertificateRepository, TrainingProviderMapper, TrainingProviderServiceLogger);
+            _previousAssessmentSeries = new()
+            {
+                Id = 1,
+                Name = "Summer 2024",
+                StartDate = new DateTime(2024, 03, 12),
+                EndDate = new DateTime(2024, 08, 05),
+                ResultPublishDate = new DateTime(2024, 08, 14)
+            };
+            OverallResultCalculationService.GetResultCalculationAssessmentAsync(DateTime.Now).Returns(_previousAssessmentSeries);
+
+            TrainingProviderService = new TrainingProviderService(RegistrationProfileRepository, TrainingProviderRepository, BatchRepository, PrintCertificateRepository, OverallResultCalculationService, TrainingProviderMapper, TrainingProviderServiceLogger);
         }
 
         public override Task When()
         {
+            OverallResultCalculationService.GetResultCalculationAssessmentAsync(DateTime.Now);
             return Task.CompletedTask;
         }
 

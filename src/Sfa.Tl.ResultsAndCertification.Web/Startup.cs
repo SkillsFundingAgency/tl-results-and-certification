@@ -228,6 +228,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             services.AddTransient<ISystemProvider, SystemProvider>();
             services.AddTransient<ISearchRegistrationLoader, SearchRegistrationLoader>();
             services.AddTransient<IProviderRegistrationsLoader, ProviderRegistrationsLoader>();
+            services.AddTransient<IAssessmentSeriesLoader, AssessmentSeriesLoader>();
         }
     }
 }
