@@ -136,6 +136,9 @@
     },
     "ipSecurityRestrictions": {
       "type": "array"
+    },
+    "tableServiceUri": {
+      "type": "string"
     }
   },
   "variables": {
@@ -147,8 +150,7 @@
     "sqlDatabaseName": "[concat(parameters('resourceNamePrefix'), '-sqldb')]",
     "IntTestSQLDatabaseName": "[concat(parameters('resourceNamePrefix'), '-inttest-sqldb')]",
     "storageAccountName": "[replace(concat(parameters('resourceNamePrefix'), 'str'), '-', '')]",
-    "logAnalyticsName": "[concat(parameters('resourceNamePrefix'), '-la')]",
-    "tableServiceUri": "https://s126d01resacconfigstr.table.core.windows.net/"
+    "logAnalyticsName": "[concat(parameters('resourceNamePrefix'), '-la')]"
   },
   "resources": [
     {
@@ -308,7 +310,7 @@
               },
               {
                 "name": "TableServiceUri",
-                "value": "[variables('tableServiceUri')]"
+                "value": "[parameters('tableServiceUri')]"
               },
               {
                 "name": "Version",
@@ -422,7 +424,7 @@
               },
               {
                 "name": "TableServiceUri",
-                "value": "[variables('tableServiceUri')]"
+                "value": "[parameters('tableServiceUri')]"
               },
               {
                 "name": "Version",
@@ -534,7 +536,7 @@
               },
               {
                 "name": "TableServiceUri",
-                "value": "[variables('tableServiceUri')]"
+                "value": "[parameters('tableServiceUri')]"
               },
               {
                 "name": "Version",
@@ -641,12 +643,12 @@
                 "value": "/api/healthcheck"
               },
               {
-                "name": "WEBSITE_ADD_SITENAME_BINDINGS_IN_APPHOST_CONFIG",
-                "value": "1"
+                "name": "WEBSITE_SWAP_WARMUP_PING_STATUSES",
+                "value": "200, 202"
               },
               {
-                "name": "FUNCTIONS_WORKER_RUNTIME",
-                "value": "dotnet-isolated"
+                "name": "WEBSITE_ADD_SITENAME_BINDINGS_IN_APPHOST_CONFIG",
+                "value": "1"
               }
             ]
           },
@@ -866,30 +868,6 @@
     },
     {
       "apiVersion": "2022-09-01",
-      "name": "[concat('ui-app-service-role-assignment-config-storage-account','-', parameters('environmentNameAbbreviation'))]",
-      "resourceGroup": "[parameters('sharedEnvResourceGroup')]",
-      "type": "Microsoft.Resources/deployments",
-      "properties": {
-        "mode": "Incremental",
-        "templateLink": {
-          "uri": "[concat(variables('deploymentUrlBase'),'/role-assignments/role-assignment-storage-account.json')]",
-          "contentVersion": "1.0.0.0"
-        },
-        "parameters": {
-          "principalId": {
-            "value": "[reference(concat('ui-app-service','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]"
-          },
-          "assignmentType": {
-            "value": "StorageTableDataReader"
-          },
-          "resourceName": {
-            "value": "[parameters('configStorageAccountName')]"
-          }
-        }
-      }
-    },
-    {
-      "apiVersion": "2022-09-01",
       "name": "[concat('internal-api-role-assignment-storage-account','-', parameters('environmentNameAbbreviation'))]",
       "type": "Microsoft.Resources/deployments",
       "properties": {
@@ -984,7 +962,7 @@
     },
     {
       "apiVersion": "2022-09-01",
-      "name": "[concat('sql-server-role-assignment-config-storage-account','-', parameters('environmentNameAbbreviation'))]",
+      "name": "[concat('ui-app-role-assignment-config-storage-account','-', parameters('environmentNameAbbreviation'))]",
       "resourceGroup": "[parameters('sharedEnvResourceGroup')]",
       "type": "Microsoft.Resources/deployments",
       "properties": {
@@ -995,7 +973,7 @@
         },
         "parameters": {
           "principalId": {
-            "value": "ace59269-054b-49a9-8323-4cfe4e7f00a9"
+            "value": "[reference(concat('ui-app-service','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]"
           },
           "assignmentType": {
             "value": "StorageTableDataReader"
@@ -1039,6 +1017,10 @@
     "uiAppServiceManagedServiceIdentityId": {
       "type": "string",
       "value": "[reference(concat('ui-app-service','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]"
+    },
+    "tableServiceUri": {
+      "type": "string",
+      "value": "[parameters('tableServiceUri')]"
     }
   }
 }

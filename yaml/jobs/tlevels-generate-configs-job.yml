@@ -15,7 +15,6 @@ jobs:
       KeyVaultUri: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.sharedKeyVaultUri'] ]
       DataProtectionKeyVaultKeyId: $[stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DataprotectionKey.DataProtectionKeyVaultKeyId']]
       IntTestSqlConnectionString: $[ dependencies.DeploySQLDatabase.outputs['IntTestSqlVariables.IntTestSqlConnectionString'] ]
-      TableStorageUri: https://s126d01resacconfigstr.table.core.windows.net/
 
     pool:
       name: "Azure Pipelines"

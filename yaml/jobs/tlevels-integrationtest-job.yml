@@ -25,7 +25,6 @@
       ConfigurationStorageConnectionString: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.configStorageConnectionString'] ]
       IntTestSqlConnectionString: $[ dependencies.DeploySQLDatabase.outputs['IntTestSqlVariables.IntTestSqlConnectionString'] ]   
       EnvironmentName: ${{ upper(parameters.environmentName) }}
-      TableStorageUri: https://s126d01resacconfigstr.table.core.windows.net/
     steps:
     - script: echo $EnvironmentName
 
