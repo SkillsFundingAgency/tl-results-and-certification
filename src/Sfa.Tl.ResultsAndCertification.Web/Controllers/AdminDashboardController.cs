@@ -1179,7 +1179,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminRequestReplacementDocumentViewModel>(registrationPathwayId);
 
-            if (viewModel == null || !_loader.IsDocumentRerequestEligible(_documentRerequestInDays, viewModel.LastDocumentRequestedDate))
+            if (viewModel == null || !viewModel.IsCertificateRerequestEligible)
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             return View(viewModel);

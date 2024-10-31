@@ -31,11 +31,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
         public SubjectStatus EnglishStatus { get; set; }
         public string OverallResult { get; set; }
 
-        public DateTime? LastPrintCertificateRequestedDate { get; set; }
-
         public bool IsCertificateRerequestEligible { get; set; }
 
+        public DateTime? LastPrintCertificateRequestedDate { get; set; }
+
         public int IndustryPlacementId { get; set; }
+
         public IpStatus IndustryPlacementStatus { get; set; }
 
         public string StartYear => string.Format(LearnerRecordDetailsContent.Start_Year_Value, AcademicYear, AcademicYear + 1);

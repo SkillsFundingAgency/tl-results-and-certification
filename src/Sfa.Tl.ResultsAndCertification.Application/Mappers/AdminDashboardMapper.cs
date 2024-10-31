@@ -66,7 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
             var validTypes = new[] { PrintCertificateType.StatementOfAchievement, PrintCertificateType.Certificate };
 
             PrintCertificate printCertificate = printCertificates.Where(p => p.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active && validTypes.Contains(p.Type))
-                .OrderByDescending(c => c.CreatedOn).FirstOrDefault();
+                .OrderByDescending(c => c.Id).FirstOrDefault();
 
             return getProperty(printCertificate);
         }

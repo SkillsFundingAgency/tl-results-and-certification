@@ -40,6 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                 IndustryPlacementStatus = IndustryPlacementStatus.NotSpecified,
                 OverallResultDetails = null,
                 OverallResultPublishDate = null,
+                PrintCertificateId = 1,
                 LastDocumentRequestedDate = DateTime.Today.AddMonths(-1),
                 IsReprint = true
             };

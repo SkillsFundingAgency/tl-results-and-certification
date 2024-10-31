@@ -26,7 +26,7 @@
             </h1>
         </div>
 
-        @if (!Model.IsCertificateRerequestEligible)
+        @if (!Model.IsCertificateRerequestEligible && Model.LastPrintCertificateRequestedDate.HasValue)
         {
             <div class="govuk-heading-m govuk-!-margin-bottom-9">
                 @string.Format(LearnerRecord.Replacement_Doc_Requested_Template, Model.LastPrintCertificateRequestedDate?.ToString("dd MMMM yyyy"))

@@ -207,7 +207,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> RequestReplacementDocumentAsync(int profileId)
         {
             var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<RequestReplacementDocumentViewModel>(User.GetUkPrn(), profileId);
-            if (viewModel == null || !CommonHelper.IsDocumentRerequestEligible(_configuration.DocumentRerequestInDays, viewModel.LastDocumentRequestedDate))
+            if (viewModel == null || !CommonHelper.IsDocumentRerequestEligible(_configuration.DocumentRerequestInDays, viewModel.PrintCertificateId, viewModel.LastDocumentRequestedDate))
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             return View(viewModel);
@@ -483,7 +483,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (assessment != null)
                 viewModel.IsResultsPublishedFromRecentAssessment = assessment.ResultPublishDate == viewModel.OverallResultPublishDate && DateTime.Today >= assessment.ResultPublishDate;
 
-            viewModel.IsDocumentRerequestEligible = CommonHelper.IsDocumentRerequestEligible(_configuration.DocumentRerequestInDays, viewModel.LastDocumentRequestedDate);
+            viewModel.IsDocumentRerequestEligible = CommonHelper.IsDocumentRerequestEligible(_configuration.DocumentRerequestInDays, viewModel.PrintCertificateId, viewModel.LastDocumentRequestedDate);
 
             viewModel.InformationBanner = await _cacheService.GetAndRemoveAsync<InformationBannerModel>(InformationCacheKey);
             viewModel.SuccessBanner = await _cacheService.GetAndRemoveAsync<NotificationBannerModel>(CacheKey);

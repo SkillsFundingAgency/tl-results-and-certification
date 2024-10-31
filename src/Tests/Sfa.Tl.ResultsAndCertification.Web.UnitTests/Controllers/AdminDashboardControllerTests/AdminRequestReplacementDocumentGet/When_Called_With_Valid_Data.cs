@@ -33,7 +33,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             },
             PrintCertificateId = 1000,
             PrintCertificateType = PrintCertificateType.StatementOfAchievement,
-            LastDocumentRequestedDate = new DateTime(2024, 1, 1)
+            LastDocumentRequestedDate = new DateTime(2024, 1, 1),
+            IsCertificateRerequestEligible = true
         };
 
         public override void Given()
@@ -41,10 +42,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             AdminDashboardLoader
                 .GetAdminLearnerRecordAsync<AdminRequestReplacementDocumentViewModel>(RegistrationPathwayId)
                 .Returns(_mockResult);
-
-            AdminDashboardLoader.
-                IsDocumentRerequestEligible(ResultsAndCertificationConfiguration.DocumentRerequestInDays, _mockResult.LastDocumentRequestedDate)
-                .Returns(true);
         }
 
         [Fact]
