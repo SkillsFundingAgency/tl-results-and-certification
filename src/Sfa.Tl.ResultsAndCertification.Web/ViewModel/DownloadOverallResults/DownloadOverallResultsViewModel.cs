@@ -10,8 +10,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.DownloadResults
     {
         public bool IsOverallResultsAvailable { get; set; }
 
-        public long ResultSlipsFileSizeKb { get; set; }
-
         public BreadcrumbModel Breadcrumb
         {
             get

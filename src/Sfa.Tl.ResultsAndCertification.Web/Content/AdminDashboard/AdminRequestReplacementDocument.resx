@@ -1,0 +1,195 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Button_Accept_And_Request" xml:space="preserve">
+    <value>Accept and request</value>
+  </data>
+  <data name="Button_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="By_Submitting_Request_You_Are_Confirming" xml:space="preserve">
+    <value>By submitting this request you are confirming that, to the best of your knowledge, the details you are providing are correct.</value>
+  </data>
+  <data name="Caption_Request_Replacement_Document" xml:space="preserve">
+    <value>Request replacement document</value>
+  </data>
+  <data name="Document_Certificate" xml:space="preserve">
+    <value>Certificate</value>
+  </data>
+  <data name="Document_Statement_Of_Achievement" xml:space="preserve">
+    <value>Statement of Achievement</value>
+  </data>
+  <data name="Heading_Check_Details_Before_Sending" xml:space="preserve">
+    <value>Check the learner's details before sending your request</value>
+  </data>
+  <data name="List_Item_English_Maths_Achievements" xml:space="preserve">
+    <value>English and maths achievements</value>
+  </data>
+  <data name="List_Item_Grades" xml:space="preserve">
+    <value>grades</value>
+  </data>
+  <data name="List_Item_Industry_Placement_Status" xml:space="preserve">
+    <value>industry placement status</value>
+  </data>
+  <data name="Now_Send_Your_Request" xml:space="preserve">
+    <value>Now send your request</value>
+  </data>
+  <data name="Page_Title" xml:space="preserve">
+    <value>Request a replacement document</value>
+  </data>
+  <data name="Para_Check_Data_Before_Submit" xml:space="preserve">
+    <value>Check this data is correct or make any changes before submitting your request.</value>
+  </data>
+  <data name="Para_Request_If_Lost_Or_Damaged" xml:space="preserve">
+    <value>Request a replacement document if it has been lost or damaged.</value>
+  </data>
+  <data name="Para_This_Means_Result_May_Not_Match" xml:space="preserve">
+    <value>This means that the results in the document may not match the results shown in the learner’s record.</value>
+  </data>
+  <data name="Para_Updated_Document_Sent_If_Any_Component_Changes" xml:space="preserve">
+    <value>If any components have changed within this learner’s record, you will automatically be sent an updated document within the next two months.</value>
+  </data>
+  <data name="Para_You_Receive_Previous_Certificate_Or_Soa" xml:space="preserve">
+    <value>The document you will receive will be a copy of the previous certificate or statement of achievement. It may not reflect any changes to:</value>
+  </data>
+  <data name="Postal_Address" xml:space="preserve">
+    <value>Postal address</value>
+  </data>
+  <data name="Success_Header_Replacement_Document_Requested" xml:space="preserve">
+    <value>A replacement document has been requested</value>
+  </data>
+  <data name="Success_Message_Replacement_Documents" xml:space="preserve">
+    <value>&lt;p class="govuk-body"&gt;Replacement documents can take up to 3 weeks to arrive.  If you have not received the learner’s document within 3 weeks, please &lt;a class="govuk-notification-banner__link" href="/contact-us"&gt;contact us&lt;/a&gt;.&lt;/p&gt;</value>
+  </data>
+  <data name="Title_Department" xml:space="preserve">
+    <value>Department</value>
+  </data>
+  <data name="Title_Document_Requested" xml:space="preserve">
+    <value>Document requested</value>
+  </data>
+  <data name="Title_Organisation_Address" xml:space="preserve">
+    <value>Organisation's address</value>
+  </data>
+  <data name="Title_Provider_Ukprn_Name_Text" xml:space="preserve">
+    <value>Provider (UKPRN)</value>
+  </data>
+  <data name="Uln_Text" xml:space="preserve">
+    <value>ULN:</value>
+  </data>
+</root>

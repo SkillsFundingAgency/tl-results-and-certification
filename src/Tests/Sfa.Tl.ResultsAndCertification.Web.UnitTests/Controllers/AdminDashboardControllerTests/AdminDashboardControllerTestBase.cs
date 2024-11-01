@@ -40,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             CacheService = Substitute.For<ICacheService>();
             ResultsAndCertificationConfiguration = new ResultsAndCertificationConfiguration { DocumentRerequestInDays = 21 };
             Logger = Substitute.For<ILogger<AdminDashboardController>>();
-            Controller = new AdminDashboardController(AdminDashboardLoader, ProviderLoader, IndustryPlacementLoader, CacheService, Logger);
+            Controller = new AdminDashboardController(AdminDashboardLoader, ProviderLoader, IndustryPlacementLoader, CacheService, Logger, ResultsAndCertificationConfiguration);
 
             ProviderUkprn = 1234567890;
             var httpContext = new ClaimsIdentityBuilder<AdminDashboardController>(Controller)

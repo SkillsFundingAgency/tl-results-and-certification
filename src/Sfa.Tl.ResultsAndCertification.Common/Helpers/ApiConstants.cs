@@ -120,6 +120,8 @@
 
         public const string GetDataExportUri = "/api/DataExport/GetDataExport/{0}/{1}/{2}";
         public const string DownloadOverallResultsDataUri = "/api/DataExport/DownloadOverallResultsData/{0}/{1}";
+        public const string DownloadOverallResultSlipsDataUri = "/api/DataExport/DownloadOverallResultSlipsData/{0}/{1}";
+        public const string DownloadLearnerOverallResultSlipsDataUri = "/api/DataExport/DownloadLearnerOverallResultSlipsData/{0}/{1}/{2}";
 
         // Industry Placement Upload
         public const string ProcessBulkIndustryPlacementsUri = "/api/industryplacement/ProcessBulkIndustryPlacements";
@@ -143,6 +145,9 @@
 
         public const string ProcessAdminChangePathwayResult = "/api/admindashboard/ProcessAdminChangePathwayResult";
         public const string ProcessAdminChangeSpecialismResult = "/api/admindashboard/ProcessAdminChangeSpecialismResult";
+
+        public const string ProcessAdminCreateReplacementDocumentPrintingRequestUri = "/api/admindashboard/ProcessAdminCreateReplacementDocumentPrintingRequest";
+
         // Admin change log
         public const string SearchChangeLogsUri = "/api/adminchangelog/SearchChangeLogs";
         public const string GetAdminChangeLogRecord = "/api/adminchangelog/GetAdminChangeLogRecord/{0}";

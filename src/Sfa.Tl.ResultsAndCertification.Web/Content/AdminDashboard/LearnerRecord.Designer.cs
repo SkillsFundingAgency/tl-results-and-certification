@@ -187,6 +187,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Request replacement document.
+        /// </summary>
+        public static string Button_Request_Replacement_Document {
+            get {
+                return ResourceManager.GetString("Button_Request_Replacement_Document", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change result.
         /// </summary>
         public static string Change_Result_Action_Link_Text {
@@ -291,6 +300,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         public static string Personal_Details_Text {
             get {
                 return ResourceManager.GetString("Personal_Details_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Replacement document requested on {0}. The document may take up to 3 weeks to arrive..
+        /// </summary>
+        public static string Replacement_Doc_Requested_Template {
+            get {
+                return ResourceManager.GetString("Replacement_Doc_Requested_Template", resourceCulture);
             }
         }
         

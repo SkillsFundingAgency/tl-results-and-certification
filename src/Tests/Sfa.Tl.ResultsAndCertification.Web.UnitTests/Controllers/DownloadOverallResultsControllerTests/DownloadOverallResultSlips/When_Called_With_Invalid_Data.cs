@@ -11,13 +11,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DownloadOvera
     {
         public override void Given()
         {
-            DownloadOverallResultsLoader.DownloadOverallResultSlipsAsync(ProviderUkprn).Returns(null as FileStream);
+            DownloadOverallResultsLoader.DownloadOverallResultSlipsDataAsync(ProviderUkprn, Email).Returns(null as FileStream);
         }
 
         [Fact]
         public void Then_Expected_Methods_Called()
         {
-            DownloadOverallResultsLoader.Received(1).DownloadOverallResultSlipsAsync(ProviderUkprn);
+            DownloadOverallResultsLoader.Received(1).DownloadOverallResultSlipsDataAsync(ProviderUkprn, Email);
         }
 
         [Fact]

@@ -2,11 +2,13 @@
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Comparer;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
@@ -14,6 +16,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,11 +27,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
     {
         private readonly IResultsAndCertificationInternalApiClient _internalApiClient;
         private readonly IMapper _mapper;
+        private readonly ResultsAndCertificationConfiguration _config;
 
-        public AdminDashboardLoader(IResultsAndCertificationInternalApiClient internalApiClient, IMapper mapper)
+        public AdminDashboardLoader(
+            IResultsAndCertificationInternalApiClient internalApiClient,
+            IMapper mapper,
+            ResultsAndCertificationConfiguration config)
         {
             _internalApiClient = internalApiClient;
             _mapper = mapper;
+            _config = config;
         }
 
         public async Task<AdminSearchLearnerFiltersViewModel> GetAdminSearchLearnerFiltersAsync()
@@ -52,6 +60,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             TLearnerRecordViewModel response = _mapper.Map<TLearnerRecordViewModel>(learnerRecord, opt =>
             {
                 opt.Items[Constants.RegistrationPathwayId] = learnerRecord.RegistrationPathwayId;
+                opt.Items[Constants.CertificateRerequestDays] = _config.DocumentRerequestInDays;
             });
 
             return response;
@@ -332,6 +341,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var request = _mapper.Map<ChangeSpecialismResultRequest>(model);
 
             return _internalApiClient.ProcessAdminChangeSpecialismResultAsync(request);
+        }
+
+        #endregion
+
+        #region Request new replacement document
+
+        public bool IsDocumentRerequestEligible(int documentRerequestInDays, DateTime? lastPrintRequestedDate)
+           => CommonHelper.IsDocumentRerequestEligible(documentRerequestInDays, lastPrintRequestedDate);
+
+        public Task<bool> CreateReplacementDocumentPrintingRequestAsync(AdminRequestReplacementDocumentViewModel viewModel)
+        {
+            var request = _mapper.Map<ReplacementPrintRequest>(viewModel);
+            return _internalApiClient.ProcessAdminCreateReplacementDocumentPrintingRequestAsync(request);
         }
 
         #endregion

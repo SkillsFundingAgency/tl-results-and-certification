@@ -114,6 +114,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 
         Task<IList<DataExportResponse>> GenerateDataExportAsync(long aoUkprn, DataExportType dataExportType, string requestedBy);
         Task<DataExportResponse> DownloadOverallResultsDataAsync(long providerUkprn, string requestedBy);
+        Task<DataExportResponse> DownloadOverallResultSlipsDataAsync(long providerUkprn, string requestedBy);
+        Task<DataExportResponse> DownloadLearnerOverallResultSlipsDataAsync(long providerUkprn, int profileId, string requestedBy);
 
         // Industry Placement Bulk Upload
         Task<BulkIndustryPlacementResponse> ProcessBulkIndustryPlacementsAsync(BulkProcessRequest model);
@@ -195,6 +197,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<IList<int>> GetProviderRegistrationsAvailableStartYearsAsync();
 
         Task<DataExportResponse> GetProviderRegistrationsAsync(GetProviderRegistrationsRequest request);
+
+        #endregion
+
+        #region Request replacement document
+
+        Task<bool> ProcessAdminCreateReplacementDocumentPrintingRequestAsync(ReplacementPrintRequest request);
 
         #endregion
     }

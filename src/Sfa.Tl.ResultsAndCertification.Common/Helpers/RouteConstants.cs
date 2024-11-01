@@ -401,6 +401,7 @@
         public const string DownloadOverallResultsPage = "DownloadOverallResultsPage";
         public const string DownloadOverallResultsFile = "DownloadOverallResultsFile";
         public const string DownloadOverallResultSlipsFile = "DownloadOverallResultSlipsFile";
+        public const string DownloadLearnerOverallResultSlipsFile = "DownloadLearnerOverallResultSlipsFile";
         #endregion
 
         #region Industry Placement Import
@@ -479,6 +480,9 @@
         public const string AdminChangePathwayResultReviewChanges = "AdminChangePathwayResultReviewChanges";
         public const string SubmitAdminChangePathwayResultReviewChanges = "SubmitAdminChangePathwayResultReviewChanges";
         public const string SubmitAdminChangeSpecialismResultReviewChanges = "SubmitAdminChangeSpecialismResultReviewChanges";
+
+        public const string AdminRequestReplacementDocument = "AdminRequestReplacementDocument";
+        public const string SubmitAdminRequestReplacementDocument = "SubmitAdminRequestReplacementDocument";
 
         #endregion
 

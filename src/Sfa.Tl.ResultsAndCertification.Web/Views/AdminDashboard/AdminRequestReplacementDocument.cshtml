@@ -1,0 +1,66 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.AdminRequestReplacementDocumentViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+@{
+    ViewData["Title"] = AdminRequestReplacementDocument.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-xl">@AdminRequestReplacementDocument.Caption_Request_Replacement_Document</span>
+        <h1 class="govuk-heading-l govuk-!-margin-bottom-3">
+            @AdminRequestReplacementDocument.Heading_Check_Details_Before_Sending
+        </h1>
+
+        <p class="govuk-body">@AdminRequestReplacementDocument.Para_Request_If_Lost_Or_Damaged</p>
+        <p class="govuk-body">@AdminRequestReplacementDocument.Para_You_Receive_Previous_Certificate_Or_Soa</p>
+        <ul class="govuk-list govuk-list--bullet">
+            <li>@AdminRequestReplacementDocument.List_Item_Grades</li>
+            <li>@AdminRequestReplacementDocument.List_Item_Industry_Placement_Status</li>
+            <li>@AdminRequestReplacementDocument.List_Item_English_Maths_Achievements</li>
+        </ul>
+        <p class="govuk-body">@AdminRequestReplacementDocument.Para_This_Means_Result_May_Not_Match</p>
+        <p class="govuk-body">@AdminRequestReplacementDocument.Para_Updated_Document_Sent_If_Any_Component_Changes</p>
+        <p class="govuk-body">@AdminRequestReplacementDocument.Para_Check_Data_Before_Submit</p>
+    </div>
+</div>
+
+<div class="govuk-grid-row govuk-!-margin-top-4 govuk-!-margin-bottom-9">
+    <div class="govuk-grid-column-two-thirds">
+        <form asp-route="@RouteConstants.SubmitAdminRequestReplacementDocument">
+            <input type="hidden" asp-for="RegistrationPathwayId" value="@Model.RegistrationPathwayId" />
+            <input type="hidden" asp-for="Uln" value="@Model.Uln" />
+            <input type="hidden" asp-for="PrintCertificateId" value="@Model.PrintCertificateId" />
+            <input type="hidden" asp-for="ProviderUkprn" value="@Model.ProviderUkprn" />
+            <input type="hidden" asp-for="ProviderAddress.AddressId" value="@Model.ProviderAddress.AddressId" />
+            <div class="record-header">
+                <h2 class="govuk-heading-xl govuk-!-margin-bottom-0">@Model.LearnerName</h2>
+                <span class="govuk-caption-xl">@AdminRequestReplacementDocument.Uln_Text @Model.Uln</span>
+            </div>
+
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+                <vc:summary-item model=Model.SummaryDocumentRequested></vc:summary-item>
+            </dl>
+
+            <h2 class="govuk-heading-m">@AdminRequestReplacementDocument.Postal_Address</h2>
+            <dl class="govuk-summary-list govuk-!-margin-bottom-9 govuk-summary-list">
+                <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
+                <vc:summary-item model=Model.SummaryDepartment></vc:summary-item>
+                <vc:summary-item model=Model.SummaryOrganisationAddress></vc:summary-item>
+            </dl>
+
+            <h2 class="govuk-heading-m">@AdminRequestReplacementDocument.Now_Send_Your_Request</h2>
+            <p class="govuk-body">@AdminRequestReplacementDocument.By_Submitting_Request_You_Are_Confirming</p>
+        
+            <div class="govuk-button-group">
+                <button type="submit" class="govuk-button govuk-!-display-block" name="certificateStatus" data-module="govuk-button" data-prevent-double-click="true">@AdminRequestReplacementDocument.Button_Accept_And_Request</button>
+                <a id="returnButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@AdminRequestReplacementDocument.Button_Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

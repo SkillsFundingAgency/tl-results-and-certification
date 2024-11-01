@@ -1,6 +1,5 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord.AdminLearnerRecordViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
-@using Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider
 @using Sfa.Tl.ResultsAndCertification.Common.Helpers
 @using Sfa.Tl.ResultsAndCertification.Common.Extensions
 
@@ -9,7 +8,7 @@
 }
 
 @section NavigationBar
-    {
+{
     <vc:back-link model=Model.BackLink></vc:back-link>
 }
 
@@ -26,6 +25,13 @@
                 @Model.LearnerName
             </h1>
         </div>
+
+        @if (!Model.IsCertificateRerequestEligible)
+        {
+            <div class="govuk-heading-m govuk-!-margin-bottom-9">
+                @string.Format(LearnerRecord.Replacement_Doc_Requested_Template, Model.LastPrintCertificateRequestedDate?.ToString("dd MMMM yyyy"))
+            </div>
+        }
 
         <h2 class="govuk-heading-m">@LearnerRecord.Personal_Details_Text</h2>
         <dl class="govuk-summary-list govuk-!-margin-bottom-9 govuk-summary-list">
@@ -62,6 +68,11 @@
 
         <div class="govuk-button-group govuk-!-margin-top-9">
             <a id="searchAgainButton" class="govuk-button" role="button" asp-route="@RouteConstants.AdminSearchLearnersRecords">@LearnerRecord.Search_Again_Text</a>
+
+            @if (Model.IsCertificateRerequestEligible)
+            {
+                <a id="requestReplacementDocumentButton" class="govuk-button" role="button" asp-route="@RouteConstants.AdminRequestReplacementDocument" asp-route-registrationPathwayId="@Model.RegistrationPathwayId">@LearnerRecord.Button_Request_Replacement_Document</a>
+            }
         </div>
     </div>
 </div>

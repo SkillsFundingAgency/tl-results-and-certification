@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("download-tlevel-results", Name = RouteConstants.DownloadOverallResultsPage)]
-        public async Task<IActionResult> DownloadOverallResults()
+        public IActionResult DownloadOverallResults()
         {
             var viewModel = new DownloadOverallResultsViewModel
             {
@@ -39,10 +39,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                     _configuration.OverallResultsAvailableDate == null ||
                     DateTime.Today >= _configuration.OverallResultsAvailableDate
             };
-
-            var fileStream = await _downloadOverallResultsLoader.DownloadOverallResultSlipsAsync(User.GetUkPrn());
-
-            viewModel.ResultSlipsFileSizeKb = fileStream == null ? 0 : fileStream.Length / 1024;
 
             return View(viewModel);
         }
@@ -65,15 +61,32 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             };
         }
 
-
         [HttpGet]
         [Route("download-tlevel-result-slips-file", Name = RouteConstants.DownloadOverallResultSlipsFile)]
-        public async Task<IActionResult> DownloadOverallResultSlipsAsync()
+        public async Task<IActionResult> DownloadOverallResultSlipsFileAsync()
         {
-            var fileStream = await _downloadOverallResultsLoader.DownloadOverallResultSlipsAsync(User.GetUkPrn());
+            var fileStream = await _downloadOverallResultsLoader.DownloadOverallResultSlipsDataAsync(User.GetUkPrn(), User.GetUserEmail());
             if (fileStream == null)
             {
-                _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download overall result slips. Method: DownloadOverallResultsDataAsync({User.GetUkPrn()})");
+                _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download overall results. Method: DownloadOverallResultSlipsDataAsync({User.GetUkPrn()}, {User.GetUserEmail()})");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            fileStream.Position = 0;
+            return new FileStreamResult(fileStream, "application/pdf")
+            {
+                FileDownloadName = DownloadOverallResultContent.Download_ResultSlips_Filename
+            };
+        }
+
+        [HttpGet]
+        [Route("download-learner-tlevel-result-slips-file/{profileId}", Name = RouteConstants.DownloadLearnerOverallResultSlipsFile)]
+        public async Task<IActionResult> DownloadLearnerOverallResultSlipsFileAsync(int profileId)
+        {
+            var fileStream = await _downloadOverallResultsLoader.DownloadLearnerOverallResultSlipsDataAsync(User.GetUkPrn(), profileId, User.GetUserEmail());
+            if (fileStream == null)
+            {
+                _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download overall results. Method: DownloadLearnerOverallResultSlipsDataAsync({User.GetUkPrn()}, {profileId} ,{User.GetUserEmail()})");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
