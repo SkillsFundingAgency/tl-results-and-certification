@@ -160,10 +160,10 @@
     <value>Not yet received</value>
   </data>
   <data name="Status_No_They_Still_Need_To_Complete_It" xml:space="preserve">
-    <value>No, they still need to complete it</value>
+    <value>No, they are still working towards completion of their industry placement</value>
   </data>
   <data name="Status_No_They_Will_Not_Complete_It" xml:space="preserve">
-    <value>No, they will not complete it</value>
+    <value>No, they will not complete their placement</value>
   </data>
   <data name="Status_Placement_Completed_Text" xml:space="preserve">
     <value>Placement completed</value>
