@@ -332,8 +332,7 @@
             ]
           },
           "appServiceConnectionStrings": {
-            "value": [
-            ]
+            "value": []
           },
           "customHostName": {
             "value": "[parameters('uiCustomHostName')]"
@@ -442,8 +441,7 @@
             ]
           },
           "appServiceConnectionStrings": {
-            "value": [
-            ]
+            "value": []
           },
           "customHostName": {
             "value": "[parameters('internalApiCustomHostname')]"
@@ -462,7 +460,6 @@
       "dependsOn": [
         "[concat('internal-api-app-service-certificate','-', parameters('environmentNameAbbreviation'))]",
         "[concat('app-insights','-', parameters('environmentNameAbbreviation'))]"
-
       ]
     },
     {
@@ -636,8 +633,8 @@
                 "value": "1"
               },
               {
-                "name": "FUNCTIONS_WORKER_RUNTIME",
-                "value": "dotnet-isolated"
+                "name": "WEBSITE_SWAP_WARMUP_PING_STATUSES",
+                "value": "200"
               }
             ]
           },
