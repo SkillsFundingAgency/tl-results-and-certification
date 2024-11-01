@@ -16,7 +16,6 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacem
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminPostResults;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,7 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.IsPendingWithdrawal, opts => opts.MapFrom(s => s.IsPendingWithdrawl))
                 .ForMember(d => d.OverallResult, opts => opts.MapFrom(s => s.OverallResult))
                 .ForMember(d => d.LastPrintCertificateRequestedDate, opts => opts.MapFrom(s => s.LastPrintCertificateRequestedDate))
-                .ForMember(d => d.IsCertificateRerequestEligible, opts => opts.MapFrom((src, dest, destMember, context) => CommonHelper.IsDocumentRerequestEligible((int)context.Items[Constants.CertificateRerequestDays], src.LastPrintCertificateRequestedDate)));
+                .ForMember(d => d.IsCertificateRerequestEligible, opts => opts.MapFrom((src, dest, destMember, context) => CommonHelper.IsDocumentRerequestEligible((int)context.Items[Constants.CertificateRerequestDays], src.PrintCertificateId, src.LastPrintCertificateRequestedDate)));
 
             CreateMap<Pathway, AdminAssessmentDetailsViewModel>()
                 .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom((src, dest, destMember, context) => context.Items[Constants.RegistrationPathwayId]))
@@ -551,9 +550,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.Pathway.Provider.Name))
                 .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.Pathway.Provider.Ukprn))
                 .ForMember(d => d.ProviderAddress, opts => opts.MapFrom(s => s.ProviderAddress))
-                .ForMember(d => d.PrintCertificateId, opts => opts.MapFrom(s => s.PrintCertificateId))
-                .ForMember(d => d.PrintCertificateType, opts => opts.MapFrom(s => s.PrintCertificateType))
-                .ForMember(d => d.LastDocumentRequestedDate, opts => opts.MapFrom(s => s.LastPrintCertificateRequestedDate));
+                .ForMember(d => d.LastDocumentRequestedDate, opts => opts.MapFrom(s => s.LastPrintCertificateRequestedDate))
+                .ForMember(d => d.IsCertificateRerequestEligible, opts => opts.MapFrom((src, dest, destMember, context) => CommonHelper.IsDocumentRerequestEligible((int)context.Items[Constants.CertificateRerequestDays], src.PrintCertificateId, src.LastPrintCertificateRequestedDate)));
 
             CreateMap<AdminRequestReplacementDocumentViewModel, ReplacementPrintRequest>()
                 .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.ProviderUkprn))

@@ -27,6 +27,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
 
         public PrintCertificateType? PrintCertificateType { get; set; }
 
+        public bool IsCertificateRerequestEligible { get; set; }
+
         public DateTime? LastDocumentRequestedDate { get; set; }
 
         public SummaryItemModel SummaryDocumentRequested =>

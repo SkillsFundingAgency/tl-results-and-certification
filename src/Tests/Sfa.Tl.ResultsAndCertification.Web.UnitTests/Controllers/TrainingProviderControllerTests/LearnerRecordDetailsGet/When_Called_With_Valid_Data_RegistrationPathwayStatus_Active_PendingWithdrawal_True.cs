@@ -55,6 +55,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                     OverallResult = "Distinction"
                 },
                 OverallResultPublishDate = DateTime.UtcNow,
+                PrintCertificateId = 1,
                 LastDocumentRequestedDate = "01/01/2022".ToDateTime(),
                 IsReprint = false
             };

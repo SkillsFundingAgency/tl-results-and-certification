@@ -347,9 +347,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         #region Request new replacement document
 
-        public bool IsDocumentRerequestEligible(int documentRerequestInDays, DateTime? lastPrintRequestedDate)
-           => CommonHelper.IsDocumentRerequestEligible(documentRerequestInDays, lastPrintRequestedDate);
-
         public Task<bool> CreateReplacementDocumentPrintingRequestAsync(AdminRequestReplacementDocumentViewModel viewModel)
         {
             var request = _mapper.Map<ReplacementPrintRequest>(viewModel);

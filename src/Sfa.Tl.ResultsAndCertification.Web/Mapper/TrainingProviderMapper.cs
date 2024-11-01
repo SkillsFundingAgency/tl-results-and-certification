@@ -68,7 +68,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.OverallResultPublishDate, opts => opts.MapFrom(s => s.OverallResultPublishDate))
                .ForMember(d => d.LastDocumentRequestedDate, opts => opts.MapFrom(s => s.LastDocumentRequestedDate))
                .ForMember(d => d.Specialisms, opts => opts.MapFrom(s => s.Specialisms))
-               .ForMember(d => d.IsReprint, opts => opts.MapFrom(s => s.IsReprint == true));
+               .ForMember(d => d.IsReprint, opts => opts.MapFrom(s => s.IsReprint == true))
+               .ForMember(d => d.PrintCertificateId, opts => opts.MapFrom(s => s.PrintCertificateId));
 
             CreateMap<Address, AddressViewModel>()
                 .ForMember(d => d.AddressId, opts => opts.MapFrom(s => s.AddressId))
