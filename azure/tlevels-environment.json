@@ -32,7 +32,7 @@
     "sqlserverlessAutoPauseDelay": {
       "type": "string"
     },
-	"configurationStorageConnectionString": {
+    "configurationStorageConnectionString": {
       "type": "securestring"
     },
     "uiCustomHostName": {
@@ -136,6 +136,9 @@
     },
     "ipSecurityRestrictions": {
       "type": "array"
+    },
+    "tableServiceUri": {
+      "type": "string"
     }
   },
   "variables": {
@@ -147,8 +150,7 @@
     "sqlDatabaseName": "[concat(parameters('resourceNamePrefix'), '-sqldb')]",
     "IntTestSQLDatabaseName": "[concat(parameters('resourceNamePrefix'), '-inttest-sqldb')]",
     "storageAccountName": "[replace(concat(parameters('resourceNamePrefix'), 'str'), '-', '')]",
-    "logAnalyticsName": "[concat(parameters('resourceNamePrefix'), '-la')]",
-	"tableServiceUri": "[concat('https://s126', parameters('resourceNamePrefix'), 'resacconfigstr.table.core.windows.net/')]"
+    "logAnalyticsName": "[concat(parameters('resourceNamePrefix'), '-la')]"
   },
   "resources": [
     {
@@ -302,13 +304,13 @@
                 "name": "EnvironmentName",
                 "value": "[toUpper(parameters('environmentNameAbbreviation'))]"
               },
-			  {
+              {
                 "name": "ConfigurationStorageConnectionString",
                 "value": "[parameters('configurationStorageConnectionString')]"
               },
               {
                 "name": "TableServiceUri",
-                "value": "[variables('tableServiceUri')]"
+                "value": "[parameters('tableServiceUri')]"
               },
               {
                 "name": "Version",
@@ -416,7 +418,7 @@
                 "name": "EnvironmentName",
                 "value": "[toUpper(parameters('environmentNameAbbreviation'))]"
               },
-			  {
+              {
                 "name": "ConfigurationStorageConnectionString",
                 "value": "[parameters('configurationStorageConnectionString')]"
               },
@@ -528,7 +530,7 @@
                 "name": "EnvironmentName",
                 "value": "[toUpper(parameters('environmentNameAbbreviation'))]"
               },
-			  {
+              {
                 "name": "ConfigurationStorageConnectionString",
                 "value": "[parameters('configurationStorageConnectionString')]"
               },
@@ -818,7 +820,7 @@
         }
       }
     },
-        {
+    {
       "apiVersion": "2022-09-01",
       "name": "[concat('ui-app-service-role-assignment-storage-account','-', parameters('environmentNameAbbreviation'))]",
       "type": "Microsoft.Resources/deployments",
@@ -988,7 +990,7 @@
       "type": "string",
       "value": "[reference(concat('function-app','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]"
     },
-        "uiAppServiceManagedServiceIdentityId": {
+    "uiAppServiceManagedServiceIdentityId": {
       "type": "string",
       "value": "[reference(concat('ui-app-service','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]"
     }
