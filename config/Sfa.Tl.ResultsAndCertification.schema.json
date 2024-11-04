@@ -17,6 +17,10 @@
       "type": "string",
       "environmentVariable": "BlobContainerUriTemplate"
     },
+    "tableServiceUri": {
+      "type": "string",
+      "environmentVariable": "tableServiceUri"
+    },
     "GovUkNotifyApiKey": {
       "type": "string",
       "environmentVariable": "GovUkNotifyApiKey"
@@ -577,7 +581,8 @@
     "SpecialismRommExtractSettings",
     "ProviderAddressExtractSettings",
     "UcasTransferAmendmentsSettings",
-    "CertificateTrackingExtractSettings"
+    "CertificateTrackingExtractSettings",
+    "tableServiceUri"
   ],
   "type": "object"
 }
