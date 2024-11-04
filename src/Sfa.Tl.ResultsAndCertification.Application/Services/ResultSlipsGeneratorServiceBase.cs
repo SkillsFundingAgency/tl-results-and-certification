@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _blobStorageService = blobStorageService;
             _logger = logger;
 
-            //SetAsposeLicence();
+            SetAsposeLicence();
         }
 
         private async void SetAsposeLicence()
