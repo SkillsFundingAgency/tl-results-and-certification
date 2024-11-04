@@ -630,6 +630,14 @@
               {
                 "name": "WEBSITE_SWAP_WARMUP_PING_PATH",
                 "value": "/api/healthcheck"
+              },
+              {
+                "name": "WEBSITE_SWAP_WARMUP_PING_STATUSES",
+                "value": "200"
+              },
+              {
+                "name": "WEBSITE_ADD_SITENAME_BINDINGS_IN_APPHOST_CONFIG",
+                "value": "1"
               }
             ]
           },
