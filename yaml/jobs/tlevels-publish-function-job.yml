@@ -48,9 +48,6 @@ jobs:
       ResourceGroupName: '$(ResourceGroupName)'
       Slot: 'staging'
 
-  - powershell: 'Start-Sleep -Seconds 120'
-    displayName: 'Wait 2 minutes before swapping'
-
   - task: AzureAppServiceManage@0
     displayName: 'Swap Slots: $(FunctionAppName)'
     inputs:
