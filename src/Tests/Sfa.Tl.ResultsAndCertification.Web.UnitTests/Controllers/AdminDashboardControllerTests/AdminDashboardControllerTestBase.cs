@@ -5,7 +5,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
-using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
@@ -21,7 +20,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         protected IProviderLoader ProviderLoader;
         protected IIndustryPlacementLoader IndustryPlacementLoader;
         protected ICacheService CacheService;
-        protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
         protected ILogger<AdminDashboardController> Logger;
         protected AdminDashboardController Controller;
 
@@ -38,9 +36,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             ProviderLoader = Substitute.For<IProviderLoader>();
             IndustryPlacementLoader = Substitute.For<IIndustryPlacementLoader>();
             CacheService = Substitute.For<ICacheService>();
-            ResultsAndCertificationConfiguration = new ResultsAndCertificationConfiguration { DocumentRerequestInDays = 21 };
             Logger = Substitute.For<ILogger<AdminDashboardController>>();
-            Controller = new AdminDashboardController(AdminDashboardLoader, ProviderLoader, IndustryPlacementLoader, CacheService, Logger, ResultsAndCertificationConfiguration);
+            Controller = new AdminDashboardController(AdminDashboardLoader, ProviderLoader, IndustryPlacementLoader, CacheService, Logger);
 
             ProviderUkprn = 1234567890;
             var httpContext = new ClaimsIdentityBuilder<AdminDashboardController>(Controller)

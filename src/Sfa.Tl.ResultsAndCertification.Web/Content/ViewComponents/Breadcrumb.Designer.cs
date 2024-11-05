@@ -124,6 +124,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Edit provider.
+        /// </summary>
+        public static string Edit_Provider {
+            get {
+                return ResourceManager.GetString("Edit_Provider", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string Home {
@@ -192,6 +201,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         public static string Manage_Postal_Address {
             get {
                 return ResourceManager.GetString("Manage_Postal_Address", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Provider&apos;s details.
+        /// </summary>
+        public static string Provider_Details {
+            get {
+                return ResourceManager.GetString("Provider_Details", resourceCulture);
             }
         }
         

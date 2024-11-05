@@ -1,0 +1,36 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminProvider.AdminProviderDetailsViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminProvider
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+@{
+    ViewData["Title"] = AdminProviderDetails.Page_Title;
+}
+
+@section NavigationBar
+{
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <vc:notification-banner model="@Model.SuccessBanner"></vc:notification-banner>
+    </div>
+</div>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        <h1 class="govuk-heading-l">@Model.ProviderName</h1>
+
+        <dl class="govuk-summary-list govuk-!-margin-bottom-9 govuk-summary-list">
+            <vc:summary-item model=Model.SummaryUkprn></vc:summary-item>
+            <vc:summary-item model=Model.SummaryName></vc:summary-item>
+            <vc:summary-item model=Model.SummaryDisplayName></vc:summary-item>
+            <vc:summary-item model=Model.SummaryIsActive></vc:summary-item>
+        </dl>
+
+        <div class="govuk-button-group">
+            <a id="editButton" class="govuk-button" role="button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminEditProvider" asp-route-providerId="@Model.ProviderId">@AdminProviderDetails.Button_Edit</a>
+            <a id="btnCancel" class="govuk-button govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.Home">@AdminProviderDetails.Button_Cancel</a>
+        </div>
+    </div>
+</div>

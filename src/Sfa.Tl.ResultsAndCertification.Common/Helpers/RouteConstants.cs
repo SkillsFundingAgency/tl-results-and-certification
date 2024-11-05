@@ -604,5 +604,17 @@
         public const string DownloadRegistrationsDataForLink = "DownloadRegistrationsDataForLink";
 
         #endregion
+
+        #region Admin provider
+
+        public const string AdminFindProviderClear = "AdminFindProviderClear";
+        public const string AdminFindProvider = "AdminFindProvider";
+        public const string AdminSubmitFindProvider = "AdminSubmitFindProvider";
+
+        public const string AdminProviderDetails = "AdminProviderDetails";
+        public const string AdminEditProvider = "AdminEditProvider";
+        public const string SubmitAdminEditProvider = "SubmitAdminEditProvider";
+
+        #endregion
     }
 }

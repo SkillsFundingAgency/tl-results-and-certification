@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminPostResults;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminProvider;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
@@ -606,6 +607,22 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
         public Task<bool> ProcessAdminCreateReplacementDocumentPrintingRequestAsync(ReplacementPrintRequest request)
            => PostAsync<ReplacementPrintRequest, bool>(ApiConstants.ProcessAdminCreateReplacementDocumentPrintingRequestUri, request);
+
+        #endregion
+
+        #region Admin providers
+
+        public Task<GetProviderResponse> GetProviderAsync(int providerId)
+        {
+            var requestUri = string.Format(ApiConstants.GetProvider, providerId);
+            return GetAsync<GetProviderResponse>(requestUri);
+        }
+
+        public Task<int> AddProviderAsync(AddProviderRequest request)
+            => PostAsync<AddProviderRequest, int>(ApiConstants.AddProvider, request);
+
+        public Task<UpdateProviderResponse> UpdateProviderAsync(UpdateProviderRequest request)
+            => PutAsync<UpdateProviderRequest, UpdateProviderResponse>(ApiConstants.UpdateProvider, request);
 
         #endregion
 

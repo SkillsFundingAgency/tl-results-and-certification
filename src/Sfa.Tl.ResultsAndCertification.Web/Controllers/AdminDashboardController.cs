@@ -6,9 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
-using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
-using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.InformationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
@@ -36,8 +34,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private readonly ICacheService _cacheService;
         private readonly ILogger _logger;
 
-        private readonly int _documentRerequestInDays;
-
         private string CacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.AdminDashboardCacheKey); } }
         private string InformationCacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.AdminDashboardInformationCacheKey); } }
 
@@ -46,16 +42,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             IProviderLoader providerLoader,
             IIndustryPlacementLoader industryPlacementLoader,
             ICacheService cacheService,
-            ILogger<AdminDashboardController> logger,
-            ResultsAndCertificationConfiguration config)
+            ILogger<AdminDashboardController> logger)
         {
             _loader = loader;
             _providerLoader = providerLoader;
             _industryPlacementLoader = industryPlacementLoader;
             _cacheService = cacheService;
             _logger = logger;
-
-            _documentRerequestInDays = config.DocumentRerequestInDays;
         }
 
         [HttpGet]
