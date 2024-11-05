@@ -63,11 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
 
         private static T GetPrintCertificateProperty<T>(ICollection<PrintCertificate> printCertificates, Func<PrintCertificate, T> getProperty)
         {
-            var validTypes = new[] { PrintCertificateType.StatementOfAchievement, PrintCertificateType.Certificate };
-
-            PrintCertificate printCertificate = printCertificates.Where(p => p.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active && validTypes.Contains(p.Type))
-                .OrderByDescending(c => c.Id).FirstOrDefault();
-
+            PrintCertificate printCertificate = printCertificates.OrderByDescending(c => c.Id).FirstOrDefault();
             return getProperty(printCertificate);
         }
 
