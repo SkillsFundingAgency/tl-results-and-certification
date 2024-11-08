@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
         Task<TqRegistrationPathway> GetRegistrationLiteByProviderUkprnAsync(long providerUkprn, int profileId, bool includeProfile = true, bool includeIndustryPlacements = false, bool includeOverallResults = false);
         Task<TqRegistrationProfile> GetRegistrationDataWithHistoryAsync(long aoUkprn, int profileId);
         Task<IList<TqRegistrationProfile>> GetRegistrationProfilesByIdsAsync(HashSet<int> profileIds, bool includeQualificationAchieved = false);
-        Task<IList<TqRegistrationPathway>> GetRegistrationPathwaysByAcademicYear(int[] academicYears);
+        Task<IList<TqRegistrationPathway>> GetRegistrationPathways();
         Task<IList<TqRegistrationPathway>> GetRegistrationPathwaysByAssesmentSeriesYear(string[] assesmentSeriesYears);
         Task<IList<TqRegistrationSpecialism>> GetSpecialismRegistrationPathwaysByAssesmentSeriesYear(string[] assesmentSeriesYears);
 

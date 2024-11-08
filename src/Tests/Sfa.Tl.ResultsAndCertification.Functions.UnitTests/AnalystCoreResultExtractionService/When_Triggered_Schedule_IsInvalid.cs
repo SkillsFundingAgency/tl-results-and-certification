@@ -18,7 +18,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystCoreResultEx
             {
                 AnalystCoreResultExtractSettings = new AnalystCoreResultExtractSettings
                 {
-                    CoreAcademicYearsToProcess = AcademicYearsToProcess,
                     CoreValidDateRanges = new[]
                     {
                         new DateTimeRange
@@ -33,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystCoreResultEx
         public override void Given()
         {
             CommonService.CreateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
-            AnalystCoreResultExtractionService.ProcessAnalystCoreResultExtractsAsync(AcademicYearsToProcess).Returns(new FunctionResponse { IsSuccess = true });
+            AnalystCoreResultExtractionService.ProcessAnalystCoreResultExtractsAsync().Returns(new FunctionResponse { IsSuccess = true });
             CommonService.UpdateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
         }
 
@@ -41,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystCoreResultEx
         public void Then_Expected_Methods_Are_Called()
         {
             CommonService.DidNotReceive().CreateFunctionLog(Arg.Any<FunctionLogDetails>());
-            AnalystCoreResultExtractionService.DidNotReceive().ProcessAnalystCoreResultExtractsAsync(AcademicYearsToProcess);
+            AnalystCoreResultExtractionService.DidNotReceive().ProcessAnalystCoreResultExtractsAsync();
             CommonService.DidNotReceive().UpdateFunctionLog(Arg.Any<FunctionLogDetails>());
         }
     }
