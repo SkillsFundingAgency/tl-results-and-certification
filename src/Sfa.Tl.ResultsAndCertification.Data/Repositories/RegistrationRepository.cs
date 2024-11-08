@@ -132,7 +132,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return await profileQueryable.ToListAsync();
         }
 
-        public async Task<IList<TqRegistrationPathway>> GetRegistrationPathwaysByAcademicYear()
+        public async Task<IList<TqRegistrationPathway>> GetRegistrationPathways()
         {
             var query = _dbContext.TqRegistrationPathway
                             .Include(p => p.TqRegistrationProfile)
