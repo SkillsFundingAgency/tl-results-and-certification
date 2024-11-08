@@ -124,7 +124,7 @@
     <value>Change</value>
   </data>
   <data name="Action_Text_Link_ResultSlip" xml:space="preserve">
-    <value>Resultslip (PDF)</value>
+    <value>Download result slip (PDF)</value>
   </data>
   <data name="Back_To_Home_Text" xml:space="preserve">
     <value>&lt; Back to home</value>

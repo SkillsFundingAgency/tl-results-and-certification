@@ -79,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Resultslip (PDF).
+        ///   Looks up a localized string similar to Download result slip (PDF).
         /// </summary>
         public static string Action_Text_Link_ResultSlip {
             get {
