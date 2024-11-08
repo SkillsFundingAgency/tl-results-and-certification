@@ -53,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                 var stopwatch = Stopwatch.StartNew();
                 await _commonService.CreateFunctionLog(functionLogDetails);
 
-                FunctionResponse response = await _analystResultExtractionService.ProcessAnalystOverallResultExtractionData(_configuration.AcademicYearsToProcess);
+                FunctionResponse response = await _analystResultExtractionService.ProcessAnalystOverallResultExtractionData();
 
                 FunctionStatus status = response.IsSuccess ? FunctionStatus.Processed : FunctionStatus.Failed;
                 var message = $"Function {context.FunctionName} completed processing.{Environment.NewLine}Status: {status}";

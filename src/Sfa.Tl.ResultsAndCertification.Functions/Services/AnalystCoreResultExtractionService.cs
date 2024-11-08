@@ -36,9 +36,9 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             _logger = logger;
         }
 
-        public async Task<FunctionResponse> ProcessAnalystCoreResultExtractsAsync(int[] academicYears)
+        public async Task<FunctionResponse> ProcessAnalystCoreResultExtractsAsync()
         {
-            IList<AnalystCoreResultExtractionData> extractionData = await GetAnalystCoreResultExtractionData(academicYears);
+            IList<AnalystCoreResultExtractionData> extractionData = await GetAnalystCoreResultExtractionData();
 
             if (extractionData == null || extractionData.Count == 0)
             {
@@ -63,9 +63,9 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             return new FunctionResponse { IsSuccess = true };
         }
 
-        private async Task<IList<AnalystCoreResultExtractionData>> GetAnalystCoreResultExtractionData(int[] academicYears)
+        private async Task<IList<AnalystCoreResultExtractionData>> GetAnalystCoreResultExtractionData()
         {
-            IList<TqRegistrationPathway> registrationPathways = await _registrationRepository.GetRegistrationPathwaysByAcademicYear(academicYears);
+            IList<TqRegistrationPathway> registrationPathways = await _registrationRepository.GetRegistrationPathwaysByAcademicYear();
             return _mapper.Map<IList<AnalystCoreResultExtractionData>>(registrationPathways);
         }
 

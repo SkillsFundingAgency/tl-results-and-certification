@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystOverallResul
         public override void Given()
         {
             CommonService.CreateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
-            AnalystResultExtractionService.ProcessAnalystOverallResultExtractionData(AcademicYearsToProcess).Returns(x => Task.FromException(new Exception()));
+            AnalystResultExtractionService.ProcessAnalystOverallResultExtractionData().Returns(x => Task.FromException(new Exception()));
             CommonService.UpdateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
         }
 
@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystOverallResul
         public void Then_Expected_Methods_Are_Called()
         {
             CommonService.Received(2).CreateFunctionLog(Arg.Any<FunctionLogDetails>());
-            AnalystResultExtractionService.Received(1).ProcessAnalystOverallResultExtractionData(AcademicYearsToProcess);
+            AnalystResultExtractionService.Received(1).ProcessAnalystOverallResultExtractionData();
             CommonService.DidNotReceive().UpdateFunctionLog(Arg.Any<FunctionLogDetails>());
             CommonService.Received(1).SendFunctionJobFailedNotification(Arg.Any<string>(), Arg.Any<string>());
         }

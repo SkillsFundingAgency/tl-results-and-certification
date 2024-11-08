@@ -20,8 +20,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystOverallResul
         protected IAnalystOverallResultExtractionService AnalystResultExtractionService = Substitute.For<IAnalystOverallResultExtractionService>();
         protected ICommonService CommonService = Substitute.For<ICommonService>();
 
-        protected int[] AcademicYearsToProcess = new[] { 2020, 2021 };
-
         public override void Setup()
         {
             DateTime today = DateTime.UtcNow.Date;
@@ -30,7 +28,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystOverallResul
             {
                 AnalystOverallResultExtractSettings = new AnalystOverallResultExtractSettings
                 {
-                    AcademicYearsToProcess = AcademicYearsToProcess,
                     ValidDateRanges = new[]
                     {
                         new DateTimeRange

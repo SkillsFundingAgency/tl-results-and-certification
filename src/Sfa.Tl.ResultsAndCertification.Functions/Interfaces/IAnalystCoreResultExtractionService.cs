@@ -5,6 +5,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Interfaces
 {
     public interface IAnalystCoreResultExtractionService
     {
-        Task<FunctionResponse> ProcessAnalystCoreResultExtractsAsync(int[] academicYears);
+        Task<FunctionResponse> ProcessAnalystCoreResultExtractsAsync();
     }
 }

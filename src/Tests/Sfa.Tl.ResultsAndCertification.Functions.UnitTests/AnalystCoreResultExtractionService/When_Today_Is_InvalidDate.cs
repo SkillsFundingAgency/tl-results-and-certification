@@ -17,7 +17,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystCoreResultEx
             {
                 AnalystCoreResultExtractSettings = new AnalystCoreResultExtractSettings
                 {
-                    CoreAcademicYearsToProcess = AcademicYearsToProcess,
                     CoreValidDateRanges = new[]
                     {
                         new DateTimeRange
@@ -40,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystCoreResultEx
         public void Then_Expected_Methods_Are_Called()
         {
             CommonService.Received(0).CreateFunctionLog(Arg.Any<FunctionLogDetails>());
-            AnalystCoreResultExtractionService.Received(0).ProcessAnalystCoreResultExtractsAsync(AcademicYearsToProcess);
+            AnalystCoreResultExtractionService.Received(0).ProcessAnalystCoreResultExtractsAsync();
             CommonService.Received(0).UpdateFunctionLog(Arg.Any<FunctionLogDetails>());
         }
     }

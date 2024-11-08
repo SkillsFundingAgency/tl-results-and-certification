@@ -132,7 +132,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return await profileQueryable.ToListAsync();
         }
 
-        public async Task<IList<TqRegistrationPathway>> GetRegistrationPathwaysByAcademicYear(int[] academicYears)
+        public async Task<IList<TqRegistrationPathway>> GetRegistrationPathwaysByAcademicYear()
         {
             var query = _dbContext.TqRegistrationPathway
                             .Include(p => p.TqRegistrationProfile)
@@ -159,7 +159,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                 .ThenInclude(s => s.DualSpecialism)
                             .Include(p => p.IndustryPlacements)
                             .Include(p => p.OverallResults.Where(p => p.IsOptedin))
-                            .Where(p => academicYears.Contains(p.AcademicYear))
                             .OrderBy(p => p.AcademicYear)
                             .ThenBy(p => p.TqRegistrationProfile.UniqueLearnerNumber);
 
