@@ -41,7 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return results;
         }
 
-        public async Task<OverallResult> GetLearnerOverallResults(long providerUkprn, long profileId, DateTime resultPublishDate)
+        public async Task<OverallResult> GetLearnerOverallResults(long providerUkprn, long profileId)
         {
             var results = await _dbContext.OverallResult
                             .Include(r => r.TqRegistrationPathway.TqRegistrationProfile)
@@ -59,8 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                              .Where(x => x.TqRegistrationPathway.TqRegistrationProfile.Id == profileId &&
                                          x.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active &&
                                          x.TqRegistrationPathway.TqProvider.TlProvider.UkPrn == providerUkprn &&
-                                         x.PublishDate == resultPublishDate && DateTime.Today >= resultPublishDate &&
-                                         x.IsOptedin && !x.EndDate.HasValue)
+                                         x.IsOptedin && !x.EndDate.HasValue && DateTime.Today >= x.PublishDate)
                              .FirstOrDefaultAsync();
             return results;
         }

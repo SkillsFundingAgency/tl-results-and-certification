@@ -355,14 +355,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<DownloadOverallResultSlipsData> DownloadLearnerOverallResultSlipsDataAsync(long providerUkprn, long profileId)
         {
-            // 1. Get PublishDate from previous assessment
-            var previousAssessment = await GetResultCalculationAssessmentAsync(DateTime.UtcNow);
-            var resultPublishDate = previousAssessment?.ResultPublishDate;
-            if (resultPublishDate == null)
-                return new DownloadOverallResultSlipsData();
-
-            // 2. Get OverallResults on above PublishDate if date reached
-            var overallResults = await _overallResultRepository.GetLearnerOverallResults(providerUkprn, profileId, resultPublishDate.Value);
+            var overallResults = await _overallResultRepository.GetLearnerOverallResults(providerUkprn, profileId);
             return _mapper.Map<DownloadOverallResultSlipsData>(overallResults);
         }
 
