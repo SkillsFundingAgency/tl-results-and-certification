@@ -136,6 +136,9 @@
     },
     "ipSecurityRestrictions": {
       "type": "array"
+    },
+    "tableServiceUri": {
+      "type": "string"
     }
   },
   "variables": {
@@ -306,6 +309,10 @@
                 "value": "[parameters('configurationStorageConnectionString')]"
               },
               {
+                "name": "TableServiceUri",
+                "value": "[parameters('tableServiceUri')]"
+              },
+              {
                 "name": "Version",
                 "value": "1.0"
               },
@@ -416,6 +423,10 @@
                 "value": "[parameters('configurationStorageConnectionString')]"
               },
               {
+                "name": "TableServiceUri",
+                "value": "[parameters('tableServiceUri')]"
+              },
+              {
                 "name": "Version",
                 "value": "1.0"
               },
@@ -524,6 +535,10 @@
                 "value": "[parameters('configurationStorageConnectionString')]"
               },
               {
+                "name": "TableServiceUri",
+                "value": "[parameters('tableServiceUri')]"
+              },
+              {
                 "name": "Version",
                 "value": "1.0"
               },
@@ -534,10 +549,6 @@
               {
                 "name": "APPINSIGHTS_INSTRUMENTATIONKEY",
                 "value": "[reference(concat('app-insights','-',parameters('environmentNameAbbreviation'))).outputs.InstrumentationKey.value]"
-              },
-              {
-                "name": "BlobStorageConnectionString",
-                "value": "[reference(concat('storage-account','-',parameters('environmentNameAbbreviation'))).outputs.storageConnectionStringKey2.value]"
               },
               {
                 "name": "AzureWebJobsStorage",
@@ -633,7 +644,7 @@
               },
               {
                 "name": "WEBSITE_SWAP_WARMUP_PING_STATUSES",
-                "value": "200"
+                "value": "200, 202"
               },
               {
                 "name": "WEBSITE_ADD_SITENAME_BINDINGS_IN_APPHOST_CONFIG",
@@ -811,6 +822,52 @@
     },
     {
       "apiVersion": "2022-09-01",
+      "name": "[concat('ui-app-service-role-assignment-storage-account','-', parameters('environmentNameAbbreviation'))]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'),'/role-assignments/role-assignment-storage-account.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "principalId": {
+            "value": "[reference(concat('ui-app-service','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]"
+          },
+          "assignmentType": {
+            "value": "StorageBlobDataContributor"
+          },
+          "resourceName": {
+            "value": "[variables('storageAccountName')]"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2022-09-01",
+      "name": "[concat('ui-app-service-role-assignment-storage-account-table','-', parameters('environmentNameAbbreviation'))]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'),'/role-assignments/role-assignment-storage-account.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "principalId": {
+            "value": "[reference(concat('ui-app-service','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]"
+          },
+          "assignmentType": {
+            "value": "StorageTableDataContributor"
+          },
+          "resourceName": {
+            "value": "[variables('storageAccountName')]"
+          }
+        }
+      }
+    },
+    {
+      "apiVersion": "2022-09-01",
       "name": "[concat('internal-api-role-assignment-storage-account','-', parameters('environmentNameAbbreviation'))]",
       "type": "Microsoft.Resources/deployments",
       "properties": {
@@ -902,6 +959,30 @@
           }
         }
       }
+    },
+    {
+      "apiVersion": "2022-09-01",
+      "name": "[concat('ui-appservic-role-assignment-config-storage-account','-', parameters('environmentNameAbbreviation'))]",
+      "resourceGroup": "[parameters('sharedEnvResourceGroup')]",
+      "type": "Microsoft.Resources/deployments",
+      "properties": {
+        "mode": "Incremental",
+        "templateLink": {
+          "uri": "[concat(variables('deploymentUrlBase'),'/role-assignments/role-assignment-storage-account.json')]",
+          "contentVersion": "1.0.0.0"
+        },
+        "parameters": {
+          "principalId": {
+            "value": "[reference(concat('ui-app-service','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]"
+          },
+          "assignmentType": {
+            "value": "StorageTableDataReader"
+          },
+          "resourceName": {
+            "value": "[parameters('configStorageAccountName')]"
+          }
+        }
+      }
     }
   ],
   "outputs": {
@@ -925,10 +1006,6 @@
       "type": "string",
       "value": "[variables('functionAppName')]"
     },
-    "BlobStorageConnectionString": {
-      "type": "string",
-      "value": "[reference(concat('storage-account','-', parameters('environmentNameAbbreviation'))).outputs.storageConnectionStringKey2.value]"
-    },
     "internalApiManagedServiceIdentityId": {
       "type": "string",
       "value": "[reference(concat('internal-api-app-service','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]"
@@ -936,6 +1013,14 @@
     "functionAppManagedServiceIdentityId": {
       "type": "string",
       "value": "[reference(concat('function-app','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]"
+    },
+    "uiAppServiceManagedServiceIdentityId": {
+      "type": "string",
+      "value": "[reference(concat('ui-app-service','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]"
+    },
+    "tableServiceUri": {
+      "type": "string",
+      "value": "[parameters('tableServiceUri')]"
     }
   }
 }
