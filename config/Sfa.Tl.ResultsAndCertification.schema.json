@@ -17,10 +17,6 @@
       "type": "string",
       "environmentVariable": "BlobContainerUriTemplate"
     },
-    "TableServiceUri": {
-      "type": "string",
-      "environmentVariable": "TableServiceUri"
-    },
     "GovUkNotifyApiKey": {
       "type": "string",
       "environmentVariable": "GovUkNotifyApiKey"
