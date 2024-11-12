@@ -144,12 +144,21 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
         private static ResultsAndCertificationConfiguration LoadConfiguration()
         {
             string tableServiceUri = Environment.GetEnvironmentVariable(Constants.TableServiceUriConfigKey);
-            IConfigurationLoader configurationLoader = ConfigurationLoaderFactory.GetConfigurationLoader(tableServiceUri, isDevelopment: true);
+            IConfigurationLoader configurationLoader = ConfigurationLoaderFactory.GetConfigurationLoader(tableServiceUri, IsDevelopment);
 
             return configurationLoader.Load(
                  Environment.GetEnvironmentVariable(Constants.EnvironmentNameConfigKey),
                  Environment.GetEnvironmentVariable(Constants.ServiceVersionConfigKey), // Need ServiceVersion rather than Version in local with .Net 6
                  Environment.GetEnvironmentVariable(Constants.ServiceNameConfigKey));
+        }
+
+        private static bool IsDevelopment
+        {
+            get
+            {
+                var environment = Environment.GetEnvironmentVariable("AZURE_FUNCTIONS_ENVIRONMENT");
+                return environment == "Development";
+            }
         }
     }
 }
