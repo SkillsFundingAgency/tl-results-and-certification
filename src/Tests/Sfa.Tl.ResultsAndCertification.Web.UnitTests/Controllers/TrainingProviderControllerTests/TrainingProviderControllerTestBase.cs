@@ -18,7 +18,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
     {
         // Dependencies
         protected ITrainingProviderLoader TrainingProviderLoader;
-        protected IAssessmentSeriesLoader AssessmentSeriesLoader;
         protected ICacheService CacheService;
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
         protected ILogger<TrainingProviderController> Logger;
@@ -34,11 +33,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         public override void Setup()
         {
             TrainingProviderLoader = Substitute.For<ITrainingProviderLoader>();
-            AssessmentSeriesLoader = Substitute.For<IAssessmentSeriesLoader>();
             CacheService = Substitute.For<ICacheService>();
             ResultsAndCertificationConfiguration = new ResultsAndCertificationConfiguration { DocumentRerequestInDays = 21 };
             Logger = Substitute.For<ILogger<TrainingProviderController>>();
-            Controller = new TrainingProviderController(TrainingProviderLoader, AssessmentSeriesLoader, CacheService, ResultsAndCertificationConfiguration, Logger);
+            Controller = new TrainingProviderController(TrainingProviderLoader, CacheService, ResultsAndCertificationConfiguration, Logger);
 
             ProviderUkprn = 1234567890;
             var httpContext = new ClaimsIdentityBuilder<TrainingProviderController>(Controller)

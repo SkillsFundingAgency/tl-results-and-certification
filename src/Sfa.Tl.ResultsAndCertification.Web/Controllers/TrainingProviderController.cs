@@ -12,7 +12,6 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.InformationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -25,7 +24,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
     public class TrainingProviderController : Controller
     {
         private readonly ITrainingProviderLoader _trainingProviderLoader;
-        private readonly IAssessmentSeriesLoader _assessmentSeriesLoader;
         private readonly ICacheService _cacheService;
         private readonly ResultsAndCertificationConfiguration _configuration;
         private readonly ILogger _logger;
@@ -33,10 +31,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private string CacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.TrainingProviderCacheKey); } }
         private string InformationCacheKey { get { return CacheKeyHelper.GetCacheKey(User.GetUserId(), CacheConstants.TrainingProviderInformationCacheKey); } }
 
-        public TrainingProviderController(ITrainingProviderLoader trainingProviderLoader, IAssessmentSeriesLoader assessmentSeriesLoader, ICacheService cacheService, ResultsAndCertificationConfiguration configuration, ILogger<TrainingProviderController> logger)
+        public TrainingProviderController(ITrainingProviderLoader trainingProviderLoader, ICacheService cacheService, ResultsAndCertificationConfiguration configuration, ILogger<TrainingProviderController> logger)
         {
             _trainingProviderLoader = trainingProviderLoader;
-            _assessmentSeriesLoader = assessmentSeriesLoader;
             _cacheService = cacheService;
             _configuration = configuration;
             _logger = logger;
@@ -471,20 +468,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("learner-record-page/{profileId}", Name = RouteConstants.LearnerRecordDetails)]
         public async Task<IActionResult> LearnerRecordDetailsAsync(int profileId)
         {
-            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(User.GetUkPrn(), profileId);
+            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsViewModel(User.GetUkPrn(), profileId, _configuration.DocumentRerequestInDays);
 
             if (viewModel == null || !viewModel.IsLearnerRegistered)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No learner record details found or learner is not registerd or learner record not added. Method: LearnerRecordDetailsAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
-
-            var assessment = await _assessmentSeriesLoader.GetResultCalculationAssessmentAsync();
-            if (assessment != null)
-                viewModel.IsResultsPublishedFromRecentAssessment = assessment.ResultPublishDate == viewModel.OverallResultPublishDate && DateTime.Today >= assessment.ResultPublishDate;
-
-            viewModel.IsDocumentRerequestEligible = CommonHelper.IsDocumentRerequestEligible(_configuration.DocumentRerequestInDays, viewModel.PrintCertificateId, viewModel.LastDocumentRequestedDate);
-
+            
             viewModel.InformationBanner = await _cacheService.GetAndRemoveAsync<InformationBannerModel>(InformationCacheKey);
             viewModel.SuccessBanner = await _cacheService.GetAndRemoveAsync<NotificationBannerModel>(CacheKey);
 

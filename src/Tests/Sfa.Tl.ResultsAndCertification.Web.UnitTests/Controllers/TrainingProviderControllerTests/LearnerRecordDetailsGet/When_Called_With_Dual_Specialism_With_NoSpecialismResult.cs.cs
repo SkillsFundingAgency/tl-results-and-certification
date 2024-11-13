@@ -3,8 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
-using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using System;
 using System.Collections.Generic;
@@ -14,7 +12,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 {
     public class When_Called_With_Dual_Specialism_With_NoSpecialismResult : TestSetup
     {
-        private Dictionary<string, string> _routeAttributes;
         public override void Given()
         {
             ProfileId = 10;
@@ -58,24 +55,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                 LastDocumentRequestedDate = "01/01/2022".ToDateTime(),
                 IsReprint = false
             };
-            _routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, Mockresult.ProfileId.ToString() } };
 
-            AssessmentSeriesDetails assessmentSeries = new()
-            {
-                Id = 1,
-                Name = "Test",
-            };
-
-            AssessmentSeriesLoader.GetResultCalculationAssessmentAsync().Returns(assessmentSeries);
-
-            TrainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(ProviderUkprn, ProfileId).Returns(Mockresult);
+            TrainingProviderLoader.GetLearnerRecordDetailsViewModel(ProviderUkprn, ProfileId, ResultsAndCertificationConfiguration.DocumentRerequestInDays).Returns(Mockresult);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            TrainingProviderLoader.Received(1).GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(ProviderUkprn, ProfileId);
-            AssessmentSeriesLoader.Received(1).GetResultCalculationAssessmentAsync();
+            TrainingProviderLoader.Received(1).GetLearnerRecordDetailsViewModel(ProviderUkprn, ProfileId, ResultsAndCertificationConfiguration.DocumentRerequestInDays);
         }
 
         [Fact]
@@ -88,7 +75,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.OverallResultDetails.SpecialismDetails.ForEach(x => x.SpecialismResult.Should().BeNullOrEmpty());
             model.OverallResultDetails.SpecialismDetails.ForEach(x => x.SpecialismName.Should().NotBeNullOrEmpty());
             model.Specialisms.Should().BeNullOrEmpty();
-
         }
     }
 }
