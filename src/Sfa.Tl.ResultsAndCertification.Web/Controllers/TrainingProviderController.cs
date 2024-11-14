@@ -1,6 +1,4 @@
-﻿using AutoMapper;
-using MessagePack.Formatters;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
@@ -206,7 +204,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public async Task<IActionResult> RequestReplacementDocumentAsync(int profileId)
         {
             var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<RequestReplacementDocumentViewModel>(User.GetUkPrn(), profileId);
-            if (viewModel == null || !CommonHelper.IsDocumentRerequestEligible(_configuration.DocumentRerequestInDays, viewModel.LastDocumentRequestedDate))
+            if (viewModel == null || !CommonHelper.IsDocumentRerequestEligible(_configuration.DocumentRerequestInDays, viewModel.PrintCertificateId, viewModel.LastDocumentRequestedDate))
                 return RedirectToRoute(RouteConstants.PageNotFound);
 
             return View(viewModel);
@@ -470,15 +468,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("learner-record-page/{profileId}", Name = RouteConstants.LearnerRecordDetails)]
         public async Task<IActionResult> LearnerRecordDetailsAsync(int profileId)
         {
-            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(User.GetUkPrn(), profileId);
+            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsViewModel(User.GetUkPrn(), profileId, _configuration.DocumentRerequestInDays);
+
             if (viewModel == null || !viewModel.IsLearnerRegistered)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No learner record details found or learner is not registerd or learner record not added. Method: LearnerRecordDetailsAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
-
-            viewModel.IsDocumentRerequestEligible = CommonHelper.IsDocumentRerequestEligible(_configuration.DocumentRerequestInDays, viewModel.LastDocumentRequestedDate);
-
+            
             viewModel.InformationBanner = await _cacheService.GetAndRemoveAsync<InformationBannerModel>(InformationCacheKey);
             viewModel.SuccessBanner = await _cacheService.GetAndRemoveAsync<NotificationBannerModel>(CacheKey);
 

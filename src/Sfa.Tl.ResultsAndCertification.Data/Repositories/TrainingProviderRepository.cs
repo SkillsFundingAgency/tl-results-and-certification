@@ -163,7 +163,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                         orderby tqPathway.CreatedOn descending
                                         let printCertificate = tqPathway.PrintCertificates.Where(p => p.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active
                                                                                                 && (p.Type == PrintCertificateType.StatementOfAchievement || p.Type == PrintCertificateType.Certificate))
-                                                                                          .OrderByDescending(c => c.CreatedOn).FirstOrDefault() // Fetching certificate for only active pathway
+                                                                                          .OrderByDescending(c => c.Id).FirstOrDefault() // Fetching certificate for only active pathway
                                         let ipRecord = tqPathway.IndustryPlacements.FirstOrDefault()
                                         let overallResult = tqPathway.OverallResults.FirstOrDefault(o => o.IsOptedin && (tqPathway.Status == RegistrationPathwayStatus.Withdrawn) ? o.EndDate != null : o.EndDate == null)
                                         let specialisms = tqPathway.TqRegistrationSpecialisms.Where(t => t.EndDate == null).Select(t => t.TlSpecialism.Name).ToList()
@@ -194,7 +194,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                             OverallResultPublishDate = overallResult != null ? overallResult.PublishDate : null,
                                             PrintCertificateId = printCertificate != null ? printCertificate.Id : null,
                                             PrintCertificateType = printCertificate != null ? printCertificate.Type : null,
-                                            LastDocumentRequestedDate = printCertificate != null ? printCertificate.CreatedOn : null,
+                                            LastDocumentRequestedDate = printCertificate != null ? printCertificate.LastRequestedOn : null,
                                             IsReprint = printCertificate != null ? printCertificate.IsReprint : null,
                                             ProviderAddress = tlProvider.TlProviderAddresses.Where(pa => pa.IsActive)
                                                                                             .OrderByDescending(pa => pa.CreatedOn)

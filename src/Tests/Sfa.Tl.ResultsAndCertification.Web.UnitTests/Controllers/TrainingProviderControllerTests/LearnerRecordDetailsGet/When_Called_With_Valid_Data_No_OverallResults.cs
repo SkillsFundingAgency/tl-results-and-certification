@@ -39,20 +39,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                 IndustryPlacementStatus = IndustryPlacementStatus.NotSpecified,
                 OverallResultDetails = null,
                 OverallResultPublishDate = null,
+                PrintCertificateId = 1,
                 LastDocumentRequestedDate = DateTime.Today.AddMonths(-1),
-                IsReprint = true
+                IsReprint = true,
+                IsDocumentRerequestEligible = true
             };
 
             _routeAttributes = new Dictionary<string, string> { { Constants.ProfileId, Mockresult.ProfileId.ToString() } };
 
-            TrainingProviderLoader.GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(ProviderUkprn, ProfileId).Returns(Mockresult);
-            ResultsAndCertificationConfiguration.DocumentRerequestInDays = 21;
+            TrainingProviderLoader.GetLearnerRecordDetailsViewModel(ProviderUkprn, ProfileId, ResultsAndCertificationConfiguration.DocumentRerequestInDays).Returns(Mockresult);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            TrainingProviderLoader.Received(1).GetLearnerRecordDetailsAsync<LearnerRecordDetailsViewModel>(ProviderUkprn, ProfileId);
+            TrainingProviderLoader.Received(1).GetLearnerRecordDetailsViewModel(ProviderUkprn, ProfileId, ResultsAndCertificationConfiguration.DocumentRerequestInDays);
         }
 
         [Fact]

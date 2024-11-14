@@ -65,7 +65,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public DateTime? LastDocumentRequestedDate { get; set; }
         public string LastDocumentRequestedDateDisplayValue { get { return LastDocumentRequestedDate.HasValue ? LastDocumentRequestedDate.Value.ToFormat() : string.Empty; } }
         public bool IsDocumentRerequestEligible { get; set; }
-        public bool IsReprint { get; set; }      
+        public bool IsReprint { get; set; }
 
         #region Summary Header
 
@@ -112,8 +112,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public SummaryItemModel SummarySpecialisms => new SummaryItemModel
         {
             Id = "specialisms",
-            Title = LearnerRecordDetailsContent.Title_Specialism_Text,            
-            Value = Specialisms.Count==0 ? "": ConvertListToRawHtmlString(Specialisms),
+            Title = LearnerRecordDetailsContent.Title_Specialism_Text,
+            Value = Specialisms.Count == 0 ? "" : ConvertListToRawHtmlString(Specialisms),
             IsRawHtml = true
         };
 
@@ -195,13 +195,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         };
 
         public List<SummaryItemModel> SummarySpecialismResult => GetSummaryItemModels();
-        
 
-    public SummaryItemModel SummaryOverallResult => new SummaryItemModel
+        public SummaryItemModel SummaryOverallResult => new SummaryItemModel
         {
             Id = "overallResult",
             Title = LearnerRecordDetailsContent.Title_OverallResult_Text,
-            Value = OverallResultDetails?.OverallResult
+            Value = OverallResultDetails?.OverallResult,
+            ActionText = RegistrationPathwayStatus == RegistrationPathwayStatus.Active ? LearnerRecordDetailsContent.Action_Text_Link_ResultSlip : string.Empty,
+            RouteName = RouteConstants.DownloadLearnerOverallResultSlipsFile,
+            RouteAttributes = new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } },
+            HiddenActionText = LearnerRecordDetailsContent.Hidden_Action_Text_OverallResult
         };
 
         public BackLinkModel BackLink => new()
@@ -229,7 +232,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         private List<SummaryItemModel> GetSummaryItemModels()
         {
             var specialisms = new List<SummaryItemModel>();
-            if(OverallResultDetails is null || OverallResultDetails.SpecialismDetails is null) return specialisms;
+            if (OverallResultDetails is null || OverallResultDetails.SpecialismDetails is null) return specialisms;
             foreach (var summary in OverallResultDetails.SpecialismDetails)
             {
                 specialisms.Add(new SummaryItemModel()

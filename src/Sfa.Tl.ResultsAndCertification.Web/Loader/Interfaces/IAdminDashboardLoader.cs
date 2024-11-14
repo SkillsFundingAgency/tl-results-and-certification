@@ -65,7 +65,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<bool> ProcessChangePathwayResultReviewChangesAsync(AdminChangePathwayResultReviewChangesViewModel model);
 
         AdminChangeSpecialismResultReviewChangesViewModel CreateAdminChangeSpecialismResultReviewChanges(AdminChangeSpecialismResultViewModel model);
+
         Task<bool> ProcessChangeSpecialismResultReviewChangesAsync(AdminChangeSpecialismResultReviewChangesViewModel model);
-       
+
+        Task<bool> CreateReplacementDocumentPrintingRequestAsync(AdminRequestReplacementDocumentViewModel viewModel);
     }
 }

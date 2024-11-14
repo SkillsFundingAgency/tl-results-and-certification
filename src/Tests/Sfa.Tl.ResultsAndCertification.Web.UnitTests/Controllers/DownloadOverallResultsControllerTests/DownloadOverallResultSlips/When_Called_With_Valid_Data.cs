@@ -12,14 +12,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DownloadOvera
     {
         public override void Given()
         {
-            DownloadOverallResultsLoader.DownloadOverallResultSlipsAsync(ProviderUkprn)
+            DownloadOverallResultsLoader.DownloadOverallResultSlipsDataAsync(ProviderUkprn, Email)
                 .Returns(new MemoryStream(Encoding.ASCII.GetBytes("Test File for download overall result slips")));
         }
 
         [Fact]
         public void Then_Expected_Methods_Called()
         {
-            DownloadOverallResultsLoader.Received(1).DownloadOverallResultSlipsAsync(ProviderUkprn);
+            DownloadOverallResultsLoader.Received(1).DownloadOverallResultSlipsDataAsync(ProviderUkprn, Email);
         }
 
         [Fact]

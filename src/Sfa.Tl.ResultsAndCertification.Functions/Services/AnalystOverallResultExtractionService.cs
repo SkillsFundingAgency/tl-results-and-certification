@@ -35,16 +35,9 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             _logger = logger;
         }
 
-        public async Task<FunctionResponse> ProcessAnalystOverallResultExtractionData(int[] academicYears)
+        public async Task<FunctionResponse> ProcessAnalystOverallResultExtractionData()
         {
-            if (academicYears.IsNullOrEmpty())
-            {
-                string message = $"No academic years specified. Method: {nameof(ProcessAnalystOverallResultExtractionData)}()";
-                _logger.LogWarning(LogEvent.ConfigurationMissing, message);
-                return new FunctionResponse { IsSuccess = false, Message = message };
-            }
-
-            IList<AnalystOverallResultExtractionData> extractionData = await GetAnalystOverallResultExtractionData(academicYears);
+            IList<AnalystOverallResultExtractionData> extractionData = await GetAnalystOverallResultExtractionData();
 
             if (extractionData.IsNullOrEmpty())
             {
@@ -67,9 +60,9 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             return new FunctionResponse { IsSuccess = true };
         }
 
-        private async Task<IList<AnalystOverallResultExtractionData>> GetAnalystOverallResultExtractionData(int[] academicYears)
+        private async Task<IList<AnalystOverallResultExtractionData>> GetAnalystOverallResultExtractionData()
         {
-            IList<TqRegistrationPathway> registrationPathways = await _registrationRepository.GetRegistrationPathwaysByAcademicYear(academicYears);
+            IList<TqRegistrationPathway> registrationPathways = await _registrationRepository.GetRegistrationPathways();
             return _mapper.Map<IList<AnalystOverallResultExtractionData>>(registrationPathways);
         }
 

@@ -50,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 await _commonService.CreateFunctionLog(functionLogDetails);
 
-                var response = await _analystCoreResultExtractionService.ProcessAnalystCoreResultExtractsAsync(_configuration.CoreAcademicYearsToProcess);
+                var response = await _analystCoreResultExtractionService.ProcessAnalystCoreResultExtractsAsync();
                 var message = $"Function {context.FunctionName} completed processing.\n" +
                                      $"\tStatus: {(response.IsSuccess ? FunctionStatus.Processed.ToString() : FunctionStatus.Failed.ToString())}";
 

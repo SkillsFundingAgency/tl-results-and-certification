@@ -10,8 +10,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystCoreResultEx
 {
     public abstract class TestSetup : AnalystCoreResultExtractFunctionTestBase
     {
-        protected int[] AcademicYearsToProcess = new int[] { 2022 };
-
         public override void Setup()
         {
             DateTime today = DateTime.UtcNow.Date;
@@ -20,7 +18,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystCoreResultEx
             {
                 AnalystCoreResultExtractSettings = new AnalystCoreResultExtractSettings
                 {
-                    CoreAcademicYearsToProcess = AcademicYearsToProcess,
                     CoreValidDateRanges = new[]
                     {
                         new DateTimeRange

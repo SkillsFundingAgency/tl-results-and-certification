@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Logging.Abstractions;
+using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
@@ -9,6 +10,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.System.Service;
 using Sfa.Tl.ResultsAndCertification.Data.Factory;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Printing;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
@@ -26,6 +28,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
         private IList<TlSpecialism> _specialisms;
         private IList<AcademicYear> _academicYears;
         protected IList<AssessmentSeries> AssessmentSeries;
+
+        protected TlProviderAddress TlProviderAddress;
 
         protected IAdminDashboardService AdminDashboardService;
 
@@ -57,6 +61,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             AssessmentSeries = AssessmentSeriesDataProvider.CreateAssessmentSeriesList(DbContext, null, true);
             TlLookupDataProvider.CreateTlLookupList(DbContext, null, true);
             _academicYears = AcademicYearDataProvider.CreateAcademicYearList(DbContext, null);
+
+            TlProviderAddress = TlProviderAddressDataProvider.CreateTlProviderAddress(DbContext, new TlProviderAddressBuilder().Build(tlProvider));
 
             DbContext.SaveChangesAsync();
         }
@@ -227,6 +233,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
 
             }
             return tqSpecialismAssessments;
+        }
+
+        public PrintCertificate SeedPrintCertificate(TqRegistrationPathway tqRegistrationPathway, TlProviderAddress tlProviderAddress = null)
+        {
+            var printCertificate = PrintCertificateDataProvider.CreatePrintCertificate(DbContext, new PrintCertificateBuilder().Build(null, tqRegistrationPathway, tlProviderAddress));
+            printCertificate.Uln = tqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber;
+            printCertificate.LearningDetails = JsonConvert.SerializeObject(new LearningDetails());
+            DbContext.SaveChanges();
+
+            return printCertificate;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -34,5 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
         Task<bool> ProcessAdminChangePathwayResultAsync(ChangePathwayResultRequest request);
 
         Task<bool> ProcessAdminChangeSpecialismResultAsync(ChangeSpecialismResultRequest request);
+
+        Task<bool> CreateReplacementDocumentPrintingRequestAsync(ReplacementPrintRequest request);
     }
 }

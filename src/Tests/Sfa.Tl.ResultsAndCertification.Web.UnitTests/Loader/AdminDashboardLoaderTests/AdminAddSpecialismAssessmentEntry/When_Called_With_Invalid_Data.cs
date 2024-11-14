@@ -1,6 +1,5 @@
 ﻿using FluentAssertions;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Xunit;
 
@@ -10,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
     {
         public override void Given()
         {
-            InternalApiClient.ProcessAddSpecialismAssessmentRequestAsync(Arg.Any<ReviewAddSpecialismAssessmentRequest>())
+            ApiClient.ProcessAddSpecialismAssessmentRequestAsync(Arg.Any<ReviewAddSpecialismAssessmentRequest>())
                 .Returns(ActualResult);
         }
 

@@ -4,5 +4,7 @@
     {
         protected long ProviderUkprn;
         protected int ProfileId;
+
+        protected int DocumentRerequestInDays => 21;
     }
 }

@@ -123,6 +123,9 @@
   <data name="Action_Text_Link_Change" xml:space="preserve">
     <value>Change</value>
   </data>
+  <data name="Action_Text_Link_ResultSlip" xml:space="preserve">
+    <value>Download result slip (PDF)</value>
+  </data>
   <data name="Back_To_Home_Text" xml:space="preserve">
     <value>&lt; Back to home</value>
   </data>
@@ -137,6 +140,9 @@
   </data>
   <data name="Hidden_Action_Text_Industry_Placement" xml:space="preserve">
     <value> industry placement information</value>
+  </data>
+  <data name="Hidden_Action_Text_OverallResult" xml:space="preserve">
+    <value>overall result</value>
   </data>
   <data name="Hidden_Action_Text_Maths" xml:space="preserve">
     <value> maths status</value>

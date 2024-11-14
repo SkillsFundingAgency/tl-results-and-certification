@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddApplicationInsightsTelemetry();
             services.AddControllers();
             services.AddSwaggerGen();
-            
+
             services.Configure<ApiBehaviorOptions>(options =>
             {
                 //options.SuppressModelStateInvalidFilter = true;
@@ -222,6 +222,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             // DataExports 
             services.AddTransient<IDataExportLoader, DataExportLoader>();
             services.AddTransient<IDataExportRepository, DataExportRepository>();
+            services.AddTransient<IResultSlipsGeneratorService, ResultSlipsGeneratorService>();
 
             // IndustryPlacement
             services.AddTransient<IDataParser<IndustryPlacementCsvRecordResponse>, IndustryPlacementParser>();

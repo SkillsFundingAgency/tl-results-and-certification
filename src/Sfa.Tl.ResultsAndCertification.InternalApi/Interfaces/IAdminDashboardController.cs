@@ -1,4 +1,5 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
@@ -15,5 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
 
         Task<bool> RemoveCoreAssessmentEntryAsync(ReviewRemoveCoreAssessmentEntryRequest request);
         Task<bool> RemoveSpecialismAssessmentEntryAsync(ReviewRemoveSpecialismAssessmentEntryRequest request);
+
+        Task<bool> ProcessAdminCreateReplacementDocumentPrintingRequestAsync(ReplacementPrintRequest request);
     }
 }

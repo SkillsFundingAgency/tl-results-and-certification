@@ -14,20 +14,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Helpers.CommonHelperTests
             {
                 return new[]
                 {
-                    // Object params { documentRerequestInDays, lastPrintRequestedDate, expectedResult}
-                    new object[] { 21, null, false},
-                    new object[] { 21, DateTime.UtcNow, false },
-                    new object[] { 21, DateTime.UtcNow.AddDays(-21), false },
-                    new object[] { 21, DateTime.UtcNow.AddDays(-22), true },
+                    // Object params { documentRerequestInDays, printCertificateId, lastPrintRequestedDate, expectedResult}
+                    new object[] { 21, 1, null, true },
+                    new object[] { 21, null, null, false },
+                    new object[] { 21, 1, DateTime.UtcNow, false },
+                    new object[] { 21, 1, DateTime.UtcNow.AddDays(-21), false },
+                    new object[] { 21, 1, DateTime.UtcNow.AddDays(-22), true },
                 };
             }
         }
 
         [Theory]
         [MemberData(nameof(Data))]
-        public void Then_Returns_Expected_Results(int documentRerequestInDays, DateTime? lastPrintRequestedDate, bool expectedResult)
+        public void Then_Returns_Expected_Results(int documentRerequestInDays, int? printCertificateId, DateTime? lastPrintRequestedDate, bool expectedResult)
         {
-            var actualResult = CommonHelper.IsDocumentRerequestEligible(documentRerequestInDays, lastPrintRequestedDate);
+            var actualResult = CommonHelper.IsDocumentRerequestEligible(documentRerequestInDays, printCertificateId, lastPrintRequestedDate);
             actualResult.Should().Be(expectedResult);
         }
     }

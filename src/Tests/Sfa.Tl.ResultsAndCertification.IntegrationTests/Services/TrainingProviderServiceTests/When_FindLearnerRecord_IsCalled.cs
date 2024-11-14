@@ -59,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             // Create Service
             RegistrationProfileRepositoryLogger = new Logger<GenericRepository<TqRegistrationProfile>>(new NullLoggerFactory());
             RegistrationProfileRepository = new GenericRepository<TqRegistrationProfile>(RegistrationProfileRepositoryLogger, DbContext);
-            
+
             TrainingProviderRepositoryLogger = new Logger<TrainingProviderRepository>(new NullLoggerFactory());
             TrainingProviderRepository = new TrainingProviderRepository(DbContext, TrainingProviderRepositoryLogger);
             TrainingProviderServiceLogger = new Logger<TrainingProviderService>(new NullLoggerFactory());
@@ -70,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             PrintCertificateRepositoryLogger = new Logger<GenericRepository<PrintCertificate>>(new NullLoggerFactory());
             PrintCertificateRepository = new GenericRepository<PrintCertificate>(PrintCertificateRepositoryLogger, DbContext);
 
-            TrainingProviderService = new TrainingProviderService(RegistrationProfileRepository, TrainingProviderRepository, BatchRepository, PrintCertificateRepository, TrainingProviderMapper, TrainingProviderServiceLogger);
+            TrainingProviderService = new TrainingProviderService(RegistrationProfileRepository, TrainingProviderRepository, BatchRepository, PrintCertificateRepository, OverallResultCalculationService, TrainingProviderMapper, TrainingProviderServiceLogger);
         }
 
         public override Task When()
@@ -140,12 +140,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
 
             var profile = _profiles.FirstOrDefault(p => p.UniqueLearnerNumber == uln);
 
-            foreach(var pathway in profile.TqRegistrationPathways)
+            foreach (var pathway in profile.TqRegistrationPathways)
             {
                 pathway.Status = RegistrationPathwayStatus.Transferred;
                 pathway.EndDate = DateTime.UtcNow;
 
-                foreach(var specialism in pathway.TqRegistrationSpecialisms)
+                foreach (var specialism in pathway.TqRegistrationSpecialisms)
                 {
                     specialism.IsOptedin = true;
                     specialism.EndDate = DateTime.UtcNow;
@@ -156,5 +156,5 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             var tqRegistrationSpecialism = RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, Specialism);
             DbContext.SaveChanges();
         }
-    }    
+    }
 }
