@@ -17,7 +17,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystOverallResul
             {
                 AnalystOverallResultExtractSettings = new AnalystOverallResultExtractSettings
                 {
-                    AcademicYearsToProcess = AcademicYearsToProcess,
                     ValidDateRanges = new[]
                     {
                         new DateTimeRange
@@ -40,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystOverallResul
         public void Then_Expected_Methods_Are_Called()
         {
             CommonService.Received(0).CreateFunctionLog(Arg.Any<FunctionLogDetails>());
-            AnalystResultExtractionService.Received(0).ProcessAnalystOverallResultExtractionData(AcademicYearsToProcess);
+            AnalystResultExtractionService.Received(0).ProcessAnalystOverallResultExtractionData();
             CommonService.Received(0).UpdateFunctionLog(Arg.Any<FunctionLogDetails>());
         }
     }

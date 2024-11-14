@@ -340,6 +340,25 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return _mapper.Map<IList<DownloadOverallResultsData>>(overallResults);
         }
 
+        public async Task<IList<DownloadOverallResultSlipsData>> DownloadOverallResultSlipsDataAsync(long providerUkprn)
+        {
+            // 1. Get PublishDate from previous assessment
+            var previousAssessment = await GetResultCalculationAssessmentAsync(DateTime.UtcNow);
+            var resultPublishDate = previousAssessment?.ResultPublishDate;
+            if (resultPublishDate == null)
+                return new List<DownloadOverallResultSlipsData>();
+
+            // 2. Get OverallResults on above PublishDate if date reached
+            var overallResults = await _overallResultRepository.GetOverallResults(providerUkprn, resultPublishDate.Value);
+            return _mapper.Map<IList<DownloadOverallResultSlipsData>>(overallResults);
+        }
+
+        public async Task<DownloadOverallResultSlipsData> DownloadLearnerOverallResultSlipsDataAsync(long providerUkprn, long profileId)
+        {
+            var overallResults = await _overallResultRepository.GetLearnerOverallResults(providerUkprn, profileId);
+            return _mapper.Map<DownloadOverallResultSlipsData>(overallResults);
+        }
+
         private async Task<List<TlLookup>> GetTlLookupData()
         {
             return await _tlLookupRepository.GetManyAsync().ToListAsync();

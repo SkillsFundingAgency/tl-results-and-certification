@@ -282,4 +282,10 @@
   <data name="Label_Overall_Result_Not_Calculated" xml:space="preserve">
     <value>Result not calculated</value>
   </data>
+  <data name="Button_Request_Replacement_Document" xml:space="preserve">
+    <value>Request replacement document</value>
+  </data>
+  <data name="Replacement_Doc_Requested_Template" xml:space="preserve">
+    <value>Document requested on {0}. The document may take up to 3 weeks to arrive.</value>
+  </data>
 </root>

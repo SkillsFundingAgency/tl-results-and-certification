@@ -1,0 +1,35 @@
+﻿using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
+using NSubstitute;
+using System.IO;
+using System.Text;
+using Xunit;
+using DownloadOverallResultContent = Sfa.Tl.ResultsAndCertification.Web.Content.DownloadOverallResults.DownloadOverallResults;
+
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DownloadOverallResultsControllerTests.DownloadLearnerOverallResultSlips
+{
+    public class When_Called_With_Valid_Data : TestSetup
+    {
+        public override void Given()
+        {
+            DownloadOverallResultsLoader.DownloadLearnerOverallResultSlipsDataAsync(ProviderUkprn, ProfileId, Email)
+                .Returns(new MemoryStream(Encoding.ASCII.GetBytes("Test File for download overall result slips")));
+        }
+
+        [Fact]
+        public void Then_Expected_Methods_Called()
+        {
+            DownloadOverallResultsLoader.Received(1).DownloadLearnerOverallResultSlipsDataAsync(ProviderUkprn, ProfileId, Email);
+        }
+
+        [Fact]
+        public void Then_Returns_Expected_Results()
+        {
+            var viewResult = Result as FileStreamResult;
+            viewResult.Should().NotBeNull();
+            viewResult.FileDownloadName.Should().Be(DownloadOverallResultContent.Download_ResultSlips_Filename);
+            viewResult.ContentType.Should().Be("application/pdf");
+            viewResult.FileStream.Should().NotBeNull();
+        }
+    }
+}

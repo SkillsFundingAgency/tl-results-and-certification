@@ -79,6 +79,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download result slip (PDF).
+        /// </summary>
+        public static string Action_Text_Link_ResultSlip {
+            get {
+                return ResourceManager.GetString("Action_Text_Link_ResultSlip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt; Back to home.
         /// </summary>
         public static string Back_To_Home_Text {
@@ -129,6 +138,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         public static string Hidden_Action_Text_Maths {
             get {
                 return ResourceManager.GetString("Hidden_Action_Text_Maths", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to overall result.
+        /// </summary>
+        public static string Hidden_Action_Text_OverallResult {
+            get {
+                return ResourceManager.GetString("Hidden_Action_Text_OverallResult", resourceCulture);
             }
         }
         

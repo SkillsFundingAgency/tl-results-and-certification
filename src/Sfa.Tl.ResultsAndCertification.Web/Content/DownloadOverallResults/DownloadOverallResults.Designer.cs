@@ -89,7 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.DownloadOverallResults {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download learner results slips ({0}, {1} KB).
+        ///   Looks up a localized string similar to Download learner results slips ({0}).
         /// </summary>
         public static string Download_Link_Result_Slips_PDF_Data {
             get {

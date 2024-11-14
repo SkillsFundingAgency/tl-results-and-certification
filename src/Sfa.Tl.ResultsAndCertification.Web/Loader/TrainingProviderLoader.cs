@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -52,6 +54,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             var response = await _internalApiClient.GetLearnerRecordDetailsAsync(providerUkprn, profileId, pathwayId);
             return _mapper.Map<T>(response);
+        }
+
+        public async Task<LearnerRecordDetailsViewModel> GetLearnerRecordDetailsViewModel(long providerUkprn, int profileId, int documentRerequestInDays)
+        {
+            LearnerRecordDetails learnerRecordDetails = await _internalApiClient.GetLearnerRecordDetailsAsync(providerUkprn, profileId);
+
+            var viewModel = _mapper.Map<LearnerRecordDetailsViewModel>(learnerRecordDetails, opt =>
+            {
+                opt.Items[Constants.CertificateRerequestDays] = documentRerequestInDays;
+            });
+
+            return viewModel;
         }
 
         public async Task<bool> UpdateLearnerSubjectAsync(long providerUkprn, AddMathsStatusViewModel model)

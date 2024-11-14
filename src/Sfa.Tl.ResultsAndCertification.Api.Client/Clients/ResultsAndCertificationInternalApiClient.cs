@@ -241,6 +241,13 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<IList<AssessmentSeriesDetails>>(requestUri);
         }
 
+        // Assessment Series
+        public async Task<AssessmentSeriesDetails> GetResultCalculationAssessmentAsync()
+        {
+            var requestUri = ApiConstants.GetResultCalculationAssessmentUri;
+            return await GetAsync<AssessmentSeriesDetails>(requestUri);
+        }
+
         // Results endpoints
         public async Task<BulkResultResponse> ProcessBulkResultsAsync(BulkProcessRequest model)
         {
@@ -426,6 +433,18 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<DataExportResponse>(requestUri);
         }
 
+        public async Task<DataExportResponse> DownloadOverallResultSlipsDataAsync(long providerUkprn, string requestedBy)
+        {
+            var requestUri = string.Format(ApiConstants.DownloadOverallResultSlipsDataUri, providerUkprn, requestedBy);
+            return await GetAsync<DataExportResponse>(requestUri);
+        }
+
+        public async Task<DataExportResponse> DownloadLearnerOverallResultSlipsDataAsync(long providerUkprn, int profileId, string requestedBy)
+        {
+            var requestUri = string.Format(ApiConstants.DownloadLearnerOverallResultSlipsDataUri, providerUkprn, profileId, requestedBy);
+            return await GetAsync<DataExportResponse>(requestUri);
+        }
+
         #region Industry Placement Bulk Upload
 
         public async Task<BulkIndustryPlacementResponse> ProcessBulkIndustryPlacementsAsync(BulkProcessRequest model)
@@ -580,6 +599,13 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
         public Task<DataExportResponse> GetProviderRegistrationsAsync(GetProviderRegistrationsRequest request)
             => PostAsync<GetProviderRegistrationsRequest, DataExportResponse>(ApiConstants.GetRegistrationsUri, request);
+
+        #endregion
+
+        #region Request replacement document
+
+        public Task<bool> ProcessAdminCreateReplacementDocumentPrintingRequestAsync(ReplacementPrintRequest request)
+           => PostAsync<ReplacementPrintRequest, bool>(ApiConstants.ProcessAdminCreateReplacementDocumentPrintingRequestUri, request);
 
         #endregion
 

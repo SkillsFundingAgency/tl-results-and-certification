@@ -1,5 +1,6 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
+using System;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
@@ -15,5 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<bool> UpdateLearnerWithdrawnStatusAsync(long providerUkprn, ChangeWithdrawnStatusHaveYouToldAwardingOrganisationViewModel model);
         Task<bool> CreateReplacementDocumentPrintingRequestAsync(long providerUkprn, RequestReplacementDocumentViewModel viewModel);
         Task<bool> ReinstateRegistrationFromPendingWithdrawalAsync(ChangeBackToActiveStatusHaveYouToldAwardingOrganisationViewModel model);
+
+        Task<LearnerRecordDetailsViewModel> GetLearnerRecordDetailsViewModel(long providerUkprn, int profileId, int documentRerequestInDays);
     }
 }

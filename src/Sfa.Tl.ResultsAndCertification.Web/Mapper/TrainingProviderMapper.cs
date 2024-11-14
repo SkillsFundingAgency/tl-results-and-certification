@@ -1,16 +1,18 @@
 ﻿using AutoMapper;
 using Newtonsoft.Json;
-using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.Specialism;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Models.OverallResults;
+using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
+using System;
 using SearchLearnerDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.SearchLearnerDetails;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
@@ -68,9 +70,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.OverallResultDetails, opts => opts.MapFrom(s => !string.IsNullOrWhiteSpace(s.OverallResultDetails) ? JsonConvert.DeserializeObject<OverallResultDetail>(s.OverallResultDetails) : null))
                .ForMember(d => d.OverallResultPublishDate, opts => opts.MapFrom(s => s.OverallResultPublishDate))
                .ForMember(d => d.LastDocumentRequestedDate, opts => opts.MapFrom(s => s.LastDocumentRequestedDate))
-               .ForMember(d => d.Specialisms, opts => opts.MapFrom(s=>s.Specialisms))
-               .ForMember(d => d.IsReprint, opts => opts.MapFrom(s => s.IsReprint == true));
-
+               .ForMember(d => d.Specialisms, opts => opts.MapFrom(s => s.Specialisms))
+               .ForMember(d => d.IsReprint, opts => opts.MapFrom(s => s.IsReprint == true))
+               .ForMember(d => d.PrintCertificateId, opts => opts.MapFrom(s => s.PrintCertificateId))
+               .ForMember(d => d.IsDocumentRerequestEligible, opts => opts.MapFrom((src, dest, destMember, context) => CommonHelper.IsDocumentRerequestEligible((int)context.Items[Constants.CertificateRerequestDays], src.PrintCertificateId, src.LastDocumentRequestedDate)));
+            
             CreateMap<Address, AddressViewModel>()
                 .ForMember(d => d.AddressId, opts => opts.MapFrom(s => s.AddressId))
                 .ForMember(d => d.DepartmentName, opts => opts.MapFrom(s => s.DepartmentName))

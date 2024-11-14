@@ -60,7 +60,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                           let ipRecord = tqPathway.IndustryPlacements.FirstOrDefault()
                                           let pathwayResults = tqPathway.TqPathwayAssessments.Where(pa => pa.IsOptedin).SelectMany(pa => pa.TqPathwayResults.Where(pr => pr.IsOptedin))
                                           let specialism = tqPathway.TqRegistrationSpecialisms.FirstOrDefault(s => s.IsOptedin)
-                                          let printRequest = _dbContext.PrintCertificate.OrderByDescending(o => o.CreatedOn).FirstOrDefault(c => c.Uln == tqProfile.UniqueLearnerNumber && c.TqRegistrationPathwayId == tqPathway.Id)
+                                          let printRequest = _dbContext.PrintCertificate.OrderByDescending(o => o.Id).FirstOrDefault(c => c.Uln == tqProfile.UniqueLearnerNumber && c.TqRegistrationPathwayId == tqPathway.Id)
                                           where tqProfile.Id == profileId && tlProvider.UkPrn == providerUkprn
                                           select new SoaLearnerRecordDetails
                                           {
@@ -96,8 +96,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                                                                                 Postcode = address.Postcode
                                                                                             }).FirstOrDefault(),
                                               Status = tqPathway.Status,
-
-                                              LastRequestedOn = printRequest.CreatedOn
+                                              LastRequestedOn = printRequest.LastRequestedOn
                                           })
                                 .FirstOrDefaultAsync();
             return soaLearnerRecord;

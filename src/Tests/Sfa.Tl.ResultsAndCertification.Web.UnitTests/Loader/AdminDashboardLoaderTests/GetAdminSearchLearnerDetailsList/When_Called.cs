@@ -1,13 +1,8 @@
-﻿using AutoMapper;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
-using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Web.Loader;
-using Sfa.Tl.ResultsAndCertification.Web.Mapper;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
 using System.Collections.Generic;
@@ -16,23 +11,10 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoaderTests.GetAdminSearchLearnerDetailsList
 {
-    public class When_Called : BaseTest<AdminDashboardLoader>
+    public class When_Called : AdminDashboardLoaderTestsBase
     {
-        private IResultsAndCertificationInternalApiClient _internalApiClient;
-        private AdminDashboardLoader Loader;
-
         private AdminSearchLearnerDetailsListViewModel _expectedResult;
         private AdminSearchLearnerDetailsListViewModel _actualResult;
-
-        public override void Setup()
-        {
-            _internalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();
-
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(AdminDashboardMapper).Assembly));
-            var mapper = new AutoMapper.Mapper(mapperConfig);
-
-            Loader = new AdminDashboardLoader(_internalApiClient, mapper);
-        }
 
         public override void Given()
         {
@@ -40,23 +22,23 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
             {
                 TotalRecords = 150,
                 Records = new List<AdminSearchLearnerDetail>
-                           {
-                               new AdminSearchLearnerDetail
-                               {
-                                   RegistrationPathwayId = 99,
-                                   Uln = 1234567890,
-                                   Firstname = "Jessica",
-                                   Lastname = "Johnson",
-                                   Provider = "Barnsley College",
-                                   ProviderUkprn = 10000536,
-                                   AwardingOrganisation = EnumAwardingOrganisation.Pearson.ToString(),
-                                   AcademicYear = 2021
-                               }
-                           },
+                {
+                    new()
+                    {
+                        RegistrationPathwayId = 99,
+                        Uln = 1234567890,
+                        Firstname = "Jessica",
+                        Lastname = "Johnson",
+                        Provider = "Barnsley College",
+                        ProviderUkprn = 10000536,
+                        AwardingOrganisation = EnumAwardingOrganisation.Pearson.ToString(),
+                        AcademicYear = 2021
+                    }
+                },
                 PagerInfo = new Pager(1, 1, 10)
             };
 
-            _internalApiClient.GetAdminSearchLearnerDetailsAsync(Arg.Any<AdminSearchLearnerRequest>()).Returns(expectedApiResult);
+            ApiClient.GetAdminSearchLearnerDetailsAsync(Arg.Any<AdminSearchLearnerRequest>()).Returns(expectedApiResult);
 
             _expectedResult = new AdminSearchLearnerDetailsListViewModel
             {
@@ -73,7 +55,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
                 },
                 LearnerDetails = new List<AdminSearchLearnerDetailsViewModel>
                 {
-                    new AdminSearchLearnerDetailsViewModel
+                    new()
                     {
                         Uln = 1234567890,
                         LearnerName = "Jessica Johnson",

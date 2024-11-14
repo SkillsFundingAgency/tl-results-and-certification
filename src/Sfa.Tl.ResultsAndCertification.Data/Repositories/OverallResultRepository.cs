@@ -21,6 +21,13 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
         {
             var results = await _dbContext.OverallResult
                             .Include(r => r.TqRegistrationPathway.TqRegistrationProfile)
+                            .Include(r => r.TqRegistrationPathway.TqPathwayAssessments.Where(a => a.IsOptedin))
+                                .ThenInclude(r => r.AssessmentSeries)
+                            .Include(r => r.TqRegistrationPathway.TqProvider)
+                                .ThenInclude(r => r.TlProvider)
+                            .Include(r => r.TqRegistrationPathway.TqRegistrationSpecialisms.Where(r => r.IsOptedin))
+                                .ThenInclude(r => r.TqSpecialismAssessments.Where(r => r.IsOptedin))
+                                .ThenInclude(r => r.AssessmentSeries)
                             .Include(r => r.TqRegistrationPathway.TqRegistrationSpecialisms.Where(p => p.IsOptedin))
                                 .ThenInclude(s => s.TlSpecialism)
                                 .ThenInclude(s => s.TlDualSpecialismToSpecialisms)
@@ -31,7 +38,29 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                          x.IsOptedin && !x.EndDate.HasValue)
                             .OrderBy(x => x.TqRegistrationPathway.TqRegistrationProfile.Lastname)
                             .ToListAsync();
+            return results;
+        }
 
+        public async Task<OverallResult> GetLearnerOverallResults(long providerUkprn, long profileId)
+        {
+            var results = await _dbContext.OverallResult
+                            .Include(r => r.TqRegistrationPathway.TqRegistrationProfile)
+                            .Include(r => r.TqRegistrationPathway.TqPathwayAssessments.Where(a => a.IsOptedin))
+                                .ThenInclude(r => r.AssessmentSeries)
+                            .Include(r => r.TqRegistrationPathway.TqProvider)
+                                .ThenInclude(r => r.TlProvider)
+                            .Include(r => r.TqRegistrationPathway.TqRegistrationSpecialisms.Where(r => r.IsOptedin))
+                                .ThenInclude(r => r.TqSpecialismAssessments.Where(r => r.IsOptedin))
+                                .ThenInclude(r => r.AssessmentSeries)
+                            .Include(r => r.TqRegistrationPathway.TqRegistrationSpecialisms.Where(p => p.IsOptedin))
+                                .ThenInclude(s => s.TlSpecialism)
+                                .ThenInclude(s => s.TlDualSpecialismToSpecialisms)
+                                .ThenInclude(s => s.DualSpecialism)
+                             .Where(x => x.TqRegistrationPathway.TqRegistrationProfile.Id == profileId &&
+                                         x.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active &&
+                                         x.TqRegistrationPathway.TqProvider.TlProvider.UkPrn == providerUkprn &&
+                                         x.IsOptedin && !x.EndDate.HasValue && DateTime.Today >= x.PublishDate)
+                             .FirstOrDefaultAsync();
             return results;
         }
     }

@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider
         public ICollection<string> Specialisms { get; set; }
         public int AcademicYear { get; set; }
         public string AwardingOrganisationName { get; set; }
-        public SubjectStatus? MathsStatus { get;set; }
+        public SubjectStatus? MathsStatus { get; set; }
         public SubjectStatus? EnglishStatus { get; set; }
 
         public bool IsLearnerRegistered { get; set; }

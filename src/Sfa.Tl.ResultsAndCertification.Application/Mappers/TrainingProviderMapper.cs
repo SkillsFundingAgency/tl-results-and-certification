@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using System;
 using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
@@ -21,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 {
                     return new List<PrintBatchItem>
                     {
-                        new PrintBatchItem
+                        new()
                         {
                             TlProviderAddressId = (int)context.Items["providerAddressId"],
                             CreatedBy = (string)context.Items["performedBy"],
@@ -35,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 {
                     return new List<PrintCertificate>
                     {
-                        new PrintCertificate
+                        new()
                         {
                             Uln = m.Uln,
                             LearnerName = m.LearnerName,
@@ -44,7 +45,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                             LearningDetails = m.LearningDetails,
                             DisplaySnapshot = m.DisplaySnapshot,
                             IsReprint = true,
-                            CreatedBy = (string)context.Items["performedBy"]
+                            CreatedBy = (string)context.Items["performedBy"],
+                            LastRequestedOn = DateTime.UtcNow
                         }
                     };
                 });

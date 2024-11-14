@@ -105,7 +105,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
 
             DbContext.SaveChanges();
             return profile;
-        }        
+        }
 
         public IList<Qualification> SeedQualificationsData()
         {
@@ -143,10 +143,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             if (seedQualificationAchieved)
             {
                 var engQual = Qualifications.FirstOrDefault(e => e.TlLookup.Code == "Eng" && e.IsSendQualification == isSendQualification);
-                var mathQual = Qualifications.FirstOrDefault(e => e.TlLookup.Code == "Math");                
+                var mathQual = Qualifications.FirstOrDefault(e => e.TlLookup.Code == "Math");
 
                 var engQualifcationGrade = engQual.QualificationType.QualificationGrades.FirstOrDefault(x => x.IsAllowable == isEngishAndMathsAchieved);
-                var mathsQualifcationGrade = mathQual.QualificationType.QualificationGrades.FirstOrDefault(x => x.IsAllowable == isEngishAndMathsAchieved); 
+                var mathsQualifcationGrade = mathQual.QualificationType.QualificationGrades.FirstOrDefault(x => x.IsAllowable == isEngishAndMathsAchieved);
 
                 profile.QualificationAchieved.Add(new QualificationAchieved
                 {
@@ -176,7 +176,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
         {
             if (profile == null) return;
 
-            profile.MathsStatus = mathsStatus; 
+            profile.MathsStatus = mathsStatus;
             profile.EnglishStatus = englishStatus;
         }
 
@@ -203,7 +203,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             return printCertificate;
         }
     }
-    
+
     public enum Provider
     {
         TestCollege = 11111111,

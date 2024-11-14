@@ -179,7 +179,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No, they still need to complete it.
+        ///   Looks up a localized string similar to No, they are still working towards completion of their industry placement.
         /// </summary>
         public static string Status_No_They_Still_Need_To_Complete_It {
             get {
@@ -188,7 +188,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No, they will not complete it.
+        ///   Looks up a localized string similar to No, they will not complete their placement.
         /// </summary>
         public static string Status_No_They_Will_Not_Complete_It {
             get {
