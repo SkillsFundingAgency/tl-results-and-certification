@@ -19,7 +19,7 @@ jobs:
       SharedResourceGroup: $[stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.SharedVariables.SharedResourceGroup']]
       EntraReaderUserIdentityResourceId: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.EntraReaderUserIdentityResourceId'] ]
       SqlUserIdentityResourceId: $[ stageDependencies.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.outputs['DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}.armOutputs.armOutput.SqlUserIdentityResourceId'] ]
-  
+
     steps:
       - checkout: self
       - checkout: devopsTools
@@ -31,6 +31,16 @@ jobs:
           'Write-Host "ConfigurationStorageConnectionString variable: $(ConfigurationStorageConnectionString)"'
           'Write-Host "containerLifecyclePolicyRules variable: $(containerLifecyclePolicyRules)"'
         displayName: "Show Variables"
+    
+      - task: AzureCLI@2
+        displayName: 'Fetch Internal API IP Security Restrictions'
+        inputs:
+          azureSubscription: ${{parameters.serviceConnection}}
+          scriptType: 'pscore'
+          scriptLocation: 'ScriptPath'
+          ScriptPath: ./operations-devops-tools/Powershell/AppServiceRestrictions/FetchIpSecurityRestrictions.ps1
+          ScriptArguments: '-resourceGroupName $(BaseName) -appServiceName $(InternalAPIAppServiceName)'
+          azurePowerShellVersion: 'LatestVersion'
 
       - task: AzureCLI@2
         displayName: Create temporary SQL firewall rule to allow Azure service connections
@@ -82,7 +92,8 @@ jobs:
             -CertificateTrackingExtractTrigger "$(CertificateTrackingExtractTrigger)"
             -enableReplica $(enableReplica)
             -containerLifecyclePolicyRules $(containerLifecyclePolicyRules)
-            -ipSecurityRestrictions $(ipSecurityRestrictions)'
+            -ipSecurityRestrictions $(ipSecurityRestrictions)
+            -internalApiIpSecurityRestrictions $(internalApiIpSecurityRestrictions)'
           tags: $(Tags) 
           processOutputs: true
       
