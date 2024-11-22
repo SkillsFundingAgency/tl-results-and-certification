@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
         public async Task<IList<TqRegistrationPathway>> GetLearnersForOverallGradeCalculation(int academicYearFrom, int academicYearTo)
         {
-            var activeLearners = await _dbContext.TqRegistrationPathway
+            var activeLearners = _dbContext.TqRegistrationPathway
                 .Include(x => x.TqRegistrationProfile)
                 .Include(x => x.IndustryPlacements)
                 .Include(x => x.TqPathwayAssessments.Where(pa => pa.IsOptedin && pa.EndDate == null))
@@ -42,10 +42,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                  (pw.IndustryPlacements.Any(ip => ip.CreatedOn > ovr.CreatedOn || ip.ModifiedOn > ovr.CreatedOn) ||
                                   pw.TqPathwayAssessments.SelectMany(pa => pa.TqPathwayResults).Any(pr => pr.CreatedOn > ovr.CreatedOn || pr.ModifiedOn > ovr.CreatedOn) ||
                                   pw.TqRegistrationSpecialisms.SelectMany(s => s.TqSpecialismAssessments.SelectMany(sa => sa.TqSpecialismResults)).Any(sr => sr.CreatedOn > ovr.CreatedOn || sr.ModifiedOn > ovr.CreatedOn)))
-                             ))
-                .ToListAsync();
+                             ));
 
-            return activeLearners;
+            return await activeLearners.ToListAsync();
         }
     }
 }
