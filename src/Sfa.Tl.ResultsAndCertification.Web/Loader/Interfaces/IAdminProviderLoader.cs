@@ -11,5 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<AdminEditProviderViewModel> GetEditProviderViewModel(int providerId);
 
         Task<UpdateProviderResponse> SubmitUpdateProviderRequest(AdminEditProviderViewModel viewModel);
+
+        Task<AddProviderResponse> SubmitAddProviderRequest(AdminAddProviderViewModel viewModel);
     }
 }

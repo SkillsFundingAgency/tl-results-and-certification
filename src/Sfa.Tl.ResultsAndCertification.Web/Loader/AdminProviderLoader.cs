@@ -35,5 +35,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             UpdateProviderRequest request = _mapper.Map<UpdateProviderRequest>(viewModel);
             return _apiClient.UpdateProviderAsync(request);
         }
+
+        public Task<AddProviderResponse> SubmitAddProviderRequest(AdminAddProviderViewModel viewModel)
+        {
+            AddProviderRequest request = _mapper.Map<AddProviderRequest>(viewModel);
+            return _apiClient.AddProviderAsync(request);
+        }
     }
 }

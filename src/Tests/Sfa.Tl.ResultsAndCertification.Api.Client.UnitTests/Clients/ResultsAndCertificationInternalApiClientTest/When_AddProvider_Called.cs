@@ -14,21 +14,20 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAndCertificationInternalApiClientTest
 {
-    public class When_UpdateProvider_Called : BaseTest<ResultsAndCertificationInternalApiClient>
+    public class When_AddProvider_Called : BaseTest<ResultsAndCertificationInternalApiClient>
     {
-        private readonly UpdateProviderRequest _request = new()
+        private readonly AddProviderRequest _request = new()
         {
-            ProviderId = 1,
             UkPrn = 10000536,
             Name = "Barnsley College",
-            DisplayName = "Barnsley College",
-            IsActive = true
+            DisplayName = "Barnsley College"
         };
 
-        private UpdateProviderResponse _result;
+        private AddProviderResponse _result;
 
-         private readonly UpdateProviderResponse _mockHttpResult = new()
+         private readonly AddProviderResponse _mockHttpResult = new()
         {
+            ProviderId = 1,
             DuplicatedUkprnFound = false,
             DuplicatedNameFound = false,
             DuplicatedDisplayNameFound = false,
@@ -51,13 +50,13 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
 
         public override void Given()
         {
-            HttpClient = new HttpClient(new MockHttpMessageHandler<UpdateProviderResponse>(_mockHttpResult, ApiConstants.UpdateProvider, HttpStatusCode.OK, JsonConvert.SerializeObject(_request)));
+            HttpClient = new HttpClient(new MockHttpMessageHandler<AddProviderResponse>(_mockHttpResult, ApiConstants.AddProvider, HttpStatusCode.OK, JsonConvert.SerializeObject(_request)));
             _apiClient = new ResultsAndCertificationInternalApiClient(HttpClient, _tokenServiceClient, _configuration);
         }
 
         public async override Task When()
         {
-            _result = await _apiClient.UpdateProviderAsync(_request);
+            _result = await _apiClient.AddProviderAsync(_request);
         }
 
         [Fact]

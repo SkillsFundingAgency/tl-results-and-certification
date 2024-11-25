@@ -79,6 +79,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add a new provider.
+        /// </summary>
+        public static string Link_Add_New_Provider {
+            get {
+                return ResourceManager.GetString("Link_Add_New_Provider", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Which provider do you want to manage?.
         /// </summary>
         public static string Page_Heading {

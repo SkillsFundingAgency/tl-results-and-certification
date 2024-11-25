@@ -46,6 +46,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminProviderLoade
                     {
                         return new UserNameResolver<AdminEditProviderViewModel, UpdateProviderRequest>(httpContextAccessor);
                     }
+                    if (type.Equals(typeof(UserNameResolver<AdminAddProviderViewModel, AddProviderRequest>)))
+                    {
+                        return new UserNameResolver<AdminAddProviderViewModel, AddProviderRequest>(httpContextAccessor);
+                    }
                     else
                     {
                         return null;

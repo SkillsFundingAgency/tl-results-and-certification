@@ -33,6 +33,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.DisplayName, opts => opts.MapFrom(s => s.DisplayName.Trim()))
                .ForMember(d => d.IsActive, opts => opts.MapFrom(s => s.IsActive))
                .ForMember(d => d.ModifiedBy, opts => opts.MapFrom<UserNameResolver<AdminEditProviderViewModel, UpdateProviderRequest>>());
+
+            CreateMap<AdminAddProviderViewModel, AddProviderRequest>()
+               .ForMember(d => d.UkPrn, opts => opts.MapFrom(s => long.Parse(s.UkPrn)))
+               .ForMember(d => d.Name, opts => opts.MapFrom(s => s.Name.Trim()))
+               .ForMember(d => d.DisplayName, opts => opts.MapFrom(s => s.DisplayName.Trim()))
+               .ForMember(d => d.CreatedBy, opts => opts.MapFrom<UserNameResolver<AdminAddProviderViewModel, AddProviderRequest>>());
         }
 
         private static SummaryItemModel CreateSummary(string id, string title, string value)

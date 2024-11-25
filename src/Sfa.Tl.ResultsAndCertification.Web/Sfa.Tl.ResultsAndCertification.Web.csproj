@@ -298,6 +298,11 @@
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		</Compile>
+		<Compile Update="Content\AdminProvider\AdminAddProvider.Designer.cs">
+		  <DependentUpon>AdminAddProvider.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
 		<Compile Update="Content\AdminProvider\AdminEditProvider.Designer.cs">
 		  <DependentUpon>AdminEditProvider.resx</DependentUpon>
 		  <DesignTime>True</DesignTime>
@@ -1562,6 +1567,10 @@
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminPostResults\AdminOpenPathwayRomm.resx">
 		  <LastGenOutput>AdminOpenPathwayRomm.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminProvider\AdminAddProvider.resx">
+		  <LastGenOutput>AdminAddProvider.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminProvider\AdminEditProvider.resx">

@@ -9,51 +9,48 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminProviderLoaderTests
 {
-    public class When_SubmitUpdateProviderRequest_Called_Returns_Expected : AdminProviderLoaderBaseTest
+    public class When_SubmitAddProviderRequest_Called_Returns_Expected : AdminProviderLoaderBaseTest
     {
-        private readonly AdminEditProviderViewModel _request = new()
+        private readonly AdminAddProviderViewModel _request = new()
         {
-            ProviderId = 1,
             UkPrn = "12345678",
-            Name = "updated-name",
-            DisplayName = "updated-display-name",
-            IsActive = true
+            Name = "added-name",
+            DisplayName = "added-display-name",
         };
 
-        private readonly Expression<Predicate<UpdateProviderRequest>> _apiRequestPredicate =
-            r => r.ProviderId == 1
-            && r.UkPrn == 12345678
-            && r.Name == "updated-name"
-            && r.DisplayName == "updated-display-name"
-            && r.IsActive == true
-            && r.ModifiedBy == "test user";
+        private readonly Expression<Predicate<AddProviderRequest>> _apiRequestPredicate =
+            r => r.UkPrn == 12345678
+            && r.Name == "added-name"
+            && r.DisplayName == "added-display-name"
+            && r.CreatedBy == "test user";
 
-        private readonly UpdateProviderResponse _apiResponse = new()
+        private readonly AddProviderResponse _apiResponse = new()
         {
+            ProviderId = 1,
             DuplicatedUkprnFound = false,
             DuplicatedNameFound = false,
             DuplicatedDisplayNameFound = false,
             Success = true
         };
 
-        private UpdateProviderResponse _result;
+        private AddProviderResponse _result;
 
         public override void Given()
         {
             ApiClient
-                .UpdateProviderAsync(Arg.Is(_apiRequestPredicate))
+                .AddProviderAsync(Arg.Is(_apiRequestPredicate))
                 .Returns(_apiResponse);
         }
 
         public override async Task When()
         {
-            _result = await Loader.SubmitUpdateProviderRequest(_request);
+            _result = await Loader.SubmitAddProviderRequest(_request);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            ApiClient.Received(1).UpdateProviderAsync(Arg.Is(_apiRequestPredicate));
+            ApiClient.Received(1).AddProviderAsync(Arg.Is(_apiRequestPredicate));
         }
 
         [Fact]

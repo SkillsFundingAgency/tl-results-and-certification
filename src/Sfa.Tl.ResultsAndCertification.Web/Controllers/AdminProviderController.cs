@@ -156,5 +156,48 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             return notFoundResult;
         }
+
+        [HttpGet]
+        [Route("admin/add-provider", Name = RouteConstants.AdminAddProvider)]
+        public IActionResult AdminAddProviderAsync()
+        {
+            return View(new AdminAddProviderViewModel());
+        }
+
+        [HttpPost]
+        [Route("admin/add-provider", Name = RouteConstants.SubmitAdminAddProvider)]
+        public async Task<IActionResult> AdminAddProviderAsync(AdminAddProviderViewModel viewModel)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(viewModel);
+            }
+
+            AddProviderResponse addResponse = await _adminProviderLoader.SubmitAddProviderRequest(viewModel);
+
+            if (!addResponse.IsRequestValid)
+            {
+                if (addResponse.DuplicatedUkprnFound)
+                    ModelState.AddModelError("Ukprn", AdminAddProvider.Validation_Message_Ukprn_Duplicated);
+
+                if (addResponse.DuplicatedNameFound)
+                    ModelState.AddModelError("Name", AdminAddProvider.Validation_Message_Name_Duplicated);
+
+                if (addResponse.DuplicatedDisplayNameFound)
+                    ModelState.AddModelError("DisplayName", AdminAddProvider.Validation_Message_DisplayName_Duplicated);
+
+                return View(viewModel);
+            }
+
+            if (!addResponse.Success)
+            {
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+            }
+
+            var notificationBanner = new AdminNotificationBannerModel(AdminAddProvider.Notification_Message_Provider_Added);
+            await _cacheService.SetAsync<NotificationBannerModel>(NotificationCacheKey, notificationBanner, CacheExpiryTime.XSmall);
+
+            return RedirectToRoute(RouteConstants.AdminProviderDetails, new { providerId = addResponse.ProviderId });
+        }
     }
 }

@@ -214,7 +214,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 
         public Task<GetProviderResponse> GetProviderAsync(int providerId);
 
-        public Task<int> AddProviderAsync(AddProviderRequest request);
+        public Task<AddProviderResponse> AddProviderAsync(AddProviderRequest request);
 
         public Task<UpdateProviderResponse> UpdateProviderAsync(UpdateProviderRequest request);
 

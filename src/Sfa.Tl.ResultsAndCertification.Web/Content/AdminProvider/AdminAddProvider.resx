@@ -117,31 +117,55 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AutoComplete_Help_Text" xml:space="preserve">
-    <value>The following entry field has auto-complete. When autocomplete results are available use up and down arrows to review and enter to select. Touch device users, explore by touch or with swipe gestures.</value>
+  <data name="Button_Cancel" xml:space="preserve">
+    <value>Cancel</value>
   </data>
-  <data name="Continue_Button_Label" xml:space="preserve">
-    <value>Continue</value>
+  <data name="Button_Submit" xml:space="preserve">
+    <value>Submit</value>
   </data>
-  <data name="Link_Add_New_Provider" xml:space="preserve">
-    <value>Add a new provider</value>
+  <data name="Heading_Add_Provider" xml:space="preserve">
+    <value>Add provider</value>
   </data>
-  <data name="Page_Heading" xml:space="preserve">
-    <value>Which provider do you want to manage?</value>
+  <data name="Label_Display_Name" xml:space="preserve">
+    <value>Display Name</value>
+  </data>
+  <data name="Label_Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Label_Ukprn" xml:space="preserve">
+    <value>UKPRN</value>
+  </data>
+  <data name="Notification_Message_Provider_Added" xml:space="preserve">
+    <value>The provider has been added</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Find providers – Admin</value>
+    <value>Add provider – Admin</value>
   </data>
-  <data name="ProviderName_Char_Limit_Exceed_Validation_Message" xml:space="preserve">
-    <value>The character limit exceeded</value>
+  <data name="Validation_Message_DisplayName_Char_Limit_Exceed" xml:space="preserve">
+    <value>The name character limit exceeded</value>
   </data>
-  <data name="ProviderName_NotValid_Validation_Message" xml:space="preserve">
-    <value>No provider found with that name - enter a valid provider’s name</value>
+  <data name="Validation_Message_DisplayName_Duplicated" xml:space="preserve">
+    <value>The provider display name already exists</value>
   </data>
-  <data name="ProviderName_Required_Validation_Message" xml:space="preserve">
-    <value>Enter a provider’s name</value>
+  <data name="Validation_Message_DisplayName_Required" xml:space="preserve">
+    <value>Enter a provider’s display name</value>
   </data>
-  <data name="Provider_Input_Field_Label" xml:space="preserve">
-    <value>Enter the provider's name</value>
+  <data name="Validation_Message_Name_Char_Limit_Exceed" xml:space="preserve">
+    <value>The name character limit exceeded</value>
+  </data>
+  <data name="Validation_Message_Name_Duplicated" xml:space="preserve">
+    <value>The provider name already exists</value>
+  </data>
+  <data name="Validation_Message_Name_Required" xml:space="preserve">
+    <value>Enter a provider name</value>
+  </data>
+  <data name="Validation_Message_Ukprn_Duplicated" xml:space="preserve">
+    <value>The provider UKPRN already exists</value>
+  </data>
+  <data name="Validation_Message_Ukprn_Only_Numbers" xml:space="preserve">
+    <value>The UKPRN must be exactly 8 numeric characters long</value>
+  </data>
+  <data name="Validation_Message_Ukprn_Required" xml:space="preserve">
+    <value>Enter a provider UKPRN</value>
   </data>
 </root>
