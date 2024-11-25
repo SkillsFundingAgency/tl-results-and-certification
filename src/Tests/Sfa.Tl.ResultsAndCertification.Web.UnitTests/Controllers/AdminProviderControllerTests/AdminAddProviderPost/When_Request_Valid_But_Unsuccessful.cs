@@ -8,43 +8,42 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminProvider;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminProviderControllerTests.AdminEditProviderPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminProviderControllerTests.AdminAddProviderPost
 {
     public class When_Request_Valid_But_Unsuccessful : AdminProviderControllerBaseTest
     {
-        private readonly AdminEditProviderViewModel _viewModel = new()
+        private readonly AdminAddProviderViewModel _viewModel = new()
         {
-            ProviderId = 1,
             UkPrn = "10000528",
             Name = "Barking & Dagenham College",
-            DisplayName = "Barking & Dagenham College",
-            IsActive = true
+            DisplayName = "Barking & Dagenham College"
         };
 
         private IActionResult _result;
 
         public override void Given()
         {
-            UpdateProviderResponse updateResponse = new()
+            AddProviderResponse addResponse = new()
             {
+                ProviderId = 0,
                 Success = false,
                 DuplicatedUkprnFound = false,
                 DuplicatedNameFound = false,
                 DuplicatedDisplayNameFound = false
             };
 
-            AdminProviderLoader.SubmitUpdateProviderRequest(_viewModel).Returns(updateResponse);
+            AdminProviderLoader.SubmitAddProviderRequest(_viewModel).Returns(addResponse);
         }
 
         public async override Task When()
         {
-            _result = await Controller.AdminEditProviderAsync(_viewModel);
+            _result = await Controller.AdminAddProviderAsync(_viewModel);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            AdminProviderLoader.Received(1).SubmitUpdateProviderRequest(_viewModel);
+            AdminProviderLoader.Received(1).SubmitAddProviderRequest(_viewModel);
             CacheService.DidNotReceive().SetAsync(NotificationCacheKey, Arg.Any<NotificationBannerModel>(), Arg.Any<CacheExpiryTime>());
         }
 

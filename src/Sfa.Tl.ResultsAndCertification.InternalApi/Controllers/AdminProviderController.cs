@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
 
         [HttpPost]
         [Route("AddProvider")]
-        public Task<int> AddProviderAsync(AddProviderRequest request)
+        public Task<AddProviderResponse> AddProviderAsync(AddProviderRequest request)
             => _adminProviderService.AddProviderAsync(request);
     }
 }

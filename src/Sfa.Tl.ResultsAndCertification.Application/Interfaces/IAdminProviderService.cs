@@ -7,7 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
     public interface IAdminProviderService
     {
         Task<GetProviderResponse> GetProviderAsync(int providerId);
-        Task<int> AddProviderAsync(AddProviderRequest addRequest);
+        Task<AddProviderResponse> AddProviderAsync(AddProviderRequest addRequest);
         Task<UpdateProviderResponse> UpdateProviderAsync(UpdateProviderRequest updateRequest, Func<DateTime> getNow);
     }
 }

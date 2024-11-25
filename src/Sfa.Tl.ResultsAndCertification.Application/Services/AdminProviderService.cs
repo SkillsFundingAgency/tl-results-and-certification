@@ -26,10 +26,20 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return _mapper.Map<GetProviderResponse>(provider);
         }
 
-        public Task<int> AddProviderAsync(AddProviderRequest addRequest)
+        public async Task<AddProviderResponse> AddProviderAsync(AddProviderRequest addRequest)
         {
+            AddProviderResponse response = await ValidateAddProvider(addRequest);
+
+            if (!response.IsRequestValid)
+            {
+                return response;
+            }
+
             TlProvider provider = _mapper.Map<TlProvider>(addRequest);
-            return _repository.CreateAsync(provider);
+            response.Success = await _repository.CreateAsync(provider) > 0;
+            response.ProviderId = provider.Id;
+
+            return response;
         }
 
         public async Task<UpdateProviderResponse> UpdateProviderAsync(UpdateProviderRequest updateRequest, Func<DateTime> getNow)
@@ -43,6 +53,20 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             validation.Success = await UpdateProvider(updateRequest, getNow);
             return validation;
+        }
+
+        private async Task<AddProviderResponse> ValidateAddProvider(AddProviderRequest addRequest)
+        {
+            bool ukprnFound = await _repository.AnyAsync(p => p.UkPrn == addRequest.UkPrn);
+            bool nameFound = await _repository.AnyAsync(p => EF.Functions.Like(p.Name.Trim(), addRequest.Name.Trim().ToLower()));
+            bool displayNameFound = await _repository.AnyAsync(p => EF.Functions.Like(p.DisplayName.Trim(), addRequest.DisplayName.Trim().ToLower()));
+
+            return new AddProviderResponse
+            {
+                DuplicatedUkprnFound = ukprnFound,
+                DuplicatedNameFound = nameFound,
+                DuplicatedDisplayNameFound = displayNameFound
+            };
         }
 
         private async Task<UpdateProviderResponse> ValidateUpdateProvider(UpdateProviderRequest updateRequest)

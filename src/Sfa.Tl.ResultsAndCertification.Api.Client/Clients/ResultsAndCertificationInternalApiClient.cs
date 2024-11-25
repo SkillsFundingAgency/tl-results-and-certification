@@ -618,8 +618,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return GetAsync<GetProviderResponse>(requestUri);
         }
 
-        public Task<int> AddProviderAsync(AddProviderRequest request)
-            => PostAsync<AddProviderRequest, int>(ApiConstants.AddProvider, request);
+        public Task<AddProviderResponse> AddProviderAsync(AddProviderRequest request)
+            => PostAsync<AddProviderRequest, AddProviderResponse>(ApiConstants.AddProvider, request);
 
         public Task<UpdateProviderResponse> UpdateProviderAsync(UpdateProviderRequest request)
             => PutAsync<UpdateProviderRequest, UpdateProviderResponse>(ApiConstants.UpdateProvider, request);

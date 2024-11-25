@@ -614,6 +614,8 @@
         public const string AdminProviderDetails = "AdminProviderDetails";
         public const string AdminEditProvider = "AdminEditProvider";
         public const string SubmitAdminEditProvider = "SubmitAdminEditProvider";
+        public const string AdminAddProvider = "AdminAddProvider";
+        public const string SubmitAdminAddProvider = "SubmitAdminAddProvider";
 
         #endregion
     }
