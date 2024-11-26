@@ -18,13 +18,7 @@
         <p class="govuk-body">@DownloadOverallResults.Para_You_Can_Download_Your_Active_Learners</p>
         <p class="govuk-body govuk-!-margin-bottom-6">@DownloadOverallResults.Para_Csv_Data_Should_Not_Be_Shared</p>
 
-        <p class="govuk-body govuk-!-margin-bottom-6">
-            @DownloadOverallResults.Para_Results_Slips_Also_Available_To_Download
-            <a asp-route="@RouteConstants.SearchLearnerRecord">
-                @DownloadOverallResults.Manage_Learner_Records
-            </a>
-            @DownloadOverallResults.Page
-        </p>
+        <p class="govuk-body govuk-!-margin-bottom-6">@DownloadOverallResults.Para_Results_Slips_Also_Available_To_Download<a class="govuk-link" asp-route="@RouteConstants.SearchLearnerRecord">@DownloadOverallResults.Manage_Learner_Records</a>@DownloadOverallResults.Page</p>
 
         <p class="govuk-body">@DownloadOverallResults.Para_Results_Updated_After_Results_Day_If</p>
         <ul class="govuk-list govuk-list--bullet">
