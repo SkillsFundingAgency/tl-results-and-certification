@@ -69,6 +69,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (pathway == null) return false;
 
             pathway.AcademicYear = request.ChangeStartYearDetails.StartYearTo;
+            pathway.ModifiedBy = request.CreatedBy;
+            pathway.ModifiedOn = _systemProvider.UtcNow;
+
             bool updated = await tqRegistrationPathwayRepository.UpdateWithSpecifedColumnsOnlyAsync(pathway, u => u.AcademicYear, u => u.ModifiedBy, u => u.ModifiedOn) > 0;
 
             if (updated)
@@ -156,8 +159,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<bool> ProcessChangeIndustryPlacementAsync(ReviewChangeIndustryPlacementRequest request)
         {
-            var industryPlacementRepository = _repositoryFactory.GetRepository<Domain.Models.IndustryPlacement>();
-            Domain.Models.IndustryPlacement industryPlacement = await industryPlacementRepository.GetSingleOrDefaultAsync(p => p.TqRegistrationPathwayId == request.RegistrationPathwayId);
+            var industryPlacementRepository = _repositoryFactory.GetRepository<IndustryPlacement>();
+            IndustryPlacement industryPlacement = await industryPlacementRepository.GetSingleOrDefaultAsync(p => p.TqRegistrationPathwayId == request.RegistrationPathwayId);
 
             return industryPlacement == null
                 ? await CreateIndustryPlacementAsync(request, industryPlacementRepository)
