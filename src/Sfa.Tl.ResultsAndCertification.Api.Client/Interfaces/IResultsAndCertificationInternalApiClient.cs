@@ -1,4 +1,5 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
@@ -217,6 +218,14 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         public Task<AddProviderResponse> AddProviderAsync(AddProviderRequest request);
 
         public Task<UpdateProviderResponse> UpdateProviderAsync(UpdateProviderRequest request);
+
+        #endregion
+
+        #region Dashboard
+
+        public Task<IEnumerable<string>> GetAwardingOrganisationBanners();
+
+        public Task<IEnumerable<string>> GetProviderBanners();
 
         #endregion
     }

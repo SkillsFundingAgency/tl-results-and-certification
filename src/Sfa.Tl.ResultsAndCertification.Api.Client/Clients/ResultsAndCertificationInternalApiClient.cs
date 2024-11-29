@@ -626,6 +626,16 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
         #endregion
 
+        #region Dashboard
+
+        public Task<IEnumerable<string>> GetAwardingOrganisationBanners()
+            => GetAsync<IEnumerable<string>>(ApiConstants.GetAwardingOrganisationBanners);
+
+        public Task<IEnumerable<string>> GetProviderBanners()
+            => GetAsync<IEnumerable<string>>(ApiConstants.GetProviderBanners);
+
+        #endregion
+
         #region Private Methods
 
         /// <summary>

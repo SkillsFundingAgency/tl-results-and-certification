@@ -19,6 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DashboardCont
                 .Build().HttpContext;
 
             HttpContextAccessor.HttpContext.Returns(httpContext);
+            Loader.GetDashboardViewModel(httpContext.User).Returns(new DashboardViewModel { HasAccessToService = true, LoginUserType = loginUserType });
         }
 
         public void Then_Expected_Result(LoginUserType loginUserType)

@@ -248,6 +248,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<IAdminChangeLogService, AdminChangeLogService>();
             services.AddTransient<IAdminPostResultsService, AdminPostResultsService>();
             services.AddTransient<IAdminProviderService, AdminProviderService>();
+
+            // Dashboard
+            services.AddTransient<IDashboardBannerService, DashboardBannerService>();
         }
     }
 }

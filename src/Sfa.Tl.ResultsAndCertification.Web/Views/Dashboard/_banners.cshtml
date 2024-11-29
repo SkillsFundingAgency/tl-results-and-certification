@@ -1,0 +1,11 @@
+﻿@model IEnumerable<Sfa.Tl.ResultsAndCertification.Web.ViewComponents.DashboardBanner.DashboardBannerModel>
+
+<div class="govuk-grid-row">
+
+    @foreach (var banner in Model)
+    {
+        <div class="govuk-grid-column-full">
+            <vc:dashboard-banner model="banner"></vc:dashboard-banner>
+        </div>
+    }
+</div>
