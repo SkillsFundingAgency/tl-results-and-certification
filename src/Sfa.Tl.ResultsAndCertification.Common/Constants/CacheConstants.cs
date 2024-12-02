@@ -20,6 +20,7 @@
         public const string AdminDashboardInformationCacheKey = "AdminDashboardInformation";
         public const string AdminChangeLogCacheKey = "AdminChangeLog";
         public const string AdminPostResultsCacheKey = "AdminPostResults";
+        public const string AdminProviderCacheKey = "AdminProvider";
 
         public const string SearchRegistrationCacheKey = "SearchRegistration";
     }

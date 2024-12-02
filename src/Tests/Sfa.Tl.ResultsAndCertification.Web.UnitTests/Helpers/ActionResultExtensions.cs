@@ -14,6 +14,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Helpers
         public static void ShouldBeRedirectPageNotFound(this IActionResult actionResult)
             => ShouldBeRedirectToRouteResult(actionResult, RouteConstants.PageNotFound);
 
+        public static void ShouldBeRedirectToProblemWithService(this IActionResult actionResult)
+           => ShouldBeRedirectToRouteResult(actionResult, RouteConstants.ProblemWithService);
+
         public static void ShouldBeRedirectToRouteResult(this IActionResult actionResult, string routeName, params (string key, object value)[] values)
         {
             actionResult.Should().NotBeNull().And.BeOfType<RedirectToRouteResult>();

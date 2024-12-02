@@ -150,6 +150,12 @@
   <data name="Item_Grade_Changed" xml:space="preserve">
     <value>a grade has changed due to a review or appeal</value>
   </data>
+  <data name="Manage_Learner_Records" xml:space="preserve">
+    <value>Manage Learner Records</value>
+  </data>
+  <data name="Page" xml:space="preserve">
+    <value> page.</value>
+  </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Download T Level results</value>
   </data>
@@ -157,13 +163,16 @@
     <value>The results will be available the day before each results day. You must not share these results until results day.</value>
   </data>
   <data name="Para_Download_Results_As_CSV_File" xml:space="preserve">
-    <value>Download results as a CSV file for active learners in the final year of their T Level.</value>
+    <value>Download results as a CSV file for active learners who have reached the end of the second year of their T Level.</value>
   </data>
   <data name="Para_Download_Results_Slips_As_PDF_File" xml:space="preserve">
-    <value>Download learner results at 15 August 2024 as a PDF.</value>
+    <value>Download learner results slips as a PDF.</value>
   </data>
   <data name="Para_File_Update_Next_Working_Day" xml:space="preserve">
-    <value>Any changes to results will be updated on the next working day.</value>
+    <value>The downloadable results file and results slips will be updated to reflect any changes to results on the next working day.</value>
+  </data>
+  <data name="Para_Results_Slips_Also_Available_To_Download" xml:space="preserve">
+    <value>Results slips are also available to download for each individual learner in the </value>
   </data>
   <data name="Para_Results_Updated_After_Results_Day_If" xml:space="preserve">
     <value>The results will be updated after results day if:</value>

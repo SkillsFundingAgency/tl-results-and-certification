@@ -213,9 +213,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<IStatementOfAchievementService, StatementOfAchievementService>();
             services.AddTransient<IPostResultsServiceService, PostResultsServiceService>();
             services.AddTransient<ILearnerService, LearnerService>();
-            services.AddTransient<IAdminDashboardService, AdminDashboardService>();
-            services.AddTransient<IAdminChangeLogService, AdminChangeLogService>();
-            services.AddTransient<IAdminPostResultsService, AdminPostResultsService>();
             services.AddTransient<ISearchRegistrationService, SearchRegistrationService>();
             services.AddTransient<IProviderRegistrationsService, ProviderRegistrationsService>();
 
@@ -245,6 +242,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             // Certificate Printing Service
             services.AddTransient<ICertificateService, CertificateService>();
             services.AddTransient<ICertificateRepository, CertificateRepository>();
+
+            // Admin Dashboard
+            services.AddTransient<IAdminDashboardService, AdminDashboardService>();
+            services.AddTransient<IAdminChangeLogService, AdminChangeLogService>();
+            services.AddTransient<IAdminPostResultsService, AdminPostResultsService>();
+            services.AddTransient<IAdminProviderService, AdminProviderService>();
         }
     }
 }
