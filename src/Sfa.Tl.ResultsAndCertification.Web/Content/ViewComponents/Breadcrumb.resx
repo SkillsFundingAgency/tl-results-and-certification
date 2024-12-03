@@ -258,4 +258,10 @@
   <data name="Upload_Romms_File" xml:space="preserve">
     <value>Upload multiple romms</value>
   </data>
+  <data name="Edit_Provider" xml:space="preserve">
+    <value>Edit provider</value>
+  </data>
+  <data name="Provider_Details" xml:space="preserve">
+    <value>Provider's details</value>
+  </data>
 </root>

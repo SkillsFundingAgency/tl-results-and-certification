@@ -3,6 +3,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminPostResults;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminProvider;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.IndustryPlacement;
@@ -206,6 +207,16 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         #region Request replacement document
 
         Task<bool> ProcessAdminCreateReplacementDocumentPrintingRequestAsync(ReplacementPrintRequest request);
+
+        #endregion
+
+        #region Admin providers
+
+        public Task<GetProviderResponse> GetProviderAsync(int providerId);
+
+        public Task<AddProviderResponse> AddProviderAsync(AddProviderRequest request);
+
+        public Task<UpdateProviderResponse> UpdateProviderAsync(UpdateProviderRequest request);
 
         #endregion
     }

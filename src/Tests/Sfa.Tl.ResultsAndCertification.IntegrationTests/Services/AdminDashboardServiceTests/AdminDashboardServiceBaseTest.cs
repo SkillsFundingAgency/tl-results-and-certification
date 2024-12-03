@@ -163,21 +163,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             return tqPathwayResults;
         }
 
-        public void RegisterUlnForNextAcademicYear(List<TqRegistrationProfile> _registrations, IList<long> ulns)
-        {
-            ulns.ToList().ForEach(uln =>
-            {
-                var registration = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == uln);
-                registration.TqRegistrationPathways.FirstOrDefault().AcademicYear = _academicYears.FirstOrDefault(x => DateTime.Today >= x.StartDate && DateTime.Today <= x.EndDate).Year + 1;
-            });
-        }
-
-        public void SeedSpecialConsiderationsLookupData()
-        {
-            IpLookupDataProvider.CreateIpLookupList(DbContext, null, IpLookupType.SpecialConsideration, true);
-            DbContext.SaveChanges();
-        }
-
         public List<TqPathwayAssessment> SeedPathwayAssessmentsData(List<TqPathwayAssessment> pathwayAssessments, bool saveChanges = true)
         {
             var tqPathwayAssessment = PathwayAssessmentDataProvider.CreateTqPathwayAssessments(DbContext, pathwayAssessments);

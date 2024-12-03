@@ -31,7 +31,6 @@ ELSE IF ('$(environment)' <> 'DevIntegration')
 BEGIN
 /*For DevIntegration we do not want to seed any data */
 :r ".\SeedTlAwardingOrganisations.sql"
-:r ".\SeedTlProviders.sql"
 :r ".\SeedTlRoutes.sql"
 :r ".\SeedTlPathways.sql"
 :r ".\SeedTlSpecialisms.sql"

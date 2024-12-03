@@ -249,6 +249,12 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 await _dbContext.Set<T>().CountAsync();
         }
 
+        public async Task<bool> AnyAsync(Expression<Func<T, bool>> predicate = null)
+        {
+            return predicate != null ? await _dbContext.Set<T>().AnyAsync(predicate) :
+                await _dbContext.Set<T>().AnyAsync();
+        }
+
         private IQueryable<T> GetQueryableWithIncludes(Expression<Func<T, bool>> predicate, Expression<Func<T, object>> orderBy, bool asendingorder = true, params Expression<Func<T, object>>[] navigationPropertyPath)
         {
             var queryable = _dbContext.Set<T>().AsQueryable();

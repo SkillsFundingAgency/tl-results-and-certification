@@ -161,6 +161,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.DownloadOverallResults {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Manage Learner Records.
+        /// </summary>
+        public static string Manage_Learner_Records {
+            get {
+                return ResourceManager.GetString("Manage_Learner_Records", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to  page..
+        /// </summary>
+        public static string Page {
+            get {
+                return ResourceManager.GetString("Page", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download T Level results.
         /// </summary>
         public static string Page_Title {
@@ -179,7 +197,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.DownloadOverallResults {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download results as a CSV file for active learners in the final year of their T Level..
+        ///   Looks up a localized string similar to Download results as a CSV file for active learners who have reached the end of the second year of their T Level..
         /// </summary>
         public static string Para_Download_Results_As_CSV_File {
             get {
@@ -188,7 +206,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.DownloadOverallResults {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download learner results at 15 August 2024 as a PDF..
+        ///   Looks up a localized string similar to Download learner results slips as a PDF..
         /// </summary>
         public static string Para_Download_Results_Slips_As_PDF_File {
             get {
@@ -197,11 +215,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.DownloadOverallResults {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Any changes to results will be updated on the next working day..
+        ///   Looks up a localized string similar to The downloadable results file and results slips will be updated to reflect any changes to results on the next working day..
         /// </summary>
         public static string Para_File_Update_Next_Working_Day {
             get {
                 return ResourceManager.GetString("Para_File_Update_Next_Working_Day", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Results slips are also available to download for each individual learner in the .
+        /// </summary>
+        public static string Para_Results_Slips_Also_Available_To_Download {
+            get {
+                return ResourceManager.GetString("Para_Results_Slips_Also_Available_To_Download", resourceCulture);
             }
         }
         

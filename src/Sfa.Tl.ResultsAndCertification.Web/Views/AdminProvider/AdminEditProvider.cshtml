@@ -1,0 +1,85 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminProvider.AdminEditProviderViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminProvider
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+@{
+    ViewData["Title"] = AdminEditProvider.Page_Title;
+}
+
+@section NavigationBar
+{
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        <partial name="_ValidationSummary" />
+        <form asp-route="@RouteConstants.SubmitAdminEditProvider">
+            <div class="govuk-form-group govuk-!-margin-bottom-7">
+                <fieldset class="govuk-fieldset">
+
+                    <!-- Provider Id -->
+                    <input type="hidden" asp-for="ProviderId" />
+
+                    <!-- Edit provider -->
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h1 class="govuk-fieldset__heading">@AdminEditProvider.Heading_Edit_Provider</h1>
+                    </legend>
+
+                    <!-- UKPRN -->
+                    <div class="govuk-form-group" sfa-validation-for="UkPrn" sfa-validation-class="govuk-form-group--error">
+                        <label class="govuk-label" for="ukprn">
+                            @AdminEditProvider.Label_Ukprn
+                        </label>
+                        <span sfa-validation-for="UkPrn"></span>
+                        <input id="ukprn" class="govuk-input govuk-!-width-two-thirds" asp-for="UkPrn" type="text" maxlength="8">
+                    </div>
+
+                    <!-- Name -->
+                    <div class="govuk-form-group" sfa-validation-for="Name" sfa-validation-class="govuk-form-group--error">
+                        <label class="govuk-label" for="name">
+                            @AdminEditProvider.Label_Name
+                        </label>
+                        <span sfa-validation-for="Name"></span>
+                        <input id="name" class="govuk-input govuk-!-width-two-thirds" asp-for="Name" type="text" maxlength="256">
+                    </div>
+
+                    <!-- Display name -->
+                    <div class="govuk-form-group" sfa-validation-for="DisplayName" sfa-validation-class="govuk-form-group--error">
+                        <label class="govuk-label" for="displayname">
+                            @AdminEditProvider.Label_Display_Name
+                        </label>
+                        <span sfa-validation-for="DisplayName"></span>
+                        <input id="displayname" class="govuk-input govuk-!-width-two-thirds" asp-for="DisplayName" type="text" maxlength="256">
+                    </div>
+
+                    <!-- Active ? -->
+                    <div class="govuk-form-group">
+                        <label class="govuk-label" for="departmentname">@AdminEditProvider.Label_Active</label>
+                        <div class="govuk-radios">
+                            <span sfa-validation-for="IsActive"></span>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="isactive-yes" asp-for="IsActive" type="radio" value="true">
+                                <label class="govuk-label govuk-radios__label" for="isactive-yes">
+                                    @AdminEditProvider.Radio_Label_Yes
+                                </label>
+                            </div>
+                            <div class="govuk-radios__item">
+                                <input class="govuk-radios__input" id="isactive-no" asp-for="IsActive" type="radio" value="false">
+                                <label class="govuk-label govuk-radios__label" for="isactive-no">
+                                    @AdminEditProvider.Radio_Label_No
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Submit / Cancel buttons -->
+                    <div class="govuk-button-group">
+                        <button id="submitButton" class="govuk-button" role="button" data-prevent-double-click="true">@AdminEditProvider.Button_Submit</button>
+                        <a id="btnCancel" class="govuk-button govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.Home">@AdminEditProvider.Button_Cancel</a>
+                    </div>
+                </fieldset>
+            </div>
+        </form>
+    </div>
+</div>

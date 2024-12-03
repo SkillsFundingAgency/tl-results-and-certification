@@ -176,5 +176,9 @@
         public const string GetAvailableStartYearsUri = "/api/providerregistrations/GetAvailableStartYears";
         public const string GetRegistrationsUri = "/api/providerregistrations/GetRegistrations";
 
+        // Admin providers
+        public const string GetProvider = "/api/adminprovider/GetProvider/{0}";
+        public const string AddProvider = "/api/adminprovider/AddProvider";
+        public const string UpdateProvider = "/api/adminprovider/UpdateProvider";
     }
 }
