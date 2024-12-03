@@ -127,10 +127,7 @@
     <value>Assessment entries</value>
   </data>
   <data name="Assessment_Entries_PublishedDate_Text" xml:space="preserve">
-    <value>05 Oct 2023</value>
-  </data>
-  <data name="Assessment_Entries_Version_Text" xml:space="preserve">
-    <value>Version 1.9</value>
+    <value>28 Nov 2024</value>
   </data>
   <data name="Awarding_Organisations_Heading" xml:space="preserve">
     <value>Awarding organisations</value>
@@ -175,10 +172,7 @@
     <value>Registrations</value>
   </data>
   <data name="Registrations_PublishedDate_Text" xml:space="preserve">
-    <value>05 Oct 2023</value>
-  </data>
-  <data name="Registrations_Version_Text" xml:space="preserve">
-    <value>Version 2.0</value>
+    <value>28 Nov 2024</value>
   </data>
   <data name="Registration_DataFormat_And_Rules" xml:space="preserve">
     <value>Registrations data format and rules ({0}, {1}KB)</value>
@@ -190,10 +184,7 @@
     <value>Results</value>
   </data>
   <data name="Results_PublishedDate_Text" xml:space="preserve">
-    <value>05 Oct 2023</value>
-  </data>
-  <data name="Results_Version_Text" xml:space="preserve">
-    <value>Version 1.7</value>
+    <value>28 Nov 2024</value>
   </data>
   <data name="Result_DataFormat_And_Rules" xml:space="preserve">
     <value>Results data format and rules ({0}, {1}KB)</value>
