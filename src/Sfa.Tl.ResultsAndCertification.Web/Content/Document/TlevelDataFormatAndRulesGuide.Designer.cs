@@ -89,20 +89,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 05 Oct 2023.
+        ///   Looks up a localized string similar to 28 Nov 2024.
         /// </summary>
         public static string Assessment_Entries_PublishedDate_Text {
             get {
                 return ResourceManager.GetString("Assessment_Entries_PublishedDate_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Version 1.9.
-        /// </summary>
-        public static string Assessment_Entries_Version_Text {
-            get {
-                return ResourceManager.GetString("Assessment_Entries_Version_Text", resourceCulture);
             }
         }
         
@@ -242,20 +233,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 05 Oct 2023.
+        ///   Looks up a localized string similar to 28 Nov 2024.
         /// </summary>
         public static string Registrations_PublishedDate_Text {
             get {
                 return ResourceManager.GetString("Registrations_PublishedDate_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Version 2.0.
-        /// </summary>
-        public static string Registrations_Version_Text {
-            get {
-                return ResourceManager.GetString("Registrations_Version_Text", resourceCulture);
             }
         }
         
@@ -287,20 +269,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 05 Oct 2023.
+        ///   Looks up a localized string similar to 28 Nov 2024.
         /// </summary>
         public static string Results_PublishedDate_Text {
             get {
                 return ResourceManager.GetString("Results_PublishedDate_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Version 1.7.
-        /// </summary>
-        public static string Results_Version_Text {
-            get {
-                return ResourceManager.GetString("Results_Version_Text", resourceCulture);
             }
         }
         
