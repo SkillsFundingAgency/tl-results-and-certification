@@ -48,15 +48,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data
         public virtual DbSet<TlDualSpecialismToSpecialism> TlDualSpecialismToSpecialism { get; set; }
         public virtual DbSet<DualSpecialismOverallGradeLookup> DualSpecialismOverallGradeLookup { get; set; }
         public virtual DbSet<ChangeLog> ChangeLog { get; set; }
-
-
-        protected override void OnModelCreating(ModelBuilder modelBuilder)
-        {
-            ////This will singularize all table names
-            //foreach (IMutableEntityType entityType in modelBuilder.Model.GetEntityTypes())
-            //{
-            //    entityType.Relational().TableName = entityType.DisplayName();
-            //}
-        }
+        public virtual DbSet<Banner> Banner { get; set; }
     }
 }
