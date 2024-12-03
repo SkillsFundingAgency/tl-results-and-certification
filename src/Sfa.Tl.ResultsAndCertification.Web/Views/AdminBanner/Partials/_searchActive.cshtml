@@ -1,0 +1,28 @@
+﻿@model AdminFindBannerCriteriaViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminBanner
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminBanner
+
+<form asp-route="@RouteConstants.SubmitAdminFindBanner">
+    <div class="govuk-form-group">
+        <label class="govuk-label govuk-label--m" for="departmentname">@AdminFindBanner.Label_Active</label>
+        <div class="govuk-radios--inline">
+            <span sfa-validation-for="SelectActiveBanners"></span>
+            <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="isactive-yes" asp-for="SelectActiveBanners" type="radio" value="true">
+                <label class="govuk-label govuk-radios__label" for="isactive-yes">
+                    @AdminFindBanner.Radio_Label_Yes
+                </label>
+            </div>
+            <div class="govuk-radios__item">
+                <input class="govuk-radios__input" id="isactive-no" asp-for="SelectActiveBanners" type="radio" value="false">
+                <label class="govuk-label govuk-radios__label" for="isactive-no">
+                    @AdminFindBanner.Radio_Label_No
+                </label>
+            </div>
+        </div>
+        <div class="govuk-button-group govuk-!-margin-top-2">
+            <button id="searchButton" class="govuk-button uln-search-button" data-module="govuk-button" data-prevent-double-click="true">@AdminFindBanner.Button_Search</button>
+        </div>
+    </div>
+</form>

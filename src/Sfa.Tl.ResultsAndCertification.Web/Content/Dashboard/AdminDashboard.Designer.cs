@@ -79,6 +79,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Notifications.
+        /// </summary>
+        public static string Tile_Notifications {
+            get {
+                return ResourceManager.GetString("Tile_Notifications", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Search learner records.
         /// </summary>
         public static string Tile_Search_Learner_Records_Heading {
@@ -97,11 +106,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search for, update and add new providers.
+        ///   Looks up a localized string similar to Search for, update and add new providers..
         /// </summary>
         public static string Tile_Search_Update_Add_New_Providers {
             get {
                 return ResourceManager.GetString("Tile_Search_Update_Add_New_Providers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update banner components for any required communications for the service..
+        /// </summary>
+        public static string Tile_Update_Banner_Components {
+            get {
+                return ResourceManager.GetString("Tile_Update_Banner_Components", resourceCulture);
             }
         }
         

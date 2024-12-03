@@ -117,6 +117,7 @@
         public const string SpecialismsId = "specialismsId";
         public const string ChangeLogId = "changeLogId";
         public const string Type = "type";
+        public const string BannerId = "bannerId";
 
         // Assessments
         public const int AssessmentEndInYears = 4;

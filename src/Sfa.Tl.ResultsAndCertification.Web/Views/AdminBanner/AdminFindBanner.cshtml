@@ -1,0 +1,78 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminBanner.AdminFindBannerViewModel
+@using Sfa.Tl.ResultsAndCertification.Common.Enum
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminBanner
+
+@{
+    ViewData["Title"] = AdminFindBanner.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+
+        <!-- Find banners -->
+        <h1 class="govuk-heading-xl">@AdminFindBanner.Heading_Find_Banners</h1>
+
+        <!-- Search  -->
+        <partial name="Partials/_searchActive.cshtml" model="Model.SearchCriteriaViewModel" />
+
+        @if (!Model.ContainsResults)
+        {
+            <!-- There are no banners -->
+            <p class="govuk-body govuk-!-margin-bottom-9">@AdminFindBanner.Heading_No_Banners</p>
+        }
+        else
+        {
+            @if (Model.ContainsMultiplePages)
+            {
+                <h2 class="govuk-body">@string.Format(Model.Pagination.PaginationSummary, @Model.PagerInfo.RecordFrom, @Model.PagerInfo.RecordTo, @Model.PagerInfo.TotalItems)</h2>
+            }
+
+            <table class="govuk-table responsive-table">
+                <thead role="rowgroup">
+                    <tr class="govuk-table__row">
+                        <th scope="col" class="govuk-table__header">@AdminFindBanner.Table_Column_Title</th>
+                        <th scope="col" class="govuk-table__header">@AdminFindBanner.Table_Column_Content</th>
+                        <th scope="col" class="govuk-table__header">@AdminFindBanner.Table_Column_Target</th>
+                        <th scope="col" class="govuk-table__header">@AdminFindBanner.Table_Column_Active</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @foreach (var banner in Model.Details)
+                    {
+                        <tr class="govuk-table__row">
+                            <td class="govuk-table__cell">
+                                <vc:change-record model="@banner.BannerDetailsLink" />
+                            </td>
+                            <td class="govuk-table__cell">
+                                @banner.Content
+                            </td>
+                            <td class="govuk-table__cell">
+                                @banner.Target
+                            </td>
+                            <td class="govuk-table__cell">
+                                @banner.Active
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+
+            @if (Model.ContainsMultiplePages)
+            {
+                <vc:pagination model=@Model.Pagination></vc:pagination>
+            }
+        }
+
+        <!-- New / Cancel buttons -->
+        <div class="govuk-button-group govuk-!-margin-top-9">
+            <a id="btnNew" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminAddBanner">@AdminFindBanner.Button_New</a>
+            <a id="btnCancel" class="govuk-button govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.Home">@AdminFindBanner.Button_Cancel</a>
+        </div>
+    </div>
+</div>  

@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminBanner;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminPostResults;
@@ -633,6 +634,25 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
         public Task<IEnumerable<string>> GetProviderBanners()
             => GetAsync<IEnumerable<string>>(ApiConstants.GetProviderBanners);
+
+        #endregion
+
+        #region Admin banners
+
+        public Task<PagedResponse<SearchBannerDetail>> SearchBannersAsync(AdminSearchBannerRequest request)
+            => PostAsync<AdminSearchBannerRequest, PagedResponse<SearchBannerDetail>>(ApiConstants.SearchBanners, request);
+
+        public Task<GetBannerResponse> GetBannerAsync(int bannerId)
+        {
+            var requestUri = string.Format(ApiConstants.GetBanner, bannerId);
+            return GetAsync<GetBannerResponse>(requestUri);
+        }
+
+        public Task<AddBannerResponse> AddBannerAsync(AddBannerRequest request)
+            => PostAsync<AddBannerRequest, AddBannerResponse>(ApiConstants.AddBanner, request);
+
+        public Task<bool> UpdateBannerAsync(UpdateBannerRequest request)
+            => PutAsync<UpdateBannerRequest, bool>(ApiConstants.UpdateBanner, request);
 
         #endregion
 

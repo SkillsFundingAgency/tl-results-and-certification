@@ -7,7 +7,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminProviderControllerTests.AdminAddProviderGet
 {
-    public class When_ProviderDetails_Found : AdminProviderControllerBaseTest
+    public class When_Called_Returns_Expected : AdminProviderControllerBaseTest
     {
         public override void Given()
         {

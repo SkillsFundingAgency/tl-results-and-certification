@@ -133,6 +133,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Find banners.
+        /// </summary>
+        public static string Find_Banners {
+            get {
+                return ResourceManager.GetString("Find_Banners", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Home.
         /// </summary>
         public static string Home {

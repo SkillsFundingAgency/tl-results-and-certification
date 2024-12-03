@@ -184,5 +184,11 @@
         //Dashboard
         public const string GetAwardingOrganisationBanners = "/api/dashboardbanner/GetAwardingOrganisationBanners";
         public const string GetProviderBanners = "/api/dashboardbanner/GetProviderBanners";
+
+        //Admin banners
+        public const string SearchBanners = "/api/adminbanner/SearchBanners";
+        public const string GetBanner = "/api/adminbanner/GetBanner/{0}";
+        public const string AddBanner = "/api/adminbanner/AddBanner";
+        public const string UpdateBanner = "/api/adminbanner/UpdateBanner";
     }
 }
