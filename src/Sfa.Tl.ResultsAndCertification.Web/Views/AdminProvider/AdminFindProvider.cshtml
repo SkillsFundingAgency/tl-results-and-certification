@@ -1,0 +1,45 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminProvider.AdminFindProviderViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminProvider
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@addTagHelper *, NWebsec.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = AdminFindProvider.Page_Title;
+}
+
+@section Scripts {
+    <script nws-csp-add-nonce="true" src="~/javascripts/provider-search.min.js"></script>
+}
+
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <partial name="_ValidationSummary" />
+        <form class="form" id="FindProviderForm" asp-route="@RouteConstants.AdminSubmitFindProvider">
+            <div class="govuk-form-group">
+                <h1 class="govuk-heading-xl">
+                    @AdminFindProvider.Page_Heading
+                </h1>
+                <div class="govuk-form-group" sfa-validation-for="Search" sfa-validation-class="govuk-form-group--error">
+                    <label class="govuk-label" for="search">
+                        @AdminFindProvider.Provider_Input_Field_Label
+                    </label>
+                    <p class="govuk-visually-hidden">@AdminFindProvider.AutoComplete_Help_Text</p>
+                    <span sfa-validation-for="Search"></span>
+                    <input id="search" name="Search" class="govuk-input" asp-for="Search" />
+                    <input id="previousSearch" type="hidden" asp-for="Search" />
+                </div>
+            </div>
+
+            <ul class="govuk-list govuk-list--bullet">
+                <li><a class="govuk-link" asp-route="@RouteConstants.AdminAddProvider">@AdminFindProvider.Link_Add_New_Provider</a></li>
+            </ul>
+
+            <button type="submit" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@AdminFindProvider.Continue_Button_Label</button>
+
+        </form>
+    </div>
+</div>

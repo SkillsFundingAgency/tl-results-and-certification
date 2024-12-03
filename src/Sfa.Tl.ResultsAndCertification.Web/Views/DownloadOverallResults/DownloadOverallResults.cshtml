@@ -18,6 +18,8 @@
         <p class="govuk-body">@DownloadOverallResults.Para_You_Can_Download_Your_Active_Learners</p>
         <p class="govuk-body govuk-!-margin-bottom-6">@DownloadOverallResults.Para_Csv_Data_Should_Not_Be_Shared</p>
 
+        <p class="govuk-body govuk-!-margin-bottom-6">@DownloadOverallResults.Para_Results_Slips_Also_Available_To_Download<a class="govuk-link" asp-route="@RouteConstants.SearchLearnerRecord">@DownloadOverallResults.Manage_Learner_Records</a>@DownloadOverallResults.Page</p>
+
         <p class="govuk-body">@DownloadOverallResults.Para_Results_Updated_After_Results_Day_If</p>
         <ul class="govuk-list govuk-list--bullet">
             <li>@DownloadOverallResults.Item_Grade_Changed</li>
@@ -29,8 +31,8 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds">
         <section class="gem-c-attachment">
-            <p class="govuk-body govuk-!-margin-top-6">@DownloadOverallResults.Para_Download_Results_As_CSV_File</p>
             <p class="govuk-body">@DownloadOverallResults.Para_File_Update_Next_Working_Day</p>
+            <p class="govuk-body govuk-!-margin-top-6">@DownloadOverallResults.Para_Download_Results_As_CSV_File</p>
             <div class="gem-c-attachment__thumbnail">
                 <a class="govuk-link" target="_self" tabindex="-1" aria-hidden="true" asp-route="DownloadOverallResultsFile">
                     <svg class="gem-c-attachment__thumbnail-image" version="1.1" viewBox="0 0 99 140" width="99" height="140" aria-hidden="true">

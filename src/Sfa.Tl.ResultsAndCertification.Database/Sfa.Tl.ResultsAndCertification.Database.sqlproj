@@ -134,7 +134,6 @@
   <ItemGroup>
     <PostDeploy Include="PostDeployment\PostDeploy.sql" />
     <None Include="PostDeployment\SeedTlAwardingOrganisations.sql" />
-    <None Include="PostDeployment\SeedTlProviders.sql" />
     <None Include="PostDeployment\SeedNotificationTemplates.sql" />
     <None Include="PostDeployment\SeedTlLookup.sql" />
   </ItemGroup>

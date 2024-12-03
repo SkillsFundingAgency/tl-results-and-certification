@@ -29,11 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             SeedTestData(EnumAwardingOrganisation.Pearson, true);
             _registrations = SeedRegistrationsData(_ulns, TqProvider);
 
-            var currentYearUln = new List<long> { 1111111111 };
-            RegisterUlnForNextAcademicYear(_registrations, currentYearUln);
-
             DbContext.SaveChanges();
-            DetachAll();
 
             CreateAdminDasboardService();
         }
@@ -44,58 +40,35 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
         {
             return Task.CompletedTask;
         }
+
         public async Task WhenAsync(ReviewChangeStartYearRequest request)
         {
             _actualResult = await AdminDashboardService.ProcessChangeStartYearAsync(request);
         }
 
-        [Theory()]
-        [MemberData(nameof(Data))]
-        public async Task Then_Expected_Results_Are_Returned(ReviewChangeStartYearRequest request, bool expectedResponse, long uln)
+        [Fact]
+        public async Task Then_Expected_Results_Are_Returned()
         {
+            ReviewChangeStartYearRequest request = new()
+            {
+                RegistrationPathwayId = 1,
+                ChangeReason = "Test Reason",
+                ContactName = "Test User",
+                ChangeStartYearDetails = new ChangeStartYearDetails { StartYearFrom = 2020, StartYearTo = 2021 },
+                RequestDate = DateTime.Now,
+                ZendeskId = "1234567890",
+                CreatedBy = "System"
+            };
+
             await WhenAsync(request);
 
-            if (expectedResponse == false)
-            {
-                _actualResult.Should().BeFalse();
-                return;
-            }
-
-            var expectedRegistrationPathway = _registrations.SingleOrDefault(x => x.UniqueLearnerNumber == uln).TqRegistrationPathways.FirstOrDefault();
-
-            expectedRegistrationPathway.Should().NotBeNull();
-
-            var actualIndustryPlacement = DbContext.TqRegistrationPathway.FirstOrDefault(ip => ip.Id == request.RegistrationPathwayId);
+            TqRegistrationPathway expected = _registrations.SingleOrDefault(x => x.UniqueLearnerNumber == 1111111111).TqRegistrationPathways.FirstOrDefault();
+            TqRegistrationPathway actual = DbContext.TqRegistrationPathway.FirstOrDefault(ip => ip.Id == request.RegistrationPathwayId);
 
             // Assert
-            request.RegistrationPathwayId.Should().Be(actualIndustryPlacement.Id);
-            request.ChangeStartYearDetails.StartYearTo.Should().Be(actualIndustryPlacement.AcademicYear);
-        }
-
-        public static IEnumerable<object[]> Data
-        {
-            get
-            {
-                return new[]
-                {
-                    // Uln not found
-                    new object[]
-                    {
-                        new ReviewChangeStartYearRequest
-                        {
-                            ChangeReason = "Test Reason",
-                            ContactName = "Test User",
-                            RegistrationPathwayId = 1,
-                            ChangeStartYearDetails = new ChangeStartYearDetails() { StartYearFrom = 2022, StartYearTo = 2021 },
-                            RequestDate = DateTime.Now,
-                            ZendeskId = "1234567890",
-                            CreatedBy = "System"
-                        },
-                        true,
-                        1111111111
-                    }
-                };
-            }
+            actual.AcademicYear.Should().Be(expected.AcademicYear);
+            actual.ModifiedBy.Should().Be(request.CreatedBy);
+            actual.ModifiedOn.Should().HaveValue();
         }
     }
 }

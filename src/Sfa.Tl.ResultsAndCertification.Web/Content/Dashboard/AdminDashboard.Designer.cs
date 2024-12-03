@@ -70,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage Providers.
+        ///   Looks up a localized string similar to Manage providers.
         /// </summary>
         public static string Tile_Manage_Providers_Heading {
             get {

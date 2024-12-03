@@ -298,6 +298,26 @@
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		</Compile>
+		<Compile Update="Content\AdminProvider\AdminAddProvider.Designer.cs">
+		  <DependentUpon>AdminAddProvider.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Content\AdminProvider\AdminEditProvider.Designer.cs">
+		  <DependentUpon>AdminEditProvider.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Content\AdminProvider\AdminFindProvider.Designer.cs">
+		  <DependentUpon>AdminFindProvider.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Content\AdminProvider\AdminProviderDetails.Designer.cs">
+		  <DependentUpon>AdminProviderDetails.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
 		<Compile Update="Content\Assessment\AddCoreAssessmentEntry.Designer.cs">
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
@@ -1547,6 +1567,22 @@
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminPostResults\AdminOpenPathwayRomm.resx">
 		  <LastGenOutput>AdminOpenPathwayRomm.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminProvider\AdminAddProvider.resx">
+		  <LastGenOutput>AdminAddProvider.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminProvider\AdminEditProvider.resx">
+		  <LastGenOutput>AdminEditProvider.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminProvider\AdminFindProvider.resx">
+		  <LastGenOutput>AdminFindProvider.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminProvider\AdminProviderDetails.resx">
+		  <LastGenOutput>AdminProviderDetails.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\Assessment\AddCoreAssessmentEntry.resx">
