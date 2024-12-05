@@ -199,15 +199,12 @@
     <value>Processing, please wait. This could take up to 10 seconds. Do not refresh.</value>
   </data>
   <data name="Romms_Published_On" xml:space="preserve">
-    <value>published 25 September 2024</value>
+    <value>published 28 November 2024</value>
   </data>
   <data name="Romms_Template_Published_On" xml:space="preserve">
     <value>published 25 September 2024</value>
   </data>
   <data name="Romms_Template_Version" xml:space="preserve">
-    <value>Version 1.0</value>
-  </data>
-  <data name="Romms_Version" xml:space="preserve">
     <value>Version 1.0</value>
   </data>
 </root>

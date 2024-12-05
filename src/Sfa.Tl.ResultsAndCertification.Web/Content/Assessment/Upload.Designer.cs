@@ -79,20 +79,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to published 20 June 2024.
+        ///   Looks up a localized string similar to published 28 November 2024.
         /// </summary>
         public static string Assessments_Published_On {
             get {
                 return ResourceManager.GetString("Assessments_Published_On", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Version 2.0.
-        /// </summary>
-        public static string Assessments_Version {
-            get {
-                return ResourceManager.GetString("Assessments_Version", resourceCulture);
             }
         }
         

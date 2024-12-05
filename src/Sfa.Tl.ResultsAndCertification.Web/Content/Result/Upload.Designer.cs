@@ -241,7 +241,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to published 30 June 2024.
+        ///   Looks up a localized string similar to published 28 November 2024.
         /// </summary>
         public static string Published_On {
             get {
@@ -255,6 +255,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         public static string Select_File_To_Upload_Required_Validation_Message {
             get {
                 return ResourceManager.GetString("Select_File_To_Upload_Required_Validation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Version 2.0.
+        /// </summary>
+        public static string Template_Version {
+            get {
+                return ResourceManager.GetString("Template_Version", resourceCulture);
             }
         }
         
@@ -300,15 +309,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         public static string Upload_Processing_Spinner_Text {
             get {
                 return ResourceManager.GetString("Upload_Processing_Spinner_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Version 2.0.
-        /// </summary>
-        public static string Version {
-            get {
-                return ResourceManager.GetString("Version", resourceCulture);
             }
         }
         

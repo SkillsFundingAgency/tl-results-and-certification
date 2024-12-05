@@ -268,7 +268,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to published 25 September 2024.
+        ///   Looks up a localized string similar to published 28 November 2024.
         /// </summary>
         public static string Romms_Published_On {
             get {
@@ -291,15 +291,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         public static string Romms_Template_Version {
             get {
                 return ResourceManager.GetString("Romms_Template_Version", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Version 1.0.
-        /// </summary>
-        public static string Romms_Version {
-            get {
-                return ResourceManager.GetString("Romms_Version", resourceCulture);
             }
         }
         
