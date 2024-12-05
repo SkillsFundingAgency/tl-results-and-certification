@@ -178,7 +178,7 @@
     <value>Processing results file</value>
   </data>
   <data name="Published_On" xml:space="preserve">
-    <value>published 30 June 2024</value>
+    <value>published 28 November 2024</value>
   </data>
   <data name="Select_File_To_Upload_Required_Validation_Message" xml:space="preserve">
     <value>Select a file to upload</value>
@@ -198,10 +198,10 @@
   <data name="Upload_Processing_Spinner_Text" xml:space="preserve">
     <value>Processing, please wait. This could take up to 10 seconds. Do not refresh.</value>
   </data>
-  <data name="Version" xml:space="preserve">
-    <value>Version 2.0</value>
-  </data>
   <data name="Warning_Text" xml:space="preserve">
     <value>Warning</value>
+  </data>
+  <data name="Template_Version" xml:space="preserve">
+    <value>Version 2.0</value>
   </data>
 </root>

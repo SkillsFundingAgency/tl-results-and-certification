@@ -268,7 +268,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to published 16 May 2023.
+        ///   Looks up a localized string similar to published 28 November 2024.
         /// </summary>
         public static string Registrations_Published_On {
             get {
@@ -291,15 +291,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         public static string Registrations_Template_Version {
             get {
                 return ResourceManager.GetString("Registrations_Template_Version", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Version 1.9.
-        /// </summary>
-        public static string Registrations_Version {
-            get {
-                return ResourceManager.GetString("Registrations_Version", resourceCulture);
             }
         }
         
