@@ -241,7 +241,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to published 30 June 2024.
+        ///   Looks up a localized string similar to Published 28 November 2024.
         /// </summary>
         public static string Published_On {
             get {
