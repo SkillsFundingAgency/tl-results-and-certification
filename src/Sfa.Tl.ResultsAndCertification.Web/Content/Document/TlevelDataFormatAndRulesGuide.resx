@@ -127,7 +127,7 @@
     <value>Assessment entries</value>
   </data>
   <data name="Assessment_Entries_PublishedDate_Text" xml:space="preserve">
-    <value>28 Nov 2024</value>
+    <value>28 November 2024</value>
   </data>
   <data name="Awarding_Organisations_Heading" xml:space="preserve">
     <value>Awarding organisations</value>
@@ -163,7 +163,7 @@
     <value>Providers</value>
   </data>
   <data name="Published_Text" xml:space="preserve">
-    <value>published</value>
+    <value>Published</value>
   </data>
   <data name="Registrations_FileSize_Text" xml:space="preserve">
     <value>296</value>
@@ -172,7 +172,7 @@
     <value>Registrations</value>
   </data>
   <data name="Registrations_PublishedDate_Text" xml:space="preserve">
-    <value>28 Nov 2024</value>
+    <value>28 November 2024</value>
   </data>
   <data name="Registration_DataFormat_And_Rules" xml:space="preserve">
     <value>Registrations data format and rules ({0}, {1}KB)</value>
@@ -184,7 +184,7 @@
     <value>Results</value>
   </data>
   <data name="Results_PublishedDate_Text" xml:space="preserve">
-    <value>28 Nov 2024</value>
+    <value>28 November 2024</value>
   </data>
   <data name="Result_DataFormat_And_Rules" xml:space="preserve">
     <value>Results data format and rules ({0}, {1}KB)</value>

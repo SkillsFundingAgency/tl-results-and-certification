@@ -89,7 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 28 Nov 2024.
+        ///   Looks up a localized string similar to 28 November 2024.
         /// </summary>
         public static string Assessment_Entries_PublishedDate_Text {
             get {
@@ -197,7 +197,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to published.
+        ///   Looks up a localized string similar to Published.
         /// </summary>
         public static string Published_Text {
             get {
@@ -233,7 +233,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 28 Nov 2024.
+        ///   Looks up a localized string similar to 28 November 2024.
         /// </summary>
         public static string Registrations_PublishedDate_Text {
             get {
@@ -269,7 +269,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 28 Nov 2024.
+        ///   Looks up a localized string similar to 28 November 2024.
         /// </summary>
         public static string Results_PublishedDate_Text {
             get {
