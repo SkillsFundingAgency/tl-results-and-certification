@@ -1,102 +1,96 @@
-jobs:
-- job: 'CodeBuild'
-  pool:
-      name: 'Azure Pipelines'
-      vmImage: 'windows-latest' #'vs2017-win2016'
-  workspace:
-    clean: all
-  steps:
-  
-    - task: UseDotNet@2 
-      displayName: "Use .NET Core SDK 2.1.x"
-      inputs:
-        packageType: 'sdk'
-        version: '2.1.x'
+steps:
+  - task: UseDotNet@2 
+    displayName: "Use .NET Core SDK 2.1.x"
+    inputs:
+      packageType: 'sdk'
+      version: '2.1.x'
         
-    - task: GitVersion@5
-      displayName: GitVersion
-      inputs:
-        runtime: 'core'
-        updateAssemblyInfo: true
-    
-    - task: NodeTool@0
-      inputs:
-        versionSpec: '14.x' 
-    
-    - task: Npm@1
-      displayName: 'npm install'
-      inputs:
-        workingDir: src/Sfa.Tl.ResultsAndCertification.Web/
-        verbose: false
-    
-    - task: Gulp@0
-      displayName: gulp
-      inputs:
-        gulpFile: src/Sfa.Tl.ResultsAndCertification.Web/gulpfile.js
-        targets: default
-    
-    - task: UseDotNet@2 
-      displayName: "Install .NET 6 SDK"
-      inputs:
-        packageType: 'sdk'
-        version: '6.x'
+  - task: GitVersion@5
+    displayName: GitVersion
+    inputs:
+      runtime: 'core'
+      updateAssemblyInfo: true
 
-    - task: DotNetCoreCLI@2
-      displayName: Restore
-      inputs:
-        command: restore
-        projects: 'src/Sfa.Tl.ResultsAndCertification.sln' 
-        noCache: true
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '14.x' 
 
-    - task: DotNetCoreCLI@2
-      displayName: Build
-      inputs:
-        projects: 'src/**/*.csproj'
-        arguments: '--configuration $(buildConfiguration)  --no-restore'        
-    
-    - task: DotNetCoreCLI@2
-      displayName: Unit Tests
-      inputs:
-        command: test
-        projects: '**/*.UnitTests.csproj'
-        arguments: '--configuration $(buildConfiguration) --no-build'
+  - task: Npm@1
+    displayName: 'npm install'
+    inputs:
+      workingDir: src/Sfa.Tl.ResultsAndCertification.Web/
+      verbose: false
 
-    - task: DotNetCoreCLI@2
-      displayName: Integration Tests
-      inputs:
-        command: publish
-        publishWebProjects: false
-        projects: '**/*.IntegrationTests.csproj'
-        arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore --no-build'
-    
-    - task: DotNetCoreCLI@2
-      displayName: 'Publish Website'
-      inputs:
-        command: publish
-        publishWebProjects: true
-        projects: 'src/Sfa.Tl.ResultsAndCertification.Web/Sfa.Tl.ResultsAndCertification.Web.csproj'
-        arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore --no-build'
-    
-    - task: DotNetCoreCLI@2
-      displayName: 'Publish Function App'
-      inputs:
-        command: publish
-        publishWebProjects: false
-        projects: 'src/Sfa.Tl.ResultsAndCertification.Functions/Sfa.Tl.ResultsAndCertification.Functions.csproj'
-        arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore --no-build'
-    
-    - task: CopyFiles@2
-      displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
-      inputs:
-        contents: |
-          azure/** 
-          config/**
-        targetFolder: '$(build.artifactstagingdirectory)/publish'
-        overWrite: true
-    
-    - task: PublishBuildArtifacts@1
-      displayName: 'Publish Artifact'
-      inputs:
-          PathtoPublish: '$(build.artifactstagingdirectory)/publish'
-          ArtifactName: 'appdrop'
-          publishLocation: 'Container'
+  - task: Gulp@0
+    displayName: gulp
+    inputs:
+      gulpFile: src/Sfa.Tl.ResultsAndCertification.Web/gulpfile.js
+      targets: default
+
+  - task: UseDotNet@2 
+    displayName: "Install .NET 6 SDK"
+    inputs:
+      packageType: 'sdk'
+      version: '6.x'
+
+  - task: Cache@2
+    displayName: Cache
+    inputs:
+      key: 'nuget | "$(Agent.OS)" | src\Sfa.Tl.ResultsAndCertification.Web\package-lock.json'
+      restoreKeys: |
+        nuget | "$(Agent.OS)"
+        nuget
+      path: '$(NUGET_PACKAGES)'
+      cacheHitVar: 'CACHE_RESTORED'        
+
+  - task: DotNetCoreCLI@2
+    displayName: Restore
+    inputs:
+      command: restore
+      projects: 'src/Sfa.Tl.ResultsAndCertification.sln'
+
+  - task: DotNetCoreCLI@2
+    displayName: Build
+    inputs:
+      projects: 'src/**/*.csproj'
+      arguments: '--configuration $(buildConfiguration)  --no-restore'
+
+  - task: DotNetCoreCLI@2
+    displayName: Publish Integration Tests
+    inputs:
+      command: publish
+      publishWebProjects: false
+      projects: '**/*.IntegrationTests.csproj'
+      arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Publish Website'
+    inputs:
+      command: publish
+      publishWebProjects: true
+      projects: 'src/Sfa.Tl.ResultsAndCertification.Web/Sfa.Tl.ResultsAndCertification.Web.csproj'
+      arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore --no-build'
+
+  - task: DotNetCoreCLI@2
+    displayName: 'Publish Function App'
+    inputs:
+      command: publish
+      publishWebProjects: false
+      projects: 'src/Sfa.Tl.ResultsAndCertification.Functions/Sfa.Tl.ResultsAndCertification.Functions.csproj'
+      arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish --no-restore --no-build'
+
+  - task: CopyFiles@2
+    displayName: 'Copy Files to: $(build.artifactstagingdirectory)'
+    inputs:
+      contents: |
+        azure/** 
+        config/**
+      targetFolder: '$(build.artifactstagingdirectory)/publish'
+      overWrite: true
+
+  - task: PublishBuildArtifacts@1
+    displayName: 'Publish Artifact'
+    inputs:
+        PathtoPublish: '$(build.artifactstagingdirectory)/publish'
+        ArtifactName: 'appdrop'
+        publishLocation: 'Container'

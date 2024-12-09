@@ -1,0 +1,14 @@
+steps:
+  - task: DownloadBuildArtifacts@0
+    inputs:
+      buildType: 'current'
+      downloadType: 'single'
+      artifactName: 'appdrop'
+      downloadPath: '$(System.ArtifactsDirectory)'
+
+  - task: DotNetCoreCLI@2
+    displayName: Unit Tests
+    inputs:
+      command: test
+      projects: 'src/Tests/**/*.UnitTests.csproj'
+      arguments: '--configuration $(buildConfiguration) --no-build'
