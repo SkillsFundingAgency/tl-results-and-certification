@@ -1,6 +1,6 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminBanner;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminNotification;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminPostResults;
@@ -229,15 +229,15 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 
         #endregion
 
-        #region Admin banners
+        #region Admin notifications
 
-        Task<PagedResponse<SearchBannerDetail>> SearchBannersAsync(AdminSearchBannerRequest request);
+        Task<PagedResponse<SearchNotificationDetail>> SearchNotificationsAsync(AdminSearchNotificationRequest request);
 
-        Task<GetBannerResponse> GetBannerAsync(int bannerId);
+        Task<GetNotificationResponse> GetNotificationAsync(int bannerId);
 
-        Task<AddBannerResponse> AddBannerAsync(AddBannerRequest request);
+        Task<AddNotificationResponse> AddNotificationAsync(AddNotificationRequest request);
 
-        Task<bool> UpdateBannerAsync(UpdateBannerRequest request);
+        Task<bool> UpdateNotificationAsync(UpdateNotificationRequest request);
 
         #endregion
     }

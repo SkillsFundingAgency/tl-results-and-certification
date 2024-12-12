@@ -619,15 +619,17 @@
 
         #endregion
 
-        #region Admin all banners
+        #region Admin notifications
 
-        public const string AdminFindBanner = "AdminFindBanner";
-        public const string SubmitAdminFindBanner = "SubmitAdminFindBanner";
-        public const string AdminBannerDetails = "AdminBannerDetails";
-        public const string AdminEditBanner = "AdminEditBanner";
-        public const string SubmitAdminEditBanner = "SubmitAdminEditBanner";
-        public const string AdminAddBanner = "AdminAddBanner";
-        public const string SubmitAdminAddBanner = "SubmitAdminAddBanner";
+        public const string AdminFindNotificationClear = "AdminFindNotificationClear";
+        public const string AdminFindNotification = "AdminFindNotification";
+        public const string SubmitAdminFindNotificationApplyFilters = "SubmitAdminFindNotificationApplyFilters";
+        public const string SubmitAdminFindNotificationClearFilters = "SubmitAdminFindNotificationClearFilters";
+        public const string AdminNotificationDetails = "AdminNotificationDetails";
+        public const string AdminEditNotification = "AdminEditNotification";
+        public const string SubmitAdminEditNotification = "SubmitAdminEditNotification";
+        public const string AdminAddNotification = "AdminAddNotification";
+        public const string SubmitAdminAddNotification = "SubmitAdminAddNotification";
 
         #endregion
     }

@@ -264,7 +264,7 @@
   <data name="Provider_Details" xml:space="preserve">
     <value>Provider's details</value>
   </data>
-  <data name="Find_Banners" xml:space="preserve">
-    <value>Find banners</value>
+  <data name="Find_Notifications" xml:space="preserve">
+    <value>Find notifications</value>
   </data>
 </root>

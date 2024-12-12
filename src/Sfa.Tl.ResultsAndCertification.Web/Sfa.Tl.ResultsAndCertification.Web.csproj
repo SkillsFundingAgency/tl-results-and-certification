@@ -45,28 +45,28 @@
 
 
 	<ItemGroup>
-		<Compile Update="Content\AdminBanner\AdminBannerBase.Designer.cs">
-		  <DependentUpon>AdminBannerBase.resx</DependentUpon>
+		<Compile Update="Content\AdminNotification\AdminNotificationBase.Designer.cs">
+		  <DependentUpon>AdminNotificationBase.resx</DependentUpon>
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		</Compile>
-		<Compile Update="Content\AdminBanner\AdminAddBanner.Designer.cs">
-		  <DependentUpon>AdminAddBanner.resx</DependentUpon>
+		<Compile Update="Content\AdminNotification\AdminAddNotification.Designer.cs">
+		  <DependentUpon>AdminAddNotification.resx</DependentUpon>
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		</Compile>
-		<Compile Update="Content\AdminBanner\AdminFindBanner.Designer.cs">
-		  <DependentUpon>AdminFindBanner.resx</DependentUpon>
+		<Compile Update="Content\AdminNotification\AdminFindNotification.Designer.cs">
+		  <DependentUpon>AdminFindNotification.resx</DependentUpon>
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		</Compile>
-		<Compile Update="Content\AdminBanner\AdminBannerDetails.Designer.cs">
-		  <DependentUpon>AdminBannerDetails.resx</DependentUpon>
+		<Compile Update="Content\AdminNotification\AdminNotificationDetails.Designer.cs">
+		  <DependentUpon>AdminNotificationDetails.resx</DependentUpon>
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		</Compile>
-		<Compile Update="Content\AdminBanner\AdminEditBanner.Designer.cs">
-		  <DependentUpon>AdminEditBanner.resx</DependentUpon>
+		<Compile Update="Content\AdminNotification\AdminEditNotification.Designer.cs">
+		  <DependentUpon>AdminEditNotification.resx</DependentUpon>
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		</Compile>
@@ -1339,24 +1339,24 @@
 
 
 	<ItemGroup>
-		<EmbeddedResource Update="Content\AdminBanner\AdminBannerBase.resx">
-		  <LastGenOutput>AdminBannerBase.Designer.cs</LastGenOutput>
+		<EmbeddedResource Update="Content\AdminNotification\AdminNotificationBase.resx">
+		  <LastGenOutput>AdminNotificationBase.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
-		<EmbeddedResource Update="Content\AdminBanner\AdminAddBanner.resx">
-		  <LastGenOutput>AdminAddBanner.Designer.cs</LastGenOutput>
+		<EmbeddedResource Update="Content\AdminNotification\AdminAddNotification.resx">
+		  <LastGenOutput>AdminAddNotification.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
-		<EmbeddedResource Update="Content\AdminBanner\AdminFindBanner.resx">
-		  <LastGenOutput>AdminFindBanner.Designer.cs</LastGenOutput>
+		<EmbeddedResource Update="Content\AdminNotification\AdminFindNotification.resx">
+		  <LastGenOutput>AdminFindNotification.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
-		<EmbeddedResource Update="Content\AdminBanner\AdminBannerDetails.resx">
-		  <LastGenOutput>AdminBannerDetails.Designer.cs</LastGenOutput>
+		<EmbeddedResource Update="Content\AdminNotification\AdminNotificationDetails.resx">
+		  <LastGenOutput>AdminNotificationDetails.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
-		<EmbeddedResource Update="Content\AdminBanner\AdminEditBanner.resx">
-		  <LastGenOutput>AdminEditBanner.Designer.cs</LastGenOutput>
+		<EmbeddedResource Update="Content\AdminNotification\AdminEditNotification.resx">
+		  <LastGenOutput>AdminEditNotification.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminChangeLog\AdminViewChangeRecord.resx">
