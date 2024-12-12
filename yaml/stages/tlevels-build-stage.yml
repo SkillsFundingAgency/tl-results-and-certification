@@ -34,11 +34,9 @@ stages:
 
   - job: RunTests
     dependsOn: BuildApplication
-    condition: and(succeeded(), contains(variables['Build.SourceBranch'], 'refs/heads/Release*'), eq(variables['Build.Reason'], 'PullRequest'))
+    condition: eq(variables['Build.Reason'], 'PullRequest')
     pool:
       name: 'Azure Pipelines'
       vmImage: 'windows-latest'
     steps:
       - template: ../jobs/tlevels-run-tests-job.yml
-
-##

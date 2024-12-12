@@ -56,6 +56,14 @@ steps:
       arguments: '--configuration $(buildConfiguration)  --no-restore'
 
   - task: DotNetCoreCLI@2
+    displayName: Publish Unit Tests
+    inputs:
+      command: publish
+      publishWebProjects: false
+      projects: '**/*.UnitTests.csproj'
+      arguments: '--configuration $(buildConfiguration) --output $(build.artifactstagingdirectory)/publish'
+
+  - task: DotNetCoreCLI@2
     displayName: Publish Integration Tests
     inputs:
       command: publish
