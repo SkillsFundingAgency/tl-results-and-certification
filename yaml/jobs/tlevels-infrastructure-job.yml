@@ -23,14 +23,6 @@ jobs:
     steps:
       - checkout: self
       - checkout: devopsTools
-      - pwsh: |
-          'Write-Host "SharedResourceGroup variable: $(SharedResourceGroup)"'
-          'Write-Host "SharedASPName variable: $(SharedASPName)"'
-          'Write-Host "SharedKeyVaultName variable: $(SharedKeyVaultName)"'
-          'Write-Host "SharedSQLServerName variable: $(SharedSQLServerName)"'
-          'Write-Host "ConfigurationStorageConnectionString variable: $(ConfigurationStorageConnectionString)"'
-          'Write-Host "containerLifecyclePolicyRules variable: $(containerLifecyclePolicyRules)"'
-        displayName: "Show Variables"
     
       - task: AzureCLI@2
         displayName: 'Fetch Internal API IP Security Restrictions'
