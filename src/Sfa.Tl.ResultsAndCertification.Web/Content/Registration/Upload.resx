@@ -187,16 +187,10 @@
     <value>You can download guidance on data formats and rules to help you. Once you have added your registration details to the template, you can upload your file.</value>
   </data>
   <data name="Registrations_Published_On" xml:space="preserve">
-    <value>published 16 May 2023</value>
+    <value>Published 28 November 2024</value>
   </data>
   <data name="Registrations_Template_Published_On" xml:space="preserve">
-    <value>published 25 May 2024</value>
-  </data>
-  <data name="Registrations_Template_Version" xml:space="preserve">
-    <value>Version 2.0</value>
-  </data>
-  <data name="Registrations_Version" xml:space="preserve">
-    <value>Version 1.9</value>
+    <value>Published 25 May 2024</value>
   </data>
   <data name="Select_File_To_Upload_Required_Validation_Message" xml:space="preserve">
     <value>Select a file to upload</value>
