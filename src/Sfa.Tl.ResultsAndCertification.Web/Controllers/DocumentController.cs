@@ -133,15 +133,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 FileType = FileType.Xlsx.ToString().ToUpperInvariant(),
 
                 RegistrationsFileSize = DocumentResource.TlevelDataFormatAndRulesGuide.Registrations_FileSize_Text,
-                RegistrationsVersion = DocumentResource.TlevelDataFormatAndRulesGuide.Registrations_Version_Text,
                 RegistrationsPublishedDate = $"{DocumentResource.TlevelDataFormatAndRulesGuide.Published_Text} {DocumentResource.TlevelDataFormatAndRulesGuide.Registrations_PublishedDate_Text}",
 
                 AssessmentEntriesFileSize = DocumentResource.TlevelDataFormatAndRulesGuide.Assessment_Entries_FileSize_Text,
-                AssessmentEntriesVersion = DocumentResource.TlevelDataFormatAndRulesGuide.Assessment_Entries_Version_Text,
                 AssessmentEntriesPublishedDate = $"{DocumentResource.TlevelDataFormatAndRulesGuide.Published_Text} {DocumentResource.TlevelDataFormatAndRulesGuide.Assessment_Entries_PublishedDate_Text}",
 
                 ResultsFileSize = DocumentResource.TlevelDataFormatAndRulesGuide.Results_FileSize_Text,
-                ResultsVersion = DocumentResource.TlevelDataFormatAndRulesGuide.Results_Version_Text,
                 ResultsPublishedDate = $"{DocumentResource.TlevelDataFormatAndRulesGuide.Published_Text} {DocumentResource.TlevelDataFormatAndRulesGuide.Results_PublishedDate_Text}"
             };
 

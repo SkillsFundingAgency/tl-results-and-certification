@@ -304,7 +304,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to published 30 June 2024.
+        ///   Looks up a localized string similar to Published 28 November 2024.
         /// </summary>
         public static string Withdrawals_Published_On {
             get {
@@ -313,29 +313,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to published 30 June 2024.
+        ///   Looks up a localized string similar to Published 30 June 2024.
         /// </summary>
         public static string Withdrawals_Template_Published_On {
             get {
                 return ResourceManager.GetString("Withdrawals_Template_Published_On", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Version 1.0.
-        /// </summary>
-        public static string Withdrawals_Template_Version {
-            get {
-                return ResourceManager.GetString("Withdrawals_Template_Version", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Version 1.0.
-        /// </summary>
-        public static string Withdrawals_Version {
-            get {
-                return ResourceManager.GetString("Withdrawals_Version", resourceCulture);
             }
         }
     }
