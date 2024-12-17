@@ -241,7 +241,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to published 30 June 2024.
+        ///   Looks up a localized string similar to Published 28 November 2024.
         /// </summary>
         public static string Published_On {
             get {
@@ -300,15 +300,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         public static string Upload_Processing_Spinner_Text {
             get {
                 return ResourceManager.GetString("Upload_Processing_Spinner_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Version 2.0.
-        /// </summary>
-        public static string Version {
-            get {
-                return ResourceManager.GetString("Version", resourceCulture);
             }
         }
         
