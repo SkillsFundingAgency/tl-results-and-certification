@@ -5,9 +5,9 @@ using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
 {
-    public class AdminBannerMapper : Profile
+    public class AdminNotificationMapper : Profile
     {
-        public AdminBannerMapper()
+        public AdminNotificationMapper()
         {
             CreateMap<Notification, GetNotificationResponse>()
                 .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))

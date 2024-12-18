@@ -11,19 +11,19 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 {
     public class AdminNotificationService : IAdminNotificationService
     {
-        private readonly IAdminNotificationRepository _bannerRepository;
+        private readonly IAdminNotificationRepository _notificationRepository;
         private readonly IRepository<Notification> _repository;
         private readonly IMapper _mapper;
 
         public AdminNotificationService(IAdminNotificationRepository bannerRepository, IRepository<Notification> repository, IMapper mapper)
         {
-            _bannerRepository = bannerRepository;
+            _notificationRepository = bannerRepository;
             _repository = repository;
             _mapper = mapper;
         }
 
         public Task<PagedResponse<SearchNotificationDetail>> SearchNotificationsAsync(AdminSearchNotificationRequest request)
-            => _bannerRepository.SearchNotificationsAsync(request, () => DateTime.Today);
+            => _notificationRepository.SearchNotificationsAsync(request, () => DateTime.Today);
 
         public async Task<GetNotificationResponse> GetNotificationAsync(int notificationId)
         {

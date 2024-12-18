@@ -45,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             int filteredRecordsCount = await query.CountAsync();
             var pager = new Pager(filteredRecordsCount, request.PageNumber, 10);
 
-            IQueryable<SearchNotificationDetail> bannerQueryable = query
+            IQueryable<SearchNotificationDetail> notificationQueryable = query
                 .Select(x => new SearchNotificationDetail
                 {
                     Id = x.Id,
@@ -57,8 +57,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .OrderByDescending(x => x.Id)
                 .Skip((pager.CurrentPage - 1) * pager.PageSize).Take(pager.PageSize);
 
-            List<SearchNotificationDetail> banners = await bannerQueryable.ToListAsync();
-            return new PagedResponse<SearchNotificationDetail> { Records = banners, TotalRecords = totalCount, PagerInfo = pager };
+            List<SearchNotificationDetail> notifications = await notificationQueryable.ToListAsync();
+            return new PagedResponse<SearchNotificationDetail> { Records = notifications, TotalRecords = totalCount, PagerInfo = pager };
         }
     }
 }
