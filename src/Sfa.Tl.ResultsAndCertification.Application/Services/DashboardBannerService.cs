@@ -12,26 +12,27 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 {
     public class DashboardBannerService : IDashboardBannerService
     {
-        private readonly IRepository<Banner> _repository;
+        private readonly IRepository<Notification> _repository;
 
-        public DashboardBannerService(IRepository<Banner> repository)
+        public DashboardBannerService(IRepository<Notification> repository)
         {
             _repository = repository;
         }
 
         public Task<IEnumerable<string>> GetAwardingOrganisationBanners(Func<DateTime> getToday)
-            => GetBanners(BannerTarget.AwardingOrganisation, getToday);
+            => GetBanners(NotificationTarget.AwardingOrganisation, getToday);
 
         public Task<IEnumerable<string>> GetProviderBanners(Func<DateTime> getToday)
-            => GetBanners(BannerTarget.Provider, getToday);
+            => GetBanners(NotificationTarget.Provider, getToday);
 
-        private async Task<IEnumerable<string>> GetBanners(BannerTarget target, Func<DateTime> getToday)
+        private async Task<IEnumerable<string>> GetBanners(NotificationTarget target, Func<DateTime> getToday)
         {
             DateTime today = getToday();
-            BannerTarget[] targets = new[] { target, BannerTarget.Both };
+            NotificationTarget[] targets = new[] { target, NotificationTarget.Both };
 
             IQueryable<string> query = _repository
-                .GetManyAsync(b => targets.Contains(b.Target) && b.IsOptedin && b.Start <= today && today <= b.End)
+                .GetManyAsync(b => targets.Contains(b.Target) && b.Start <= today && today <= b.End)
+                .OrderBy(b => b.Start)
                 .Select(b => b.Content);
 
             return await query.ToListAsync();

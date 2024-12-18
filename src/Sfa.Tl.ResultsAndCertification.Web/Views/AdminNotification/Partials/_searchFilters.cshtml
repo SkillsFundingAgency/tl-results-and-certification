@@ -1,0 +1,36 @@
+﻿@model AdminFindNotificationCriteriaViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminNotification
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminNotification
+
+<form asp-route="@RouteConstants.SubmitAdminFindNotificationApplyFilters">
+
+    <h2 class="govuk-heading-m govuk-!-padding-top-4">@AdminFindNotification.Filters_Heading </h2>
+
+    <div class="govuk-form-group">
+        <fieldset class="govuk-fieldset">
+            <legend class="govuk-fieldset__legend govuk-fieldset__legend--s govuk-!-margin-bottom-0">
+                @AdminFindNotification.Label_Active
+            </legend>
+            <div class="govuk-checkboxes govuk-checkboxes--small" data-module="govuk-checkboxes">
+                @foreach (var filter in Model?.ActiveFilters?.Select((value, i) => (value, i)))
+                {
+                    var elementId = (filter.i > 0) ? "selectedactive-" + filter.i : "selectedactive";
+                    <div class="govuk-checkboxes__item">
+                        <input class="govuk-checkboxes__input" id="@elementId" type="checkbox" asp-for="@Model.ActiveFilters[@filter.i].IsSelected">
+                        <label class="govuk-label govuk-checkboxes__label" for="@elementId">
+                            @filter.value.Name
+                        </label>
+                    </div>
+                    <input type="hidden" asp-for="@Model.ActiveFilters[@filter.i].Id" />
+                    <input type="hidden" asp-for="@Model.ActiveFilters[@filter.i].Name" />
+                }
+            </div>
+        </fieldset>
+    </div>
+
+    <div class="govuk-button-group">
+        <button id="filterButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@AdminFindNotification.Button_Apply_Filters</button>
+        <button id="clearFiltersButton" class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" asp-route="@RouteConstants.SubmitAdminFindNotificationClearFilters">@AdminFindNotification.Button_Clear_Filters</button>
+    </div>
+</form>

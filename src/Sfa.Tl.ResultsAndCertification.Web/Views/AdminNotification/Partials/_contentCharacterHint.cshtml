@@ -1,0 +1,15 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminNotification;
+
+<div id="content-info" class="govuk-hint govuk-js-character-count__message">
+    @AdminNotificationBase.Message_You_Have_Characters_Remaining
+</div>
+<noscript>
+    <style type="text/css">
+        #content-info {
+            display: none;
+        }
+    </style>
+    <div class="govuk-hint govuk-js-character-count__message">
+        @AdminNotificationBase.Message_You_Can_Enter_Up_To_Characters
+    </div>
+</noscript>

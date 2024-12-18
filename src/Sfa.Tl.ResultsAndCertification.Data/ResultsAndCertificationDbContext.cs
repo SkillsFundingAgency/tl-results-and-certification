@@ -48,6 +48,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data
         public virtual DbSet<TlDualSpecialismToSpecialism> TlDualSpecialismToSpecialism { get; set; }
         public virtual DbSet<DualSpecialismOverallGradeLookup> DualSpecialismOverallGradeLookup { get; set; }
         public virtual DbSet<ChangeLog> ChangeLog { get; set; }
-        public virtual DbSet<Banner> Banner { get; set; }
+        public virtual DbSet<Notification> Notification { get; set; }
     }
 }

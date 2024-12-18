@@ -1,0 +1,20 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminNotification.AdminFindNotificationDetailsViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminNotification
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+<div class="govuk-summary-list__row">
+    <div class="govuk-grid-row govuk-padding-1">
+        <div class="govuk-grid-column-full">
+            <dt class="govuk-summary-list__key">
+                <h3 class="govuk-heading-m govuk-!-margin-bottom-0">
+                    <vc:change-record model="@Model.NotificationDetailsLink" />
+                </h3>
+            </dt>
+            <dd class="govuk-summary-list__value govuk-grid-column-full">
+                <p>@($"{@AdminFindNotification.EndDate_Text} {Model.EndDate}")</p>
+                <p>@($"{@AdminFindNotification.Target_Text} {Model.Target}")</p>
+                <p>@($"{@AdminFindNotification.Active_Text} {Model.IsActive}")</p>
+            </dd>
+        </div>
+    </div>
+</div>

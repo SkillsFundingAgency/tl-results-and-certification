@@ -1,6 +1,6 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminNotification;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminPostResults;
@@ -226,6 +226,18 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         public Task<IEnumerable<string>> GetAwardingOrganisationBanners();
 
         public Task<IEnumerable<string>> GetProviderBanners();
+
+        #endregion
+
+        #region Admin notifications
+
+        Task<PagedResponse<SearchNotificationDetail>> SearchNotificationsAsync(AdminSearchNotificationRequest request);
+
+        Task<GetNotificationResponse> GetNotificationAsync(int bannerId);
+
+        Task<AddNotificationResponse> AddNotificationAsync(AddNotificationRequest request);
+
+        Task<bool> UpdateNotificationAsync(UpdateNotificationRequest request);
 
         #endregion
     }

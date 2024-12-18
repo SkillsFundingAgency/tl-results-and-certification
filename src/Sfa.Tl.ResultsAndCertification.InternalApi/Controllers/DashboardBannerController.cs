@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
     public class DashboardBannerController
     {
         private readonly IDashboardBannerService _dashboardBannerService;
-        private readonly Func<DateTime> _getNow = () => DateTime.UtcNow;
+        private readonly Func<DateTime> _getToday = () => DateTime.Today;
 
         public DashboardBannerController(IDashboardBannerService dashboardBannerService)
         {
@@ -21,11 +21,11 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         [HttpGet]
         [Route("GetAwardingOrganisationBanners")]
         public Task<IEnumerable<string>> GetAwardingOrganisationBanners()
-           => _dashboardBannerService.GetAwardingOrganisationBanners(_getNow);
+           => _dashboardBannerService.GetAwardingOrganisationBanners(_getToday);
 
         [HttpGet]
         [Route("GetProviderBanners")]
         public Task<IEnumerable<string>> GetProviderBanners()
-            => _dashboardBannerService.GetProviderBanners(_getNow);
+            => _dashboardBannerService.GetProviderBanners(_getToday);
     }
 }

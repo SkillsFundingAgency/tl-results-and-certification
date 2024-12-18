@@ -12,7 +12,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog
     public class AdminSearchChangeLogViewModel
     {
         private const int FirstPage = 1;
-        private const int PageSize = 10;
 
         public AdminSearchChangeLogCriteriaViewModel SearchCriteriaViewModel { get; set; } = new AdminSearchChangeLogCriteriaViewModel();
 
@@ -49,10 +48,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog
         {
             BreadcrumbItems = new List<BreadcrumbItem>
             {
-                new BreadcrumbItem { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.AdminHome },
-                new BreadcrumbItem { DisplayName = BreadcrumbContent.Change_Log }
+                new() { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.AdminHome },
+                new() { DisplayName = BreadcrumbContent.Change_Log }
             }
         };
-
     }
 }
