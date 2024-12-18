@@ -4,16 +4,13 @@
     {
         public string FileType { get; set; }
         public string RegistrationsFileSize { get; set; }
-        public string RegistrationsVersion { get; set; }
         public string RegistrationsPublishedDate { get; set; }
 
         public string AssessmentEntriesFileSize { get; set; }
-        public string AssessmentEntriesVersion { get; set; }
         public string AssessmentEntriesPublishedDate { get; set; }
 
         public string ResultsFileSize { get; set; }
-        public string ResultsVersion { get; set; }
         public string ResultsPublishedDate { get; set; }
-       
+
     }
 }

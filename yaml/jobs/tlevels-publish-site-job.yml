@@ -32,7 +32,7 @@ jobs:
       artifactName: 'appdrop'
       downloadPath: '$(System.ArtifactsDirectory)'
   
-  - task: AzureRmWebAppDeployment@3
+  - task: AzureRmWebAppDeployment@4
     displayName: 'Azure App Service Deploy: $(webAppName)'
     inputs:
       azureSubscription: ${{ parameters.serviceConnection }}
