@@ -1,0 +1,61 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminNotification.AdminFindNotificationViewModel
+@using Sfa.Tl.ResultsAndCertification.Common.Enum
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminNotification
+
+@{
+    ViewData["Title"] = AdminFindNotification.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+<!-- Find banners -->
+<h1 class="govuk-heading-xl">@AdminFindNotification.Heading_Find_Banners</h1>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-one-third">
+
+        <!-- Filters -->
+        <div class="filter-border govuk-!-margin-bottom-9">
+            <partial name="Partials/_searchFilters.cshtml" model="Model.SearchCriteria" />
+        </div>
+
+        <!-- New banner / cancel buttons -->
+        <div class="govuk-form-group">
+            <div class="govuk-button-group govuk-!-margin-top-2">
+                <a id="btnNew" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminAddNotification">@AdminFindNotification.Button_New_Banner</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="govuk-grid-column-two-thirds">
+
+        @if (!Model.ContainsResults)
+        {
+            <!-- There are no banners -->
+            <div class="govuk-!-font-size-19">
+                <h2 class="govuk-heading-m">@AdminFindNotification.Heading_No_Banners</h2>
+            </div>
+        }
+        else
+        {
+            <div class="learner-records">
+                <h2 class="govuk-body">@string.Format(Model.Pagination.PaginationSummary, @Model.PagerInfo.RecordFrom, @Model.PagerInfo.RecordTo, @Model.PagerInfo.TotalItems)</h2>
+
+                <dl class="govuk-summary-list">
+                    @foreach (var banner in Model.Details)
+                    {
+                        <partial name="Partials/_notificationDetailsCard.cshtml" model="banner" />
+                    }
+                </dl>
+            </div>
+
+            @if (Model.ContainsMultiplePages)
+            {
+                <vc:pagination model=@Model.Pagination></vc:pagination>
+            }
+        }
+    </div>
+</div>  

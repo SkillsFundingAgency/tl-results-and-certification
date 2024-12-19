@@ -96,8 +96,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             AdminSearchLearnerDetailsListViewModel learnerDetailsListViewModel = await _loader.GetAdminSearchLearnerDetailsListAsync(searchCriteria);
             viewModel.SetLearnerDetails(learnerDetailsListViewModel);
 
-            viewModel.SearchLearnerDetailsList = learnerDetailsListViewModel;
-
             await _cacheService.SetAsync(CacheKey, viewModel);
             return View(viewModel);
         }

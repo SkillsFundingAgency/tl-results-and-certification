@@ -152,7 +152,7 @@
     <None Include="PostDeployment\SeedIpTempFlexTlevelCombination.sql" />
     <None Include="PostDeployment\SeedIpTempFlexNavigation.sql" />
     <None Include="PostDeployment\SeedOverallGradeLookup.sql" />
-    <Build Include="Tables\Banner.sql" />
+    <Build Include="Tables\Notification.sql" />
   </ItemGroup>
   <ItemGroup>
     <SqlCmdVariable Include="environment">

@@ -123,6 +123,9 @@
   <data name="Tile_Manage_Providers_Heading" xml:space="preserve">
     <value>Manage providers</value>
   </data>
+  <data name="Tile_Notifications" xml:space="preserve">
+    <value>Notifications</value>
+  </data>
   <data name="Tile_Search_Learner_Records_Heading" xml:space="preserve">
     <value>Search learner records</value>
   </data>
@@ -130,7 +133,10 @@
     <value>Search for and update active and withdrawn learner details.</value>
   </data>
   <data name="Tile_Search_Update_Add_New_Providers" xml:space="preserve">
-    <value>Search for, update and add new providers</value>
+    <value>Search for, update and add new providers.</value>
+  </data>
+  <data name="Tile_Update_Banner_Components" xml:space="preserve">
+    <value>Update banner components for any required communications for the service.</value>
   </data>
   <data name="Tile_View_Change_Log" xml:space="preserve">
     <value>View change log</value>

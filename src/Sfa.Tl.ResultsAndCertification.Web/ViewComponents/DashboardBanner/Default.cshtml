@@ -3,14 +3,14 @@
 
 @if (Model != null)
 {
-    <div class="govuk-notification-banner" role="region" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+    <div class="govuk-notification-banner" role="region" data-module="govuk-notification-banner">
         <div class="govuk-notification-banner__header">
             <h2 class="govuk-notification-banner__title">
                 @DashboardBanner.Heading
             </h2>
         </div>
         <div class="govuk-notification-banner__content">
-            <p class="govuk-body">@Html.Raw($"<b>{Model.Message}</b>")</p>
+            <b>@Html.Raw($"{Model.Message}")</b>
         </div>
     </div>
 }
