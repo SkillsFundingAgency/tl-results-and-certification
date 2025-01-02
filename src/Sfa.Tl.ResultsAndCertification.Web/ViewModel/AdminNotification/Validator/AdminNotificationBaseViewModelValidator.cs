@@ -9,7 +9,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminNotification.Validat
     public class AdminNotificationBaseViewModelValidator : AbstractValidator<AdminNotificationBaseViewModel>
     {
         private const int TitleMaxLength = 255;
-        private const int ContentMaxLength = 500;
 
         public AdminNotificationBaseViewModelValidator()
         {
@@ -26,10 +25,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminNotification.Validat
             RuleFor(r => r.Content)
                 .Required()
                 .WithMessage(AdminNotificationBase.Validation_Content_Blank_Text);
-
-            RuleFor(r => r.Content)
-                .MaximumLength(ContentMaxLength)
-                .WithMessage(AdminNotificationBase.Validation_Content_Max_Length);
 
             // Target
             RuleFor(r => r.Target)

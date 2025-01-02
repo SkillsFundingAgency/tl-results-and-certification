@@ -89,15 +89,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminNotification {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The content&apos;s maximum length is 500 characters..
-        /// </summary>
-        public static string Validation_Content_Max_Length {
-            get {
-                return ResourceManager.GetString("Validation_Content_Max_Length", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Enter the end day.
         /// </summary>
         public static string Validation_End_Date_Day_When_Blank {
