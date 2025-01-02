@@ -126,9 +126,6 @@
   <data name="Validation_Content_Blank_Text" xml:space="preserve">
     <value>Enter the content</value>
   </data>
-  <data name="Validation_Content_Max_Length" xml:space="preserve">
-    <value>The content's maximum length is 500 characters.</value>
-  </data>
   <data name="Validation_End_Date_Day_When_Blank" xml:space="preserve">
     <value>Enter the end day</value>
   </data>
