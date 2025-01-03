@@ -71,6 +71,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             .Include(x => x.IndustryPlacements)
             .Include(x => x.OverallResults.Where(o => o.IsOptedin && (o.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn) ? o.EndDate != null : o.EndDate == null))
             .Include(x => x.PrintCertificates.Where(pc => pc.Type == PrintCertificateType.StatementOfAchievement || pc.Type == PrintCertificateType.Certificate))
+                .ThenInclude(x => x.PrintBatchItem)
+                .ThenInclude(x => x.Batch)
             .OrderByDescending(o => o.CreatedOn);
 
             TqRegistrationPathway regPathway = await query.FirstOrDefaultAsync(p => p.Id == registrationPathwayId &&
