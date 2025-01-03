@@ -41,5 +41,15 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard
         public DateTime? LastPrintCertificateRequestedDate { get; set; }
 
         public Address ProviderAddress { get; set; }
+
+        public DateTime? PrintRequestSubmittedOn { get; set; }
+
+        public int? BatchId { get; set; }
+
+        public string TrackingId { get; set; }
+
+        public PrintingBatchItemStatus? PrintingBatchItemStatus { get; set; }
+
+        public DateTime? PrintingBatchItemStatusChangedOn { get; set; }
     }
 }
