@@ -79,15 +79,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Version 2.0.
-        /// </summary>
-        public static string Assessments_Version {
-            get {
-                return ResourceManager.GetString("Assessments_Version", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to 1KB.
         /// </summary>
         public static string CSV_File_Size_Kb_Text {

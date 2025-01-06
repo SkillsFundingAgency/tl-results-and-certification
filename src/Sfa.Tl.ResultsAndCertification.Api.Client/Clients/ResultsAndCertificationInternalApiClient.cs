@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminNotification;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminPostResults;
@@ -623,6 +624,35 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
         public Task<UpdateProviderResponse> UpdateProviderAsync(UpdateProviderRequest request)
             => PutAsync<UpdateProviderRequest, UpdateProviderResponse>(ApiConstants.UpdateProvider, request);
+
+        #endregion
+
+        #region Dashboard
+
+        public Task<IEnumerable<string>> GetAwardingOrganisationBanners()
+            => GetAsync<IEnumerable<string>>(ApiConstants.GetAwardingOrganisationBanners);
+
+        public Task<IEnumerable<string>> GetProviderBanners()
+            => GetAsync<IEnumerable<string>>(ApiConstants.GetProviderBanners);
+
+        #endregion
+
+        #region Admin notifications
+
+        public Task<PagedResponse<SearchNotificationDetail>> SearchNotificationsAsync(AdminSearchNotificationRequest request)
+            => PostAsync<AdminSearchNotificationRequest, PagedResponse<SearchNotificationDetail>>(ApiConstants.SearchNotifications, request);
+
+        public Task<GetNotificationResponse> GetNotificationAsync(int bannerId)
+        {
+            var requestUri = string.Format(ApiConstants.GetNotification, bannerId);
+            return GetAsync<GetNotificationResponse>(requestUri);
+        }
+
+        public Task<AddNotificationResponse> AddNotificationAsync(AddNotificationRequest request)
+            => PostAsync<AddNotificationRequest, AddNotificationResponse>(ApiConstants.AddNotification, request);
+
+        public Task<bool> UpdateNotificationAsync(UpdateNotificationRequest request)
+            => PutAsync<UpdateNotificationRequest, bool>(ApiConstants.UpdateNotification, request);
 
         #endregion
 

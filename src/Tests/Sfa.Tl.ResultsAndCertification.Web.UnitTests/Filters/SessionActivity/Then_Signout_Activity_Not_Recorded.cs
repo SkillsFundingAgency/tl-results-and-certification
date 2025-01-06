@@ -7,9 +7,9 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
+using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using System;
 using System.Collections.Generic;
 using Xunit;
@@ -19,11 +19,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Filters.SessionActivity
     public class Then_Signout_Activity_Not_Recorded : When_FilterAttribute_Action_Is_Called
     {
         private DashboardController _dashboardController;
+        private IDashboardLoader _loader;
         private ILogger<DashboardController> _logger;
         public override void Given()
         {
+            _loader = Substitute.For<IDashboardLoader>();
             _logger = Substitute.For<ILogger<DashboardController>>();
-            _dashboardController = new DashboardController(_logger);
+            _dashboardController = new DashboardController(_loader, _logger);
 
             var httpContext = new ClaimsIdentityBuilder<DashboardController>(_dashboardController)
                .Add(CustomClaimTypes.HasAccessToService, "true")
