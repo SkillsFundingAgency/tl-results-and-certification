@@ -1,5 +1,7 @@
 jobs:
 - job: 'CodeBuild'
+  variables:
+    NUGET_PACKAGES: $(Pipeline.Workspace)/.nuget/packages
   pool:
       name: 'Azure Pipelines'
       vmImage: 'windows-latest' #'vs2017-win2016'
@@ -12,12 +14,6 @@ jobs:
       inputs:
         packageType: 'sdk'
         version: '2.1.x'
-        
-    - task: GitVersion@5
-      displayName: GitVersion
-      inputs:
-        runtime: 'core'
-        updateAssemblyInfo: true
     
     - task: NodeTool@0
       inputs:
@@ -41,12 +37,31 @@ jobs:
         packageType: 'sdk'
         version: '6.x'
 
+    - task: gitversion/setup@3.1.1
+      displayName: Install GitVersion
+      inputs:
+        versionSpec: '6.0.x'
+
+    - task: gitversion/execute@3.1.1
+      displayName: Update GitVersion
+      inputs:
+        updateAssemblyInfo: true
+
+    - task: Cache@2
+      displayName: Cache
+      inputs:
+        key: 'nuget | "$(Agent.OS)" | src\Sfa.Tl.ResultsAndCertification.Web\package-lock.json'
+        restoreKeys: |
+          nuget | "$(Agent.OS)"
+          nuget
+        path: '$(NUGET_PACKAGES)'
+        cacheHitVar: 'CACHE_RESTORED'
+  
     - task: DotNetCoreCLI@2
       displayName: Restore
       inputs:
         command: restore
         projects: 'src/Sfa.Tl.ResultsAndCertification.sln' 
-        noCache: true
 
     - task: DotNetCoreCLI@2
       displayName: Build
