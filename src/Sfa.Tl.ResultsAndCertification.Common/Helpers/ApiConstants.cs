@@ -180,5 +180,15 @@
         public const string GetProvider = "/api/adminprovider/GetProvider/{0}";
         public const string AddProvider = "/api/adminprovider/AddProvider";
         public const string UpdateProvider = "/api/adminprovider/UpdateProvider";
+
+        //Dashboard
+        public const string GetAwardingOrganisationBanners = "/api/dashboardbanner/GetAwardingOrganisationBanners";
+        public const string GetProviderBanners = "/api/dashboardbanner/GetProviderBanners";
+
+        //Admin notifications
+        public const string SearchNotifications = "/api/adminnotification/SearchNotifications";
+        public const string GetNotification = "/api/adminnotification/GetNotification/{0}";
+        public const string AddNotification = "/api/adminnotification/AddNotification";
+        public const string UpdateNotification = "/api/adminnotification/UpdateNotification";
     }
 }

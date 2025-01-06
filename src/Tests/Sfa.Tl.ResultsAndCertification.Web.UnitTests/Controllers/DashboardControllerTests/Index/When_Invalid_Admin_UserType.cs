@@ -7,12 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Dashboard;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Security.Claims;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DashboardControllerTests.Index
@@ -27,6 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DashboardCont
                 .Build().HttpContext;
 
             HttpContextAccessor.HttpContext.Returns(httpContext);
+            Loader.GetDashboardViewModel(httpContext.User).Returns(new DashboardViewModel { HasAccessToService = false });
         }
 
         [Fact]
