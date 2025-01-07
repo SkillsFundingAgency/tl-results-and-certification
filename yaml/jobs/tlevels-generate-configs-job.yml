@@ -25,16 +25,6 @@ jobs:
       - DeploySQLDatabase
 
     steps:
-      - pwsh: |
-          'Write-Host "ConfigStorageAccountName variable: $(ConfigStorageAccountName)"'
-          'Write-Host "SqlConnectionString variable: $(SqlConnectionString)"'
-          'Write-Host "BlobStorageConnectionString variable: $(BlobStorageConnectionString)"'
-          'Write-Host "RedisCacheConnection variable: $(RedisCacheConnection)"'
-          'Write-Host "KeyVaultUri variable: $(KeyVaultUri)"'
-          'Write-Host "DataProtectionKeyVaultKeyId : $(DataProtectionKeyVaultKeyId)"'
-          'Write-Host "IntTestSqlConnectionString : $(IntTestSqlConnectionString)"'
-        name: ShowVariables
-
       - task: DownloadBuildArtifacts@0
         inputs:
           buildType: "current"

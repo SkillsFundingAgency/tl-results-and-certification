@@ -1,7 +1,7 @@
 ﻿CREATE TABLE [dbo].[Notification] (
 	[Id] [int] IDENTITY(1, 1) NOT NULL
 	,[Title] [nvarchar](255) NOT NULL
-	,[Content] [nvarchar](500) NOT NULL
+	,[Content] [nvarchar](1000) NOT NULL
 	,[Target] [int] NOT NULL
 	,[Start] DATE NOT NULL
 	,[End] DATE NOT NULL

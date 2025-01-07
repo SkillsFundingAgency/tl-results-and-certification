@@ -192,6 +192,9 @@
   <data name="Registrations_Template_Published_On" xml:space="preserve">
     <value>Published 25 May 2024</value>
   </data>
+  <data name="Registrations_Version" xml:space="preserve">
+    <value>Version 1.9</value>
+  </data>
   <data name="Select_File_To_Upload_Required_Validation_Message" xml:space="preserve">
     <value>Select a file to upload</value>
   </data>
