@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System;
 using System.Collections.Generic;
+using BatchItemStatus = Sfa.Tl.ResultsAndCertification.Common.Enum.PrintingBatchItemStatus;
 using IndustryPlacementStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.IndustryPlacementStatus;
 using IpStatus = Sfa.Tl.ResultsAndCertification.Common.Enum.IndustryPlacementStatus;
 using LearnerRecordDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.LearnerRecord;
@@ -38,6 +39,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
         public int IndustryPlacementId { get; set; }
 
         public IpStatus IndustryPlacementStatus { get; set; }
+
+        public int? BatchId { get; set; }
+
+        public DateTime? PrintRequestSubmittedOn { get; set; }
+
+        public PrintingBatchItemStatus? PrintingBatchItemStatus { get; set; }
+
+        public DateTime? PrintingBatchItemStatusChangedOn { get; set; }
+
+        public string TrackingId { get; set; }
 
         public string StartYear => string.Format(LearnerRecordDetailsContent.Start_Year_Value, AcademicYear, AcademicYear + 1);
 
@@ -122,6 +133,41 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
             Id = "result",
             Title = LearnerRecordDetailsContent.Title_Result,
             Value = OverallResult ?? LearnerRecordDetailsContent.Label_Overall_Result_Not_Calculated
+        };
+
+        public SummaryItemModel SummaryBatchId => new()
+        {
+            Id = "batchid",
+            Title = LearnerRecordDetailsContent.Title_Batch_Id,
+            Value = BatchId.HasValue ? BatchId.Value.ToString() : string.Empty
+        };
+
+        public SummaryItemModel SummaryPrintRequestSubmittedOn => new()
+        {
+            Id = "printrequestsubmittedon",
+            Title = LearnerRecordDetailsContent.Title_Date_Of_Submission,
+            Value = PrintRequestSubmittedOn.HasValue ? PrintRequestSubmittedOn.Value.ToDobFormat() : string.Empty
+        };
+
+        public SummaryItemModel SummaryPrintingBatchItemStatus => new()
+        {
+            Id = "printingbatchitemstatus",
+            Title = LearnerRecordDetailsContent.Title_Batch_Status,
+            Value = PrintingBatchItemStatus.HasValue && PrintingBatchItemStatus.Value != BatchItemStatus.NotSpecified ? PrintingBatchItemStatus?.GetDisplayName() : string.Empty
+        };
+
+        public SummaryItemModel SummaryPrintingBatchItemStatusChangedOn => new()
+        {
+            Id = "printingbatchitemstatuschangedon",
+            Title = LearnerRecordDetailsContent.Title_Batch_Status_Changed_On,
+            Value = PrintingBatchItemStatusChangedOn.HasValue ? PrintingBatchItemStatusChangedOn.Value.ToDobFormat() : string.Empty
+        };
+
+        public SummaryItemModel SummaryTrackingId => new()
+        {
+            Id = "trackingid",
+            Title = LearnerRecordDetailsContent.Title_Tracking_Id,
+            Value = !string.IsNullOrEmpty(TrackingId) ? TrackingId : string.Empty
         };
 
         #endregion
