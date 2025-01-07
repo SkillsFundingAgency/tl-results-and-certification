@@ -156,4 +156,7 @@
   <data name="Error_Summary_Text" xml:space="preserve">
     <value>Select the academic year</value>
   </data>
+  <data name="Heading_Personal_Details" xml:space="preserve">
+    <value>Personal details</value>
+  </data>
 </root>

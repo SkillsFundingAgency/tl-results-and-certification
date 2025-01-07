@@ -106,6 +106,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Personal details.
+        /// </summary>
+        public static string Heading_Personal_Details {
+            get {
+                return ResourceManager.GetString("Heading_Personal_Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change academic year.
         /// </summary>
         public static string Page_Title {

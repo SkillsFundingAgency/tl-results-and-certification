@@ -6,16 +6,14 @@
     ViewData["Title"] = @ChangeAcademicYear.Page_Title;
 }
 
-@section NavigationBar {
+@section NavigationBar 
+{
     <vc:back-link model=Model.BackLink></vc:back-link>
 }
 
 <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-
-        <h1 class="govuk-heading-l">
-            @ChangeAcademicYear.Change_Academic_Year_Heading_Text
-        </h1>
+    <    <div class="govuk-grid-column-two-thirds-from-desktop">
+       
         <form asp-route="@RouteConstants.SubmitChangeAcademicYear" method="post">
             <input type="hidden" asp-for="ProfileId" />
             <input type="hidden" asp-for="Uln" />
@@ -31,6 +29,16 @@
                 <input type="hidden" asp-for="AcademicYears[i].Name" />
                 <input type="hidden" asp-for="AcademicYears[i].Year" />
             }
+
+            <div class="record-header">
+                <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
+                    @ChangeAcademicYear.Change_Academic_Year_Heading_Text
+                </h1>
+            </div>
+            <partial name="_ValidationSummary" />
+            <h2 class="govuk-heading-m">
+                @ChangeAcademicYear.Heading_Personal_Details
+            </h2>
 
             <dl class="govuk-summary-list">
                 <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
