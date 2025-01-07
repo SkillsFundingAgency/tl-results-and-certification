@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class SelectAcademicYear {
+    public class ChangeAcademicYear {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal SelectAcademicYear() {
+        internal ChangeAcademicYear() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Registration.SelectAcademicYear", typeof(SelectAcademicYear).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Registration.ChangeAcademicYear", typeof(ChangeAcademicYear).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,110 +61,119 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Back to registration details.
+        ///   Looks up a localized string similar to Cancel.
         /// </summary>
-        public static string Back_To_Registration_Details_Button_Text {
+        public static string Button_Cancel {
             get {
-                return ResourceManager.GetString("Back_To_Registration_Details_Button_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Academic year cannot be changed.
-        /// </summary>
-        public static string Change_AcademicYear_Heading_Text {
-            get {
-                return ResourceManager.GetString("Change_AcademicYear_Heading_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Change.
-        /// </summary>
-        public static string Change_Button_Text {
-            get {
-                return ResourceManager.GetString("Change_Button_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The learner has a result recorded for one or more component. The academic year cannot be changed..
-        /// </summary>
-        public static string Change_Registration_AcademicYear_Body_Text {
-            get {
-                return ResourceManager.GetString("Change_Registration_AcademicYear_Body_Text", resourceCulture);
+                return ResourceManager.GetString("Button_Cancel", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Continue.
         /// </summary>
-        public static string Continue_Button_Text {
+        public static string Button_Continue {
             get {
-                return ResourceManager.GetString("Continue_Button_Text", resourceCulture);
+                return ResourceManager.GetString("Button_Continue", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to At this time you can only select {0}.
+        ///   Looks up a localized string similar to Change academic year.
         /// </summary>
-        public static string Inset_At_This_Time_You_Can_Only_Select {
+        public static string Change_Academic_Year_Heading_Text {
             get {
-                return ResourceManager.GetString("Inset_At_This_Time_You_Can_Only_Select", resourceCulture);
+                return ResourceManager.GetString("Change_Academic_Year_Heading_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add a new registration.
+        ///   Looks up a localized string similar to There is a problem.
         /// </summary>
-        public static string Page_Caption_Text {
+        public static string Error_Summary_Header {
             get {
-                return ResourceManager.GetString("Page_Caption_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add a new registration - Select the academic year page.
-        /// </summary>
-        public static string Page_Title_Add_Registration_Select_AcademicYear {
-            get {
-                return ResourceManager.GetString("Page_Title_Add_Registration_Select_AcademicYear", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Academic year cannot be changed page.
-        /// </summary>
-        public static string Page_Title_Change_Registration_Select_AcademicYear {
-            get {
-                return ResourceManager.GetString("Page_Title_Change_Registration_Select_AcademicYear", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Register learner on a new course.
-        /// </summary>
-        public static string Reregister_Heading_Text {
-            get {
-                return ResourceManager.GetString("Reregister_Heading_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Register learner on a new course - Select the academic year page.
-        /// </summary>
-        public static string Reregister_Page_Title_AcademicYear {
-            get {
-                return ResourceManager.GetString("Reregister_Page_Title_AcademicYear", resourceCulture);
+                return ResourceManager.GetString("Error_Summary_Header", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Select the academic year.
         /// </summary>
-        public static string Select_The_AcademicYear_Label_Text {
+        public static string Error_Summary_Text {
             get {
-                return ResourceManager.GetString("Select_The_AcademicYear_Label_Text", resourceCulture);
+                return ResourceManager.GetString("Error_Summary_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change academic year.
+        /// </summary>
+        public static string Page_Title {
+            get {
+                return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Academic year.
+        /// </summary>
+        public static string Title_AcademicYear_Text {
+            get {
+                return ResourceManager.GetString("Title_AcademicYear_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Core (code).
+        /// </summary>
+        public static string Title_Core_Text {
+            get {
+                return ResourceManager.GetString("Title_Core_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Title_Name_Text {
+            get {
+                return ResourceManager.GetString("Title_Name_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Provider (UKPRN).
+        /// </summary>
+        public static string Title_Provider_Text {
+            get {
+                return ResourceManager.GetString("Title_Provider_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ULN.
+        /// </summary>
+        public static string Title_Uln {
+            get {
+                return ResourceManager.GetString("Title_Uln", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select the academic year.
+        /// </summary>
+        public static string Validation_Message {
+            get {
+                return ResourceManager.GetString("Validation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to What should the academic year to be?.
+        /// </summary>
+        public static string What_Should_The_Academic_Heading_Title {
+            get {
+                return ResourceManager.GetString("What_Should_The_Academic_Heading_Title", resourceCulture);
             }
         }
     }

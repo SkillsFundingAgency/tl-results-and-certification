@@ -21,9 +21,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
         public override void Given()
         {
-            _ulns = new Dictionary<long, RegistrationPathwayStatus> 
-            { 
-                { 1111111111, RegistrationPathwayStatus.Active }, 
+            _ulns = new Dictionary<long, RegistrationPathwayStatus>
+            {
+                { 1111111111, RegistrationPathwayStatus.Active },
                 { 1111111112, RegistrationPathwayStatus.Withdrawn },
                 { 1111111113, RegistrationPathwayStatus.Active },
                 { 1111111114, RegistrationPathwayStatus.Active },
@@ -49,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 {
                     var hasHitoricData = new List<long> { 1111111113 };
                     var isHistoricAssessent = hasHitoricData.Any(x => x == registration.UniqueLearnerNumber);
-                    var isLatestActiveResult = !isHistoricAssessent; 
+                    var isLatestActiveResult = !isHistoricAssessent;
 
                     var tqPathwayResultSeedData = GetPathwayResultDataToProcess(assessment, isLatestActiveResult, isHistoricAssessent);
                     tqPathwayResultsSeedData.AddRange(tqPathwayResultSeedData);
@@ -88,8 +88,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             ProviderRepository = new ProviderRepository(ProviderRepositoryLogger, DbContext);
             RegistrationRepository = new RegistrationRepository(RegistrationRepositoryLogger, DbContext);
             TqRegistrationPathwayRepository = new GenericRepository<TqRegistrationPathway>(TqRegistrationPathwayRepositoryLogger, DbContext);
+            TqPathwayAssessmentRepository = new GenericRepository<TqPathwayAssessment>(TqPathwayAssessmentRepositoryLogger, DbContext);
             TqRegistrationSpecialismRepository = new GenericRepository<TqRegistrationSpecialism>(TqRegistrationSpecialismRepositoryLogger, DbContext);
-            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, TqRegistrationPathwayRepository, TqRegistrationSpecialismRepository, CommonService, RegistrationMapper, RegistrationRepositoryLogger);
+            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, TqRegistrationPathwayRepository, TqPathwayAssessmentRepository, TqRegistrationSpecialismRepository, CommonService, SystemProvider, RegistrationMapper, RegistrationRepositoryLogger);
         }
 
         public override Task When()

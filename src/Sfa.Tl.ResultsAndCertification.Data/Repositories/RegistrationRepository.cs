@@ -103,6 +103,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                         .ThenInclude(x => x.TlPathway)
                 .Include(x => x.TqProvider)
                     .ThenInclude(x => x.TlProvider)
+                .Include(x => x.TqPathwayAssessments)
+                    .ThenInclude(x => x.TqPathwayResults)
                 .Include(x => x.TqRegistrationSpecialisms)
                     .ThenInclude(x => x.TlSpecialism)
                 .OrderByDescending(o => o.CreatedOn)
@@ -119,6 +121,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 predicate = e => e.IsOptedin && e.EndDate != null;
 
             regPathway.TqRegistrationSpecialisms = regPathway.TqRegistrationSpecialisms.Where(predicate).ToList();
+            regPathway.TqPathwayAssessments = regPathway.TqPathwayAssessments.Where(e => e.IsOptedin && e.EndDate == null).ToList();
             return regPathway;
         }
 

@@ -33,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             var ncfeRegistrationProfile = SeedRegistrationData(1111111111, RegistrationPathwayStatus.Active, false);
             ncfeRegistrationProfile.TqRegistrationPathways.ToList().ForEach(x => { x.TqRegistrationProfileId = pearsonRegistrationProfile.Id; });
             pearsonRegistrationProfile.TqRegistrationPathways.Add(ncfeRegistrationProfile.TqRegistrationPathways.ToList()[0]);
-            
+
             DbContext.SaveChanges();
 
             CreateMapper();
@@ -45,11 +45,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             ProviderRepository = new ProviderRepository(ProviderRepositoryLogger, DbContext);
             RegistrationRepository = new RegistrationRepository(RegistrationRepositoryLogger, DbContext);
             TqRegistrationPathwayRepository = new GenericRepository<TqRegistrationPathway>(TqRegistrationPathwayRepositoryLogger, DbContext);
+            TqPathwayAssessmentRepository = new GenericRepository<TqPathwayAssessment>(TqPathwayAssessmentRepositoryLogger, DbContext);
             TqRegistrationSpecialismRepository = new GenericRepository<TqRegistrationSpecialism>(TqRegistrationSpecialismRepositoryLogger, DbContext);
-            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, TqRegistrationPathwayRepository, TqRegistrationSpecialismRepository, CommonService, RegistrationMapper, RegistrationRepositoryLogger);
+            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, TqRegistrationPathwayRepository, TqPathwayAssessmentRepository, TqRegistrationSpecialismRepository, CommonService, SystemProvider, RegistrationMapper, RegistrationRepositoryLogger);
         }
 
-        public override Task When() 
+        public override Task When()
         {
             return Task.CompletedTask;
         }
@@ -76,8 +77,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             actualResult.Specialisms.Should().NotBeNullOrEmpty();
             actualResult.Specialisms.Count().Should().Be(expectedResponse.Specialisms?.Count());
 
-            actualResult.Specialisms.ToList().ForEach(x => 
-            { 
+            actualResult.Specialisms.ToList().ForEach(x =>
+            {
                 expectedResponse.Specialisms?.Select(s => s.Code).Should().Contain(x.Code);
                 expectedResponse.Specialisms?.Select(s => s.Name).Should().Contain(x.Name);
             });
@@ -157,7 +158,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, TqProvider);
             tqRegistrationPathway.Status = status;
 
-            
+
             foreach (var specialism in Specialisms)
             {
                 tqRegistrationPathway.TqRegistrationSpecialisms.Add(RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, tqRegistrationPathway, specialism));
@@ -175,7 +176,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
             if (saveChange)
                 DbContext.SaveChangesAsync();
-            
+
             return tqRegistrationProfile;
         }
     }

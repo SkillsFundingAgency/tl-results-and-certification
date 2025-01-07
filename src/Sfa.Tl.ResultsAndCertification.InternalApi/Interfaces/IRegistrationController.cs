@@ -13,6 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
         Task<bool> WithdrawRegistrationAsync(WithdrawRegistrationRequest model);
         Task<bool> RejoinRegistrationAsync(RejoinRegistrationRequest model);
         Task<bool> ReregistrationAsync(ReregistrationRequest model);
+        Task<bool> ProcessChangeAcademicYearAsync(ChangeAcademicYearRequest request, int profileId);
 
         // Bulk process
         Task<BulkProcessResponse> ProcessBulkRegistrationsAsync(BulkProcessRequest request);

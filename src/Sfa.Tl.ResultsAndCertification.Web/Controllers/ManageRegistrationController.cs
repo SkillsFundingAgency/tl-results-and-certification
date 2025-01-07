@@ -353,13 +353,104 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("academic-year-cannot-change/{profileId}", Name = RouteConstants.ChangeAcademicYear)]
+        [Route("academic-year-change/{profileId}", Name = RouteConstants.ChangeAcademicYear)]
         public async Task<IActionResult> ChangeAcademicYearAsync(int profileId)
         {
             var viewModel = await _registrationLoader.GetRegistrationProfileAsync<ChangeAcademicYearViewModel>(User.GetUkPrn(), profileId);
+
             if (viewModel == null)
             {
                 _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found. Method: ChangeAcademicYearAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            if (viewModel.HasActiveAssessmentResults)
+            {
+                return RedirectToRoute(nameof(RouteConstants.CannotChangeAcademicYear), new { profileId = profileId });
+            }
+
+            var academicYears = await _registrationLoader.GetAcademicYearsAsync();
+
+            viewModel.AcademicYears = academicYears.ToList();
+            viewModel.AcademicYearToBe = academicYears.SingleOrDefault(x => x.Year == viewModel.AcademicYear + 1).Year;
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("submit-academic-year-change/{profileId}", Name = RouteConstants.SubmitChangeAcademicYear)]
+        public async Task<IActionResult> ChangeAcademicYearAsync(ChangeAcademicYearViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            await _cacheService.SetAsync(CacheKey, model);
+            return RedirectToAction(nameof(RouteConstants.ReviewChangeAcademicYear), new { profileId = model.ProfileId });
+        }
+
+        [HttpGet]
+        [Route("review-academic-year-change/{profileId}", Name = RouteConstants.ReviewChangeAcademicYear)]
+        public async Task<IActionResult> ReviewChangeAcademicYearAsync(int profileId)
+        {
+            var viewModel = await _registrationLoader.GetRegistrationProfileAsync<ChangeAcademicYearViewModel>(User.GetUkPrn(), profileId);
+
+            if (viewModel == null)
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            var _cachedModel = await _cacheService.GetAsync<ChangeAcademicYearViewModel>(CacheKey);
+            viewModel.AcademicYearChangeTo = _cachedModel.AcademicYearChangeTo;
+            viewModel.AcademicYears = _cachedModel.AcademicYears;
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("review-academic-year-change", Name = RouteConstants.SubmitReviewChangeAcademicYear)]
+        public async Task<IActionResult> ReviewChangeAcademicYearAsync(ChangeAcademicYearViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+            model.AoUkprn = User.GetUkPrn();
+            var response = await _registrationLoader.ProcessChangeAcademicYearAsync(model, model.ProfileId);
+
+            if (!response.IsSuccess)
+            {
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+            }
+
+            await _cacheService.SetAsync(string.Concat(CacheKey, Constants.ChangeAcademicYearConfirmationViewModel), response, CacheExpiryTime.XSmall);
+
+            return RedirectToRoute(nameof(RouteConstants.ChangeAcademicYearConfirmation));
+        }
+
+        [HttpGet]
+        [Route("academic-year-change-confirmation", Name = RouteConstants.ChangeAcademicYearConfirmation)]
+        public async Task<IActionResult> ChangeAcademicYearConfirmationAsync()
+        {
+            var viewModel = await _cacheService.GetAndRemoveAsync<ChangeAcademicYearResponse>(string.Concat(CacheKey, Constants.ChangeAcademicYearConfirmationViewModel));
+
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read ChangeAcademicYearConfirmationAsync from redis cache in change academic yearconfirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("academic-year-cannot-change/{profileId}", Name = RouteConstants.CannotChangeAcademicYear)]
+        public async Task<IActionResult> CannotChangeAcademicYearAsync(int profileId)
+        {
+            var viewModel = await _registrationLoader.GetRegistrationProfileAsync<CannotChangeAcademicYearViewModel>(User.GetUkPrn(), profileId);
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found. Method: CannotChangeAcademicYearAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
             return View(viewModel);

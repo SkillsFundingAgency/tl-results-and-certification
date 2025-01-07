@@ -372,5 +372,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 SourceFilePath = sourceFilePath
             });
         }
+
+        public async Task<ChangeAcademicYearResponse> ProcessChangeAcademicYearAsync(ChangeAcademicYearViewModel viewModel, int profileId)
+        {
+            var reviewChangeRequest = _mapper.Map<ChangeAcademicYearRequest>(viewModel);
+            var response = await _internalApiClient.ProcessChangeAcademicYearAsync(reviewChangeRequest, profileId);
+            return new ChangeAcademicYearResponse { ProfileId = profileId, Uln = viewModel.Uln, IsSuccess = response };
+        }
     }
 }

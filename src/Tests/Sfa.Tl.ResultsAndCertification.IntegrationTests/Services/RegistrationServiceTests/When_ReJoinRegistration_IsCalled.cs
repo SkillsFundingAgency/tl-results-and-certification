@@ -69,8 +69,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             ProviderRepository = new ProviderRepository(ProviderRepositoryLogger, DbContext);
             RegistrationRepository = new RegistrationRepository(RegistrationRepositoryLogger, DbContext);
             TqRegistrationPathwayRepository = new GenericRepository<TqRegistrationPathway>(TqRegistrationPathwayRepositoryLogger, DbContext);
+            TqPathwayAssessmentRepository = new GenericRepository<TqPathwayAssessment>(TqPathwayAssessmentRepositoryLogger, DbContext);
             TqRegistrationSpecialismRepository = new GenericRepository<TqRegistrationSpecialism>(TqRegistrationSpecialismRepositoryLogger, DbContext);
-            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, TqRegistrationPathwayRepository, TqRegistrationSpecialismRepository, CommonService, RegistrationMapper, RegistrationRepositoryLogger);
+            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, TqRegistrationPathwayRepository, TqPathwayAssessmentRepository, TqRegistrationSpecialismRepository, CommonService, SystemProvider, RegistrationMapper, RegistrationRepositoryLogger);
 
             _reJoinRegistrationRequest = new RejoinRegistrationRequest
             {
@@ -98,7 +99,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             await WhenAsync();
             _result.Should().Be(expectedResult);
 
-            if (expectedResult == false) 
+            if (expectedResult == false)
                 return;
 
             var expectedRegistrationProfile = _tqRegistrationProfile;
@@ -156,7 +157,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 var expectedPreviousSpecialismResult = expectedPreviousSpecialismAssessment.TqSpecialismResults.FirstOrDefault(x => x.EndDate != null);
 
                 AssertSpecialismResult(actualActiveSpecialismResult, expectedPreviousSpecialismResult, isRejoin: true);
-            }            
+            }
 
             // Assert IndustryPlacement Data
             var actualActiveIndustryPlacement = actualActivePathway.IndustryPlacements.FirstOrDefault();
@@ -205,7 +206,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, TqProviders.First());
             tqRegistrationPathway.IsBulkUpload = false;
 
-            if(seedIndustryPlacement)
+            if (seedIndustryPlacement)
             {
                 var industryPlacement = IndustryPlacementProvider.CreateIndustryPlacement(DbContext, new IndustryPlacement { Status = IndustryPlacementStatus.Completed, Details = "{'industryPlacementStatus': 'Completed'}", CreatedBy = "Test User" });
                 tqRegistrationPathway.IndustryPlacements.Add(industryPlacement);
