@@ -29,6 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.AcademicYear))
                 .ForMember(d => d.Status, opts => opts.MapFrom(s => s.Status))
                 .ForMember(d => d.IsActiveWithOtherAo, opts => opts.MapFrom((src, dest, destMember, context) => (bool)context.Items["IsActiveWithOtherAo"]))
+                .ForMember(d => d.HasActiveAssessmentResults, opts => opts.MapFrom((src, dest, destMember, context) => (bool)context.Items["HasActiveAssessmentResults"]))
                 .ForMember(d => d.HasActiveAssessmentEntriesForSpecialisms, opts => opts.MapFrom((src, dest, destMember, context) => (bool)context.Items["HasActiveAssessmentEntriesForSpecialisms"]));
 
             CreateMap<ManageRegistration, TqRegistrationProfile>()

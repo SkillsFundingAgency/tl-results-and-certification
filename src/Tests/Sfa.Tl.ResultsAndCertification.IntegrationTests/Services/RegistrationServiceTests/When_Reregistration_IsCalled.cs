@@ -39,8 +39,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             ProviderRepository = new ProviderRepository(ProviderRepositoryLogger, DbContext);
             RegistrationRepository = new RegistrationRepository(RegistrationRepositoryLogger, DbContext);
             TqRegistrationPathwayRepository = new GenericRepository<TqRegistrationPathway>(TqRegistrationPathwayRepositoryLogger, DbContext);
+            TqPathwayAssessmentRepository = new GenericRepository<TqPathwayAssessment>(TqPathwayAssessmentRepositoryLogger, DbContext);
             TqRegistrationSpecialismRepository = new GenericRepository<TqRegistrationSpecialism>(TqRegistrationSpecialismRepositoryLogger, DbContext);
-            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, TqRegistrationPathwayRepository, TqRegistrationSpecialismRepository, CommonService, RegistrationMapper, RegistrationRepositoryLogger);
+            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, TqRegistrationPathwayRepository, TqPathwayAssessmentRepository, TqRegistrationSpecialismRepository, CommonService, SystemProvider, RegistrationMapper, RegistrationRepositoryLogger);
 
             var reregisterTlProvider = TqProviders.Last().TlProvider;
             var reregisterPathway = TqProviders.Last().TqAwardingOrganisation.TlPathway;
@@ -78,7 +79,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         public async Task Then_Returns_Expected_Results(int profileId, bool withdrawRegistration, bool isCoreSameAsWithdrawnCore, bool expectedResult)
         {
             _reRegistrationRequest.ProfileId = profileId;
-            if(isCoreSameAsWithdrawnCore)
+            if (isCoreSameAsWithdrawnCore)
             {
                 _reRegistrationRequest.CoreCode = _initialRegisteredTqProvider.TqAwardingOrganisation.TlPathway.LarId;
             }
@@ -94,7 +95,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 {
                     new object[] { 1, true, false, true },
                     new object[] { 1, true, true, false},
-                    new object[] { 1, false, false, false},                    
+                    new object[] { 1, false, false, false},
                     new object[] { 10000000, true, false, false }
                 };
             }

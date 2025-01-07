@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
+namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class AdminSearchLearners {
+    public class ChangeAcademicYear {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal AdminSearchLearners() {
+        internal ChangeAcademicYear() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.AdminSearchLearners", typeof(AdminSearchLearners).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.Registration.ChangeAcademicYear", typeof(ChangeAcademicYear).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,47 +61,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to When autocomplete results are available use up and down arrows to review and enter to select.  Touch device users, explore by touch or with swipe gestures..
+        ///   Looks up a localized string similar to Cancel.
         /// </summary>
-        public static string AutoComplete_Help_Text {
+        public static string Button_Cancel {
             get {
-                return ResourceManager.GetString("AutoComplete_Help_Text", resourceCulture);
+                return ResourceManager.GetString("Button_Cancel", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Apply filters.
+        ///   Looks up a localized string similar to Continue.
         /// </summary>
-        public static string Button_Apply_Filters {
+        public static string Button_Continue {
             get {
-                return ResourceManager.GetString("Button_Apply_Filters", resourceCulture);
+                return ResourceManager.GetString("Button_Continue", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Clear filters.
+        ///   Looks up a localized string similar to Change academic year.
         /// </summary>
-        public static string Button_Clear_Filters {
+        public static string Change_Academic_Year_Heading_Text {
             get {
-                return ResourceManager.GetString("Button_Clear_Filters", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Search.
-        /// </summary>
-        public static string Button_Search {
-            get {
-                return ResourceManager.GetString("Button_Search", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Clear search.
-        /// </summary>
-        public static string Clear_Search {
-            get {
-                return ResourceManager.GetString("Clear_Search", resourceCulture);
+                return ResourceManager.GetString("Change_Academic_Year_Heading_Text", resourceCulture);
             }
         }
         
@@ -115,61 +97,25 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Awarding organisation.
+        ///   Looks up a localized string similar to Select the academic year.
         /// </summary>
-        public static string Filters_Awarding_Organisation {
+        public static string Error_Summary_Text {
             get {
-                return ResourceManager.GetString("Filters_Awarding_Organisation", resourceCulture);
+                return ResourceManager.GetString("Error_Summary_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Filters.
+        ///   Looks up a localized string similar to Personal details.
         /// </summary>
-        public static string Filters_Heading {
+        public static string Heading_Personal_Details {
             get {
-                return ResourceManager.GetString("Filters_Heading", resourceCulture);
+                return ResourceManager.GetString("Heading_Personal_Details", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Provider name.
-        /// </summary>
-        public static string Filters_Provider_Name {
-            get {
-                return ResourceManager.GetString("Filters_Provider_Name", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Start year.
-        /// </summary>
-        public static string Filters_Start_Year {
-            get {
-                return ResourceManager.GetString("Filters_Start_Year", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Search learner records.
-        /// </summary>
-        public static string Heading_Search_Learners_Records {
-            get {
-                return ResourceManager.GetString("Heading_Search_Learners_Records", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Start a search.
-        /// </summary>
-        public static string Heading_Start_Search {
-            get {
-                return ResourceManager.GetString("Heading_Start_Search", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Search learner records – Admin.
+        ///   Looks up a localized string similar to Change academic year.
         /// </summary>
         public static string Page_Title {
             get {
@@ -178,29 +124,65 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Viewing {0} - {1} of {2} learners.
+        ///   Looks up a localized string similar to Academic year.
         /// </summary>
-        public static string PaginationSummary_Text {
+        public static string Title_AcademicYear_Text {
             get {
-                return ResourceManager.GetString("PaginationSummary_Text", resourceCulture);
+                return ResourceManager.GetString("Title_AcademicYear_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter a ULN or learner last name to search and/or you can apply filters to narrow your results..
+        ///   Looks up a localized string similar to Core (code).
         /// </summary>
-        public static string Para_Enter_ULN_Or_Learner_Last_Name {
+        public static string Title_Core_Text {
             get {
-                return ResourceManager.GetString("Para_Enter_ULN_Or_Learner_Last_Name", resourceCulture);
+                return ResourceManager.GetString("Title_Core_Text", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search by ULN or learner last name.
+        ///   Looks up a localized string similar to Name.
         /// </summary>
-        public static string Search_By_Uln_Or_Learner_Lastname {
+        public static string Title_Name_Text {
             get {
-                return ResourceManager.GetString("Search_By_Uln_Or_Learner_Lastname", resourceCulture);
+                return ResourceManager.GetString("Title_Name_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Provider (UKPRN).
+        /// </summary>
+        public static string Title_Provider_Text {
+            get {
+                return ResourceManager.GetString("Title_Provider_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ULN.
+        /// </summary>
+        public static string Title_Uln {
+            get {
+                return ResourceManager.GetString("Title_Uln", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select the academic year.
+        /// </summary>
+        public static string Validation_Message {
+            get {
+                return ResourceManager.GetString("Validation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to What should the academic year to be?.
+        /// </summary>
+        public static string What_Should_The_Academic_Heading_Title {
+            get {
+                return ResourceManager.GetString("What_Should_The_Academic_Heading_Title", resourceCulture);
             }
         }
     }

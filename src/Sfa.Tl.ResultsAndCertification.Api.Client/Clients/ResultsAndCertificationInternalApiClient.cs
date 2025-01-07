@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminNotification;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminNotification;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminPostResults;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminProvider;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
@@ -174,6 +175,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         {
             var requestUri = string.Format(ApiConstants.DeleteRegistrationUri, aoUkprn, profileId);
             return await DeleteAsync<bool>(requestUri);
+        }
+
+        public async Task<bool> ProcessChangeAcademicYearAsync(ChangeAcademicYearRequest model, int profileId)
+        {
+            var requestUri = string.Format(ApiConstants.ProcessChangeAcademicYearUri, profileId);
+            return await PostAsync<ChangeAcademicYearRequest, bool>(requestUri, model);
         }
 
         public async Task<bool> UpdateRegistrationAsync(ManageRegistration model)
@@ -503,6 +510,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         {
             return await PostAsync<ReviewChangeStartYearRequest, bool>(ApiConstants.ProcessChangeStartYearUri, request);
         }
+
+        public async Task<bool> ProcessChangeStartAcademicAsync(ReviewChangeStartYearRequest request)
+            => await PostAsync<ReviewChangeStartYearRequest, bool>(ApiConstants.ProcessChangeAcademicYearUri, request);
 
         public async Task<bool> ProcessChangeIndustryPlacementAsync(ReviewChangeIndustryPlacementRequest request)
         {

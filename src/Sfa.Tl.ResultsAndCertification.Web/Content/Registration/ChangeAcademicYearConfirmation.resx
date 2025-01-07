@@ -117,40 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Back_To_Registration_Details_Button_Text" xml:space="preserve">
-    <value>Back to registration details</value>
+  <data name="Caption_Text_Uln" xml:space="preserve">
+    <value>ULN: </value>
   </data>
-  <data name="Change_AcademicYear_Heading_Text" xml:space="preserve">
-    <value>Academic year cannot be changed</value>
+  <data name="Heading_Successful" xml:space="preserve">
+    <value>Registration created successfully</value>
   </data>
-  <data name="Change_Button_Text" xml:space="preserve">
-    <value>Change</value>
+  <data name="Page_Title" xml:space="preserve">
+    <value>Academic year change confirmation page</value>
   </data>
-  <data name="Change_Registration_AcademicYear_Body_Text" xml:space="preserve">
-    <value>The learner has a result recorded for one or more component. The academic year cannot be changed.</value>
+  <data name="View_Registration_Button_Text" xml:space="preserve">
+    <value>View registration</value>
   </data>
-  <data name="Continue_Button_Text" xml:space="preserve">
-    <value>Continue</value>
-  </data>
-  <data name="Inset_At_This_Time_You_Can_Only_Select" xml:space="preserve">
-    <value>At this time you can only select {0}</value>
-  </data>
-  <data name="Page_Caption_Text" xml:space="preserve">
-    <value>Add a new registration</value>
-  </data>
-  <data name="Page_Title_Add_Registration_Select_AcademicYear" xml:space="preserve">
-    <value>Add a new registration - Select the academic year page</value>
-  </data>
-  <data name="Page_Title_Change_Registration_Select_AcademicYear" xml:space="preserve">
-    <value>Academic year cannot be changed page</value>
-  </data>
-  <data name="Reregister_Heading_Text" xml:space="preserve">
-    <value>Register learner on a new course</value>
-  </data>
-  <data name="Reregister_Page_Title_AcademicYear" xml:space="preserve">
-    <value>Register learner on a new course - Select the academic year page</value>
-  </data>
-  <data name="Select_The_AcademicYear_Label_Text" xml:space="preserve">
-    <value>Select the academic year</value>
+  <data name="You_Successfully_Changed_The_Learner_Academic_Year" xml:space="preserve">
+    <value>You successfully changed the learner academic year.</value>
   </data>
 </root>

@@ -78,8 +78,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             ProviderRepository = new ProviderRepository(ProviderRepositoryLogger, DbContext);
             RegistrationRepository = new RegistrationRepository(RegistrationRepositoryLogger, DbContext);
             TqRegistrationPathwayRepository = new GenericRepository<TqRegistrationPathway>(TqRegistrationPathwayRepositoryLogger, DbContext);
+            TqPathwayAssessmentRepository = new GenericRepository<TqPathwayAssessment>(TqPathwayAssessmentRepositoryLogger, DbContext);
             TqRegistrationSpecialismRepository = new GenericRepository<TqRegistrationSpecialism>(TqRegistrationSpecialismRepositoryLogger, DbContext);
-            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, TqRegistrationPathwayRepository, TqRegistrationSpecialismRepository, CommonService, RegistrationMapper, RegistrationRepositoryLogger);
+            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, TqRegistrationPathwayRepository, TqPathwayAssessmentRepository, TqRegistrationSpecialismRepository, CommonService, SystemProvider, RegistrationMapper, RegistrationRepositoryLogger);
 
             var newProvider = TlProviders.Last();
             _updateRegistrationRequest = new ManageRegistration
@@ -182,7 +183,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
                 // Assert specialisms releated data
 
-                foreach(var activeSpecialism in activePathway.TqRegistrationSpecialisms.Where(x => x.EndDate == null))
+                foreach (var activeSpecialism in activePathway.TqRegistrationSpecialisms.Where(x => x.EndDate == null))
                 {
                     var expectedActiveSpecialism = expectedActivePathway.TqRegistrationSpecialisms.FirstOrDefault(x => x.TlSpecialismId == activeSpecialism.TlSpecialismId && x.EndDate == null);
 
@@ -301,6 +302,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                                 null);
             });
             RegistrationMapper = new Mapper(mapperConfig);
-        }        
+        }
     }
 }

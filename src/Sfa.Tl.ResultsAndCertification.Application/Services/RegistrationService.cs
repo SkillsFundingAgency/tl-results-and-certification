@@ -6,6 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Application.Models;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Common.Services.System.Interface;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Comparer;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
@@ -16,7 +17,6 @@ using Sfa.Tl.ResultsAndCertification.Models.Registration;
 using Sfa.Tl.ResultsAndCertification.Models.Registration.BulkProcess;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -28,15 +28,19 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private readonly IRegistrationRepository _tqRegistrationRepository;
         private readonly IRepository<TqRegistrationPathway> _tqRegistrationPathwayRepository;
         private readonly IRepository<TqRegistrationSpecialism> _tqRegistrationSpecialismRepository;
+        private readonly IRepository<TqPathwayAssessment> _tqPathwayAssessmentRepository;
         private readonly ICommonService _commonService;
+        private readonly ISystemProvider _systemProvider;
         private readonly IMapper _mapper;
         private readonly ILogger<IRegistrationRepository> _logger;
 
         public RegistrationService(IProviderRepository providerRespository,
             IRegistrationRepository tqRegistrationRepository,
             IRepository<TqRegistrationPathway> tqRegistrationPathwayRepository,
+            IRepository<TqPathwayAssessment> tqPathwayAssessmentRepository,
             IRepository<TqRegistrationSpecialism> tqRegistrationSpecialismRepository,
             ICommonService commonService,
+            ISystemProvider systemProvider,
             IMapper mapper,
             ILogger<IRegistrationRepository> logger
             )
@@ -44,8 +48,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _tqProviderRepository = providerRespository;
             _tqRegistrationRepository = tqRegistrationRepository;
             _tqRegistrationPathwayRepository = tqRegistrationPathwayRepository;
+            _tqPathwayAssessmentRepository = tqPathwayAssessmentRepository;
             _tqRegistrationSpecialismRepository = tqRegistrationSpecialismRepository;
             _commonService = commonService;
+            _systemProvider = systemProvider;
             _mapper = mapper;
             _logger = logger;
         }
@@ -456,6 +462,17 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             if (tqRegistration == null || (status != null && tqRegistration.Status != status)) return null;
 
             var hasActiveAssessmentEntriesForSpecialisms = false;
+            var hasActiveAssessmentResults = false;
+
+
+            if (tqRegistration.TqPathwayAssessments.Any())
+            {
+                var pathwayIds = tqRegistration.TqPathwayAssessments.Select(p => p.Id);
+                hasActiveAssessmentResults = await _tqPathwayAssessmentRepository
+                                                .CountAsync(p => pathwayIds
+                                                .Contains(p.Id) && p.TqPathwayResults
+                                                .Any(pa => pa.IsOptedin && pa.EndDate == null && pa.TlLookupId != (int)PathwayComponentGradeLookup.XNoResult)) > 0;
+            }
 
             if (tqRegistration.TqRegistrationSpecialisms.Any())
             {
@@ -474,6 +491,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 opt.Items["IsActiveWithOtherAo"] = isRegisteredWithOtherAo;
                 opt.Items["HasActiveAssessmentEntriesForSpecialisms"] = hasActiveAssessmentEntriesForSpecialisms;
+                opt.Items["HasActiveAssessmentResults"] = hasActiveAssessmentResults;
             });
         }
 
@@ -676,6 +694,34 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             registration.IsPendingWithdrawal = false;
             return await _tqRegistrationPathwayRepository.UpdateWithSpecifedColumnsOnlyAsync(registration, r => r.IsPendingWithdrawal, r => r.ModifiedBy, r => r.ModifiedOn) > 0;
+        }
+
+        public async Task<bool> ProcessChangeAcademicYearAsync(ChangeAcademicYearRequest model)
+        {
+            var tqRegistrationProfile = await _tqRegistrationRepository.GetRegistrationLiteAsync(model.AoUkprn, model.ProfileId);
+
+            var pathway = await _tqRegistrationPathwayRepository.GetFirstOrDefaultAsync(p => p.Id == tqRegistrationProfile.Id && p.Status == RegistrationPathwayStatus.Active);
+            if (pathway == null) return false;
+
+            pathway.EndDate = _systemProvider.UtcNow;
+            pathway.Status = RegistrationPathwayStatus.Withdrawn;
+            pathway.ModifiedBy = model.PerformedBy;
+            pathway.ModifiedOn = _systemProvider.UtcNow;
+
+            var isRegistrationWithdrawn = await _tqRegistrationPathwayRepository.UpdateWithSpecifedColumnsOnlyAsync(pathway, u => u.Status, u => u.ModifiedBy, u => u.ModifiedOn) > 0;
+
+            if (!isRegistrationWithdrawn) return false;
+
+            return await _tqRegistrationPathwayRepository.CreateAsync(new TqRegistrationPathway
+            {
+                TqRegistrationProfileId = model.ProfileId,
+                TqProviderId = pathway.TqProviderId,
+                AcademicYear = int.Parse(model.AcademicYearChangeTo),
+                StartDate = _systemProvider.UtcNow,
+                Status = RegistrationPathwayStatus.Active,
+                CreatedBy = model.PerformedBy,
+                CreatedOn = _systemProvider.UtcNow
+            }) > 0;
         }
 
         #region Private Methods

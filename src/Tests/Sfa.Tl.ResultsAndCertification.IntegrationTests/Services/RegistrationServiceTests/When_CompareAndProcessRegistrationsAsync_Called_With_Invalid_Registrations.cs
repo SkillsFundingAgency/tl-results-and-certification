@@ -37,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             SeedTestData(EnumAwardingOrganisation.Ncfe, true);
             SeedRegistrationData(1111111112);
             SeedRegistrationData(1111111113, RegistrationPathwayStatus.Withdrawn);
-            
+
             // Seed Profile with specialisms and assessment entry
             var registrationProfileWithSpecialism = SeedRegistrationData(1111111116, RegistrationPathwayStatus.Active, TqProviders[TqProviders.Count - 1]);
             SeedSpecialismAssessmentsData(GetSpecialismAssessmentsDataToProcess(registrationProfileWithSpecialism.TqRegistrationPathways.SelectMany(p => p.TqRegistrationSpecialisms).ToList()));
@@ -49,9 +49,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             ProviderRepository = new ProviderRepository(ProviderRepositoryLogger, DbContext);
             RegistrationRepository = new RegistrationRepository(RegistrationRepositoryLogger, DbContext);
             TqRegistrationPathwayRepository = new GenericRepository<TqRegistrationPathway>(TqRegistrationPathwayRepositoryLogger, DbContext);
+            TqPathwayAssessmentRepository = new GenericRepository<TqPathwayAssessment>(TqPathwayAssessmentRepositoryLogger, DbContext);
             TqRegistrationSpecialismRepository = new GenericRepository<TqRegistrationSpecialism>(TqRegistrationSpecialismRepositoryLogger, DbContext);
             CreateCommonService();
-            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, TqRegistrationPathwayRepository, TqRegistrationSpecialismRepository, CommonService, RegistrationMapper, RegistrationRepositoryLogger);
+            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, TqRegistrationPathwayRepository, TqPathwayAssessmentRepository, TqRegistrationSpecialismRepository, CommonService, SystemProvider, RegistrationMapper, RegistrationRepositoryLogger);
 
             _tqRegistrationProfilesData = GetRegistrationsDataToProcess(new List<long> { 1111111111, 1111111112, 1111111113, 1111111114, 1111111115, 1111111116 });
             _expectedValidationErrors = new BulkRegistrationValidationErrorsBuilder().BuildStage4ValidationErrorsList();
@@ -73,7 +74,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
         protected override void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson, bool seedMultipleProviders = false)
         {
-            if(AcademicYears == null || AcademicYears.Count == 0)
+            if (AcademicYears == null || AcademicYears.Count == 0)
                 AcademicYears = AcademicYearDataProvider.CreateAcademicYearList(DbContext, null);
 
             TlAwardingOrganisation = TlevelDataProvider.CreateTlAwardingOrganisation(DbContext, awardingOrganisation);
