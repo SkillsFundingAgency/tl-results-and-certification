@@ -4,7 +4,6 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Web.UnitTests.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
 using System;
@@ -40,7 +39,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 EnglishStatus = SubjectStatus.NotSpecified,
                 IsLearnerRegistered = true,
                 IndustryPlacementId = 10,
-                IndustryPlacementStatus = IndustryPlacementStatus.Completed
+                IndustryPlacementStatus = IndustryPlacementStatus.Completed,
+                BatchId = 1000,
+                PrintRequestSubmittedOn = new DateTime(2024, 1, 1),
+                PrintingBatchItemStatus = PrintingBatchItemStatus.AwaitingProcessing,
+                PrintingBatchItemStatusChangedOn = new DateTime(2024, 1, 2),
+                TrackingId = "1Z6F88X56839656159"
             };
 
             AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminLearnerRecordViewModel>(RegistrationPathwayId).Returns(_loaderResult);
@@ -121,6 +125,31 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             model.SummaryEnglishStatus.Should().NotBeNull();
             model.SummaryEnglishStatus.Title.Should().Be(LearnerRecordDetailsContent.Title_English_Text);
             model.SummaryMathsStatus.Value.Should().Be(SubjectStatusContent.Not_Yet_Recevied_Display_Text);
+
+            // Summary Batch Id
+            model.SummaryBatchId.Should().NotBeNull();
+            model.SummaryBatchId.Title.Should().Be(LearnerRecordDetailsContent.Title_Batch_Id);
+            model.SummaryBatchId.Value.Should().Be(_loaderResult.BatchId.ToString());
+
+            // Summary Print Request Submitted On
+            model.SummaryPrintRequestSubmittedOn.Should().NotBeNull();
+            model.SummaryPrintRequestSubmittedOn.Title.Should().Be(LearnerRecordDetailsContent.Title_Date_Of_Submission);
+            model.SummaryPrintRequestSubmittedOn.Value.Should().Be(_loaderResult.PrintRequestSubmittedOn.Value.ToDobFormat());
+
+            // Summary Printing Batch Item Status
+            model.SummaryPrintingBatchItemStatus.Should().NotBeNull();
+            model.SummaryPrintingBatchItemStatus.Title.Should().Be(LearnerRecordDetailsContent.Title_Batch_Status);
+            model.SummaryPrintingBatchItemStatus.Value.Should().Be(_loaderResult.PrintingBatchItemStatus?.GetDisplayName());
+
+            // Summary Printing Batch Item Status Changed On
+            model.SummaryPrintingBatchItemStatusChangedOn.Should().NotBeNull();
+            model.SummaryPrintingBatchItemStatusChangedOn.Title.Should().Be(LearnerRecordDetailsContent.Title_Batch_Status_Changed_On);
+            model.SummaryPrintingBatchItemStatusChangedOn.Value.Should().Be(_loaderResult.PrintingBatchItemStatusChangedOn.Value.ToDobFormat());
+
+            // Summary Batch Id
+            model.SummaryTrackingId.Should().NotBeNull();
+            model.SummaryTrackingId.Title.Should().Be(LearnerRecordDetailsContent.Title_Tracking_Id);
+            model.SummaryTrackingId.Value.Should().Be(_loaderResult.TrackingId);
 
             // Back link
             model.BackLink.Should().NotBeNull();
