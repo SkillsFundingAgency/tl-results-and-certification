@@ -24,6 +24,7 @@ stages:
     - group: platform-global-${{parameters.applicationName}}
     - group: platform-${{parameters.environmentName}}
     - group: platform-${{parameters.environmentName}}-${{parameters.applicationName}}
+    - group: platform-global
     - name: SharedBaseName
       value: "s126${{parameters.sharedEnvironmentId}}-${{parameters.applicationName}}"
     - name: SharedResourceGroup
@@ -43,3 +44,4 @@ stages:
       serviceConnection: ${{ parameters.serviceConnection }}
       sharedEnvironmentId: ${{ parameters.sharedEnvironmentId }}
       environmentName: ${{parameters.environmentName}}
+      globalSignServiceAccountPassword: $($GlobalSignServiceAccountPassword)
