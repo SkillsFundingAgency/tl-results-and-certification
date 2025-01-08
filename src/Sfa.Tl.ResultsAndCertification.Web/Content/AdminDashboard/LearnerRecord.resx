@@ -306,4 +306,7 @@
   <data name="Title_Tracking_Id" xml:space="preserve">
     <value>Tracking ID</value>
   </data>
+  <data name="Title_CertificateType_Text" xml:space="preserve">
+    <value>Certificate type</value>
+  </data>
 </root>

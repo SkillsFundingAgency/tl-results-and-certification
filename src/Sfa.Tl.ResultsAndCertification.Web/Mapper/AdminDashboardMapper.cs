@@ -56,7 +56,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.PrintRequestSubmittedOn, opts => opts.MapFrom(s => s.PrintRequestSubmittedOn))
                 .ForMember(d => d.PrintingBatchItemStatus, opts => opts.MapFrom(s => s.PrintingBatchItemStatus))
                 .ForMember(d => d.PrintingBatchItemStatusChangedOn, opts => opts.MapFrom(s => s.PrintingBatchItemStatusChangedOn))
-                .ForMember(d => d.TrackingId, opts => opts.MapFrom(s => s.TrackingId));
+                .ForMember(d => d.TrackingId, opts => opts.MapFrom(s => s.TrackingId))
+                .ForMember(d => d.PrintCertificateType, opts => opts.MapFrom(s => s.PrintCertificateType));
 
             CreateMap<Pathway, AdminAssessmentDetailsViewModel>()
                     .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom((src, dest, destMember, context) => context.Items[Constants.RegistrationPathwayId]))
