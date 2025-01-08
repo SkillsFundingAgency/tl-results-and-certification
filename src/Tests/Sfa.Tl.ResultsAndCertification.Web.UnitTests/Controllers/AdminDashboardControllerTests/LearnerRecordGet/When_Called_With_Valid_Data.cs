@@ -40,6 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 IsLearnerRegistered = true,
                 IndustryPlacementId = 10,
                 IndustryPlacementStatus = IndustryPlacementStatus.Completed,
+                PrintCertificateType = PrintCertificateType.StatementOfAchievement,
                 BatchId = 1000,
                 PrintRequestSubmittedOn = new DateTime(2024, 1, 1),
                 PrintingBatchItemStatus = PrintingBatchItemStatus.AwaitingProcessing,
@@ -125,6 +126,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             model.SummaryEnglishStatus.Should().NotBeNull();
             model.SummaryEnglishStatus.Title.Should().Be(LearnerRecordDetailsContent.Title_English_Text);
             model.SummaryMathsStatus.Value.Should().Be(SubjectStatusContent.Not_Yet_Recevied_Display_Text);
+
+            // Summary Certificate Type
+            model.SummaryPrintCertificateType.Should().NotBeNull();
+            model.SummaryPrintCertificateType.Title.Should().Be(LearnerRecordDetailsContent.Title_CertificateType_Text);
+            model.SummaryPrintCertificateType.Value.Should().Be(_loaderResult.PrintCertificateType.Value.GetDisplayName());
 
             // Summary Batch Id
             model.SummaryBatchId.Should().NotBeNull();
