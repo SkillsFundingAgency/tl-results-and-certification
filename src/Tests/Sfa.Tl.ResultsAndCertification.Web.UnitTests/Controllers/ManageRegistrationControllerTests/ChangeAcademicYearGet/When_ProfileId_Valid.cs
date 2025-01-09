@@ -17,7 +17,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             mockresult = new ChangeAcademicYearViewModel
             {
                 ProfileId = 1,
-                AcademicYear = 2020
+                Uln = 1234567890,
+                AoUkprn = AoUkprn,
+                Name = "John Smith",
+                ProviderDisplayName = "Barnsley College (10000536)",
+                PathwayDisplayName = "Digital Business Services",
+                AcademicYear = 2020,
+                AcademicYearToBe = 2021
             };
 
             RegistrationLoader.GetRegistrationProfileAsync<ChangeAcademicYearViewModel>(AoUkprn, ProfileId).Returns(mockresult);
@@ -46,6 +52,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             model.Should().NotBeNull();
 
             model.ProfileId.Should().Be(mockresult.ProfileId);
+            model.Uln.Should().Be(mockresult.Uln);
+            model.Name.Should().Be(mockresult.Name);
+            model.ProviderDisplayName.Should().Be(mockresult.ProviderDisplayName);
+            model.PathwayDisplayName.Should().Be(mockresult.PathwayDisplayName);
+            model.AoUkprn.Should().Be(mockresult.AoUkprn);
+            model.AcademicYear.Should().Be(mockresult.AcademicYear);
+            model.AcademicYearToBe.Should().Be(mockresult.AcademicYearToBe);
 
             var backLink = model.BackLink;
             backLink.RouteName.Should().Be(RouteConstants.RegistrationDetails);
