@@ -130,5 +130,11 @@ jobs:
           scriptLocation: 'inlineScript'
           inlineScript: 'az sql server firewall-rule delete -g $(SharedResourceGroup) -s $(SharedSQLServerName) -n "allowAllAzure"'
 
-
-     
+      - task: AzurePowerShell@5
+        displayName: 'Set Certificate Policy'
+        inputs:
+          azureSubscription: ${{ parameters.serviceConnection }}
+          ScriptType: InlineScript
+          Inline: | 
+            Set-AzKeyVaultCertificatePolicy -VaultName $(SharedKeyVaultName) -Name $(CertificateName) -RenewAtNumberOfDaysBeforeExpiry 30
+          azurePowerShellVersion: LatestVersion
