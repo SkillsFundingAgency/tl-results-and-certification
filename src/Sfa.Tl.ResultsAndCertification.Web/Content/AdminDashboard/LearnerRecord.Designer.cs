@@ -511,6 +511,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Certificate type.
+        /// </summary>
+        public static string Title_CertificateType_Text {
+            get {
+                return ResourceManager.GetString("Title_CertificateType_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date of submission.
         /// </summary>
         public static string Title_Date_Of_Submission {

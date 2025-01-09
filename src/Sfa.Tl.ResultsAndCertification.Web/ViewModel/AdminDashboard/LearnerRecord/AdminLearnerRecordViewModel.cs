@@ -44,11 +44,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
 
         public DateTime? PrintRequestSubmittedOn { get; set; }
 
-        public PrintingBatchItemStatus? PrintingBatchItemStatus { get; set; }
+        public BatchItemStatus? PrintingBatchItemStatus { get; set; }
 
         public DateTime? PrintingBatchItemStatusChangedOn { get; set; }
 
         public string TrackingId { get; set; }
+
+        public PrintCertificateType? PrintCertificateType { get; set; }
 
         public string StartYear => string.Format(LearnerRecordDetailsContent.Start_Year_Value, AcademicYear, AcademicYear + 1);
 
@@ -133,6 +135,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
             Id = "result",
             Title = LearnerRecordDetailsContent.Title_Result,
             Value = OverallResult ?? LearnerRecordDetailsContent.Label_Overall_Result_Not_Calculated
+        };
+
+        public SummaryItemModel SummaryPrintCertificateType => new()
+        {
+            Id = "printcertificatetype",
+            Title = LearnerRecordDetailsContent.Title_CertificateType_Text,
+            Value = PrintCertificateType.HasValue ? PrintCertificateType.Value.GetDisplayName() : string.Empty
         };
 
         public SummaryItemModel SummaryBatchId => new()
