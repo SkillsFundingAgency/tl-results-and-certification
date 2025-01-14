@@ -66,6 +66,16 @@
             <vc:summary-item model=Model.SummaryOverallResult></vc:summary-item>
         </dl>
 
+        <h2 class="govuk-heading-m">@LearnerRecord.Section_Heading_Print_Batch_Info</h2>
+        <dl class="govuk-summary-list govuk-!-margin-bottom-9">
+            <vc:summary-item model=Model.SummaryBatchId></vc:summary-item>
+            <vc:summary-item model=Model.SummaryPrintCertificateType></vc:summary-item>
+            <vc:summary-item model=Model.SummaryPrintRequestSubmittedOn></vc:summary-item>
+            <vc:summary-item model=Model.SummaryPrintingBatchItemStatus></vc:summary-item>
+            <vc:summary-item model=Model.SummaryPrintingBatchItemStatusChangedOn></vc:summary-item>
+            <vc:summary-item model=Model.SummaryTrackingId></vc:summary-item>
+        </dl>
+
         <div class="govuk-button-group govuk-!-margin-top-9">
             <a id="searchAgainButton" class="govuk-button" role="button" asp-route="@RouteConstants.AdminSearchLearnersRecords">@LearnerRecord.Search_Again_Text</a>
 

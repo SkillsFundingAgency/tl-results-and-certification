@@ -107,5 +107,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         {
             return await _registrationService.ReinstateRegistrationFromPendingWithdrawalAsync(model);
         }
+
+        [HttpPost]
+        [Route("ProcessChangeAcademicYear/{profileId}")]
+        public async Task<bool> ProcessChangeAcademicYearAsync(ChangeAcademicYearRequest model, int profileId)
+        {
+            return await _registrationService.ProcessChangeAcademicYearAsync(model);
+        }
     }
 }

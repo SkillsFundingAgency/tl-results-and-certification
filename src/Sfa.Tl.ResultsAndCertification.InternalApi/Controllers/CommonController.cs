@@ -46,5 +46,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         {
             return await _commonService.GetAcademicYearsAsync();
         }
+
     }
 }

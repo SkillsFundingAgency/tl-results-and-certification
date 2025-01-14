@@ -90,6 +90,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.IsActiveWithOtherAo, opts => opts.MapFrom(s => s.IsActiveWithOtherAo))
                 .ForMember(d => d.HasActiveAssessmentEntriesForSpecialisms, opts => opts.MapFrom(s => s.HasActiveAssessmentEntriesForSpecialisms));
 
+            CreateMap<RegistrationDetails, ChangeAcademicYearViewModel>()
+                .ForMember(d => d.Name, opts => opts.MapFrom(s => $"{s.Firstname} {s.Lastname}"))
+                .ForMember(d => d.HasActiveAssessmentResults, opts => opts.MapFrom(s => s.HasActiveAssessmentResults))
+                .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.PathwayLarId})"))
+                .ForMember(d => d.ProviderDisplayName, opts => opts.MapFrom(s => $"{s.ProviderName} ({s.ProviderUkprn})"));
+
             CreateMap<RegistrationDetails, ManageRegistration>()
                 .ForMember(d => d.CoreCode, opts => opts.MapFrom(s => s.PathwayLarId))
                 .ForMember(d => d.SpecialismCodes, opts => opts.MapFrom(s => s.Specialisms.Select(x => x.Code)));
@@ -112,7 +118,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<RegistrationDetails, ChangeSpecialismViewModel>()
                 .ForMember(d => d.CoreCode, opts => opts.MapFrom(s => s.PathwayLarId))
                 .ForMember(d => d.SpecialismCodes, opts => opts.MapFrom(s => s.Specialisms.Select(x => x.Code)));
-            CreateMap<RegistrationDetails, ChangeAcademicYearViewModel>();
+            CreateMap<RegistrationDetails, CannotChangeAcademicYearViewModel>();
+
+            CreateMap<ChangeAcademicYearViewModel, ChangeAcademicYearRequest>()
+               .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
+               .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+                .ForMember(d => d.AcademicYearChangeTo, opts => opts.MapFrom(s => s.AcademicYearChangeTo))
+               .ForMember(d => d.PerformedBy, opts => opts.MapFrom<UserNameResolver<ChangeAcademicYearViewModel, ChangeAcademicYearRequest>>());
 
             // Mappings: ChangeViewModels -> Manageregistration
             CreateMap<ChangeLearnersNameViewModel, ManageRegistration>()

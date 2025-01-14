@@ -21,19 +21,21 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
     public class PrintingService : IPrintingService
     {
         private readonly IMapper _mapper;
-        private readonly ILogger _logger;
         private readonly IRepository<Batch> _batchRepository;
         private readonly IRepository<PrintBatchItem> _printBatchItemRepository;
         private readonly IPrintingRepository _printingRepository;
         private readonly INotificationService _notificationService;
         private readonly ResultsAndCertificationConfiguration _configuration;
 
-        public PrintingService(IMapper mapper, ILogger<IPrintingService> logger, IRepository<Batch> batchRepository,
-            IRepository<PrintBatchItem> printBatchItemRepository, IPrintingRepository printingRepository,
-            INotificationService notificationService, ResultsAndCertificationConfiguration configuration)
+        public PrintingService(
+            IMapper mapper,
+            IRepository<Batch> batchRepository,
+            IRepository<PrintBatchItem> printBatchItemRepository,
+            IPrintingRepository printingRepository,
+            INotificationService notificationService,
+            ResultsAndCertificationConfiguration configuration)
         {
             _mapper = mapper;
-            _logger = logger;
             _batchRepository = batchRepository;
             _printBatchItemRepository = printBatchItemRepository;
             _printingRepository = printingRepository;
@@ -44,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public async Task<IList<PrintRequest>> GetPendingPrintRequestsAsync()
         {
             var batches = await _printingRepository.GetPendingPrintRequestAsync();
-            
+
             if (batches == null) return null;
 
             return _mapper.Map<IList<PrintRequest>>(batches);
@@ -74,12 +76,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     if (batchResponseStatus != ResponseStatus.NotSpecified)
                     {
                         var isResponseStatusError = batchResponseStatus == ResponseStatus.Error;
+                        DateTime now = DateTime.UtcNow;
 
                         batch.Status = isResponseStatusError ? BatchStatus.Error : BatchStatus.Accepted;
                         batch.Errors = isResponseStatusError ? JsonConvert.SerializeObject(printRequestResponse.Errors) : null;
+                        batch.RunOn = now;
                         batch.ResponseStatus = batchResponseStatus;
                         batch.ResponseMessage = (printRequestResponse.BatchNumber < 1 && isResponseStatusError) ? JsonConvert.SerializeObject(printRequestResponse.Errors) : null;
-                        batch.ModifiedOn = DateTime.UtcNow;
+                        batch.ModifiedOn = now;
                         batch.ModifiedBy = Constants.FunctionPerformedBy;
 
                         modifiedBatches.Add(batch);
@@ -94,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 var response = await _batchRepository.UpdateManyAsync(modifiedBatches);
 
-                if(response > 0 && batchIdsToSendEmail.Any())
+                if (response > 0 && batchIdsToSendEmail.Any())
                     await SendEmailAsync(batchIdsToSendEmail, Constants.SubmitCertificatePrintingRequest);
 
                 return new CertificatePrintingResponse { IsSuccess = response > 0, PrintingProcessedCount = printRequestResponses.Count, ModifiedCount = modifiedBatches.Count, SavedCount = response };
@@ -117,7 +121,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<CertificatePrintingResponse> UpdateBatchSummaryResponsesAsync(List<BatchSummaryResponse> batchSummaryResponses)
         {
-            if(batchSummaryResponses == null || batchSummaryResponses.Count == 0)
+            if (batchSummaryResponses == null || batchSummaryResponses.Count == 0)
                 return new CertificatePrintingResponse { IsSuccess = true, PrintingProcessedCount = 0, ModifiedCount = 0, SavedCount = 0 };
 
             var batchIds = new List<int>();
@@ -139,9 +143,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     var batchSummaryStatus = EnumExtensions.GetEnumByDisplayName<PrintingStatus>(batchSummary.Status);
                     var printBatch = printBatchesFromDb.FirstOrDefault(b => b.Id == batchSummary.BatchNumber);
 
-                    if(printBatch != null)
+                    if (printBatch != null)
                     {
-                        if(HasErrorStatus(batchSummary.Status))
+                        if (HasErrorStatus(batchSummary.Status))
                         {
                             printBatch.ResponseStatus = ResponseStatus.Error;
                             printBatch.ResponseMessage = batchSummary.ErrorMessage;
@@ -278,7 +282,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return new CertificatePrintingResponse { IsSuccess = true, PrintingProcessedCount = trackBatchResponses.Count, ModifiedCount = 0, SavedCount = 0 };
             }
         }
-        
+
         private bool HasErrorStatus(string value)
         {
             var responseStatus = EnumExtensions.GetEnumByDisplayName<ResponseStatus>(value);

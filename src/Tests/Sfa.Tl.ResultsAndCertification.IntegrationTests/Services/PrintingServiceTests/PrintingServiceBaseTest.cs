@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PrintingServi
         // Dependencies.
         protected IRepository<Batch> BatchRepository;
         protected ILogger<GenericRepository<Batch>> BatchRepositoryLogger;
-        
+
         protected IRepository<PrintBatchItem> PrintBatchItemRepository;
         protected ILogger<GenericRepository<PrintBatchItem>> PrintBatchItemRepositoryLogger;
 
@@ -53,7 +53,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PrintingServi
         protected ILogger<INotificationService> NotificationServiceLogger;
         protected INotificationService NotificationService;
 
-        protected ILogger<IPrintingService> PrintingServiceLogger;
         protected IPrintingService PrintingService;
 
         protected virtual void CreateMapper()

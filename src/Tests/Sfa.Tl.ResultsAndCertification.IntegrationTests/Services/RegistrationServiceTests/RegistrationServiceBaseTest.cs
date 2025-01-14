@@ -8,6 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Services.System.Interface;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
@@ -45,11 +46,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         protected IRegistrationRepository RegistrationRepository;
         protected IRepository<TqRegistrationPathway> TqRegistrationPathwayRepository;
         protected IRepository<TqRegistrationSpecialism> TqRegistrationSpecialismRepository;
+        protected IRepository<TqPathwayAssessment> TqPathwayAssessmentRepository;
         protected ILogger<ProviderRepository> ProviderRepositoryLogger;
         protected ILogger<RegistrationRepository> RegistrationRepositoryLogger;
         protected ILogger<GenericRepository<TqRegistrationPathway>> TqRegistrationPathwayRepositoryLogger;
         protected ILogger<GenericRepository<TqRegistrationSpecialism>> TqRegistrationSpecialismRepositoryLogger;
+        protected ILogger<GenericRepository<TqPathwayAssessment>> TqPathwayAssessmentRepositoryLogger;
         protected ICommonService CommonService;
+        protected ISystemProvider SystemProvider;
         protected IMapper RegistrationMapper;
         protected ILogger<GenericRepository<ChangeLog>> ChangeLogRepositoryLogger;
         protected IRepository<ChangeLog> ChangeLogRepository;
@@ -64,6 +68,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             var commonServiceLogger = new Logger<CommonService>(new NullLoggerFactory());
             var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(CommonMapper).Assembly));
             var commonMapper = new Mapper(mapperConfig);
+            var systemProvider = Substitute.For<ISystemProvider>();
 
             var tlLookupRepositoryLogger = new Logger<GenericRepository<TlLookup>>(new NullLoggerFactory());
             var tlLookupRepository = new GenericRepository<TlLookup>(tlLookupRepositoryLogger, DbContext);
@@ -84,7 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             ChangeLogRepositoryLogger = new Logger<GenericRepository<ChangeLog>>(new NullLoggerFactory());
             ChangeLogRepository = new GenericRepository<ChangeLog>(ChangeLogRepositoryLogger, DbContext);
             CommonService = new CommonService(commonServiceLogger, commonMapper, tlLookupRepository, functionLogRepository, commonRepository, notificationService, configuration, ChangeLogRepository);
-        } 
+        }
 
         protected virtual void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson, bool seedMultipleProviders = false)
         {
@@ -143,7 +148,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
             if (saveChanges)
                 DbContext.SaveChanges();
-            
+
             return tqRegistrationProfile;
         }
 
@@ -195,7 +200,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 var tqresults = GetPathwayResultDataToProcess(pathwayAssessment, seedPathwayResultsAsActive, isHistorical, isBulkUpload);
                 tqPathwayResults.AddRange(tqresults);
             }
-            
+
             return tqPathwayResults;
         }
 
@@ -366,7 +371,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         {
             actualPathway.Should().NotBeNull();
 
-            if(!isTransferred)
+            if (!isTransferred)
                 actualPathway.TqProviderId.Should().Be(expectedPathway.TqProviderId);
 
             actualPathway.AcademicYear.Should().Be(expectedPathway.AcademicYear);
@@ -397,7 +402,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             if (!isRejoin && !isTransferred)
                 actualAssessment.TqRegistrationPathwayId.Should().Be(expectedAssessment.TqRegistrationPathwayId);
 
-            if(!isTransferred)
+            if (!isTransferred)
                 actualAssessment.TqRegistrationPathway.TqProviderId.Should().Be(expectedAssessment.TqRegistrationPathway.TqProviderId);
 
             actualAssessment.AssessmentSeriesId.Should().Be(expectedAssessment.AssessmentSeriesId);
@@ -414,7 +419,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         {
             actualResult.Should().NotBeNull();
             if (!isRejoin && !isTransferred)
-            actualResult.TqPathwayAssessmentId.Should().Be(expectedResult.TqPathwayAssessmentId);
+                actualResult.TqPathwayAssessmentId.Should().Be(expectedResult.TqPathwayAssessmentId);
 
             actualResult.TlLookupId.Should().Be(expectedResult.TlLookupId);
             actualResult.IsOptedin.Should().BeTrue();

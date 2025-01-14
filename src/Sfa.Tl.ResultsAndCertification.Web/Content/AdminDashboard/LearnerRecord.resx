@@ -288,4 +288,25 @@
   <data name="Replacement_Doc_Requested_Template" xml:space="preserve">
     <value>Document requested on {0}. The document may take up to 3 weeks to arrive.</value>
   </data>
+  <data name="Section_Heading_Print_Batch_Info" xml:space="preserve">
+    <value>Print Batch Information</value>
+  </data>
+  <data name="Title_Batch_Id" xml:space="preserve">
+    <value>Batch ID</value>
+  </data>
+  <data name="Title_Batch_Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Title_Batch_Status_Changed_On" xml:space="preserve">
+    <value>Status changed on</value>
+  </data>
+  <data name="Title_Date_Of_Submission" xml:space="preserve">
+    <value>Date of submission</value>
+  </data>
+  <data name="Title_Tracking_Id" xml:space="preserve">
+    <value>Tracking ID</value>
+  </data>
+  <data name="Title_CertificateType_Text" xml:space="preserve">
+    <value>Certificate type</value>
+  </data>
 </root>

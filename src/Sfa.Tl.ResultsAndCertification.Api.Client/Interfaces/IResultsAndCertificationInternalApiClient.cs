@@ -3,6 +3,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminNotification;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminNotification;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminPostResults;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminProvider;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
@@ -49,6 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<FindUlnResponse> FindUlnAsync(long aoUkprn, long uln);
         Task<RegistrationDetails> GetRegistrationDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null);
         Task<bool> DeleteRegistrationAsync(long aoUkprn, int profileId);
+        Task<bool> ProcessChangeAcademicYearAsync(ChangeAcademicYearRequest model, int profileId);
 
         // Manage registrations
         Task<bool> UpdateRegistrationAsync(ManageRegistration model);

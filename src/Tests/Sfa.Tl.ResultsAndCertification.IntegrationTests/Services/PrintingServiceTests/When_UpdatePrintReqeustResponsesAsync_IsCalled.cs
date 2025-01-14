@@ -6,6 +6,7 @@ using Notify.Interfaces;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
@@ -71,8 +72,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PrintingServi
                 TlevelQueriedSupportEmailAddress = "test@test.com"
             };
 
-            PrintingServiceLogger = new Logger<PrintingService>(new NullLoggerFactory());
-            PrintingService = new PrintingService(PrintingServiceMapper, PrintingServiceLogger, BatchRepository, PrintBatchItemRepository, PrintingRepository, NotificationService, Configuration);
+            PrintingService = new PrintingService(PrintingServiceMapper, BatchRepository, PrintBatchItemRepository, PrintingRepository, NotificationService, Configuration);
         }
 
         public override Task When()
@@ -96,24 +96,30 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PrintingServi
         {
             await WhenAsync(printRequestResponse);
 
-            _actualResult.Should().NotBeNull();            
+            _actualResult.Should().NotBeNull();
 
             _actualResult.IsSuccess.Should().Be(certificatePrintingResponse.IsSuccess);
             _actualResult.PrintingProcessedCount.Should().Be(certificatePrintingResponse.PrintingProcessedCount);
             _actualResult.ModifiedCount.Should().Be(certificatePrintingResponse.ModifiedCount);
             _actualResult.SavedCount.Should().Be(certificatePrintingResponse.SavedCount);
 
-            if(printRequestResponse != null)
+            if (printRequestResponse != null)
             {
                 var actualBatch = DbContext.Batch.FirstOrDefault(b => b.Id == (printRequestResponse.BatchNumber < 1 ? printRequestResponse.BatchId : printRequestResponse.BatchNumber));
-
                 var expectedBatchStatus = printRequestResponse.Status == ResponseStatus.Error.ToString() ? BatchStatus.Error : BatchStatus.Accepted;
+
                 actualBatch.Status.Should().Be(expectedBatchStatus);
+                actualBatch.RunOn.Should().NotBeNull();
+                actualBatch.ModifiedOn.Should().NotBeNull();
+                actualBatch.ModifiedBy.Should().Be(Constants.FunctionPerformedBy);
 
                 if (expectedBatchStatus == BatchStatus.Error)
                 {
+                    string errorsJson = JsonConvert.SerializeObject(printRequestResponse.Errors);
+
+                    actualBatch.Errors.Should().Be(errorsJson);
                     actualBatch.ResponseStatus.Should().Be(ResponseStatus.Error);
-                    actualBatch.ResponseMessage.Should().Be(JsonConvert.SerializeObject(printRequestResponse.Errors));
+                    actualBatch.ResponseMessage.Should().Be(errorsJson);
                 }
                 else
                 {

@@ -1,0 +1,70 @@
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual.ChangeAcademicYearViewModel
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.Registration
+
+@{
+    ViewData["Title"] = ReviewChangeAcademicYear.Page_Title;
+}
+
+@section NavigationBar
+{
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <div class="record-header">
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
+                @ReviewChangeAcademicYear.Heading_Change_Start_Year
+            </h1>
+        </div>
+        <partial name="_ValidationSummary" />
+        <h2 class="govuk-heading-m">
+            @ReviewChangeAcademicYear.Heading_Personal_Details
+        </h2>
+
+        <dl class="govuk-summary-list">
+            <vc:summary-item model=Model.SummaryLearnerName></vc:summary-item>
+            <vc:summary-item model=Model.SummaryUln></vc:summary-item>
+            <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
+            <vc:summary-item model=Model.SummaryCore></vc:summary-item>
+            <vc:summary-item model=Model.SummaryAcademicYear></vc:summary-item>
+        </dl>
+
+        <h2 class="govuk-heading-m">
+            @ReviewChangeAcademicYear.Heading_Change_Summary
+        </h2>
+
+        <dl class="govuk-summary-list govuk-!-margin-bottom-4">
+            <div class="govuk-summary-list__row">
+                <dt class="govuk-summary-list__key">@ReviewChangeAcademicYear.Title_Change_Summary_Change_Text</dt>
+                <dt class="govuk-summary-list__key">@ReviewChangeAcademicYear.Title_Change_Summary_From_Text</dt>
+                <dt class="govuk-summary-list__key">@ReviewChangeAcademicYear.Title_Change_Summary_To_Text</dt>
+                <dt class="govuk-summary-list__key"></dt>
+            </div>
+            <vc:summary-item model=Model.SummaryChangeAcademicYear></vc:summary-item>
+        </dl>
+
+        <form asp-route="@RouteConstants.SubmitReviewChangeAcademicYear">
+            <input type="hidden" asp-for="ProfileId" />
+            <input type="hidden" asp-for="Uln" />
+            <input type="hidden" asp-for="Name" />
+            <input type="hidden" asp-for="ProviderDisplayName" />
+            <input type="hidden" asp-for="PathwayDisplayName" />
+            <input type="hidden" asp-for="AcademicYear" />
+            <input type="hidden" asp-for="AcademicYearToBe" />
+            <input type="hidden" asp-for="AcademicYearChangeTo" />
+
+            @for (int i = 0; i < Model.AcademicYears.Count; i++)
+            {
+                <input type="hidden" asp-for="AcademicYears[i].Id" />
+                <input type="hidden" asp-for="AcademicYears[i].Name" />
+                <input type="hidden" asp-for="AcademicYears[i].Year" />
+            }
+            <div class="govuk-button-group">
+                <button id="submitButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@ReviewChangeAcademicYear.Button_Submit</button>
+                <a id="returnButton" class="govuk-button gov-body govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.RegistrationDetails" asp-route-profileid="@Model.ProfileId">@ReviewChangeAcademicYear.Button_Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

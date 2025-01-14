@@ -108,6 +108,11 @@
         public const string ChangeRegistrationSpecialisms = "ChangeRegistrationSpecialisms";
         public const string SubmitChangeRegistrationSpecialisms = "SubmitChangeRegistrationSpecialisms";
         public const string ChangeAcademicYear = "ChangeAcademicYear";
+        public const string SubmitChangeAcademicYear = "SubmitChangeAcademicYear";
+        public const string ReviewChangeAcademicYear = "ReviewChangeAcademicYear";
+        public const string SubmitReviewChangeAcademicYear = "SubmitReviewChangeAcademicYear";
+        public const string ChangeAcademicYearConfirmation = "ChangeAcademicYearConfirmation";
+        public const string CannotChangeAcademicYear = "CannotChangeAcademicYear";
         public const string ChangeRegistrationProviderAndCoreNeedToWithdraw = "ChangeRegistrationProviderAndCoreNeedToWithdraw";
         public const string ChangeRegistrationProviderNotOfferingSameCore = "ChangeRegistrationProviderNotOfferingSameCore";
         public const string AmendActiveRegistration = "AmendActiveRegistration";

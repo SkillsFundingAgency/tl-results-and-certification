@@ -26,6 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         public int AcademicYear { get; set; }
         public RegistrationPathwayStatus Status { get; set; }
         public IEnumerable<AcademicYear> AcademicYears { get; set; }
+        public AcademicYear AcademicYearsChangeToBe { get; set; }
         public bool IsActiveWithOtherAo { get; set; }
         public bool HasActiveAssessmentEntriesForSpecialisms { get; set; }
 
