@@ -34,6 +34,7 @@
         public const string ReregistrationUri = "/api/registration/Reregistration";
         public const string SetRegistrationAsPendingWithdrawalUri = "/api/registration/SetRegistrationAsPendingWithdrawal";
         public const string ReinstateRegistrationFromPendingWithdrawalUri = "/api/registration/ReinstateRegistrationFromPendingWithdrawal";
+        public const string ProcessChangeAcademicYearUri = "/api/registration/ProcessChangeAcademicYear/{0}";
 
         // Assessments Related Uri's
         public const string ProcessBulkAssessmentsUri = "/api/assessment/ProcessBulkAssessments";

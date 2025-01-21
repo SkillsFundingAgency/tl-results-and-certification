@@ -44,8 +44,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             ProviderRepository = new ProviderRepository(ProviderRepositoryLogger, DbContext);
             RegistrationRepository = new RegistrationRepository(RegistrationRepositoryLogger, DbContext);
             TqRegistrationPathwayRepository = new GenericRepository<TqRegistrationPathway>(TqRegistrationPathwayRepositoryLogger, DbContext);
+            TqPathwayAssessmentRepository = new GenericRepository<TqPathwayAssessment>(TqPathwayAssessmentRepositoryLogger, DbContext);
             TqRegistrationSpecialismRepository = new GenericRepository<TqRegistrationSpecialism>(TqRegistrationSpecialismRepositoryLogger, DbContext);
-            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, TqRegistrationPathwayRepository, TqRegistrationSpecialismRepository, CommonService, RegistrationMapper, RegistrationRepositoryLogger);
+            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, TqRegistrationPathwayRepository, TqPathwayAssessmentRepository, TqRegistrationSpecialismRepository, CommonService, SystemProvider, RegistrationMapper, RegistrationRepositoryLogger);
 
             var newProvider = TlProviders.Last();
             _updateRegistrationRequest = new ManageRegistration
@@ -62,16 +63,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                 SpecialismCodes = TlPathwaySpecialismCombinations.Select(s => s.TlSpecialism.LarId),
                 PerformedBy = "Test User",
                 HasProviderChanged = false
-            };            
+            };
         }
 
-        public override Task When() 
+        public override Task When()
         {
             return Task.CompletedTask;
         }
 
         public async Task WhenAsync()
-        {            
+        {
             _result = await RegistrationService.UpdateRegistrationAsync(_updateRegistrationRequest);
         }
 
@@ -83,12 +84,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             _updateRegistrationRequest.HasProviderChanged = hasProviderChanged;
             _updateRegistrationRequest.HasSpecialismsChanged = hasSpecialismsChanged;
 
-            if(hasProviderChanged)
+            if (hasProviderChanged)
             {
                 // Assessments seed
                 var pathwayAssessments = SeedPathwayAssessmentsData(GetPathwayAssessmentsDataToProcess(_tqRegistrationProfile.TqRegistrationPathways.ToList(), isBulkUpload: false));
                 var pathwayResults = SeedPathwayResultsData(GetPathwayResultsDataToProcess(pathwayAssessments, isBulkUpload: false));
-                
+
                 var specialismAssessments = SeedSpecialismAssessmentsData(GetSpecialismAssessmentsDataToProcess(_tqRegistrationProfile.TqRegistrationPathways.SelectMany(p => p.TqRegistrationSpecialisms).ToList()));
                 var specialismResults = SeedSpecialismResultsData(GetSpecialismResultsDataToProcess(specialismAssessments, isBulkUpload: false));
             }
@@ -96,7 +97,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             await WhenAsync();
             _result.Should().Be(expectedResult);
 
-            if(hasProviderChanged)
+            if (hasProviderChanged)
             {
                 AssertProviderChangedData();
             }
@@ -227,7 +228,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             if (!isBulkupload)
             {
                 tqRegistrationPathway.IsBulkUpload = isBulkupload;
-                tqRegistrationPathway.TqRegistrationSpecialisms.ToList().ForEach(s => s.IsBulkUpload = isBulkupload); 
+                tqRegistrationPathway.TqRegistrationSpecialisms.ToList().ForEach(s => s.IsBulkUpload = isBulkupload);
             }
 
             DbContext.SaveChangesAsync();

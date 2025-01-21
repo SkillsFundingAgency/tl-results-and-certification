@@ -51,13 +51,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.IsPendingWithdrawal, opts => opts.MapFrom(s => s.IsPendingWithdrawl))
                 .ForMember(d => d.OverallResult, opts => opts.MapFrom(s => s.OverallResult))
                 .ForMember(d => d.LastPrintCertificateRequestedDate, opts => opts.MapFrom(s => s.LastPrintCertificateRequestedDate))
-                .ForMember(d => d.IsCertificateRerequestEligible, opts => opts.MapFrom((src, dest, destMember, context) => CommonHelper.IsDocumentRerequestEligible((int)context.Items[Constants.CertificateRerequestDays], src.PrintCertificateId, src.LastPrintCertificateRequestedDate)));
+                .ForMember(d => d.IsCertificateRerequestEligible, opts => opts.MapFrom((src, dest, destMember, context) => CommonHelper.IsDocumentRerequestEligible((int)context.Items[Constants.CertificateRerequestDays], src.PrintCertificateId, src.LastPrintCertificateRequestedDate)))
+                .ForMember(d => d.BatchId, opts => opts.MapFrom(s => s.BatchId))
+                .ForMember(d => d.PrintRequestSubmittedOn, opts => opts.MapFrom(s => s.PrintRequestSubmittedOn))
+                .ForMember(d => d.PrintingBatchItemStatus, opts => opts.MapFrom(s => s.PrintingBatchItemStatus))
+                .ForMember(d => d.PrintingBatchItemStatusChangedOn, opts => opts.MapFrom(s => s.PrintingBatchItemStatusChangedOn))
+                .ForMember(d => d.TrackingId, opts => opts.MapFrom(s => s.TrackingId))
+                .ForMember(d => d.PrintCertificateType, opts => opts.MapFrom(s => s.PrintCertificateType));
 
             CreateMap<Pathway, AdminAssessmentDetailsViewModel>()
-                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom((src, dest, destMember, context) => context.Items[Constants.RegistrationPathwayId]))
-                .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.Name} ({s.LarId})"))
-                .ForMember(d => d.PathwayAssessments, opts => opts.MapFrom(s => s.PathwayAssessments))
-                .ForMember(d => d.SpecialismDetails, opts => opts.MapFrom(s => s.Specialisms));
+                    .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom((src, dest, destMember, context) => context.Items[Constants.RegistrationPathwayId]))
+                    .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.Name} ({s.LarId})"))
+                    .ForMember(d => d.PathwayAssessments, opts => opts.MapFrom(s => s.PathwayAssessments))
+                    .ForMember(d => d.SpecialismDetails, opts => opts.MapFrom(s => s.Specialisms));
 
             CreateMap<Assessment, AdminAssessmentViewModel>()
                 .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom((src, dest, destMember, context) => context.Items[Constants.RegistrationPathwayId]))

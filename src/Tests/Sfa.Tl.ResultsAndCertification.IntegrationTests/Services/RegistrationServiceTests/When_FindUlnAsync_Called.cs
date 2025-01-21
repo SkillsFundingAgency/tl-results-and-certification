@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             // Seed Tlevel data for ncfe
             SeedTestData(EnumAwardingOrganisation.Ncfe, true);
             SeedRegistrationData(1111111112);
-            
+
             CreateMapper();
 
             ProviderRepositoryLogger = new Logger<ProviderRepository>(new NullLoggerFactory());
@@ -37,11 +37,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             ProviderRepository = new ProviderRepository(ProviderRepositoryLogger, DbContext);
             RegistrationRepository = new RegistrationRepository(RegistrationRepositoryLogger, DbContext);
             TqRegistrationPathwayRepository = new GenericRepository<TqRegistrationPathway>(TqRegistrationPathwayRepositoryLogger, DbContext);
+            TqPathwayAssessmentRepository = new GenericRepository<TqPathwayAssessment>(TqPathwayAssessmentRepositoryLogger, DbContext);
             TqRegistrationSpecialismRepository = new GenericRepository<TqRegistrationSpecialism>(TqRegistrationSpecialismRepositoryLogger, DbContext);
-            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, TqRegistrationPathwayRepository, TqRegistrationSpecialismRepository, CommonService, RegistrationMapper, RegistrationRepositoryLogger);
+            RegistrationService = new RegistrationService(ProviderRepository, RegistrationRepository, TqRegistrationPathwayRepository, TqPathwayAssessmentRepository, TqRegistrationSpecialismRepository, CommonService, SystemProvider, RegistrationMapper, RegistrationRepositoryLogger);
         }
 
-        public override Task When() 
+        public override Task When()
         {
             return Task.CompletedTask;
         }
@@ -59,7 +60,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             }
 
             var expecedStatus = expectedResponse.IsRegisteredWithOtherAo ? RegistrationPathwayStatus.NotSpecified : expectedResponse.Status;
-            
+
             actualResult.Uln.Should().Be(expectedResponse.Uln);
             actualResult.Status.Should().Be(expecedStatus);
             actualResult.IsRegisteredWithOtherAo.Should().Be(expectedResponse.IsRegisteredWithOtherAo);

@@ -71,8 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PrintingServi
                 TlevelQueriedSupportEmailAddress = "test@test.com"
             };
 
-            PrintingServiceLogger = new Logger<PrintingService>(new NullLoggerFactory());
-            PrintingService = new PrintingService(PrintingServiceMapper, PrintingServiceLogger, BatchRepository, PrintBatchItemRepository, PrintingRepository, NotificationService, Configuration);
+            PrintingService = new PrintingService(PrintingServiceMapper, BatchRepository, PrintBatchItemRepository, PrintingRepository, NotificationService, Configuration);
         }
 
         public override Task When()

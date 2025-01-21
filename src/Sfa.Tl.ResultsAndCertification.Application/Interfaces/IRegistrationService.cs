@@ -21,6 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
         Task<bool> ReregistrationAsync(ReregistrationRequest model);
         Task<bool> SetRegistrationAsPendingWithdrawalAsync(SetRegistrationAsPendingWithdrawalRequest model);
         Task<bool> ReinstateRegistrationFromPendingWithdrawalAsync(ReinstateRegistrationFromPendingWithdrawalRequest model);
+        Task<bool> ProcessChangeAcademicYearAsync(ChangeAcademicYearRequest model);
 
         IList<TqRegistrationProfile> TransformRegistrationModel(IList<RegistrationRecordResponse> registrationsData, string performedBy);
         Task<RegistrationProcessResponse> CompareAndProcessRegistrationsAsync(IList<TqRegistrationProfile> registrations);

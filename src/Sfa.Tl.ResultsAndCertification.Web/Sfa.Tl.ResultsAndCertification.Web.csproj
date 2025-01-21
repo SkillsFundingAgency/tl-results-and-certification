@@ -45,6 +45,11 @@
 
 
 	<ItemGroup>
+		<Compile Update="Content\AdminDashboard\LearnerRecord.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>LearnerRecord.resx</DependentUpon>
+		</Compile>
 		<Compile Update="Content\AdminNotification\AdminNotificationBase.Designer.cs">
 		  <DependentUpon>AdminNotificationBase.resx</DependentUpon>
 		  <DesignTime>True</DesignTime>
@@ -675,10 +680,25 @@
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
 		</Compile>
+		<Compile Update="Content\Registration\ChangeAcademicYearConfirmation.Designer.cs">
+		  <DependentUpon>ChangeAcademicYearConfirmation.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Content\Registration\ReviewChangeAcademicYear.Designer.cs">
+		  <DependentUpon>ReviewChangeAcademicYear.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
 		<Compile Update="Content\Registration\ChangeSpecialismRestriction.Designer.cs">
 			<DesignTime>True</DesignTime>
 			<AutoGen>True</AutoGen>
 			<DependentUpon>ChangeSpecialismRestriction.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Content\Registration\ChangeAcademicYear.Designer.cs">
+		  <DependentUpon>ChangeAcademicYear.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
 		</Compile>
 		<Compile Update="Content\Registration\RegistrationsDownloadData.Designer.cs">
 			<DesignTime>True</DesignTime>
@@ -1339,6 +1359,10 @@
 
 
 	<ItemGroup>
+		<EmbeddedResource Update="Content\AdminDashboard\LearnerRecord.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>LearnerRecord.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminNotification\AdminNotificationBase.resx">
 		  <LastGenOutput>AdminNotificationBase.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
@@ -1888,9 +1912,21 @@
 		  <LastGenOutput>DownloadRegistrationsData.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
+		<EmbeddedResource Update="Content\Registration\ChangeAcademicYearConfirmation.resx">
+		  <LastGenOutput>ChangeAcademicYearConfirmation.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\Registration\ReviewChangeAcademicYear.resx">
+		  <LastGenOutput>ReviewChangeAcademicYear.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Content\Registration\ChangeSpecialismRestriction.resx">
 			<Generator>PublicResXFileCodeGenerator</Generator>
 			<LastGenOutput>ChangeSpecialismRestriction.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\Registration\ChangeAcademicYear.resx">
+		  <LastGenOutput>ChangeAcademicYear.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\Registration\RegistrationsDownloadData.resx">
 			<Generator>PublicResXFileCodeGenerator</Generator>

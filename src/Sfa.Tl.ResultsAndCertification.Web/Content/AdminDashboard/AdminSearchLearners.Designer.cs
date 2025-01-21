@@ -169,7 +169,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search learner records – Admin – Manage T Level results – GOV.UK.
+        ///   Looks up a localized string similar to Search learner records – Admin.
         /// </summary>
         public static string Page_Title {
             get {

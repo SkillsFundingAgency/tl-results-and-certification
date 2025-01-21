@@ -367,6 +367,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Print Batch Information.
+        /// </summary>
+        public static string Section_Heading_Print_Batch_Info {
+            get {
+                return ResourceManager.GetString("Section_Heading_Print_Batch_Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Overall T Level Result.
         /// </summary>
         public static string Section_Heading_TLevel_Overall_Result {
@@ -475,6 +484,51 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Batch ID.
+        /// </summary>
+        public static string Title_Batch_Id {
+            get {
+                return ResourceManager.GetString("Title_Batch_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string Title_Batch_Status {
+            get {
+                return ResourceManager.GetString("Title_Batch_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status changed on.
+        /// </summary>
+        public static string Title_Batch_Status_Changed_On {
+            get {
+                return ResourceManager.GetString("Title_Batch_Status_Changed_On", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Certificate type.
+        /// </summary>
+        public static string Title_CertificateType_Text {
+            get {
+                return ResourceManager.GetString("Title_CertificateType_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date of submission.
+        /// </summary>
+        public static string Title_Date_Of_Submission {
+            get {
+                return ResourceManager.GetString("Title_Date_Of_Submission", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date of birth.
         /// </summary>
         public static string Title_DateofBirth_Text {
@@ -552,6 +606,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         public static string Title_TLevel_Text {
             get {
                 return ResourceManager.GetString("Title_TLevel_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tracking ID.
+        /// </summary>
+        public static string Title_Tracking_Id {
+            get {
+                return ResourceManager.GetString("Title_Tracking_Id", resourceCulture);
             }
         }
         
