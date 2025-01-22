@@ -425,6 +425,39 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return new FunctionResponse { IsSuccess = true };
         }
 
+        public async Task<FunctionResponse> ProcessIndustryPlacementProviderNotificationsAsync()
+        {
+            var currentAcademicYears = await _commonRepository.GetCurrentAcademicYearsAsync();
+            if (currentAcademicYears == null || !currentAcademicYears.Any())
+            {
+                throw new ApplicationException($"Current Academic years are not found. Method: {nameof(ProcessIndustryPlacementProviderNotificationsAsync)}");
+            }
+
+            var ukprnCountDictionary = await _tqRegistrationPathwayRepository.GetManyAsync()
+                .Include(x => x.IndustryPlacements)
+                .Include(x => x.TqProvider)
+                    .ThenInclude(x => x.TlProvider)
+                .Where(w => w.Status == RegistrationPathwayStatus.Active &&
+                            w.EndDate == null &&
+                            w.AcademicYear == currentAcademicYears.FirstOrDefault().Year - 1 &&
+                            !w.IndustryPlacements.Any())
+                .GroupBy(g => g.TqProvider.TlProvider.UkPrn)
+                .ToDictionaryAsync(group => group.Key, group => group.Count());
+
+            if (ukprnCountDictionary == null || !ukprnCountDictionary.Any())
+            {
+                var message = $"No entries are found. Method: {nameof(ProcessIndustryPlacementProviderNotificationsAsync)}()";
+                _logger.LogWarning(LogEvent.NoDataFound, message);
+                return new FunctionResponse { IsSuccess = true, Message = message };
+            }
+
+            // Notifications sent to providers
+
+
+            // 4.Update response
+            return new FunctionResponse { IsSuccess = true };
+        }
+
         private async Task<IList<IpLookupData>> SpecialConsiderationReasonsAsync()
         {
             var lookupData = await _ipLookupRepository.GetManyAsync(x => x.TlLookup.Category == IpLookupType.SpecialConsideration.ToString()).OrderBy(x => x.SortOrder).ToListAsync();

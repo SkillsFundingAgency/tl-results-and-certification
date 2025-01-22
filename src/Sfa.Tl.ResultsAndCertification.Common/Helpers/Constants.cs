@@ -184,6 +184,7 @@
         public const string UcasTransferAmendments = "UcasTransferAmendments";
         public const string OverallResultCalculation = "OverallResultCalculation";
         public const string IndustryPlacementExtract = "IndustryPlacementExtract";
+        public const string IndustryPlacementProviderNotifications = "IndustryPlacementProviderNotifications";
         public const string IndustryPlacementExtractsFolder = "extracts";
         public const string AnalystOverallResultExtract = "AnalystOverallResultExtract";
         public const string AnalystCoreResultExtract = "AnalystCoreResultExtract";

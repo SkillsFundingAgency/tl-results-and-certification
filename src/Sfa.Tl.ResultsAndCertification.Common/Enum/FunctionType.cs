@@ -18,6 +18,7 @@
         AnalystCoreResultExtract = 13,
         CoreRommExtract = 14,
         SpecialismRommExtract = 15,
-        CertificateTrackingExtract = 16
+        CertificateTrackingExtract = 16,
+        IndustryPlacementProviderNotifications = 17
     }
 }

@@ -13,6 +13,7 @@
     "UcasTransferAmendmentsTrigger": "0 45 21 * 8-10 *",
     "OverallResultCalculationTrigger": "30 20 * * *",
     "IndustryPlacementExtractTrigger": "0 30 8 * * *",
+    "IndustryPlacementProviderNotificationsTrigger": "* * * * * *",
     "AnalystOverallResultExtractTrigger": "0 15 7 * * *",
     "AnalystCoreResultExtractTrigger": "0 30 7 * * *",
     "ProviderAddressExtractTrigger": "0 45 7 * * *",
