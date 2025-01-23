@@ -117,14 +117,8 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Accessibility_Statement_Published_On" xml:space="preserve">
-    <value>1 May 2024</value>
-  </data>
-  <data name="Accessibility_Statement_Reviewed_On" xml:space="preserve">
-    <value>4 January 2024</value>
-  </data>
-  <data name="Accessibility_Statement_Tested_On" xml:space="preserve">
-    <value>12 July 2022</value>
+  <data name="Email" xml:space="preserve">
+    <value>tlevel.resultsandcertification@education.gov.uk</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Accessibility statement</value>
