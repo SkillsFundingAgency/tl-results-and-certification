@@ -175,6 +175,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                 app.UseHsts(options =>
                 {
                     options.MaxAge(365);
+                    options.Preload();
                     options.IncludeSubdomains();
                 });
             }
