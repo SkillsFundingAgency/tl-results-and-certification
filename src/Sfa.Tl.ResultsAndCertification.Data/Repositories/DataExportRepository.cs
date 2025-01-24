@@ -109,7 +109,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 AcademicYear = academicYear.First(e => e.Year == pa.TqRegistrationPathway.AcademicYear).Name,
                 CoreCode = pa.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
                 CoreAssessmentEntry = pa.AssessmentSeries.Name,
-                CoreGrade = pa.TqPathwayResults.First().TlLookup != null ? pa.TqPathwayResults.First().TlLookup.Value : string.Empty
+                CoreGrade = pa.TqPathwayResults.First().TlLookup != null ? pa.TqPathwayResults.First(pa => pa.IsOptedin && pa.EndDate == null).TlLookup.Value : string.Empty
             })
             .ToListAsync();
         }
@@ -135,7 +135,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                AcademicYear = academicYear.First(e => e.Year == sa.TqRegistrationSpecialism.TqRegistrationPathway.AcademicYear).Name,
                SpecialismCode = sa.TqRegistrationSpecialism.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
                SpecialismAssessmentEntry = sa.AssessmentSeries.Name,
-               SpecialismGrade = sa.TqSpecialismResults.First().TlLookup != null ? sa.TqSpecialismResults.First().TlLookup.Value : string.Empty
+               SpecialismGrade = sa.TqSpecialismResults.First().TlLookup != null ? sa.TqSpecialismResults.First(e => e.IsOptedin && e.EndDate == null).TlLookup.Value : string.Empty
            })
            .ToListAsync();
         }
