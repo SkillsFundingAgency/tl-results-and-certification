@@ -92,6 +92,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             var academicYear = _dbContext.AcademicYear;
 
             return await _dbContext.TqPathwayAssessment
+                .Include(pa => pa.TqPathwayResults.Where(pa => pa.IsOptedin && pa.EndDate == null))
                 .Include(pa => pa.TqRegistrationPathway)
                 .Include(pa => pa.AssessmentSeries)
                 .Include(pa => pa.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlPathway)
@@ -109,7 +110,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 AcademicYear = academicYear.First(e => e.Year == pa.TqRegistrationPathway.AcademicYear).Name,
                 CoreCode = pa.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
                 CoreAssessmentEntry = pa.AssessmentSeries.Name,
-                CoreGrade = pa.TqPathwayResults.First().TlLookup != null ? pa.TqPathwayResults.First(pa => pa.IsOptedin && pa.EndDate == null).TlLookup.Value : string.Empty
+                CoreGrade = pa.TqPathwayResults.Any() ? pa.TqPathwayResults.First().TlLookup.Value : string.Empty
             })
             .ToListAsync();
         }
@@ -119,6 +120,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             var academicYear = _dbContext.AcademicYear;
 
             return await _dbContext.TqSpecialismAssessment
+               .Include(sa => sa.TqSpecialismResults.Where(sa => sa.IsOptedin && sa.EndDate == null))
                .Include(sa => sa.TqRegistrationSpecialism)
                .Include(sa => sa.AssessmentSeries)
                .Include(sa => sa.TqRegistrationSpecialism.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlPathway)
@@ -135,7 +137,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                AcademicYear = academicYear.First(e => e.Year == sa.TqRegistrationSpecialism.TqRegistrationPathway.AcademicYear).Name,
                SpecialismCode = sa.TqRegistrationSpecialism.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
                SpecialismAssessmentEntry = sa.AssessmentSeries.Name,
-               SpecialismGrade = sa.TqSpecialismResults.First().TlLookup != null ? sa.TqSpecialismResults.First(e => e.IsOptedin && e.EndDate == null).TlLookup.Value : string.Empty
+               SpecialismGrade = sa.TqSpecialismResults.Any() ? sa.TqSpecialismResults.First().TlLookup.Value : string.Empty
            })
            .ToListAsync();
         }
