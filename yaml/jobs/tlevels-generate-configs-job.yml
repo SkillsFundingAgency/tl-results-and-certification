@@ -6,6 +6,11 @@ parameters:
   - name: tableName
     type: string
     default: "configuration"
+  - name: environmentName
+    type: string
+  - name: ConfigurationSecrets
+    type: object
+    default: {}
 jobs:
   - job: GenerateConfigs
     variables:
@@ -25,6 +30,8 @@ jobs:
       - DeploySQLDatabase
 
     steps:
+      - checkout: self
+      - checkout: devopsTools
       - task: DownloadBuildArtifacts@0
         inputs:
           buildType: "current"
@@ -32,10 +39,20 @@ jobs:
           artifactName: "appdrop"
           downloadPath: "$(System.ArtifactsDirectory)"
 
-      - task: GenerateEnvironmentConfiguration@3
-        displayName: "Process schemas in $(System.ArtifactsDirectory)/appdrop/config"
+      - task: AzurePowerShell@5
+        displayName: 'Generate Configuration'
         inputs:
-          SourcePath: "$(System.ArtifactsDirectory)/appdrop/config"
-          ServiceConnectionName: ${{ parameters.serviceConnection}}
-          StorageAccountName: "$(ConfigStorageAccountName)"
-          TableName: Configuration
+          azureSubscription: ${{ parameters.ServiceConnection }}
+          ScriptType: 'FilePath'
+          scriptPath: './operations-devops-tools/Powershell/GenerateConfig/New-ConfigurationTableEntry.ps1'
+          scriptArguments:
+            -SourcePath "$(System.ArtifactsDirectory)/appdrop/config"
+            -TargetFilename "Sfa.Tl.ResultsAndCertification.schema.json"
+            -StorageAccountName "$(ConfigStorageAccountName)"
+            -StorageAccountResourceGroup "$(SharedResourceGroup)"
+            -EnvironmentName ${{ parameters.EnvironmentName }}
+            -TableName "Configuration"
+          azurePowerShellVersion: LatestVersion
+          pwsh: true
+          FailOnStandardError: true
+        env: ${{ parameters.ConfigurationSecrets }}
