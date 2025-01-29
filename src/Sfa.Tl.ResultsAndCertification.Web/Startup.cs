@@ -172,12 +172,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             else
             {
                 app.UseExceptionHandler("/Error/500");
-                app.UseHsts(options =>
-                {
-                    options.MaxAge(365);
-                    options.Preload();
-                    options.IncludeSubdomains();
-                });
+                SetStrictTransportSecurityHeader(app);
             }
 
             app.UseXContentTypeOptions();
@@ -185,12 +180,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             app.UseXXssProtection(opts => opts.Disabled());
             app.UseXfo(xfo => xfo.Deny());
 
-            app.UseCsp(options => options.ScriptSources(s => s.StrictDynamic()
-                                         .CustomSources("https:", "https://www.google-analytics.com/analytics.js",
-                                                        "https://www.googletagmanager.com/",
-                                                        "https://tagmanager.google.com/")
-                                         .UnsafeInline())
-                                         .ObjectSources(s => s.None()));
+            SetConfigSecurityPolicyHeader(app);
+
             app.UseCookiePolicy();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
@@ -232,6 +223,44 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             services.AddTransient<IProviderRegistrationsLoader, ProviderRegistrationsLoader>();
             services.AddTransient<IDashboardLoader, DashboardLoader>();
             services.AddTransient<IAdminNotificationLoader, AdminNotificationLoader>();
+        }
+
+        private static void SetStrictTransportSecurityHeader(IApplicationBuilder app)
+        {
+            const int Days = 365;
+
+            app.UseHsts(options =>
+            {
+                options.MaxAge(Days);
+                options.Preload();
+                options.IncludeSubdomains();
+            });
+        }
+
+        private static void SetConfigSecurityPolicyHeader(IApplicationBuilder app)
+        {
+            const string Https = "https:";
+            string[] strictDynamicCustomSources = { Https, "https://www.google-analytics.com/analytics.js", "https://www.googletagmanager.com/", "https://tagmanager.google.com/" };
+
+            app.UseCsp(options => options
+            .BaseUris(conf => conf.Self())
+            .DefaultSources(conf =>
+                conf.Self()
+                .CustomSources(Https))
+            .ScriptSources(conf =>
+                conf.StrictDynamic()
+                .CustomSources(strictDynamicCustomSources)
+                .UnsafeInline())
+            .ObjectSources(conf => conf.None())
+            .StyleSources(conf => conf.Self())
+            .ImageSources(conf => conf.Self())
+            .MediaSources(conf => conf.None())
+            .ChildSources(conf => conf.None())
+            .FrameAncestors(conf => conf.None())
+            .FontSources(conf => conf.Self())
+            .ManifestSources(conf => conf.None())
+            .FormActions(conf => conf.Self())
+            .UpgradeInsecureRequests());
         }
     }
 }
