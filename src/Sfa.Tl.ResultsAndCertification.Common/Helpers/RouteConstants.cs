@@ -379,6 +379,12 @@
         public const string ProblemWithRommsUpload = "ProblemWithRommsUpload";
         public const string DownloadRommErrors = "DownloadRommErrors";
 
+        public const string DownloadRommsFile = "DownloadRommsFile";
+        public const string RommsGeneratingDownload = "RommsGeneratingDownload";
+        public const string SubmitRommsGeneratingDownload = "SubmitRommsGeneratingDownload ";
+        public const string RommsDownloadData = "RommsDownloadData";
+        public const string RommsDownloadDataLink = "RommsDownloadDataLink";
+        public const string RommsNoRecordsFound = "RommsNoRecordsFound";
         #endregion
 
         #region Industry Placement

@@ -165,5 +165,36 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     .Select(x => x.OrderByDescending(o => o.CreatedOn).First())
                     .ToList();
         }
+
+        public async Task<IList<RommsExport>> GetDataExportRommsAsync(long aoUkprn)
+        {
+            return await _dbContext.TqPathwayResult
+                .Include(pr => pr.TqPathwayAssessment)
+                .Include(pr => pr.TlLookup)
+                .Include(pr => pr.TqPathwayAssessment.TqRegistrationPathway)
+                .Include(pr => pr.TqPathwayAssessment.TqRegistrationPathway.TqRegistrationProfile)
+                .Where(pr =>
+                (pr.IsOptedin && pr.EndDate == null && pr.PrsStatus.HasValue && pr.PrsStatus == PrsStatus.UnderReview) ||
+                (pr.IsOptedin && pr.EndDate == null && pr.PrsStatus == PrsStatus.Reviewed)
+                && pr.TqPathwayAssessment.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn)
+                .Select(pr => new RommsExport()
+                {
+                    Uln = pr.TqPathwayAssessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber,
+                    FirstName = pr.TqPathwayAssessment.TqRegistrationPathway.TqRegistrationProfile.Firstname,
+                    LastName = pr.TqPathwayAssessment.TqRegistrationPathway.TqRegistrationProfile.Lastname,
+                    DateOfBirth = pr.TqPathwayAssessment.TqRegistrationPathway.TqRegistrationProfile.DateofBirth,
+                    Ukprn = pr.TqPathwayAssessment.TqRegistrationPathway.TqProvider.TlProvider.UkPrn,
+                    AcademicYear = pr.TqPathwayAssessment.TqRegistrationPathway.AcademicYear,
+                    AssessmentSeriesCore = pr.TqPathwayAssessment.AssessmentSeries.Name,
+                    CoreComponentCode = pr.TqPathwayAssessment.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
+                    CoreRommOpen = pr.PrsStatus == PrsStatus.UnderReview || pr.PrsStatus == PrsStatus.Reviewed,
+                    CoreRommOutcome = pr.PrsStatus == PrsStatus.UnderReview ? string.Empty : pr.TlLookup.Value,
+                    AssessmentSeriesSpecialisms = string.Join(", ", pr.TqPathwayAssessment.TqRegistrationPathway.TqRegistrationSpecialisms.Where(s => s.IsOptedin).Select(s => s.TlSpecialism.LarId)),
+                    SpecialismComponentCode = string.Empty,
+                    SpecialismRommOpen = false,
+                    SpecialismRommOutcome = string.Empty
+                })
+                .ToListAsync();
+        }
     }
 }

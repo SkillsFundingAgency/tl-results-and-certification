@@ -117,157 +117,19 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Assessment_Dashboard" xml:space="preserve">
-    <value>Assessments</value>
+  <data name="Heading_Download_Romms_Data" xml:space="preserve">
+    <value>Generating romms data</value>
   </data>
-  <data name="Change_Log" xml:space="preserve">
-    <value>Change log</value>
+  <data name="Js_Disabled_Continue_Button" xml:space="preserve">
+    <value>Continue (click once)</value>
   </data>
-  <data name="Check_Learner_Details" xml:space="preserve">
-    <value>Check the learner’s details</value>
+  <data name="Js_Disabled_Information" xml:space="preserve">
+    <value>JavaScript is disabled in your browser so we cannot show you a progress icon. Generating the file can take up to 10 seconds after you click 'Continue'.</value>
   </data>
-  <data name="Contact" xml:space="preserve">
-    <value>Contact us</value>
+  <data name="Page_Title" xml:space="preserve">
+    <value>Generating download - Romms</value>
   </data>
-  <data name="Download_Learner_Results" xml:space="preserve">
-    <value>Download learner results</value>
-  </data>
-  <data name="Download_Registrations_Data" xml:space="preserve">
-    <value>Download registrations data</value>
-  </data>
-  <data name="Download_Registrations_Data_For" xml:space="preserve">
-    <value>Download registrations data for {0}</value>
-  </data>
-  <data name="Home" xml:space="preserve">
-    <value>Home</value>
-  </data>
-  <data name="Learners_Assessment_entries" xml:space="preserve">
-    <value>Learner's assessment entries</value>
-  </data>
-  <data name="Learners_Record" xml:space="preserve">
-    <value>Learner record</value>
-  </data>
-  <data name="Learners_Results" xml:space="preserve">
-    <value>Learner's results</value>
-  </data>
-  <data name="Learners_Romms_And_Appeals" xml:space="preserve">
-    <value>Learner’s ROMMs and appeals</value>
-  </data>
-  <data name="Learner_TLevel_Record" xml:space="preserve">
-    <value>Learner T Level record</value>
-  </data>
-  <data name="Manage_Learner_TLevel_Records" xml:space="preserve">
-    <value>Manage learner T Level records</value>
-  </data>
-  <data name="Manage_Postal_Address" xml:space="preserve">
-    <value>Manage your organisation’s postal address</value>
-  </data>
-  <data name="Provider_Find_Provider" xml:space="preserve">
-    <value>Find a provider</value>
-  </data>
-  <data name="Provider_Tlevels" xml:space="preserve">
-    <value>Provider’s T Levels</value>
-  </data>
-  <data name="Provider_Your_Providers" xml:space="preserve">
-    <value>Your providers</value>
-  </data>
-  <data name="Prs_Learner_Component_Grade_Status" xml:space="preserve">
-    <value>Learner’s component grade status</value>
-  </data>
-  <data name="Registered_Learners" xml:space="preserve">
-    <value>Registered learners</value>
-  </data>
-  <data name="Registration_Dashboard" xml:space="preserve">
-    <value>Registrations</value>
-  </data>
-  <data name="Registration_Details" xml:space="preserve">
-    <value>Registration details</value>
-  </data>
-  <data name="Request_Statement_Of_Achievement" xml:space="preserve">
-    <value>Request statement of achievement</value>
-  </data>
-  <data name="Result_Dashboard" xml:space="preserve">
-    <value>Results</value>
-  </data>
-  <data name="Reviews_And_Appeals" xml:space="preserve">
-    <value>Post-results</value>
-  </data>
-  <data name="Search_For_Assessment_Entry" xml:space="preserve">
-    <value>Search for an assessment entry</value>
-  </data>
-  <data name="Search_For_Learner" xml:space="preserve">
-    <value>Search for a learner</value>
-  </data>
-  <data name="Search_For_Registration_Entry" xml:space="preserve">
-    <value>Search for a registration</value>
-  </data>
-  <data name="Search_For_Result_Entry" xml:space="preserve">
-    <value>Search for a result</value>
-  </data>
-  <data name="Search_For_Romm_Or_An_Appeal_Entry" xml:space="preserve">
-    <value>Search for a ROMM or an appeal</value>
-  </data>
-  <data name="Search_Learner_Records" xml:space="preserve">
-    <value>Search learner records</value>
-  </data>
-  <data name="StartPostResultsService" xml:space="preserve">
-    <value>Post-results</value>
-  </data>
-  <data name="StartReviewsAndAppeals" xml:space="preserve">
-    <value>Appeals</value>
-  </data>
-  <data name="Statement_Of_Achievement_Not_Available" xml:space="preserve">
-    <value>Statement of achievement not available</value>
-  </data>
-  <data name="Tlevels_Confirmed_List" xml:space="preserve">
-    <value>Confirmed T Levels</value>
-  </data>
-  <data name="Tlevels_Dashboard" xml:space="preserve">
-    <value>T Levels</value>
-  </data>
-  <data name="Tlevels_None_Confirmed" xml:space="preserve">
-    <value>No confirmed T Levels</value>
-  </data>
-  <data name="Tlevels_None_Queried" xml:space="preserve">
-    <value>No queried T Levels</value>
-  </data>
-  <data name="Tlevels_Queried_List" xml:space="preserve">
-    <value>Queried T Levels</value>
-  </data>
-  <data name="Tlevel_Details" xml:space="preserve">
-    <value>T Level details</value>
-  </data>
-  <data name="Tlevel_Review_Select" xml:space="preserve">
-    <value>Review new T Levels</value>
-  </data>
-  <data name="Upload_Assessments_File" xml:space="preserve">
-    <value>Upload multiple assessments</value>
-  </data>
-  <data name="Upload_Registrations_File" xml:space="preserve">
-    <value>Upload multiple registrations</value>
-  </data>
-  <data name="Upload_Results_File" xml:space="preserve">
-    <value>Upload multiple results</value>
-  </data>
-  <data name="Upload_Withdrawls_File" xml:space="preserve">
-    <value>Upload multiple withdrawals</value>
-  </data>
-  <data name="ResultReviewsAndAppeals" xml:space="preserve">
-    <value>Result reviews and appeals</value>
-  </data>
-  <data name="Upload_Romms_File" xml:space="preserve">
-    <value>Upload multiple romms</value>
-  </data>
-  <data name="Edit_Provider" xml:space="preserve">
-    <value>Edit provider</value>
-  </data>
-  <data name="Provider_Details" xml:space="preserve">
-    <value>Provider's details</value>
-  </data>
-  <data name="Find_Notifications" xml:space="preserve">
-    <value>Find notifications</value>
-  </data>
-  <data name="Download_Romms_Data" xml:space="preserve">
-    <value>Download romms data</value>
+  <data name="Processing_Spinner_Text" xml:space="preserve">
+    <value>Processing, please wait. This could take up to 10 seconds. Do not refresh.</value>
   </data>
 </root>

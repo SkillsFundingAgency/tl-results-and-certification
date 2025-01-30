@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
@@ -213,5 +214,39 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 return null;
             }
         }
+
+        public Task<IList<DataExportResponse>> GenerateRommsDataExportAsync(long aoUkprn, string requestedBy)
+            => _internalApiClient.GenerateRommDataExportAsync(aoUkprn, requestedBy);
+
+        public Task<Stream> GetRommsDataFileAsync(long aoUkprn, Guid blobUniqueReference)
+        {
+            string fileStreamNotFoundMessage = $"No FileStream found to download romms data. Method: {nameof(GetRommsDataFileAsync)}";
+            return GetDataFileAsync(aoUkprn, blobUniqueReference, DataExportType.Romms, fileStreamNotFoundMessage);
+        }
+
+        private async Task<Stream> GetDataFileAsync(long aoUkprn, Guid blobUniqueReference, DataExportType dataExportType, string fileStreamNotFoundMessage)
+        {
+            string sourceFilePath = $"{aoUkprn}/{dataExportType}";
+
+            Stream fileStream = await DownloadFileAsync(blobUniqueReference, sourceFilePath);
+            if (fileStream == null)
+            {
+                string blobReadError = $"{fileStreamNotFoundMessage}(ContainerName: {DocumentType.Registrations}, BlobFileName = {blobUniqueReference}, SourceFilePath = {sourceFilePath})";
+                _logger.LogWarning(LogEvent.FileStreamNotFound, blobReadError);
+            }
+
+            return fileStream;
+        }
+
+        private Task<Stream> DownloadFileAsync(Guid blobUniqueReference, string sourceFilePath)
+        {
+            return _blobStorageService.DownloadFileAsync(new BlobStorageData
+            {
+                ContainerName = DocumentType.DataExports.ToString(),
+                BlobFileName = $"{blobUniqueReference}.{FileType.Csv}",
+                SourceFilePath = sourceFilePath
+            });
+        }
+
     }
 }

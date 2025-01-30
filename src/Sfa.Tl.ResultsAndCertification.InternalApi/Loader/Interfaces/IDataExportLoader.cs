@@ -11,5 +11,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader.Interfaces
         Task<DataExportResponse> DownloadOverallResultsDataAsync(long providerUkprn, string requestedBy);
         Task<DataExportResponse> DownloadOverallResultSlipsDataAsync(long providerUkprn, string requestedBy);
         Task<DataExportResponse> DownloadLearnerOverallResultSlipsDataAsync(long providerUkprn, long profileId, string requestedBy);
+        Task<IList<DataExportResponse>> DownloadRommExportAsync(long aoUkprn, string requestedBy);
     }
 }

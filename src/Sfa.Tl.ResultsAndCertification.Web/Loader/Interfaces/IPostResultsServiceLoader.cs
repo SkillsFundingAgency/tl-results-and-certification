@@ -1,7 +1,9 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -22,5 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         T TransformLearnerDetailsTo<T>(FindPrsLearnerRecord prsLearnerRecord);
         Task<UploadRommsResponseViewModel> ProcessBulkRommsAsync(UploadRommsRequestViewModel viewModel);
         Task<Stream> GetRommValidationErrorsFileAsync(long aoUkprn, Guid blobUniqueReference);
+        Task<IList<DataExportResponse>> GenerateRommsDataExportAsync(long aoUkprn, string requestedBy);
+        Task<Stream> GetRommsDataFileAsync(long aoUkprn, Guid blobUniqueReference);
     }
 }

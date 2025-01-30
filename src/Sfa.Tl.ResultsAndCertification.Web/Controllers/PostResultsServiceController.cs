@@ -6,9 +6,11 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.DataExport;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.SearchRegistration.Enum;
 using System;
@@ -680,6 +682,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             };
         }
 
+        #region Romms Upload
+
         [HttpGet]
         [Route("upload-romms-file/{requestErrorTypeId:int?}", Name = RouteConstants.UploadRommsFile)]
         public IActionResult UploadRommsFile(int? requestErrorTypeId)
@@ -777,6 +781,87 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.Error, new { StatusCode = 500 });
             }
         }
+        #endregion
+
+        #region Romms Download
+
+        [HttpGet]
+        [Route("romms-generating-download", Name = RouteConstants.RommsGeneratingDownload)]
+        public IActionResult RommsGeneratingDownload()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [Route("romms-generating-download", Name = RouteConstants.SubmitRommsGeneratingDownload)]
+        public async Task<IActionResult> SubmitRommsGeneratingDownloadAsync()
+        {
+            long ukprn = User.GetUkPrn();
+            string email = User.GetUserEmail();
+
+            var postResultServiceResponse = await _postResultsServiceLoader.GenerateRommsDataExportAsync(ukprn, email);
+
+            if (!postResultServiceResponse.ContainsSingle())
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
+            if (!postResultServiceResponse.Any(x => x.IsDataFound))
+            {
+                _logger.LogWarning(LogEvent.NoDataFound,
+                    $"There are no romms found. Method: GenerateRommsDataFileAsync({ukprn}, {email})");
+
+                return RedirectToRoute(RouteConstants.RegistrationsNoRecordsFound);
+            }
+
+            RommsDownloadViewModel rommsDownloadViewModel = new()
+            {
+                RommsDownloadLinkViewModel = CreateDownloadLink(postResultServiceResponse.First()),
+            };
+
+            await _cacheService.SetAsync(CacheKey, rommsDownloadViewModel, CacheExpiryTime.XSmall);
+            return RedirectToRoute(RouteConstants.RommsDownloadData);
+
+            static DownloadLinkViewModel CreateDownloadLink(DataExportResponse response)
+                => new()
+                {
+                    BlobUniqueReference = response.BlobUniqueReference,
+                    FileSize = response.FileSize,
+                    FileType = FileType.Csv.ToString().ToUpperInvariant()
+                };
+        }
+
+        [HttpGet]
+        [Route("romms-no-records-found", Name = RouteConstants.RommsNoRecordsFound)]
+        public IActionResult RommsNoRecordsFound()
+        {
+            return View(new RommsNoRecordsFoundViewModel());
+        }
+
+        [HttpGet]
+        [Route("romms-download-data", Name = RouteConstants.RommsDownloadData)]
+        public async Task<IActionResult> RommsDownloadDataAsync()
+        {
+            var cacheModel = await _cacheService.GetAndRemoveAsync<RommsDownloadViewModel>(CacheKey);
+            if (cacheModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"Unable to read DataExportResponse from redis cache in romms download page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(cacheModel);
+        }
+
+        [HttpGet]
+        [Route("download-romms-data/{id}", Name = RouteConstants.RommsDownloadDataLink)]
+        public Task<IActionResult> RommsDownloadDataLinkAsync(string id)
+        {
+            return DownloadDataLinkAsync(
+                id,
+                () => _postResultsServiceLoader.GetRommsDataFileAsync(User.GetUkPrn(), id.ToGuid()),
+                RommContent.RommsDownloadData.Romms_Data_Report_File_Name_Text,
+                nameof(RommsDownloadDataLinkAsync));
+        }
+
+        #endregion
 
         private async Task<IActionResult> DownloadDataLinkAsync(string id, Func<Task<Stream>> getDataFile, string fileDownloadName, string methodName)
         {
@@ -789,7 +874,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var fileStream = await getDataFile();
             if (fileStream == null)
             {
-                _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download registration data. Method: {methodName}(AoUkprn: {User.GetUkPrn()}, BlobUniqueReference = {id})");
+                _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download romm data. Method: {methodName}(AoUkprn: {User.GetUkPrn()}, BlobUniqueReference = {id})");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
