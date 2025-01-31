@@ -142,7 +142,7 @@
     <value>Add , view or change results for individual learners.</value>
   </data>
   <data name="Para_Download_Result_Data_As_Csv_File" xml:space="preserve">
-    <value>Download result data in a CSV file.</value>
+    <value>Download results data (including open assessment entry results) in a CSV file.</value>
   </data>
   <data name="Para_Tell_Us_When_Your_Learners_Have_Achieved" xml:space="preserve">
     <value>Tell us what your learners have achieved</value>
