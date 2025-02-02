@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
                     BreadcrumbItems = new List<BreadcrumbItem>
                     {
                         new BreadcrumbItem { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.Home },
-                        new BreadcrumbItem { DisplayName = BreadcrumbContent.Registration_Dashboard, RouteName = RouteConstants.RegistrationDashboard }
+                        new BreadcrumbItem { DisplayName = BreadcrumbContent.ResultReviewsAndAppeals, RouteName = RouteConstants.ResultReviewsAndAppeals }
                     }
                 };
             }

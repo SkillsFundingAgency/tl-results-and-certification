@@ -809,7 +809,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 _logger.LogWarning(LogEvent.NoDataFound,
                     $"There are no romms found. Method: GenerateRommsDataFileAsync({ukprn}, {email})");
 
-                return RedirectToRoute(RouteConstants.RegistrationsNoRecordsFound);
+                return RedirectToRoute(RouteConstants.RommsNoRecordsFound);
             }
 
             RommsDownloadViewModel rommsDownloadViewModel = new()
