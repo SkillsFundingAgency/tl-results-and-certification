@@ -37,7 +37,11 @@ stages:
       - name: environmentTagName
         value: ${{parameters.environmentTagName}}
       - '${{ each variableTemplate in parameters.variableTemplates }}':
-        - template: '${{variableTemplate}}'       
+        - template: '${{variableTemplate}}'
+      - name: SharedBaseName
+        value: "s126${{parameters.sharedEnvironmentId}}-${{parameters.applicationName}}"
+      - name: SharedResourceGroup
+        value: '$(SharedBaseName)-shared'     
 
     displayName: "${{parameters.environmentName}} [${{parameters.environmentId}}] deployment"
     jobs:
@@ -57,6 +61,24 @@ stages:
         parameters:
           serviceConnection: ${{ parameters.serviceConnection }}
           sharedEnvironmentId: ${{ parameters.sharedEnvironmentId }}
+          environmentName: ${{ parameters.environmentName }}
+          ConfigurationSecrets: 
+            BlobStorageAccountKey: $(BlobStorageAccountKey)
+            ConfigStorageAccountkey: $(ConfigStorageAccountkey)
+            ConfigurationStorageConnectionString: $(ConfigurationStorageConnectionString)
+            DfeSignInApiSecret: $(DfeSignInApiSecret)
+            DfeSignInClientSecret: $(DfeSignInClientSecret)
+            GovUkNotifyApiKey: $(GovUkNotifyApiKey)
+            LearningRecordServicePassword: $(LearningRecordServicePassword)
+            OrdnanceSurveyPlacesApiPlacesKey: $(OrdnanceSurveyPlacesApiPlacesKey)
+            PrintingApiPassword: $(PrintingApiPassword)
+            RedisCacheConnection: $(RedisCacheConnection)
+            RedisCachePassword: $(RedisCachePassword)
+            ResacSQLServiceAccountPassword: $(ResacSQLServiceAccountPassword)
+            SharedStorageAccountKey: $(SharedStorageAccountKey)
+            SQLServerAdminPassword: $(SQLServerAdminPassword)
+            sqlServerReplicaAdminPassword: $(sqlServerReplicaAdminPassword)
+            UcasApiPassword: $(UcasApiPassword)
 
       - template: ../jobs/tlevels-integrationtest-job.yml
         parameters:
