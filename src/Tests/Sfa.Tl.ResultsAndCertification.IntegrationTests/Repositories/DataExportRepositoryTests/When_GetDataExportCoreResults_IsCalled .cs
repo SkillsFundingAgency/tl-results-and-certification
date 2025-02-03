@@ -80,17 +80,18 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.DataExpor
 
             _actualResult.Should().NotBeNull();
 
-            var expectedPathwayResults = await DbContext.TqPathwayResult
+            var expectedPathwayResults = await DbContext.TqPathwayAssessment
+                        .Include(x => x.TqPathwayResults)
                         .Where(x => x.IsOptedin && x.EndDate == null && // Active result
-                                    x.TqPathwayAssessment.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active &&  // Active Pathway
-                                    x.TqPathwayAssessment.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn) // Given Ao
+                                    x.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active &&  // Active Pathway
+                                    x.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn) // Given Ao
                         .Select(x => new CoreResultsExport
                         {
-                            Uln = x.TqPathwayAssessment.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber,
-                            AcademicYear = DbContext.AcademicYear.First(e => e.Year == x.TqPathwayAssessment.TqRegistrationPathway.AcademicYear).Name,
-                            CoreCode = x.TqPathwayAssessment.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
-                            CoreAssessmentEntry = x.TqPathwayAssessment.AssessmentSeries.Name,
-                            CoreGrade = x.TlLookup.Value
+                            Uln = x.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber,
+                            AcademicYear = DbContext.AcademicYear.First(e => e.Year == x.TqRegistrationPathway.AcademicYear).Name,
+                            CoreCode = x.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
+                            CoreAssessmentEntry = x.AssessmentSeries.Name,
+                            CoreGrade = x.TqPathwayResults.First().TlLookup != null ? x.TqPathwayResults.First().TlLookup.Value : string.Empty
                         }).ToListAsync();
 
             _actualResult.Count().Should().Be(expectedPathwayResults.Count);

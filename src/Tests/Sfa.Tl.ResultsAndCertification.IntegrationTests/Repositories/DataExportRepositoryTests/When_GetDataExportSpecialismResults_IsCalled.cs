@@ -80,18 +80,19 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.DataExpor
 
             _actualResult.Should().NotBeNull();
 
-            var expectedSpecialismResults = await DbContext.TqSpecialismResult
+            var expectedSpecialismResults = await DbContext.TqSpecialismAssessment
+                        .Include(x => x.TqSpecialismResults)
                         .Where(x => x.IsOptedin && x.EndDate == null && // Active result
-                                    x.TqSpecialismAssessment.IsOptedin && x.TqSpecialismAssessment.EndDate == null && // Active Specialism Assessment
-                                    x.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active &&  // Active Pathway                                    
-                                    x.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn) // Given Ao
+                                    x.IsOptedin && x.EndDate == null && // Active Specialism Assessment
+                                    x.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active &&  // Active Pathway                                    
+                                    x.TqRegistrationSpecialism.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn) // Given Ao
                         .Select(x => new SpecialismResultsExport
                         {
-                            Uln = x.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber,
-                            AcademicYear = DbContext.AcademicYear.Single(e => e.Year == x.TqSpecialismAssessment.TqRegistrationSpecialism.TqRegistrationPathway.AcademicYear).Name,
-                            SpecialismCode = x.TqSpecialismAssessment.TqRegistrationSpecialism.TlSpecialism.LarId,
-                            SpecialismAssessmentEntry = x.TqSpecialismAssessment.AssessmentSeries.Name,
-                            SpecialismGrade = x.TlLookup.Value
+                            Uln = x.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber,
+                            AcademicYear = DbContext.AcademicYear.Single(e => e.Year == x.TqRegistrationSpecialism.TqRegistrationPathway.AcademicYear).Name,
+                            SpecialismCode = x.TqRegistrationSpecialism.TlSpecialism.LarId,
+                            SpecialismAssessmentEntry = x.AssessmentSeries.Name,
+                            SpecialismGrade = x.TqSpecialismResults.First().TlLookup != null ? x.TqSpecialismResults.First().TlLookup.Value : string.Empty
                         }).ToListAsync();
 
             _actualResult.Count().Should().Be(expectedSpecialismResults.Count);
