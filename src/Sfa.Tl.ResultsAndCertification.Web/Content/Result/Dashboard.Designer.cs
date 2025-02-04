@@ -133,7 +133,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Result {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download result data in a CSV file..
+        ///   Looks up a localized string similar to Download results data (including open assessment entry results) in a CSV file..
         /// </summary>
         public static string Para_Download_Result_Data_As_Csv_File {
             get {
