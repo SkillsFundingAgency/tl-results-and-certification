@@ -106,6 +106,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 2024 to 2025.
+        /// </summary>
+        public static string Link_2024_To_2025 {
+            get {
+                return ResourceManager.GetString("Link_2024_To_2025", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to List all active learners by start year.
         /// </summary>
         public static string List_All_Learners_By_Start_Year {
