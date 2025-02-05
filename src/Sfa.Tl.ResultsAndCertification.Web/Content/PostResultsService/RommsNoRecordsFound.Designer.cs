@@ -116,7 +116,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to A CSV file cannot be generated as there are no learners registered in our system for your organisation..
+        ///   Looks up a localized string similar to There are no ROMMs recorded for any registered learners..
         /// </summary>
         public static string No_Records_Found_Message {
             get {

@@ -136,7 +136,7 @@
     <value>If you need help with the Manage T Level results service please</value>
   </data>
   <data name="No_Records_Found_Message" xml:space="preserve">
-    <value>A CSV file cannot be generated as there are no learners registered in our system for your organisation.</value>
+    <value>There are no ROMMs recorded for any registered learners.</value>
   </data>
   <data name="Page_Heading" xml:space="preserve">
     <value>No records found</value>
