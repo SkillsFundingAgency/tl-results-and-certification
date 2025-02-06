@@ -165,5 +165,53 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     .Select(x => x.OrderByDescending(o => o.CreatedOn).First())
                     .ToList();
         }
+
+        public async Task<IList<RommsExport>> GetDataExportRommsAsync(long aoUkprn)
+        {
+            var query = _dbContext.TqRegistrationPathway
+                .Include(pr => pr.TqPathwayAssessments.Where(pa => pa.IsOptedin && pa.EndDate == null))
+                    .ThenInclude(pa => pa.TqPathwayResults)
+                    .ThenInclude(pr => pr.TlLookup)
+                .Include(pr => pr.TqRegistrationProfile)
+                .Include(pr => pr.TqPathwayAssessments)
+                    .ThenInclude(pa => pa.AssessmentSeries)
+                .Include(pr => pr.TqProvider)
+                    .ThenInclude(tp => tp.TqAwardingOrganisation)
+                    .ThenInclude(ao => ao.TlAwardingOrganisaton)
+                .Include(pr => pr.TqRegistrationSpecialisms.Where(rs => rs.IsOptedin && rs.EndDate == null))
+                    .ThenInclude(rs => rs.TqSpecialismAssessments.Where(sa => sa.IsOptedin && sa.EndDate == null))
+                    .ThenInclude(sa => sa.TqSpecialismResults
+                            .Where(sr => sr.IsOptedin && sr.EndDate == null && (sr.PrsStatus == PrsStatus.UnderReview || sr.PrsStatus == PrsStatus.Reviewed)))
+                    .ThenInclude(sr => sr.TlLookup)
+                .Include(pr => pr.TqRegistrationSpecialisms)
+                    .ThenInclude(rs => rs.TlSpecialism)
+                .Where(pr => pr.EndDate == null
+                    && pr.Status == RegistrationPathwayStatus.Active
+                    && pr.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn
+                    && (pr.TqPathwayAssessments.Any(pa => pa.TqPathwayResults.Any(pr => pr.PrsStatus == PrsStatus.UnderReview || pr.PrsStatus == PrsStatus.Reviewed))
+                        || pr.TqRegistrationSpecialisms.Any(rs => rs.IsOptedin && rs.EndDate == null && rs.TqSpecialismAssessments.Any(sa => sa.IsOptedin && sa.EndDate == null && sa.TqSpecialismResults.Any(sr => sr.PrsStatus == PrsStatus.UnderReview || sr.PrsStatus == PrsStatus.Reviewed)))));
+
+            var result = await query
+                .Select(romm => new RommsExport
+                {
+                    Uln = romm.TqRegistrationProfile.UniqueLearnerNumber,
+                    FirstName = romm.TqRegistrationProfile.Firstname,
+                    LastName = romm.TqRegistrationProfile.Lastname,
+                    DateOfBirth = romm.TqRegistrationProfile.DateofBirth,
+                    Ukprn = romm.TqProvider.TlProvider.UkPrn,
+                    AcademicYear = romm.AcademicYear,
+                    AssessmentSeriesCore = romm.TqPathwayAssessments.First().AssessmentSeries.Name,
+                    CoreComponentCode = romm.TqPathwayAssessments.First().TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
+                    CoreRommOpen = romm.TqPathwayAssessments.Any(pa => pa.TqPathwayResults.Any(pr => pr.PrsStatus == PrsStatus.UnderReview || pr.PrsStatus == PrsStatus.Reviewed)),
+                    CoreRommOutcome = romm.TqPathwayAssessments.First(pa => pa.IsOptedin && pa.EndDate == null).TqPathwayResults.First(pr => pr.IsOptedin && pr.EndDate == null && pr.PrsStatus == PrsStatus.Reviewed).TlLookup.Value,
+                    AssessmentSeriesSpecialisms = romm.TqRegistrationSpecialisms.First().TqSpecialismAssessments.First().AssessmentSeries.Name,
+                    SpecialismComponentCode = romm.TqRegistrationSpecialisms.First().TlSpecialism.LarId,
+                    SpecialismRommOpen = romm.TqRegistrationSpecialisms.Any(rs => rs.TqSpecialismAssessments.Any(sa => sa.TqSpecialismResults.Any(sr => sr.IsOptedin && sr.EndDate == null && (sr.PrsStatus == PrsStatus.UnderReview || sr.PrsStatus == PrsStatus.Reviewed)))),
+                    SpecialismRommOutcome = romm.TqRegistrationSpecialisms.First().TqSpecialismAssessments.First().TqSpecialismResults.First(sr => sr.IsOptedin && sr.EndDate == null && sr.PrsStatus == PrsStatus.Reviewed).TlLookup.Value
+                })
+                .ToListAsync();
+
+            return result;
+        }
     }
 }

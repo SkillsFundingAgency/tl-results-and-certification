@@ -12,5 +12,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
         Task<IList<CoreResultsExport>> GetDataExportCoreResultsAsync(long aoUkprn);
         Task<IList<SpecialismResultsExport>> GetDataExportSpecialismResultsAsync(long aoUkprn);
         Task<IList<PendingWithdrawalsExport>> GetDataExportPendingWithdrawalsAsync(long aoUkprn);
+        Task<IList<RommsExport>> GetDataExportRommsAsync(long aoUkprn);
     }
 }

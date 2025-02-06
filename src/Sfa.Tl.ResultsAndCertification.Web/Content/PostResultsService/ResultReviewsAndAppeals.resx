@@ -141,4 +141,10 @@
   <data name="Para_Tell_Us_About_Reviews_Moderations_Appeals_And_Report_Outcomes" xml:space="preserve">
     <value>Tell us about any reviews of marking or moderations (RoMMs) or appeals and report their outcomes.</value>
   </data>
+  <data name="Card_Heading_Download_Multiple_Romms" xml:space="preserve">
+    <value>Download multiple ROMMs</value>
+  </data>
+  <data name="Card_Content_Download_Open_ROMM_For_Learners_Downloading_CSV_File" xml:space="preserve">
+    <value>Download open ROMM and ROMM outcomes for learners by downloading a CSV file</value>
+  </data>
 </root>
