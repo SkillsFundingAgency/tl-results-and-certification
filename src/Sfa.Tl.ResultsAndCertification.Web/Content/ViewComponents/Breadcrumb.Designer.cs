@@ -124,7 +124,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download romms data.
+        ///   Looks up a localized string similar to Download ROMMs data.
         /// </summary>
         public static string Download_Romms_Data {
             get {
@@ -502,7 +502,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload multiple romms.
+        ///   Looks up a localized string similar to Upload multiple ROMMs.
         /// </summary>
         public static string Upload_Romms_File {
             get {

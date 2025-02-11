@@ -41,12 +41,12 @@
         public const string InactiveUln = "Inactive Uln";
         public const string InvalidDateOfBirth = "Invalid date of birth";
         public const string InvalidLastName = "Invalid last name";
-        public const string InvalidResultState = "Active Romm or Appeal";
+        public const string InvalidResultState = "Active ROMM or Appeal";
         public const string InvalidRommResultState = "Active Romm, Appeal or no result unavailable.";
-        public const string CoreRommWindowExpired = "Invalid Core Romm period.";
-        public const string SpecialismRommWindowExpired = "Invalid Specialism Romm period.";
-        public const string InvalidCoreResultState = "Active Core Romm, Appeal or no result unavailable.";
-        public const string InvalidSpecialismResultState = "Active Specialism Romm, Appeal or no result unavailable.";
+        public const string CoreRommWindowExpired = "Invalid Core ROMM period.";
+        public const string SpecialismRommWindowExpired = "Invalid Specialism ROMM period.";
+        public const string InvalidCoreResultState = "Active Core ROMM, Appeal or no result unavailable.";
+        public const string InvalidSpecialismResultState = "Active Specialism ROMM, Appeal or no result unavailable.";
 
         // Bulk Registration Stage4 Validation Messages
         public const string ActiveUlnWithDifferentAo = "Active ULN with a different awarding organisation";
