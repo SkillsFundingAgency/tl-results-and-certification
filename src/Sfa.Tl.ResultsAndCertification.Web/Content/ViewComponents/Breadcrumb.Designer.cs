@@ -124,6 +124,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download romms data.
+        /// </summary>
+        public static string Download_Romms_Data {
+            get {
+                return ResourceManager.GetString("Download_Romms_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit provider.
         /// </summary>
         public static string Edit_Provider {

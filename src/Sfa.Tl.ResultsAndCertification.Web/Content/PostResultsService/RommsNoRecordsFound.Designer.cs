@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ResultReviewsAndAppeals {
+    public class RommsNoRecordsFound {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ResultReviewsAndAppeals() {
+        internal RommsNoRecordsFound() {
         }
         
         /// <summary>
@@ -39,8 +39,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.ResultReviewsAndApp" +
-                            "eals", typeof(ResultReviewsAndAppeals).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService.RommsNoRecordsFound" +
+                            "", typeof(RommsNoRecordsFound).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -62,79 +62,79 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download open ROMM and ROMM outcomes for learners by downloading a CSV file.
+        ///   Looks up a localized string similar to Add romms.
         /// </summary>
-        public static string Card_Content_Download_Open_ROMM_For_Learners_Downloading_CSV_File {
+        public static string Button_Add_Romms {
             get {
-                return ResourceManager.GetString("Card_Content_Download_Open_ROMM_For_Learners_Downloading_CSV_File", resourceCulture);
+                return ResourceManager.GetString("Button_Add_Romms", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Open ROMM or add ROMM outcomes for learners by uploading a CSV file..
+        ///   Looks up a localized string similar to Back to home.
         /// </summary>
-        public static string Card_Content_Open_Or_Add_Romm_Outcomes_By_Uploading_CSV_file {
+        public static string Button_Back_To_Home {
             get {
-                return ResourceManager.GetString("Card_Content_Open_Or_Add_Romm_Outcomes_By_Uploading_CSV_file", resourceCulture);
+                return ResourceManager.GetString("Button_Back_To_Home", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Search for a learner who has requested a review..
+        ///   Looks up a localized string similar to contact us.
         /// </summary>
-        public static string Card_Content_Search_For_Learner_Who_Requested_Review {
+        public static string Contact_Us {
             get {
-                return ResourceManager.GetString("Card_Content_Search_For_Learner_Who_Requested_Review", resourceCulture);
+                return ResourceManager.GetString("Contact_Us", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download multiple ROMMs.
+        ///   Looks up a localized string similar to No registration records found.
         /// </summary>
-        public static string Card_Heading_Download_Multiple_Romms {
+        public static string Email_Subject {
             get {
-                return ResourceManager.GetString("Card_Heading_Download_Multiple_Romms", resourceCulture);
+                return ResourceManager.GetString("Email_Subject", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage a learner&apos;s ROMMs, appeals and outcomes.
+        ///   Looks up a localized string similar to Get help with the Manage T Level results service.
         /// </summary>
-        public static string Card_Heading_Manage_Learners_Romms_Appeals_And_Outcomes {
+        public static string Get_Help_With_Mangage_TLevel_Results_Service {
             get {
-                return ResourceManager.GetString("Card_Heading_Manage_Learners_Romms_Appeals_And_Outcomes", resourceCulture);
+                return ResourceManager.GetString("Get_Help_With_Mangage_TLevel_Results_Service", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload multiple ROMMs.
+        ///   Looks up a localized string similar to If you need help with the Manage T Level results service please.
         /// </summary>
-        public static string Card_Heading_Upload_Multiple_Romms {
+        public static string If_You_Need_Help {
             get {
-                return ResourceManager.GetString("Card_Heading_Upload_Multiple_Romms", resourceCulture);
+                return ResourceManager.GetString("If_You_Need_Help", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to In this section.
+        ///   Looks up a localized string similar to There are no ROMMs recorded for any registered learners..
         /// </summary>
-        public static string Heading_In_This_Section {
+        public static string No_Records_Found_Message {
             get {
-                return ResourceManager.GetString("Heading_In_This_Section", resourceCulture);
+                return ResourceManager.GetString("No_Records_Found_Message", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Reviews, appeals and grade changes.
+        ///   Looks up a localized string similar to No records found.
         /// </summary>
-        public static string Heading_Prs_Review_Appeal_Grade_Change {
+        public static string Page_Heading {
             get {
-                return ResourceManager.GetString("Heading_Prs_Review_Appeal_Grade_Change", resourceCulture);
+                return ResourceManager.GetString("Page_Heading", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Results reviews, appeals and grade changes.
+        ///   Looks up a localized string similar to No records found - Romms.
         /// </summary>
         public static string Page_Title {
             get {
@@ -143,11 +143,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tell us about any reviews of marking or moderations (ROMMs) or appeals and report their outcomes..
+        ///   Looks up a localized string similar to We aim to respond within 3 working days..
         /// </summary>
-        public static string Para_Tell_Us_About_Reviews_Moderations_Appeals_And_Report_Outcomes {
+        public static string We_Aim_To_Respond_Within_3_Working_Days {
             get {
-                return ResourceManager.GetString("Para_Tell_Us_About_Reviews_Moderations_Appeals_And_Report_Outcomes", resourceCulture);
+                return ResourceManager.GetString("We-Aim_To_Respond_Within_3_Working_Days", resourceCulture);
             }
         }
     }

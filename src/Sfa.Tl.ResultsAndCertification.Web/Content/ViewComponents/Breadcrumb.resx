@@ -267,4 +267,7 @@
   <data name="Find_Notifications" xml:space="preserve">
     <value>Find notifications</value>
   </data>
+  <data name="Download_Romms_Data" xml:space="preserve">
+    <value>Download romms data</value>
+  </data>
 </root>

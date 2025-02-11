@@ -7,6 +7,7 @@
         Assessments = 2,
         Results = 3,
         PendingWithdrawals = 4,
-        ProviderRegistrations = 5
+        ProviderRegistrations = 5,
+        Romms = 6
     }
 }
