@@ -98,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage a learner&apos;s RoMMs, appeals and outcomes.
+        ///   Looks up a localized string similar to Manage a learner&apos;s ROMMs, appeals and outcomes.
         /// </summary>
         public static string Card_Heading_Manage_Learners_Romms_Appeals_And_Outcomes {
             get {
@@ -143,7 +143,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tell us about any reviews of marking or moderations (RoMMs) or appeals and report their outcomes..
+        ///   Looks up a localized string similar to Tell us about any reviews of marking or moderations (ROMMs) or appeals and report their outcomes..
         /// </summary>
         public static string Para_Tell_Us_About_Reviews_Moderations_Appeals_And_Report_Outcomes {
             get {

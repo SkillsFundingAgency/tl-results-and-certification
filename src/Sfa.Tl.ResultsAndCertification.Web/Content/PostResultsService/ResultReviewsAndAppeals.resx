@@ -127,7 +127,7 @@
     <value>In this section</value>
   </data>
   <data name="Card_Heading_Manage_Learners_Romms_Appeals_And_Outcomes" xml:space="preserve">
-    <value>Manage a learner's RoMMs, appeals and outcomes</value>
+    <value>Manage a learner's ROMMs, appeals and outcomes</value>
   </data>
   <data name="Card_Content_Search_For_Learner_Who_Requested_Review" xml:space="preserve">
     <value>Search for a learner who has requested a review.</value>
@@ -139,7 +139,7 @@
     <value>Open ROMM or add ROMM outcomes for learners by uploading a CSV file.</value>
   </data>
   <data name="Para_Tell_Us_About_Reviews_Moderations_Appeals_And_Report_Outcomes" xml:space="preserve">
-    <value>Tell us about any reviews of marking or moderations (RoMMs) or appeals and report their outcomes.</value>
+    <value>Tell us about any reviews of marking or moderations (ROMMs) or appeals and report their outcomes.</value>
   </data>
   <data name="Card_Heading_Download_Multiple_Romms" xml:space="preserve">
     <value>Download multiple ROMMs</value>
