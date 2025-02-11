@@ -214,7 +214,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tell us about any reviews of marking and moderation (RoMMs) or appeals and report their outcomes..
+        ///   Looks up a localized string similar to Tell us about any reviews of marking and moderation (ROMMs) or appeals and report their outcomes..
         /// </summary>
         public static string Tile_Review_Appeal_Tell_Romms_Or_Appeal_Outcome {
             get {
