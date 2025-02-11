@@ -736,7 +736,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (viewModel == null)
             {
                 _logger.LogWarning(LogEvent.UploadSuccessfulPageFailed,
-                    $"Unable to read upload successful romms response from temp data. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                    $"Unable to read upload successful ROMMs response from temp data. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
             return View(viewModel);
@@ -750,7 +750,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (viewModel == null)
             {
                 _logger.LogWarning(LogEvent.UploadUnsuccessfulPageFailed,
-                    $"Unable to read upload unsuccessful romms response from temp data. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
+                    $"Unable to read upload unsuccessful ROMMs response from temp data. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
             return View(viewModel);
@@ -807,7 +807,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             if (!postResultServiceResponse.Any(x => x.IsDataFound))
             {
                 _logger.LogWarning(LogEvent.NoDataFound,
-                    $"There are no romms found. Method: GenerateRommsDataFileAsync({ukprn}, {email})");
+                    $"There are no ROMMs found. Method: GenerateRommsDataFileAsync({ukprn}, {email})");
 
                 return RedirectToRoute(RouteConstants.RommsNoRecordsFound);
             }

@@ -62,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add romms.
+        ///   Looks up a localized string similar to Add ROMMs.
         /// </summary>
         public static string Button_Add_Romms {
             get {
@@ -134,7 +134,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No records found - Romms.
+        ///   Looks up a localized string similar to No records found - ROMMs.
         /// </summary>
         public static string Page_Title {
             get {

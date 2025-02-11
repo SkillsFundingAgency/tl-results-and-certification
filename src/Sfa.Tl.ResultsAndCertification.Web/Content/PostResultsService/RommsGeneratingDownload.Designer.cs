@@ -62,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Generating romms data.
+        ///   Looks up a localized string similar to Generating ROMMs data.
         /// </summary>
         public static string Heading_Download_Romms_Data {
             get {
@@ -89,7 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Generating download - Romms.
+        ///   Looks up a localized string similar to Generating download - ROMMs.
         /// </summary>
         public static string Page_Title {
             get {

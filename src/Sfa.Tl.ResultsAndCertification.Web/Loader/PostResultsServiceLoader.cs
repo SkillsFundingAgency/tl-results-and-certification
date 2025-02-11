@@ -220,7 +220,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         public Task<Stream> GetRommsDataFileAsync(long aoUkprn, Guid blobUniqueReference)
         {
-            string fileStreamNotFoundMessage = $"No FileStream found to download romms data. Method: {nameof(GetRommsDataFileAsync)}";
+            string fileStreamNotFoundMessage = $"No FileStream found to download ROMMs data. Method: {nameof(GetRommsDataFileAsync)}";
             return GetDataFileAsync(aoUkprn, blobUniqueReference, DataExportType.Romms, fileStreamNotFoundMessage);
         }
 

@@ -10,11 +10,11 @@
         public const string AcademicYear = "Academic year";
         public const string AssessmentSeriesCore = "Assessment series (Core)";
         public const string CoreComponentCode = "Core component code";
-        public const string CoreRommOpen = "Core romm open";
-        public const string CoreRommOutcome = "Core Romm outcome";
+        public const string CoreRommOpen = "Core ROMM open";
+        public const string CoreRommOutcome = "Core ROMM outcome";
         public const string AssessmentSeriesSpecialisms = "Assessment series (Specialisms)";
         public const string SpecialismComponentCode = "Specialism component code";
-        public const string SpecialismRommOpen = "Specialism romm open";
-        public const string SpecialismRommOutcome = "Specialism romm outcome";
+        public const string SpecialismRommOpen = "Specialism ROMM open";
+        public const string SpecialismRommOutcome = "Specialism ROMM outcome";
     }
 }

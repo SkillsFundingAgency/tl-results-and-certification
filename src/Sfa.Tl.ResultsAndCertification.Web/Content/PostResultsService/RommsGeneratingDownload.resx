@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Heading_Download_Romms_Data" xml:space="preserve">
-    <value>Generating romms data</value>
+    <value>Generating ROMMs data</value>
   </data>
   <data name="Js_Disabled_Continue_Button" xml:space="preserve">
     <value>Continue (click once)</value>
@@ -127,7 +127,7 @@
     <value>JavaScript is disabled in your browser so we cannot show you a progress icon. Generating the file can take up to 10 seconds after you click 'Continue'.</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Generating download - Romms</value>
+    <value>Generating download - ROMMs</value>
   </data>
   <data name="Processing_Spinner_Text" xml:space="preserve">
     <value>Processing, please wait. This could take up to 10 seconds. Do not refresh.</value>
