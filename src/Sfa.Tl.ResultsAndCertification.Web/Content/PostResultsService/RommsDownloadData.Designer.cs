@@ -106,7 +106,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Romms data includes active learners..
+        ///   Looks up a localized string similar to ROMMs data includes active learners..
         /// </summary>
         public static string Para_Registrations_Data_Includes_Active_Widthdrawn_Learners {
             get {
