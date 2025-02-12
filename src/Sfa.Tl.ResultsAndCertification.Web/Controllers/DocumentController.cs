@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Document;
@@ -128,21 +127,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("tlevel-data-format-and-rules-guides", Name = RouteConstants.TlevelDataFormatAndRulesGuide)]
         public IActionResult TlevelDataFormatAndRulesGuide()
         {
-            var viewModel = new TlevelDataFormatAndRulesGuideViewModel
-            {
-                FileType = FileType.Xlsx.ToString().ToUpperInvariant(),
-
-                RegistrationsFileSize = DocumentResource.TlevelDataFormatAndRulesGuide.Registrations_FileSize_Text,
-                RegistrationsPublishedDate = $"{DocumentResource.TlevelDataFormatAndRulesGuide.Published_Text} {DocumentResource.TlevelDataFormatAndRulesGuide.Registrations_PublishedDate_Text}",
-
-                AssessmentEntriesFileSize = DocumentResource.TlevelDataFormatAndRulesGuide.Assessment_Entries_FileSize_Text,
-                AssessmentEntriesPublishedDate = $"{DocumentResource.TlevelDataFormatAndRulesGuide.Published_Text} {DocumentResource.TlevelDataFormatAndRulesGuide.Assessment_Entries_PublishedDate_Text}",
-
-                ResultsFileSize = DocumentResource.TlevelDataFormatAndRulesGuide.Results_FileSize_Text,
-                ResultsPublishedDate = $"{DocumentResource.TlevelDataFormatAndRulesGuide.Published_Text} {DocumentResource.TlevelDataFormatAndRulesGuide.Results_PublishedDate_Text}"
-            };
-
-            return View(viewModel);
+            return View(new TlevelDataFormatAndRulesGuideViewModel());
         }
 
 

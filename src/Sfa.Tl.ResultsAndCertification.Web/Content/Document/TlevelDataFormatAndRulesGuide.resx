@@ -118,16 +118,16 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Assessment_Entries_DataFormat_And_Rules" xml:space="preserve">
-    <value>Assessment entries data format and rules ({0}, {1}KB)</value>
+    <value>Assessment entries data format and rules ({0}, {1})</value>
   </data>
   <data name="Assessment_Entries_FileSize_Text" xml:space="preserve">
-    <value>292</value>
+    <value>292KB</value>
   </data>
   <data name="Assessment_Entries_Heading_Text" xml:space="preserve">
     <value>Assessment entries</value>
   </data>
   <data name="Assessment_Entries_PublishedDate_Text" xml:space="preserve">
-    <value>28 November 2024</value>
+    <value>07 February 2025</value>
   </data>
   <data name="Awarding_Organisations_Heading" xml:space="preserve">
     <value>Awarding organisations</value>
@@ -159,35 +159,32 @@
   <data name="Present_Your_Data_Correctly_By_Viewing_An_Example_CSV_File_Text" xml:space="preserve">
     <value>present your data correctly, by viewing an example CSV file</value>
   </data>
-  <data name="Providers_Heading" xml:space="preserve">
-    <value>Providers</value>
-  </data>
   <data name="Published_Text" xml:space="preserve">
     <value>Published</value>
   </data>
   <data name="Registrations_FileSize_Text" xml:space="preserve">
-    <value>296</value>
+    <value>296KB</value>
   </data>
   <data name="Registrations_Heading_Text" xml:space="preserve">
     <value>Registrations</value>
   </data>
   <data name="Registrations_PublishedDate_Text" xml:space="preserve">
-    <value>28 November 2024</value>
+    <value>07 February 2025</value>
   </data>
   <data name="Registration_DataFormat_And_Rules" xml:space="preserve">
-    <value>Registrations data format and rules ({0}, {1}KB)</value>
+    <value>Registrations data format and rules ({0}, {1})</value>
   </data>
   <data name="Results_FileSize_Text" xml:space="preserve">
-    <value>292</value>
+    <value>292KB</value>
   </data>
   <data name="Results_Heading_Text" xml:space="preserve">
     <value>Results</value>
   </data>
   <data name="Results_PublishedDate_Text" xml:space="preserve">
-    <value>28 November 2024</value>
+    <value>07 February 2025</value>
   </data>
-  <data name="Result_DataFormat_And_Rules" xml:space="preserve">
-    <value>Results data format and rules ({0}, {1}KB)</value>
+  <data name="Results_DataFormat_And_Rules" xml:space="preserve">
+    <value>Results data format and rules ({0}, {1})</value>
   </data>
   <data name="Section_Heading" xml:space="preserve">
     <value>T Levels data format and rules</value>
@@ -230,5 +227,32 @@
   </data>
   <data name="Tlevels_Romm_Data_Format_And_Rules_File_Name" xml:space="preserve">
     <value>tlevels-romm-data-format-and-rules.xlsx</value>
+  </data>
+  <data name="Romms_FileSize_Text" xml:space="preserve">
+    <value>290KB</value>
+  </data>
+  <data name="Romms_DataFormat_And_Rules" xml:space="preserve">
+    <value>ROMMs data format and rules ({0}, {1})</value>
+  </data>
+  <data name="Romms_Heading_Text" xml:space="preserve">
+    <value>ROMMs</value>
+  </data>
+  <data name="Romms_PublishedDate_Text" xml:space="preserve">
+    <value>07 February 2025</value>
+  </data>
+  <data name="Widthdrawals_FileSize_Text" xml:space="preserve">
+    <value>296KB</value>
+  </data>
+  <data name="Withdrawals_DataFormat_And_Rules" xml:space="preserve">
+    <value>Withdrawals data format and rules ({0}, {1})</value>
+  </data>
+  <data name="Withdrawals_Heading_Text" xml:space="preserve">
+    <value>Withdrawals</value>
+  </data>
+  <data name="Withdrawals_PublishedDate_Text" xml:space="preserve">
+    <value>07 February 2025</value>
+  </data>
+  <data name="XlsxFileType" xml:space="preserve">
+    <value>XLSX</value>
   </data>
 </root>
