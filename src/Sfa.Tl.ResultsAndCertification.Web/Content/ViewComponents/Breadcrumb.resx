@@ -256,7 +256,7 @@
     <value>Result reviews and appeals</value>
   </data>
   <data name="Upload_Romms_File" xml:space="preserve">
-    <value>Upload multiple romms</value>
+    <value>Upload multiple ROMMs</value>
   </data>
   <data name="Edit_Provider" xml:space="preserve">
     <value>Edit provider</value>
@@ -266,5 +266,8 @@
   </data>
   <data name="Find_Notifications" xml:space="preserve">
     <value>Find notifications</value>
+  </data>
+  <data name="Download_Romms_Data" xml:space="preserve">
+    <value>Download ROMMs data</value>
   </data>
 </root>

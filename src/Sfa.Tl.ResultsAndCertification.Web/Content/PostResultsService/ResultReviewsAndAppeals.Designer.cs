@@ -62,6 +62,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download open ROMM and ROMM outcomes for learners by downloading a CSV file.
+        /// </summary>
+        public static string Card_Content_Download_Open_ROMM_For_Learners_Downloading_CSV_File {
+            get {
+                return ResourceManager.GetString("Card_Content_Download_Open_ROMM_For_Learners_Downloading_CSV_File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Open ROMM or add ROMM outcomes for learners by uploading a CSV file..
         /// </summary>
         public static string Card_Content_Open_Or_Add_Romm_Outcomes_By_Uploading_CSV_file {
@@ -80,7 +89,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Manage a learner&apos;s RoMMs, appeals and outcomes.
+        ///   Looks up a localized string similar to Download multiple ROMMs.
+        /// </summary>
+        public static string Card_Heading_Download_Multiple_Romms {
+            get {
+                return ResourceManager.GetString("Card_Heading_Download_Multiple_Romms", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manage a learner&apos;s ROMMs, appeals and outcomes.
         /// </summary>
         public static string Card_Heading_Manage_Learners_Romms_Appeals_And_Outcomes {
             get {
@@ -125,7 +143,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Tell us about any reviews of marking or moderations (RoMMs) or appeals and report their outcomes..
+        ///   Looks up a localized string similar to Tell us about any reviews of marking or moderations (ROMMs) or appeals and report their outcomes..
         /// </summary>
         public static string Para_Tell_Us_About_Reviews_Moderations_Appeals_And_Report_Outcomes {
             get {

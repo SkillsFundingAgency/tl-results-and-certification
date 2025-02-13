@@ -1,0 +1,44 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService.RommsDownloadViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+@{
+    ViewData["Title"] = RommsDownloadData.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <h1 class="govuk-heading-l govuk-!-margin-bottom-8">
+            @RommsDownloadData.Heading_Download_Romms_Data
+        </h1>
+
+        <p class="govuk-body">@RommsDownloadData.Para_Registrations_Data_Includes_Active_Widthdrawn_Learners</p>
+
+        <section class="govuk-clearfix">
+            <div class="gem-c-attachment__thumbnail">
+                <a class="govuk-link" target="_self" tabindex="-1" aria-hidden="true" asp-route="@RouteConstants.RommsDownloadDataLink" asp-route-id="@Model.RommsDownloadLinkViewModel.BlobUniqueReference">
+                    <svg class="attachment__thumbnail-image thumbnail-image-large" version="1.1" viewBox="0 0 99 140" width="99" height="140" aria-hidden="true">
+                        <path d="M12 12h75v27H12zm0 47h18.75v63H12zm55 2v59H51V61h16m2-2H49v63h20V59z" stroke-width="0"></path>
+                        <path d="M49 61.05V120H32.8V61.05H49m2-2H30.75v63H51V59zm34 2V120H69.05V61.05H85m2-2H67v63h20V59z" stroke-width="0"></path>
+                        <path d="M30 68.5h56.5M30 77.34h56.5M30 112.7h56.5M30 95.02h56.5M30 86.18h56.5M30 103.86h56.5" fill="none" stroke-miterlimit="10" stroke-width="2"></path>
+                    </svg>
+                </a>
+            </div>
+            <div class="attachment__details">
+                <h2 class="govuk-heading-m">
+                    <a class="govuk-link" target="_self" asp-route="@RouteConstants.RommsDownloadDataLink" asp-route-id="@Model.RommsDownloadLinkViewModel.BlobUniqueReference">
+                        @RommsDownloadData.Download_Link_Romms_Data (@Model.RommsDownloadLinkViewModel.FileType, @Model.RommsDownloadLinkViewModel.FileSize <abbr title="Kilobyte">@RommsDownloadData.File_Size_Units</abbr>)
+                    </a>
+                </h2>
+            </div>
+        </section>
+        <div class="govuk-button-group govuk-!-margin-top-5">
+            <a id="backToHomeButton" class="govuk-button" role="button" asp-route="@RouteConstants.Home">@RommsDownloadData.Button_Back_To_Home</a>
+        </div>
+    </div>
+</div>

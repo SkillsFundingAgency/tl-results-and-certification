@@ -124,6 +124,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download ROMMs data.
+        /// </summary>
+        public static string Download_Romms_Data {
+            get {
+                return ResourceManager.GetString("Download_Romms_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit provider.
         /// </summary>
         public static string Edit_Provider {
@@ -493,7 +502,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Upload multiple romms.
+        ///   Looks up a localized string similar to Upload multiple ROMMs.
         /// </summary>
         public static string Upload_Romms_File {
             get {
