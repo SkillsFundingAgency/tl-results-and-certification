@@ -4,7 +4,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminNotification;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminNotification;
@@ -433,6 +432,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         public async Task<IList<DataExportResponse>> GenerateDataExportAsync(long aoUkprn, DataExportType dataExportType, string requestedBy)
         {
             var requestUri = string.Format(ApiConstants.GetDataExportUri, aoUkprn, (int)dataExportType, requestedBy);
+            return await GetAsync<IList<DataExportResponse>>(requestUri);
+        }
+
+        public async Task<IList<DataExportResponse>> GenerateRommDataExportAsync(long aoUkprn, string requestedBy)
+        {
+            var requestUri = string.Format(ApiConstants.DownloadRommExportUri, aoUkprn, requestedBy);
             return await GetAsync<IList<DataExportResponse>>(requestUri);
         }
 

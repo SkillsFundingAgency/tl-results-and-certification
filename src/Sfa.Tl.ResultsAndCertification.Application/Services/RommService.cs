@@ -145,7 +145,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 }
 
                 // 3. Learner Active Assessments
-                var activeCoreAssessmentEntry = profile.TqRegistrationPathways.Select(p => p.TqPathwayAssessments.FirstOrDefault(a => a.IsOptedin && a.EndDate is null && a.AssessmentSeriesId == coreAssessmentSeries.Id)).FirstOrDefault();
+                var activeCoreAssessmentEntry = profile.TqRegistrationPathways
+                        .Where(p => p.Status == RegistrationPathwayStatus.Active && p.EndDate == null)
+                        .SelectMany(p => p.TqPathwayAssessments)
+                        .FirstOrDefault(a => a.IsOptedin
+                            && a.EndDate is null
+                            && a.AssessmentSeriesId == coreAssessmentSeries.Id);
 
                 if (activeCoreAssessmentEntry == null)
                 {
