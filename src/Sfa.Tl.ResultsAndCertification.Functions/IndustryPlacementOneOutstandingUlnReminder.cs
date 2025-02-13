@@ -8,43 +8,41 @@ using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
 
-
 namespace Sfa.Tl.ResultsAndCertification.Functions
 {
-    public class IndustryPlacementProviderNotifications
+    public class IndustryPlacementOneOutstandingUlnReminder
     {
-        private readonly IIndustryPlacementService _industryPlacementService;
+        private readonly IIndustryPlacementNotificationService _industryPlacementNotificationService;
 
         private readonly ICommonService _commonService;
 
-        public IndustryPlacementProviderNotifications(IIndustryPlacementService industryPlacementService, ICommonService commonService)
+        public IndustryPlacementOneOutstandingUlnReminder(IIndustryPlacementNotificationService industryPlacementNotificationService, ICommonService commonService)
         {
-            _industryPlacementService = industryPlacementService;
+            _industryPlacementNotificationService = industryPlacementNotificationService;
             _commonService = commonService;
         }
 
-        [FunctionName(Constants.IndustryPlacementProviderNotifications)]
-        public async Task IndustryPlacementProviderNotificationAsync([TimerTrigger("%IndustryPlacementProviderNotificationsTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
+        [FunctionName(Constants.IndustryPlacementOneOutstandingUlnReminder)]
+        public async Task IndustryPlacementMissedDeadlineReminderAsync([TimerTrigger("%IndustryPlacementOneOutstandingUlnReminderTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
-            //if (_commonService.IsIndustryPlacementTriggerDateValid())
-            //{
-            var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.IndustryPlacementProviderNotifications);
-
+            var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.IndustryPlacementOneOutstandingUlnReminder);
 
             try
             {
-
                 logger.LogInformation($"Function {context.FunctionName} started");
 
                 var stopwatch = Stopwatch.StartNew();
 
                 await _commonService.CreateFunctionLog(functionLogDetails);
 
-                var response = await _industryPlacementService.ProcessIndustryPlacementProviderNotificationsAsync();
+                var response = await _industryPlacementNotificationService.ProcessIndustryPlacementOneOutstandingUlnReminderAsync();
+
                 var message = $"Function {context.FunctionName} completed processing.\n" +
-                                     $"\tStatus: {(response.IsSuccess ? FunctionStatus.Processed.ToString() : FunctionStatus.Failed.ToString())}";
+                                    $"\tStatus: {(response.IsSuccess ? FunctionStatus.Processed.ToString() : FunctionStatus.Failed.ToString())}.\n" +
+                                    $"\tTotal users count: {response.UsersCount}\n" +
+                                    $"\tNumber of emails sent {response.EmailSentCount}";
 
                 CommonHelper.UpdateFunctionLogRequest(functionLogDetails, response.IsSuccess ? FunctionStatus.Processed : FunctionStatus.Failed, message);
 
@@ -65,8 +63,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 await _commonService.SendFunctionJobFailedNotification(context.FunctionName, errorMessage);
             }
-            //}
-
         }
     }
 }

@@ -19,6 +19,9 @@
         CoreRommExtract = 14,
         SpecialismRommExtract = 15,
         CertificateTrackingExtract = 16,
-        IndustryPlacementProviderNotifications = 17
+        IndustryPlacementFirstDeadlineReminder = 17,
+        IndustryPlacementMissedDeadlineReminder = 18,
+        IndustryPlacementChaseBigGapsReminder = 19,
+        IndustryPlacementOneOutstandingUlnReminder = 20
     }
 }

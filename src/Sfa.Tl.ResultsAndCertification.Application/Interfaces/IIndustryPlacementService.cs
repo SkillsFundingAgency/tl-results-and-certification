@@ -15,6 +15,5 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
         Task<IndustryPlacementProcessResponse> CompareAndProcessIndustryPlacementsAsync(IList<Domain.Models.IndustryPlacement> industryPlacementsToProcess);
         Task<IList<IpLookupData>> GetIpLookupDataAsync(IpLookupType ipLookupType, int? pathwayId);
         Task<FunctionResponse> ProcessIndustryPlacementExtractionsAsync();
-        Task<FunctionResponse> ProcessIndustryPlacementProviderNotificationsAsync();
     }
 }
