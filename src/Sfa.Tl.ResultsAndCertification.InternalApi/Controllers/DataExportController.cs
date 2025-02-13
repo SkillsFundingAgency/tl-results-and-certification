@@ -47,5 +47,10 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         {
             return await _dataExportLoader.DownloadLearnerOverallResultSlipsDataAsync(providerUkprn, profileId, requestedBy);
         }
+
+        [HttpGet]
+        [Route("DownloadRommExport/{aoUkprn}/{requestedBy}")]
+        public async Task<IList<DataExportResponse>> DownloadRommExportAsync(long aoUkprn, string requestedBy)
+           => await _dataExportLoader.DownloadRommExportAsync(aoUkprn, requestedBy);
     }
 }

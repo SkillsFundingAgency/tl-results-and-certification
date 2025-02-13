@@ -189,6 +189,20 @@ gulp.task('copy-data-export-js', function () {
         .pipe(gulp.dest(paths.dist.defaultJs));
 });
 
+gulp.task('copy-romm-download-js', function () {
+    return src([
+        'Frontend/src/javascripts/romm-download.js'
+    ])
+        .pipe(concat('romm-download.js'))
+        .pipe(minify({
+            noSource: true,
+            ext: {
+                min: '.min.js'
+            }
+        }))
+        .pipe(gulp.dest(paths.dist.defaultJs));
+});
+
 gulp.task('copy-assets', () => {
     return src(paths.src.defaultAssets)
         .pipe(gulp.dest(paths.dist.defaultAssets));

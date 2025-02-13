@@ -1,0 +1,31 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Web.Content.PostResultsService
+@using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Spinner
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@addTagHelper *, NWebsec.AspNetCore.Mvc.TagHelpers
+
+@{
+    ViewData["Title"] = RommsGeneratingDownload.Page_Title;
+}
+
+@section Scripts {
+    <script nws-csp-add-nonce="true" src="~/javascripts/romm-download.min.js"></script>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <form asp-route="@RouteConstants.SubmitRommsGeneratingDownload" id="submitRommsDownload">
+            <div class="govuk-form-group">
+                <h1 class="govuk-heading-l">
+                    @RommsGeneratingDownload.Heading_Download_Romms_Data
+                </h1>
+            </div>
+
+            <vc:spinner model="new SpinnerModel { Message = RommsGeneratingDownload.Processing_Spinner_Text }"></vc:spinner>
+
+            <noscript>
+                <p class="govuk-body">@RommsGeneratingDownload.Js_Disabled_Information</p>
+                <button id="btnContinue" class="govuk-button" data-module="govuk-button" type="submit" data-prevent-double-click="true">@RommsGeneratingDownload.Js_Disabled_Continue_Button</button>
+            </noscript>
+        </form>
+    </div>
+</div>

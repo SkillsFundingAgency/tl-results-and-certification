@@ -117,34 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Heading_Prs_Review_Appeal_Grade_Change" xml:space="preserve">
-    <value>Reviews, appeals and grade changes</value>
+  <data name="Button_Add_Romms" xml:space="preserve">
+    <value>Add ROMMs</value>
+  </data>
+  <data name="Button_Back_To_Home" xml:space="preserve">
+    <value>Back to home</value>
+  </data>
+  <data name="Contact_Us" xml:space="preserve">
+    <value>contact us</value>
+  </data>
+  <data name="Email_Subject" xml:space="preserve">
+    <value>No registration records found</value>
+  </data>
+  <data name="Get_Help_With_Mangage_TLevel_Results_Service" xml:space="preserve">
+    <value>Get help with the Manage T Level results service</value>
+  </data>
+  <data name="If_You_Need_Help" xml:space="preserve">
+    <value>If you need help with the Manage T Level results service please</value>
+  </data>
+  <data name="No_Records_Found_Message" xml:space="preserve">
+    <value>There are no ROMMs recorded for any registered learners.</value>
+  </data>
+  <data name="Page_Heading" xml:space="preserve">
+    <value>No records found</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Results reviews, appeals and grade changes</value>
+    <value>No records found - ROMMs</value>
   </data>
-  <data name="Heading_In_This_Section" xml:space="preserve">
-    <value>In this section</value>
-  </data>
-  <data name="Card_Heading_Manage_Learners_Romms_Appeals_And_Outcomes" xml:space="preserve">
-    <value>Manage a learner's ROMMs, appeals and outcomes</value>
-  </data>
-  <data name="Card_Content_Search_For_Learner_Who_Requested_Review" xml:space="preserve">
-    <value>Search for a learner who has requested a review.</value>
-  </data>
-  <data name="Card_Heading_Upload_Multiple_Romms" xml:space="preserve">
-    <value>Upload multiple ROMMs</value>
-  </data>
-  <data name="Card_Content_Open_Or_Add_Romm_Outcomes_By_Uploading_CSV_file" xml:space="preserve">
-    <value>Open ROMM or add ROMM outcomes for learners by uploading a CSV file.</value>
-  </data>
-  <data name="Para_Tell_Us_About_Reviews_Moderations_Appeals_And_Report_Outcomes" xml:space="preserve">
-    <value>Tell us about any reviews of marking or moderations (ROMMs) or appeals and report their outcomes.</value>
-  </data>
-  <data name="Card_Heading_Download_Multiple_Romms" xml:space="preserve">
-    <value>Download multiple ROMMs</value>
-  </data>
-  <data name="Card_Content_Download_Open_ROMM_For_Learners_Downloading_CSV_File" xml:space="preserve">
-    <value>Download open ROMM and ROMM outcomes for learners by downloading a CSV file</value>
+  <data name="We-Aim_To_Respond_Within_3_Working_Days" xml:space="preserve">
+    <value>We aim to respond within 3 working days.</value>
   </data>
 </root>

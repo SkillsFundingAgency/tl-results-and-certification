@@ -76,6 +76,24 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
             return await WritePdfToBlobAsync(ukprn, documentType, requestType, requestedBy, byteData, componentType);
         }
 
+        public async Task<IList<DataExportResponse>> DownloadRommExportAsync(long aoUkprn, string requestedBy)
+        {
+            var romms = await _dataExportRepository.GetDataExportRommsAsync(aoUkprn);
+
+            var exportResponse = await ProcessRommsExportResponseAsync(romms, aoUkprn, DocumentType.DataExports, DataExportType.Romms, requestedBy, classMapType: typeof(RommsExportMap));
+            return new List<DataExportResponse>() { exportResponse };
+        }
+
+        private async Task<DataExportResponse> ProcessRommsExportResponseAsync<T>(IList<T> data, long ukprn, DocumentType documentType, DataExportType requestType, string requestedBy, ComponentType componentType = ComponentType.NotSpecified, Type classMapType = null, bool isEmptyFileAllowed = false)
+        {
+            if (!isEmptyFileAllowed && (data == null || !data.Any()))
+                return new DataExportResponse { ComponentType = componentType, IsDataFound = false };
+
+            var byteData = await CsvExtensions.WriteFileAsync(data, classMapType: classMapType);
+            var response = await WriteCsvToBlobAsync(ukprn, documentType, requestType, requestedBy, byteData, componentType);
+            return response;
+        }
+
         private async Task<IList<DataExportResponse>> ProcessRegistrationsRequestAsync(long aoUkprn, string requestedBy)
         {
             var registrations = await _dataExportRepository.GetDataExportRegistrationsAsync(aoUkprn);
