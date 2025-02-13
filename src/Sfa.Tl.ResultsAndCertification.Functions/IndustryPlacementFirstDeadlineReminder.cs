@@ -44,9 +44,13 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                                      $"\tTotal users count: {response.UsersCount}\n" +
                                      $"\tNumber of emails sent {response.EmailSentCount}";
 
-                CommonHelper.UpdateFunctionLogRequest(functionLogDetails, response.IsSuccess ? FunctionStatus.Processed : FunctionStatus.Failed, message);
+                var status = response.IsSuccess ? FunctionStatus.Processed : FunctionStatus.Failed;
+                CommonHelper.UpdateFunctionLogRequest(functionLogDetails, status, message);
 
                 await _commonService.UpdateFunctionLog(functionLogDetails);
+
+                if (status == FunctionStatus.Failed)
+                    await _commonService.SendFunctionJobFailedNotification(context.FunctionName, $"Function Status: {status}, Message: {message}");
 
                 stopwatch.Stop();
 
