@@ -96,6 +96,18 @@
     "industryPlacementExtractTrigger": {
       "type": "string"
     },
+    "industryPlacementProviderFirstDeadlineReminderTrigger": {
+      "type": "string"
+    },
+    "industryPlacementMissedDeadlineReminderTrigger": {
+      "type": "string"
+    },
+    "industryPlacementChaseBigGapsReminderTrigger": {
+      "type": "string"
+    },
+    "industryPlacementOneOutstandingUlnReminderTrigger": {
+      "type": "string"
+    },
     "analystOverallResultExtractTrigger": {
       "type": "string"
     },
@@ -605,6 +617,22 @@
               {
                 "name": "IndustryPlacementExtractTrigger",
                 "value": "[parameters('industryPlacementExtractTrigger')]"
+              },
+              {
+                "name": "IndustryPlacementProviderFirstDeadlineReminderTrigger",
+                "value": "[parameters('industryPlacementProviderFirstDeadlineReminderTrigger')]"
+              },
+              {
+                "name": "IndustryPlacementMissedDeadlineReminderTrigger",
+                "value": "[parameters('industryPlacementMissedDeadlineReminderTrigger')]"
+              },
+              {
+                "name": "IndustryPlacementChaseBigGapsReminderTrigger",
+                "value": "[parameters('industryPlacementChaseBigGapsReminderTrigger')]"
+              },
+              {
+                "name": "IndustryPlacementOneOutstandingUlnReminderTrigger",
+                "value": "[parameters('industryPlacementOneOutstandingUlnReminderTrigger')]"
               },
               {
                 "name": "AnalystOverallResultExtractTrigger",
