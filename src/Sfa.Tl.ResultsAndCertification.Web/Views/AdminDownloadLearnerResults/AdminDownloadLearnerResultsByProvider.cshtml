@@ -1,0 +1,55 @@
+﻿@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDownloadLearnerResults
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDownloadLearnerResults.AdminDownloadLearnerResultsByProviderViewModel
+
+@{
+    ViewData["Title"] = @AdminDownloadLearnerResultsByProvider.Page_Title;
+}
+
+@section NavigationBar
+{
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-three-quarters">
+        <h1 class="govuk-heading-l">@string.Format(AdminDownloadLearnerResultsByProvider.Heading_Download_Tlevel_Results, Model.ProviderName)</h1>
+    </div>
+</div>
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <section class="gem-c-attachment">
+            <p class="govuk-body">@AdminDownloadLearnerResultsByProvider.Para_File_Update_Next_Working_Day</p>
+            <p class="govuk-body govuk-!-margin-top-6">@AdminDownloadLearnerResultsByProvider.Para_Download_Results_As_CSV_File</p>
+            <div class="gem-c-attachment__thumbnail">
+                <a class="govuk-link" target="_self" tabindex="-1" aria-hidden="true" asp-route="@RouteConstants.AdminDownloadLearnerResultsCsv" asp-route-ukprn="@Model.ProviderUkprn">
+                    <svg class="gem-c-attachment__thumbnail-image" version="1.1" viewBox="0 0 99 140" width="99" height="140" aria-hidden="true">
+                        <path d="M12 12h75v27H12zM12 59h9v9h-9zM12 77h9v9h-9zM12 95h9v9h-9zM12 113h9v9h-9zM30 59h57v9H30zM30 77h39v9H30zM30 95h57v9H30zM30 113h48v9H30z" stroke-width="0"></path>
+                    </svg>
+                </a>
+            </div>
+            <h3 class="govuk-heading-s">
+                <a class="govuk-link" target="_self" asp-route="@RouteConstants.AdminDownloadLearnerResultsCsv" asp-route-ukprn="@Model.ProviderUkprn">
+                    @string.Format(@AdminDownloadLearnerResultsByProvider.Download_Link_Results_CSV_Data, @AdminDownloadLearnerResultsByProvider.File_Type_CSV)
+                </a>
+            </h3>
+        </section>
+
+        <section class="gem-c-attachment">
+            <p class="govuk-body govuk-!-margin-top-6">@AdminDownloadLearnerResultsByProvider.Para_Download_Results_Slips_As_PDF_File</p>
+            <div class="gem-c-attachment__thumbnail">
+                <a class="govuk-link" target="_self" tabindex="-1" aria-hidden="true" asp-route="@RouteConstants.AdminDownloadLearnerResultsPdf" asp-route-ukprn="@Model.ProviderUkprn">
+                    <svg class="gem-c-attachment__thumbnail-image" version="1.1" viewBox="0 0 99 140" width="99" height="140" aria-hidden="true">
+                        <path d="M12 12h75v27H12zM12 59h9v9h-9zM12 77h9v9h-9zM12 95h9v9h-9zM12 113h9v9h-9zM30 59h57v9H30zM30 77h39v9H30zM30 95h57v9H30zM30 113h48v9H30z" stroke-width="0"></path>
+                    </svg>
+                </a>
+            </div>
+            <h3 class="govuk-heading-s">
+                <a class="govuk-link" target="_self" asp-route="@RouteConstants.AdminDownloadLearnerResultsPdf" asp-route-ukprn="@Model.ProviderUkprn">
+                    @string.Format(@AdminDownloadLearnerResultsByProvider.Download_Link_Result_Slips_PDF_Data, @AdminDownloadLearnerResultsByProvider.File_Type_PDF)
+                </a>
+            </h3>
+        </section>
+    </div>
+</div>

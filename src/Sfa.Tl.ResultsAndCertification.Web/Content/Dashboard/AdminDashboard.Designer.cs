@@ -70,6 +70,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download learner results.
+        /// </summary>
+        public static string Tile_Download_Learner_Results {
+            get {
+                return ResourceManager.GetString("Tile_Download_Learner_Results", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download results for active learners in their final year of their T Level..
+        /// </summary>
+        public static string Tile_Download_Results_For_Active_Learners {
+            get {
+                return ResourceManager.GetString("Tile_Download_Results_For_Active_Learners", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Manage providers.
         /// </summary>
         public static string Tile_Manage_Providers_Heading {
