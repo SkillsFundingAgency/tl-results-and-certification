@@ -50,7 +50,17 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<IndustryPlacementNotificationResponse> ProcessIndustryPlacementFirstDeadlineReminderAsync()
         {
-            var activeProviders = await _tlProviderRepository.GetManyAsync(p => p.IsActive).Select(p => p.UkPrn).ToListAsync();
+            var previousAcademicYear = await GetPreviousAcademicYearAsync();
+
+            var activeProviders = _tqRegistrationPathwayRepository.GetManyAsync()
+                .Include(rp => rp.TqProvider)
+                    .ThenInclude(p => p.TlProvider)
+                    .Where(rp => rp.Status == RegistrationPathwayStatus.Active &&
+                                 rp.EndDate == null &&
+                                 rp.AcademicYear == previousAcademicYear)
+                    .Select(pr => pr.TqProvider.TlProvider.UkPrn)
+                    .Distinct()
+                    .ToList();
 
             if (activeProviders == null || !activeProviders.Any())
             {
@@ -58,6 +68,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }
 
             var providerUsers = await _dfeSignInApiClient.GetDfeUsersAllProviders(activeProviders);
+
+            if (providerUsers == null)
+            {
+                var message = $"No provider users are found. Method: {nameof(ProcessIndustryPlacementFirstDeadlineReminderAsync)}()";
+                _logger.LogWarning(LogEvent.NoDataFound, message);
+                return new IndustryPlacementNotificationResponse { IsSuccess = true, Message = message };
+            }
 
             Dictionary<string, dynamic> userTokens = new()
             {
@@ -71,27 +88,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             IndustryPlacementNotificationResponse response = new();
 
-            var currentAcademicYears = await _commonRepository.GetCurrentAcademicYearsAsync();
+            var previousAcademicYear = await GetPreviousAcademicYearAsync();
 
-            if (currentAcademicYears == null || !currentAcademicYears.Any())
-            {
-                throw new ApplicationException($"Current Academic years are not found. Method: {nameof(ProcessIndustryPlacementMissedDeadlineReminderAsync)}");
-            }
-
-            var previousAcademicYear = currentAcademicYears.FirstOrDefault()?.Year - 1;
-
-            var filteredPathways = await _tqRegistrationPathwayRepository.GetManyAsync()
-                .Include(x => x.IndustryPlacements)
-                .Include(x => x.TqProvider)
-                    .ThenInclude(x => x.TlProvider)
-                .Where(w => w.Status == RegistrationPathwayStatus.Active &&
-                            w.EndDate == null &&
-                            w.AcademicYear == previousAcademicYear)
-                .ToListAsync();
-
-            var pathwaysWithoutPlacements = filteredPathways
-                .Where(w => !w.IndustryPlacements.Any())
-                .ToList();
+            var pathwaysWithoutPlacements = await GetPathwaysWithoutIndustryPlacementsAsync(previousAcademicYear);
 
             var ukprnCountDictionary = pathwaysWithoutPlacements
                 .GroupBy(g => g.TqProvider.TlProvider.UkPrn)
@@ -141,30 +140,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             IndustryPlacementNotificationResponse response = new();
 
-            var currentAcademicYears = await _commonRepository.GetCurrentAcademicYearsAsync();
+            var previousAcademicYear = await GetPreviousAcademicYearAsync();
 
-            if (currentAcademicYears == null || !currentAcademicYears.Any())
-            {
-                throw new ApplicationException($"Current Academic years are not found. Method: {nameof(ProcessIndustryPlacementChaseBigGapsReminderAsync)}");
-            }
+            var pathwaysWithoutPlacements = await GetPathwaysWithoutIndustryPlacementsAsync(previousAcademicYear);
 
-            var previousAcademicYear = currentAcademicYears.FirstOrDefault()?.Year - 1;
-
-            var filteredPathways = await _tqRegistrationPathwayRepository.GetManyAsync()
-                .Include(x => x.IndustryPlacements)
-                .Include(x => x.TqProvider)
-                    .ThenInclude(x => x.TlProvider)
-                .Where(w => w.Status == RegistrationPathwayStatus.Active &&
-                            w.EndDate == null &&
-                            w.AcademicYear == previousAcademicYear)
-                .ToListAsync();
-
-            var pathwaysWithoutPlacements = filteredPathways
-                .Where(w => !w.IndustryPlacements.Any())
-                .ToList();
-
-            var ukprnCountDictionary = pathwaysWithoutPlacements
-                .GroupBy(g => g.TqProvider.TlProvider.UkPrn)
+            var ukprnCountDictionary = pathwaysWithoutPlacements.GroupBy(g => g.TqProvider.TlProvider.UkPrn)
                 .ToDictionary(group => group.Key, group => group.Count());
 
             if (ukprnCountDictionary == null || !ukprnCountDictionary.Any())
@@ -211,14 +191,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             IndustryPlacementNotificationResponse response = new();
 
-            var currentAcademicYears = await _commonRepository.GetCurrentAcademicYearsAsync();
-
-            if (currentAcademicYears == null || !currentAcademicYears.Any())
-            {
-                throw new ApplicationException($"Current Academic years are not found. Method: {nameof(ProcessIndustryPlacementOneOutstandingUlnReminderAsync)}");
-            }
-
-            var previousAcademicYear = currentAcademicYears.FirstOrDefault()?.Year - 1;
+            var previousAcademicYear = await GetPreviousAcademicYearAsync();
 
             var filteredPathways = await _tqRegistrationPathwayRepository.GetManyAsync()
                 .Include(x => x.TqRegistrationProfile)
@@ -304,5 +277,32 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 IsSuccess = hasEmailSent
             };
         }
+
+        private async Task<int> GetPreviousAcademicYearAsync()
+        {
+            var currentAcademicYears = await _commonRepository.GetCurrentAcademicYearsAsync();
+
+            if (currentAcademicYears == null || !currentAcademicYears.Any())
+            {
+                throw new ApplicationException($"Current Academic years are not found. Method: {nameof(GetPreviousAcademicYearAsync)}");
+            }
+
+            return currentAcademicYears.FirstOrDefault().Year - 1;
+        }
+
+        private async Task<IEnumerable<TqRegistrationPathway>> GetPathwaysWithoutIndustryPlacementsAsync(int academicYear)
+        {
+            var filteredPathways = await _tqRegistrationPathwayRepository.GetManyAsync()
+                .Include(x => x.IndustryPlacements)
+                .Include(x => x.TqProvider)
+                    .ThenInclude(x => x.TlProvider)
+                .Where(w => w.Status == RegistrationPathwayStatus.Active &&
+                            w.EndDate == null &&
+                            w.AcademicYear == academicYear)
+                .ToListAsync();
+
+            return filteredPathways.Where(w => !w.IndustryPlacements.Any()).ToList();
+        }
+
     }
 }
