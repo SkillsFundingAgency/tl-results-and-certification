@@ -53,6 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
             // post data api and get respone
             foreach (var pendingPrintRequest in pendingPrintRequests)
             {
+                if (pendingPrintRequest.Batch.TotalCertificateCount == 0) continue; // If the certificate count is 0 dont call the xerox API
                 var printResponse = await _printingApiClient.ProcessPrintRequestAsync(pendingPrintRequest);
 
                 if (printResponse != null)
