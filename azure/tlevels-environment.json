@@ -173,6 +173,9 @@
           },
           "minimumTlsVersion": {
             "value": "TLS1_2"
+          },
+          "allowBlobPublicAccess": {
+            "value": true
           }
         }
       }
@@ -902,7 +905,7 @@
             "value": "[reference(concat('function-app','-',parameters('environmentNameAbbreviation'))).outputs.managedServiceIdentityId.value]"
           },
           "assignmentType": {
-            "value": "StorageTableDataReader"
+            "value": "StorageBlobDataReader"
           },
           "resourceName": {
             "value": "[parameters('configStorageAccountName')]"
