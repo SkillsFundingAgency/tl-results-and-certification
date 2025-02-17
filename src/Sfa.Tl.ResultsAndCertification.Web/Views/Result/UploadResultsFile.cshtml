@@ -42,24 +42,10 @@
             </form>
 
             <h2 class="govuk-heading-m">@Upload.Heading_Before_You_Start</h2>
-            <p class="govuk-body">@Upload.Para_If_You_Export_Data_From_Another_System</p>
-            <p class="govuk-body">@Upload.Para_You_Can_Download_Guidance_On_Data_Format_And_Rules</p>
-
-            <section class="gem-c-attachment">
-                <div class="gem-c-attachment__thumbnail">
-                    <a class="govuk-link" target="_self" tabindex="-1" aria-hidden="true" asp-route="DownloadResultsDataFormatAndRulesGuide">
-                        <svg class="gem-c-attachment__thumbnail-image" version="1.1" viewBox="0 0 99 140" width="99" height="140" aria-hidden="true">
-                            <path d="M12 12h75v27H12zM12 59h9v9h-9zM12 77h9v9h-9zM12 95h9v9h-9zM12 113h9v9h-9zM30 59h57v9H30zM30 77h39v9H30zM30 95h57v9H30zM30 113h48v9H30z" stroke-width="0"></path>
-                        </svg>
-                    </a>
-                </div>
-                <h3 class="govuk-heading-s">
-                    <a class="govuk-link" target="_self" asp-route="DownloadResultsDataFormatAndRulesGuide">
-                        @string.Format(@Upload.Link_Tlevels_Results_Data_Format_Rules, @Upload.File_Type_Xlsx, @Upload.Tlevels_Results_Data_Format_Rules_File_Size_Kb)
-                    </a>
-                </h3>
-                <p class="govuk-body-s">@Upload.Published_On</p>
-            </section>
+            <p class="govuk-body">@Upload.Para_If_You_Export_Data_Check_The_Data_Is_In_The_Right_Format</p>
+            <p class="govuk-body">
+                @Upload.Para_See_The <a class="govuk-link" asp-route="TlevelDataFormatAndRulesGuide">@Upload.Tlevel_Data_Format_And_Rules</a> @Upload.Para_Guidance_And_Download_The_Template_To_Help_You
+            </p>
 
             <section class="gem-c-attachment">
                 <div class="gem-c-attachment__thumbnail">
