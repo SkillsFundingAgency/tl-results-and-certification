@@ -205,7 +205,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to guidance and download the template to help you. Once you have added your registration details to the template, you can upload your file..
+        ///   Looks up a localized string similar to guidance and download the template to help you. Once you have added your assessment details to the template, you can upload your file..
         /// </summary>
         public static string Para_Guidance_And_Download_The_Template_To_Help_You {
             get {
