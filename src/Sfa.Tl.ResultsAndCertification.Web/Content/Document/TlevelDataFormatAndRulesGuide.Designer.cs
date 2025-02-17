@@ -62,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Assessment entries data format and rules ({0}, {1}KB).
+        ///   Looks up a localized string similar to Assessment entries data format and rules ({0}, {1}).
         /// </summary>
         public static string Assessment_Entries_DataFormat_And_Rules {
             get {
@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 292.
+        ///   Looks up a localized string similar to 292KB.
         /// </summary>
         public static string Assessment_Entries_FileSize_Text {
             get {
@@ -89,7 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 28 November 2024.
+        ///   Looks up a localized string similar to 07 February 2025.
         /// </summary>
         public static string Assessment_Entries_PublishedDate_Text {
             get {
@@ -188,15 +188,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Providers.
-        /// </summary>
-        public static string Providers_Heading {
-            get {
-                return ResourceManager.GetString("Providers_Heading", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Published.
         /// </summary>
         public static string Published_Text {
@@ -206,7 +197,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Registrations data format and rules ({0}, {1}KB).
+        ///   Looks up a localized string similar to Registrations data format and rules ({0}, {1}).
         /// </summary>
         public static string Registration_DataFormat_And_Rules {
             get {
@@ -215,7 +206,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 296.
+        ///   Looks up a localized string similar to 296KB.
         /// </summary>
         public static string Registrations_FileSize_Text {
             get {
@@ -233,7 +224,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 28 November 2024.
+        ///   Looks up a localized string similar to 07 February 2025.
         /// </summary>
         public static string Registrations_PublishedDate_Text {
             get {
@@ -242,16 +233,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Results data format and rules ({0}, {1}KB).
+        ///   Looks up a localized string similar to Results data format and rules ({0}, {1}).
         /// </summary>
-        public static string Result_DataFormat_And_Rules {
+        public static string Results_DataFormat_And_Rules {
             get {
-                return ResourceManager.GetString("Result_DataFormat_And_Rules", resourceCulture);
+                return ResourceManager.GetString("Results_DataFormat_And_Rules", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 292.
+        ///   Looks up a localized string similar to 292KB.
         /// </summary>
         public static string Results_FileSize_Text {
             get {
@@ -269,11 +260,47 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 28 November 2024.
+        ///   Looks up a localized string similar to 07 February 2025.
         /// </summary>
         public static string Results_PublishedDate_Text {
             get {
                 return ResourceManager.GetString("Results_PublishedDate_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ROMMs data format and rules ({0}, {1}).
+        /// </summary>
+        public static string Romms_DataFormat_And_Rules {
+            get {
+                return ResourceManager.GetString("Romms_DataFormat_And_Rules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 290KB.
+        /// </summary>
+        public static string Romms_FileSize_Text {
+            get {
+                return ResourceManager.GetString("Romms_FileSize_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ROMMs.
+        /// </summary>
+        public static string Romms_Heading_Text {
+            get {
+                return ResourceManager.GetString("Romms_Heading_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 07 February 2025.
+        /// </summary>
+        public static string Romms_PublishedDate_Text {
+            get {
+                return ResourceManager.GetString("Romms_PublishedDate_Text", resourceCulture);
             }
         }
         
@@ -400,6 +427,51 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         public static string Use_The_Correct_Format_For_File_Data_Items_Text {
             get {
                 return ResourceManager.GetString("Use_The_Correct_Format_For_File_Data_Items_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 296KB.
+        /// </summary>
+        public static string Widthdrawals_FileSize_Text {
+            get {
+                return ResourceManager.GetString("Widthdrawals_FileSize_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Withdrawals data format and rules ({0}, {1}).
+        /// </summary>
+        public static string Withdrawals_DataFormat_And_Rules {
+            get {
+                return ResourceManager.GetString("Withdrawals_DataFormat_And_Rules", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Withdrawals.
+        /// </summary>
+        public static string Withdrawals_Heading_Text {
+            get {
+                return ResourceManager.GetString("Withdrawals_Heading_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 07 February 2025.
+        /// </summary>
+        public static string Withdrawals_PublishedDate_Text {
+            get {
+                return ResourceManager.GetString("Withdrawals_PublishedDate_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to XLSX.
+        /// </summary>
+        public static string XlsxFileType {
+            get {
+                return ResourceManager.GetString("XlsxFileType", resourceCulture);
             }
         }
     }
