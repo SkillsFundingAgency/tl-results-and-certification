@@ -255,9 +255,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             _logger.LogInformation($"Sending email notification for {templateName} to {users.Count()} users.");
 
-            // TODO temp overriding email address
-            users.ForEach(u => u.Email = "sajid.malik@education.gov.uk");
-
             foreach (var user in users)
             {
                 hasEmailSent = await _notificationService.SendEmailNotificationAsync(templateName, user.Email, tokens);
