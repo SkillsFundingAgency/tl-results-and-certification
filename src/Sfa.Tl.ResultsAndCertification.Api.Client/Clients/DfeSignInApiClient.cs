@@ -50,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return userInfoResult;
         }
 
-        public async Task<IEnumerable<DfeUsers>> GetDfeUsersAllProviders(IEnumerable<long> ukPrns)
+        public async Task<List<DfeUsers>> GetDfeUsersAllProviders(List<long> ukPrns)
         {
             var users = new List<DfeUsers>();
 

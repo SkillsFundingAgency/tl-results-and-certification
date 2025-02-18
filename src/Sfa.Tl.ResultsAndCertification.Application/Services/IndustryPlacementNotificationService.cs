@@ -81,7 +81,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 { "reference_number", 000000 }
             };
 
-            return await SendEmailNotificationAsync(NotificationTemplateName.IndustryPlacementFirstDeadlineReminder.ToString(), providerUsers, userTokens);
+            var response = await SendEmailNotificationAsync(NotificationTemplateName.IndustryPlacementFirstDeadlineReminder.ToString(), providerUsers, userTokens);
+
+            response.Message = $"Total users: {response.UsersCount} Email sent: {response.EmailSentCount}.";
+
+            return response;
         }
 
         public async Task<IndustryPlacementNotificationResponse> ProcessIndustryPlacementMissedDeadlineReminderAsync()
@@ -103,7 +107,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return new IndustryPlacementNotificationResponse { IsSuccess = true, Message = message };
             }
 
-            var providerUsers = await _dfeSignInApiClient.GetDfeUsersAllProviders(ukprnCountDictionary.Keys);
+            var providerUsers = await _dfeSignInApiClient.GetDfeUsersAllProviders(ukprnCountDictionary.Keys.ToList());
 
             if (providerUsers == null)
             {
@@ -154,7 +158,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 return new IndustryPlacementNotificationResponse { IsSuccess = true, Message = message };
             }
 
-            var providerUsers = await _dfeSignInApiClient.GetDfeUsersAllProviders(ukprnCountDictionary.Keys);
+            var providerUsers = await _dfeSignInApiClient.GetDfeUsersAllProviders(ukprnCountDictionary.Keys.ToList());
 
             if (providerUsers == null)
             {
@@ -193,17 +197,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             var previousAcademicYear = await GetPreviousAcademicYearAsync();
 
-            var filteredPathways = await _tqRegistrationPathwayRepository.GetManyAsync()
-                .Include(x => x.TqRegistrationProfile)
-                .Include(x => x.IndustryPlacements)
-                .Include(x => x.TqProvider)
-                    .ThenInclude(x => x.TlProvider)
-                .Where(w => w.Status == RegistrationPathwayStatus.Active &&
-                            w.EndDate == null &&
-                            w.AcademicYear == previousAcademicYear)
-                .ToListAsync();
+            var pathwaysWithoutPlacements = await GetPathwaysWithoutIndustryPlacementsAsync(previousAcademicYear);
 
-            var pathwayWithOnePendingIPStatus = filteredPathways
+            var pathwayWithOnePendingIPStatus = pathwaysWithoutPlacements
                 .Where(rp => !rp.IndustryPlacements.Any())
                 .GroupBy(g => g.TqProvider.TlProvider.UkPrn)
                 .Where(rp => rp.Count() == 1)
@@ -293,6 +289,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         private async Task<IEnumerable<TqRegistrationPathway>> GetPathwaysWithoutIndustryPlacementsAsync(int academicYear)
         {
             var filteredPathways = await _tqRegistrationPathwayRepository.GetManyAsync()
+                .Include(x => x.TqRegistrationProfile)
                 .Include(x => x.IndustryPlacements)
                 .Include(x => x.TqProvider)
                     .ThenInclude(x => x.TlProvider)
