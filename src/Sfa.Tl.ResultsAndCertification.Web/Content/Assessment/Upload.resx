@@ -120,9 +120,6 @@
   <data name="Assessments_Entry_Published_On" xml:space="preserve">
     <value>Published 20 June 2024</value>
   </data>
-  <data name="Assessments_Published_On" xml:space="preserve">
-    <value>Published 28 November 2024</value>
-  </data>
   <data name="CSV_File_Size_Kb_Text" xml:space="preserve">
     <value>1KB</value>
   </data>
@@ -132,14 +129,8 @@
   <data name="File_Name_Length_Validation_Message" xml:space="preserve">
     <value>File name must have no more than {0} characters</value>
   </data>
-  <data name="File_Size_Kb_Text" xml:space="preserve">
-    <value>287KB</value>
-  </data>
   <data name="File_Size_Too_Large_Validation_Message" xml:space="preserve">
     <value>File size too large – must be no more than {0}MB</value>
-  </data>
-  <data name="File_Type" xml:space="preserve">
-    <value>XLSX</value>
   </data>
   <data name="File_Type_CSV" xml:space="preserve">
     <value>CSV</value>
@@ -152,9 +143,6 @@
   </data>
   <data name="Js_Disabled_Upload_File_Help_Text" xml:space="preserve">
     <value>JavaScript is disabled so you will not see the upload progress icon after you press Submit. Processing the file can take up to 10 seconds depending on the file size.</value>
-  </data>
-  <data name="Link_Tlevels_Assessment_Entry_Data_Format_Rules" xml:space="preserve">
-    <value>Download T Levels assessment entry data format and rules ({0}, {1})</value>
   </data>
   <data name="Link_Tlevels_Assessment_Entry_Template" xml:space="preserve">
     <value>Download T Levels assessment entry template ({0}, {1})</value>
@@ -177,11 +165,14 @@
   <data name="Page_Title" xml:space="preserve">
     <value>Upload multiple assessments</value>
   </data>
-  <data name="Para_If_You_Export_Data_From_Another_System" xml:space="preserve">
-    <value>If you export data from another system, you must check the data is in the right format. </value>
+  <data name="Para_Guidance_And_Download_The_Template_To_Help_You" xml:space="preserve">
+    <value>guidance and download the template to help you. Once you have added your assessment details to the template, you can upload your file.</value>
   </data>
-  <data name="Para_If_You_Export_Data_From_Another_System_Guidance" xml:space="preserve">
-    <value>You can download guidance on data formats and rules to help you. Once you have added your assessment entries to the template, you can upload your file.</value>
+  <data name="Para_If_You_Export_Data_Check_The_Data_Is_In_The_Right_Format" xml:space="preserve">
+    <value>If you export data from another system, you must check the data is in the right format.</value>
+  </data>
+  <data name="Para_See_The" xml:space="preserve">
+    <value>See the</value>
   </data>
   <data name="Para_You_Can_Add_Or_Change_Registration" xml:space="preserve">
     <value>You can add or change assessment entries for one or more learners by uploading a CSV file</value>
@@ -191,6 +182,9 @@
   </data>
   <data name="Select_File_To_Upload_Required_Validation_Message" xml:space="preserve">
     <value>Select a file to upload</value>
+  </data>
+  <data name="Tlevel_Data_Format_And_Rules" xml:space="preserve">
+    <value>T Level data format and rules</value>
   </data>
   <data name="Upload_File_Button_Text" xml:space="preserve">
     <value>Upload</value>
