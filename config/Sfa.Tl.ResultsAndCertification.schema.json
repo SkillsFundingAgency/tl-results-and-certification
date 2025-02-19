@@ -534,6 +534,50 @@
       "additionalProperties": false,
       "required": [],
       "type": "object"
+    },
+    "IPProviderFirstDeadlineReminderSettings": {
+      "properties": {
+        "NumberOfDays": {
+          "type": "array",
+          "environmentVariable": "IndustryPlacementProviderFirstDeadlineReminderDateRanges"
+        }
+      },
+      "additionalProperties": false,
+      "required": [],
+      "type": "object"
+    },
+    "IPMissedDeadlineReminderSettings": {
+      "properties": {
+        "NumberOfDays": {
+          "type": "array",
+          "environmentVariable": "IndustryPlacementMissedDeadlineReminderDateRanges"
+        }
+      },
+      "additionalProperties": false,
+      "required": [],
+      "type": "object"
+    },
+    "IPChaseBigGapsReminderExtractSettings": {
+      "properties": {
+        "NumberOfDays": {
+          "type": "array",
+          "environmentVariable": "IndustryPlacementChaseBigGapsReminderDateRanges"
+        }
+      },
+      "additionalProperties": false,
+      "required": [],
+      "type": "object"
+    },
+    "IPOneOutstandingUlnReminderExtractSettings": {
+      "properties": {
+        "NumberOfDays": {
+          "type": "array",
+          "environmentVariable": "IndustryPlacementOneOutstandingUlnReminderDateRanges"
+        }
+      },
+      "additionalProperties": false,
+      "required": [],
+      "type": "object"
     }
   },
   "additionalProperties": false,
@@ -569,7 +613,11 @@
     "SpecialismRommExtractSettings",
     "ProviderAddressExtractSettings",
     "UcasTransferAmendmentsSettings",
-    "CertificateTrackingExtractSettings"
+    "CertificateTrackingExtractSettings",
+    "IPProviderFirstDeadlineReminderSettings",
+    "IPMissedDeadlineReminderSettings",
+    "IPChaseBigGapsReminderExtractSettings",
+    "IPOneOutstandingUlnReminderExtractSettings"
   ],
   "type": "object"
 }

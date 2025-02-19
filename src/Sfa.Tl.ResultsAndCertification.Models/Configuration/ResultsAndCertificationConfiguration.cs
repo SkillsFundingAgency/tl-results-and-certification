@@ -307,5 +307,39 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// The certificate extract settings.
         /// </value>
         public CertificateTrackingExtractSettings CertificateTrackingExtractSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets industry placement chase big gaps reminder extract settings.
+        /// </summary>
+        /// <value>
+        /// The industry placement chase big gaps reminder extract settings.
+        /// </value>
+        public IPChaseBigGapsReminderExtractSettings IPChaseBigGapsReminderExtractSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets the one outstanding uln reminder extract settings.
+        /// </summary>
+        /// <value>
+        /// The one oustanding uln reminder extract settings.
+        /// </value>
+        public IPOneOutstandingUlnReminderExtractSettings IPOneOutstandingUlnReminderExtractSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets first deadline reminder reminder extract settings.
+        /// </summary>
+        /// <value>
+        /// The industry first deadline reminder extract settings.
+        /// </value>
+        public IPProviderFirstDeadlineReminderSettings IPProviderFirstDeadlineReminderSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets the missed deadline reminder extract settings.
+        /// </summary>
+        /// <value>
+        /// The missed deadline reminder extract settings.
+        /// </value>
+        public IPMissedDeadlineReminderSettings IPMissedDeadlineReminderSettings { get; set; }
+
+
     }
 }

@@ -1,7 +1,10 @@
 ﻿using Microsoft.Azure.WebJobs.Extensions.Timers;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Common.Utils.Ranges;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
+using System;
 
 
 namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementChaseBigGapsReminderTests
@@ -12,6 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementCh
         protected TimerSchedule TimerSchedule;
         protected IIndustryPlacementNotificationService IndustryPlacementNotificationService;
         protected ICommonService CommonService;
+        protected ResultsAndCertificationConfiguration Configuration;
 
         // Actual function instance
         protected IndustryPlacementChaseBigGapsReminder IndustryPlacementChaseBigGapsReminderFunction;
@@ -21,8 +25,24 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementCh
             TimerSchedule = Substitute.For<TimerSchedule>();
             IndustryPlacementNotificationService = Substitute.For<IIndustryPlacementNotificationService>();
             CommonService = Substitute.For<ICommonService>();
+            DateTime today = DateTime.UtcNow.Date;
 
-            IndustryPlacementChaseBigGapsReminderFunction = new IndustryPlacementChaseBigGapsReminder(IndustryPlacementNotificationService, CommonService);
+            Configuration = new ResultsAndCertificationConfiguration
+            {
+                IPChaseBigGapsReminderExtractSettings = new IPChaseBigGapsReminderExtractSettings
+                {
+                    IndustryPlacementChaseBigGapsReminderDateRanges = new[]
+                    {
+                        new DateTimeRange
+                        {
+                            From = today.AddDays(-1),
+                            To = today.AddDays(1)
+                        }
+                    }
+                }
+            };
+
+            IndustryPlacementChaseBigGapsReminderFunction = new IndustryPlacementChaseBigGapsReminder(IndustryPlacementNotificationService, CommonService, Configuration);
         }
 
     }

@@ -9,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementCh
     {
         public async override Task When()
         {
-            await IndustryPlacementChaseBigGapsReminderFunction.IndustryPlacementMissedDeadlineReminderAsync(new TimerInfo(TimerSchedule, new ScheduleStatus()), new ExecutionContext(), new NullLogger<IndustryPlacementChaseBigGapsReminder>());
+            await IndustryPlacementChaseBigGapsReminderFunction.IndustryPlacementChaseBigGapsReminderAsync(new TimerInfo(TimerSchedule, new ScheduleStatus()), new ExecutionContext(), new NullLogger<IndustryPlacementChaseBigGapsReminder>());
         }
     }
 }
