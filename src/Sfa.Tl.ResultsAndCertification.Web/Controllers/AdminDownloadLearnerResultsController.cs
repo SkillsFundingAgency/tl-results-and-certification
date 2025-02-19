@@ -114,7 +114,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var fileStream = await _downloadOverallResultsLoader.DownloadOverallResultSlipsDataAsync(ukprn, User.GetUserEmail());
             if (fileStream == null)
             {
-                _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download overall results. Method: DownloadOverallResultSlipsFileAsync({ukprn}, {User.GetUserEmail()})");
+                _logger.LogWarning(LogEvent.FileStreamNotFound, $"No FileStream found to download overall results. Method: AdminDownloadLearnerResultsPdfAsync({ukprn}, {User.GetUserEmail()})");
                 return RedirectToRoute(RouteConstants.ProblemWithService);
             }
 
