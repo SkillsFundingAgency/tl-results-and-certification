@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementCh
 
             Configuration = new ResultsAndCertificationConfiguration
             {
-                IPChaseBigGapsReminderExtractSettings = new IPChaseBigGapsReminderExtractSettings
+                IPChaseBigGapsReminderSettings = new IPChaseBigGapsReminderSettings
                 {
                     ValidDateRanges = new[]
                     {

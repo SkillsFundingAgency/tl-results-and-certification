@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementOn
 
             Configuration = new ResultsAndCertificationConfiguration
             {
-                IPOneOutstandingUlnReminderExtractSettings = new IPOneOutstandingUlnReminderExtractSettings
+                IPOneOutstandingUlnReminderSettings = new IPOneOutstandingUlnReminderSettings
                 {
                     ValidDateRanges = new[]
                     {

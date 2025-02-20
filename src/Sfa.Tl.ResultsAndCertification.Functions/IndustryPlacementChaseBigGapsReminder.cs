@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
     public class IndustryPlacementChaseBigGapsReminder
     {
         private readonly IIndustryPlacementNotificationService _industryPlacementNotificationService;
-        private readonly IPChaseBigGapsReminderExtractSettings _configuration;
+        private readonly IPChaseBigGapsReminderSettings _configuration;
 
         private readonly ICommonService _commonService;
 
@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
         {
             _industryPlacementNotificationService = industryPlacementNotificationService;
             _commonService = commonService;
-            _configuration = configuration.IPChaseBigGapsReminderExtractSettings;
+            _configuration = configuration.IPChaseBigGapsReminderSettings;
         }
 
         [FunctionName(Constants.IndustryPlacementChaseBigGapsReminder)]

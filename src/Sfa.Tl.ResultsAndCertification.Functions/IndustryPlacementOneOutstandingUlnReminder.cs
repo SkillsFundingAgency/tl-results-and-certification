@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
     public class IndustryPlacementOneOutstandingUlnReminder
     {
         private readonly IIndustryPlacementNotificationService _industryPlacementNotificationService;
-        private readonly IPOneOutstandingUlnReminderExtractSettings _configuration;
+        private readonly IPOneOutstandingUlnReminderSettings _configuration;
 
         private readonly ICommonService _commonService;
 
@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
         {
             _industryPlacementNotificationService = industryPlacementNotificationService;
             _commonService = commonService;
-            _configuration = configuration.IPOneOutstandingUlnReminderExtractSettings;
+            _configuration = configuration.IPOneOutstandingUlnReminderSettings;
         }
 
         [FunctionName(Constants.IndustryPlacementOneOutstandingUlnReminder)]

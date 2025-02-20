@@ -557,7 +557,7 @@
       "required": [],
       "type": "object"
     },
-    "IPChaseBigGapsReminderExtractSettings": {
+    "IPChaseBigGapsReminderSettings": {
       "properties": {
         "ValidDateRanges": {
           "type": "array",
@@ -568,7 +568,7 @@
       "required": [],
       "type": "object"
     },
-    "IPOneOutstandingUlnReminderExtractSettings": {
+    "IPOneOutstandingUlnReminderSettings": {
       "properties": {
         "ValidDateRanges": {
           "type": "array",
@@ -616,8 +616,8 @@
     "CertificateTrackingExtractSettings",
     "IPProviderFirstDeadlineReminderSettings",
     "IPMissedDeadlineReminderSettings",
-    "IPChaseBigGapsReminderExtractSettings",
-    "IPOneOutstandingUlnReminderExtractSettings"
+    "IPChaseBigGapsReminderSettings",
+    "IPOneOutstandingUlnReminderSettings"
   ],
   "type": "object"
 }

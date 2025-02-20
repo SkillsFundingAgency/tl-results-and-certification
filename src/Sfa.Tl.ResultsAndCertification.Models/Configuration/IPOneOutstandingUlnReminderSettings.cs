@@ -4,7 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Models.JsonConverter;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
 {
-    public class IPOneOutstandingUlnReminderExtractSettings
+    public class IPOneOutstandingUlnReminderSettings
     {
         /// <summary>
         /// Gets or sets the valid date ranges to run the process.

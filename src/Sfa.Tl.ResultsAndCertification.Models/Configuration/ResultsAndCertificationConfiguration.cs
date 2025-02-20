@@ -314,7 +314,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// <value>
         /// The industry placement chase big gaps reminder extract settings.
         /// </value>
-        public IPChaseBigGapsReminderExtractSettings IPChaseBigGapsReminderExtractSettings { get; set; }
+        public IPChaseBigGapsReminderSettings IPChaseBigGapsReminderSettings { get; set; }
 
         /// <summary>
         /// Gets or sets the one outstanding uln reminder extract settings.
@@ -322,7 +322,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// <value>
         /// The one oustanding uln reminder extract settings.
         /// </value>
-        public IPOneOutstandingUlnReminderExtractSettings IPOneOutstandingUlnReminderExtractSettings { get; set; }
+        public IPOneOutstandingUlnReminderSettings IPOneOutstandingUlnReminderSettings { get; set; }
 
         /// <summary>
         /// Gets or sets first deadline reminder reminder extract settings.
