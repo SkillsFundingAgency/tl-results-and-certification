@@ -33,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
             var today = DateTime.UtcNow.Date;
-            bool shouldFunctionRunToday = _configuration.IndustryPlacementMissedDeadlineReminderDateRanges.Any(r => r.Contains(today));
+            bool shouldFunctionRunToday = _configuration.ValidDateRanges.Any(r => r.Contains(today));
 
             if (!shouldFunctionRunToday)
             {
