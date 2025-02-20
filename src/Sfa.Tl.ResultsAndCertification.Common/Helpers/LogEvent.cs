@@ -26,7 +26,7 @@
         public const int TlevelReportIssueFailed = 2003;
 
         // provider events
-        public const int ProviersNotFound = 3001;
+        public const int ProviderNotFound = 3001;
         public const int ProviderTlevelNotAdded = 3002;
         public const int ProviderTlevelNotRemoved = 3003;
         public const int ProviderTlevelNotFound = 3004;

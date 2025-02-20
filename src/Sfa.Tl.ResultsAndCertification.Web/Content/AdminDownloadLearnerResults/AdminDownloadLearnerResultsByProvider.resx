@@ -117,37 +117,49 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Header_Admin_Dashboard" xml:space="preserve">
-    <value>Admin dashboard</value>
+  <data name="Button_Back_To_Home" xml:space="preserve">
+    <value>Back to home</value>
   </data>
-  <data name="Tile_Download_Learner_Results" xml:space="preserve">
-    <value>Download learner results</value>
+  <data name="Button_Download_Results_File" xml:space="preserve">
+    <value>Download results file</value>
   </data>
-  <data name="Tile_Download_Results_For_Active_Learners" xml:space="preserve">
-    <value>Download results for active learners in their final year of their T Level.</value>
+  <data name="Download_Filename" xml:space="preserve">
+    <value>T-Level-overall-results.csv</value>
   </data>
-  <data name="Tile_Manage_Providers_Heading" xml:space="preserve">
-    <value>Manage providers</value>
+  <data name="Download_Link_Results_CSV_Data" xml:space="preserve">
+    <value>Download results ({0})</value>
   </data>
-  <data name="Tile_Notifications" xml:space="preserve">
-    <value>Notifications</value>
+  <data name="Download_Link_Result_Slips_PDF_Data" xml:space="preserve">
+    <value>Download learner results slips ({0})</value>
   </data>
-  <data name="Tile_Search_Learner_Records_Heading" xml:space="preserve">
-    <value>Search learner records</value>
+  <data name="Download_ResultSlips_Filename" xml:space="preserve">
+    <value>T-Level-overall-result-slips.pdf</value>
   </data>
-  <data name="Tile_Search_Learner_Records_Search_For_And_Update" xml:space="preserve">
-    <value>Search for and update active and withdrawn learner details.</value>
+  <data name="File_Type_CSV" xml:space="preserve">
+    <value>CSV</value>
   </data>
-  <data name="Tile_Search_Update_Add_New_Providers" xml:space="preserve">
-    <value>Search for, update and add new providers.</value>
+  <data name="File_Type_PDF" xml:space="preserve">
+    <value>PDF</value>
   </data>
-  <data name="Tile_Update_Banner_Components" xml:space="preserve">
-    <value>Update banner components for any required communications for the service.</value>
+  <data name="Heading_Download_Tlevel_Results" xml:space="preserve">
+    <value>Download T Level results for {0}</value>
   </data>
-  <data name="Tile_View_Change_Log" xml:space="preserve">
-    <value>View change log</value>
+  <data name="Manage_Learner_Records" xml:space="preserve">
+    <value>Manage Learner Records</value>
   </data>
-  <data name="Tile_View_Change_Log_View_Changes" xml:space="preserve">
-    <value>View changes made to learner records by the admin team.</value>
+  <data name="Page" xml:space="preserve">
+    <value> page.</value>
+  </data>
+  <data name="Page_Title" xml:space="preserve">
+    <value>Download T Level results – Admin</value>
+  </data>
+  <data name="Para_Download_Results_As_CSV_File" xml:space="preserve">
+    <value>Download results as a CSV file for active learners who have reached the end of the second year of their T Level.</value>
+  </data>
+  <data name="Para_Download_Results_Slips_As_PDF_File" xml:space="preserve">
+    <value>Download learner results slips as a PDF.</value>
+  </data>
+  <data name="Para_File_Update_Next_Working_Day" xml:space="preserve">
+    <value>The downloadable results file and results slips will be updated to reflect any changes to results on the next working day.</value>
   </data>
 </root>

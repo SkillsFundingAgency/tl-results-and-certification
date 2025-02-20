@@ -117,37 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Header_Admin_Dashboard" xml:space="preserve">
-    <value>Admin dashboard</value>
+  <data name="AutoComplete_Help_Text" xml:space="preserve">
+    <value>The following entry field has auto-complete. When autocomplete results are available use up and down arrows to review and enter to select. Touch device users, explore by touch or with swipe gestures.</value>
   </data>
-  <data name="Tile_Download_Learner_Results" xml:space="preserve">
-    <value>Download learner results</value>
+  <data name="Continue_Button_Label" xml:space="preserve">
+    <value>Continue</value>
   </data>
-  <data name="Tile_Download_Results_For_Active_Learners" xml:space="preserve">
-    <value>Download results for active learners in their final year of their T Level.</value>
+  <data name="Page_Heading" xml:space="preserve">
+    <value>Which provider do you want to manage?</value>
   </data>
-  <data name="Tile_Manage_Providers_Heading" xml:space="preserve">
-    <value>Manage providers</value>
+  <data name="Page_Title" xml:space="preserve">
+    <value>Find providers – Admin</value>
   </data>
-  <data name="Tile_Notifications" xml:space="preserve">
-    <value>Notifications</value>
+  <data name="ProviderName_Char_Limit_Exceed_Validation_Message" xml:space="preserve">
+    <value>The character limit exceeded</value>
   </data>
-  <data name="Tile_Search_Learner_Records_Heading" xml:space="preserve">
-    <value>Search learner records</value>
+  <data name="ProviderName_NotValid_Validation_Message" xml:space="preserve">
+    <value>No provider found with that name - enter a valid provider’s name</value>
   </data>
-  <data name="Tile_Search_Learner_Records_Search_For_And_Update" xml:space="preserve">
-    <value>Search for and update active and withdrawn learner details.</value>
+  <data name="ProviderName_Required_Validation_Message" xml:space="preserve">
+    <value>Enter a provider’s name</value>
   </data>
-  <data name="Tile_Search_Update_Add_New_Providers" xml:space="preserve">
-    <value>Search for, update and add new providers.</value>
-  </data>
-  <data name="Tile_Update_Banner_Components" xml:space="preserve">
-    <value>Update banner components for any required communications for the service.</value>
-  </data>
-  <data name="Tile_View_Change_Log" xml:space="preserve">
-    <value>View change log</value>
-  </data>
-  <data name="Tile_View_Change_Log_View_Changes" xml:space="preserve">
-    <value>View changes made to learner records by the admin team.</value>
+  <data name="Provider_Input_Field_Label" xml:space="preserve">
+    <value>Enter the provider's name</value>
   </data>
 </root>

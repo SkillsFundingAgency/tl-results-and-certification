@@ -4,7 +4,6 @@ using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Models.ResultSlips;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Models.DownloadOverallResults;
-using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -18,13 +17,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public byte[] GetByteData(IEnumerable<DownloadOverallResultSlipsData> data)
         {
-            if (data == null || !data.Any())
-            {
-                throw new ArgumentNullException($"data cannot be null. {nameof(data)}");
-            }
-
             Document = new();
             MemoryStream stream = new();
+
+            if (data == null || !data.Any())
+            {
+                Document.Pages.Add();
+                Document.Save(stream);
+                return stream.ToArray();
+            }
 
             foreach (DownloadOverallResultSlipsData item in data)
             {
@@ -33,31 +34,29 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 page.Paragraphs.Add(BuildResultSlip(item));
                 page.Paragraphs[0].Margin = new MarginInfo() { Top = 50 };
             }
+
             Document.Save(stream);
             return stream.ToArray();
         }
 
         private static Table BuildResultSlip(DownloadOverallResultSlipsData learner)
         {
-            ResultSlipRow row;
-            List<ResultSlipRowProperty> data = new();
-
             Table table = CreateTableAndSetProperties();
 
             // Learner name and Uln
-            row = new ResultSlipRow(new HeaderRowStyle());
-            data = new()
+            ResultSlipRow row = new(new HeaderRowStyle());
+            List<ResultSlipRowProperty> data = new()
             {
-                 new () { Name=DownloadOverallResultSlipsHeader.LearnerName, ColSpan = COLSPAN.COLSPAN_2 } ,
-                 new () { Name=DownloadOverallResultSlipsHeader.Uln }
+                 new () { Name = DownloadOverallResultSlipsHeader.LearnerName, ColSpan = COLSPAN.COLSPAN_2 } ,
+                 new () { Name = DownloadOverallResultSlipsHeader.Uln }
             };
             table.Rows.Add(row.GetRow(data));
 
             row = new ResultSlipRow(new DataRowStyle());
             data = new()
             {
-                 new () { Name=learner.LearnerName, ColSpan = COLSPAN.COLSPAN_2 } ,
-                 new () { Name=learner.Uln.ToString() }
+                 new () { Name = learner.LearnerName, ColSpan = COLSPAN.COLSPAN_2 } ,
+                 new () { Name = learner.Uln.ToString() }
             };
             table.Rows.Add(row.GetRow(data));
 
@@ -65,15 +64,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             row = new ResultSlipRow(new HeaderRowStyle());
             data = new()
             {
-                 new () { Name=DownloadOverallResultSlipsHeader.ProviderName, ColSpan = COLSPAN.COLSPAN_2  },
-                 new () { Name=DownloadOverallResultSlipsHeader.ProviderUkprn }
+                 new () { Name = DownloadOverallResultSlipsHeader.ProviderName, ColSpan = COLSPAN.COLSPAN_2  },
+                 new () { Name = DownloadOverallResultSlipsHeader.ProviderUkprn }
             };
             table.Rows.Add(row.GetRow(data));
 
             row = new ResultSlipRow(new DataRowStyle());
             data = new()
             {
-                 new () {  Name=learner.ProviderName, ColSpan = COLSPAN.COLSPAN_2  },
+                 new () {  Name = learner.ProviderName, ColSpan = COLSPAN.COLSPAN_2  },
                  new () {  Name = learner.ProviderUkprn }
             };
             table.Rows.Add(row.GetRow(data));
@@ -82,14 +81,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             row = new ResultSlipRow(new HeaderRowStyle());
             data = new()
             {
-                 new () { Name=DownloadOverallResultSlipsHeader.Tlevel, ColSpan = COLSPAN.COLSPAN_3 }
+                 new () { Name = DownloadOverallResultSlipsHeader.Tlevel, ColSpan = COLSPAN.COLSPAN_3 }
             };
             table.Rows.Add(row.GetRow(data));
 
             row = new ResultSlipRow(new DataRowStyle());
             data = new()
             {
-                 new () { Name=learner.Tlevel, ColSpan = COLSPAN.COLSPAN_3 }
+                 new () { Name = learner.Tlevel, ColSpan = COLSPAN.COLSPAN_3 }
             };
             table.Rows.Add(row.GetRow(data));
 
@@ -97,14 +96,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             row = new ResultSlipRow(new HeaderRowStyle());
             data = new()
             {
-                 new () { Name=DownloadOverallResultSlipsHeader.CoreComponent, ColSpan = COLSPAN.COLSPAN_3 }
+                 new () { Name = DownloadOverallResultSlipsHeader.CoreComponent, ColSpan = COLSPAN.COLSPAN_3 }
             };
             table.Rows.Add(row.GetRow(data));
 
             row = new ResultSlipRow(new DataRowStyle());
             data = new()
             {
-                 new () { Name=learner.CoreComponent, ColSpan = COLSPAN.COLSPAN_3 }
+                 new () { Name = learner.CoreComponent, ColSpan = COLSPAN.COLSPAN_3 }
             };
             table.Rows.Add(row.GetRow(data));
 
@@ -112,18 +111,18 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             row = new ResultSlipRow(new HeaderRowStyle());
             data = new()
             {
-                  new () { Name=DownloadOverallResultSlipsHeader.CoreCode } ,
-                  new () { Name=DownloadOverallResultSlipsHeader.CoreAssessmentExamPeriod } ,
-                  new () { Name=DownloadOverallResultSlipsHeader.CoreResult }
+                  new () { Name = DownloadOverallResultSlipsHeader.CoreCode },
+                  new () { Name = DownloadOverallResultSlipsHeader.CoreAssessmentExamPeriod },
+                  new () { Name = DownloadOverallResultSlipsHeader.CoreResult }
             };
             table.Rows.Add(row.GetRow(data));
 
             row = new ResultSlipRow(new DataRowStyle());
             data = new()
             {
-                new () {  Name=learner.CoreCode },
-                new () { Name=learner.CoreAssessmentSeries },
-                new () { Name=learner.CoreResult }
+                new () { Name = learner.CoreCode },
+                new () { Name = learner.CoreAssessmentSeries },
+                new () { Name = learner.CoreResult }
             };
             table.Rows.Add(row.GetRow(data));
 
@@ -131,14 +130,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             row = new ResultSlipRow(new HeaderRowStyle());
             data = new()
             {
-                 new () { Name=DownloadOverallResultSlipsHeader.SpecialismComponent, ColSpan = COLSPAN.COLSPAN_3 }
+                 new () { Name = DownloadOverallResultSlipsHeader.SpecialismComponent, ColSpan = COLSPAN.COLSPAN_3 }
             };
             table.Rows.Add(row.GetRow(data));
 
             row = new ResultSlipRow(new DataRowStyle());
             data = new()
             {
-                  new () { Name=learner.SpecialismComponent, ColSpan = COLSPAN.COLSPAN_3 }
+                  new () { Name = learner.SpecialismComponent, ColSpan = COLSPAN.COLSPAN_3 }
             };
             table.Rows.Add(row.GetRow(data));
 
@@ -146,18 +145,18 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             row = new ResultSlipRow(new HeaderRowStyle());
             data = new()
             {
-                  new () { Name=DownloadOverallResultSlipsHeader.SpecialismCode },
-                  new () { Name=DownloadOverallResultSlipsHeader.SpecialismAssessmentExamPeriod },
-                  new () { Name=DownloadOverallResultSlipsHeader.SpecialismResult }
+                  new () { Name = DownloadOverallResultSlipsHeader.SpecialismCode },
+                  new () { Name = DownloadOverallResultSlipsHeader.SpecialismAssessmentExamPeriod },
+                  new () { Name = DownloadOverallResultSlipsHeader.SpecialismResult }
             };
             table.Rows.Add(row.GetRow(data));
 
             row = new ResultSlipRow(new DataRowStyle());
             data = new()
             {
-                new () { Name=learner.SpecialismCode },
-                new () { Name=learner.SpecialismAssessmentSeries },
-                new () { Name=learner.SpecialismResult }
+                new () { Name = learner.SpecialismCode },
+                new () { Name = learner.SpecialismAssessmentSeries },
+                new () { Name = learner.SpecialismResult }
             };
             table.Rows.Add(row.GetRow(data));
 
@@ -165,16 +164,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             row = new ResultSlipRow(new HeaderRowStyle());
             data = new()
             {
-                new () { Name=DownloadOverallResultSlipsHeader.IndustryPlacementStatus, ColSpan = COLSPAN.COLSPAN_2 },
-                new () { Name=DownloadOverallResultSlipsHeader.OverallResult }
+                new () { Name = DownloadOverallResultSlipsHeader.IndustryPlacementStatus, ColSpan = COLSPAN.COLSPAN_2 },
+                new () { Name = DownloadOverallResultSlipsHeader.OverallResult }
             };
             table.Rows.Add(row.GetRow(data));
 
             row = new ResultSlipRow(new DataRowStyle());
             data = new()
             {
-                new () { Name=learner.IndustryPlacementStatus, ColSpan = COLSPAN.COLSPAN_2 },
-                new () { Name=learner.OverallResult }
+                new () { Name = learner.IndustryPlacementStatus, ColSpan = COLSPAN.COLSPAN_2 },
+                new () { Name = learner.OverallResult }
             };
             table.Rows.Add(row.GetRow(data));
 
@@ -203,8 +202,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                 page.Contents.Add(new Aspose.Pdf.Operators.GSave());
 
-                Rectangle rectangle = new Rectangle(lowerLeftX, lowerLeftY, upperRightX, upperRightY);
-                Matrix matrix = new Matrix(new double[] { rectangle.URX - rectangle.LLX, 0, 0, rectangle.URY - rectangle.LLY, rectangle.LLX, rectangle.LLY });
+                Rectangle rectangle = new(lowerLeftX, lowerLeftY, upperRightX, upperRightY);
+                Matrix matrix = new(new double[] { rectangle.URX - rectangle.LLX, 0, 0, rectangle.URY - rectangle.LLY, rectangle.LLX, rectangle.LLY });
 
                 page.Contents.Add(new Aspose.Pdf.Operators.ConcatenateMatrix(matrix));
                 XImage ximage = page.Resources.Images[page.Resources.Images.Count];
@@ -242,14 +241,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             table.VerticalAlignment = VerticalAlignment.Bottom;
 
             table.DefaultCellTextState = new Aspose.Pdf.Text.TextState("Arial", 8f);
-            table.DefaultCellBorder = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, 0.1f);
-            table.Border = new Aspose.Pdf.BorderInfo(Aspose.Pdf.BorderSide.All, 0.6f);
+            table.DefaultCellBorder = new BorderInfo(BorderSide.All, 0.1f);
+            table.Border = new BorderInfo(BorderSide.All, 0.6f);
 
-            Aspose.Pdf.MarginInfo margin = new Aspose.Pdf.MarginInfo();
-            margin.Top = 6f;
-            margin.Left = 4f;
-            margin.Right = 4f;
-            margin.Bottom = 6f;
+            MarginInfo margin = new()
+            {
+                Top = 6f,
+                Left = 4f,
+                Right = 4f,
+                Bottom = 6f
+            };
 
             table.DefaultCellPadding = margin;
         }
