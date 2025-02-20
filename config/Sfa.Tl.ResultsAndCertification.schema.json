@@ -537,7 +537,7 @@
     },
     "IPProviderFirstDeadlineReminderSettings": {
       "properties": {
-        "NumberOfDays": {
+        "ValidDateRanges": {
           "type": "array",
           "environmentVariable": "IndustryPlacementProviderFirstDeadlineReminderDateRanges"
         }
@@ -548,7 +548,7 @@
     },
     "IPMissedDeadlineReminderSettings": {
       "properties": {
-        "NumberOfDays": {
+        "ValidDateRanges": {
           "type": "array",
           "environmentVariable": "IndustryPlacementMissedDeadlineReminderDateRanges"
         }
@@ -559,7 +559,7 @@
     },
     "IPChaseBigGapsReminderExtractSettings": {
       "properties": {
-        "NumberOfDays": {
+        "ValidDateRanges": {
           "type": "array",
           "environmentVariable": "IndustryPlacementChaseBigGapsReminderDateRanges"
         }
@@ -570,7 +570,7 @@
     },
     "IPOneOutstandingUlnReminderExtractSettings": {
       "properties": {
-        "NumberOfDays": {
+        "ValidDateRanges": {
           "type": "array",
           "environmentVariable": "IndustryPlacementOneOutstandingUlnReminderDateRanges"
         }

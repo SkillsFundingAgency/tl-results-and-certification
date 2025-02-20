@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementOn
             {
                 IPOneOutstandingUlnReminderExtractSettings = new IPOneOutstandingUlnReminderExtractSettings
                 {
-                    IndustryPlacementOneOutstandingUlnReminderDateRanges = new[]
+                    ValidDateRanges = new[]
                     {
                         new DateTimeRange
                         {

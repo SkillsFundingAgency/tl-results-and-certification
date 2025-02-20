@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementMi
             {
                 IPMissedDeadlineReminderSettings = new IPMissedDeadlineReminderSettings
                 {
-                    IndustryPlacementMissedDeadlineReminderDateRanges = new[]
+                    ValidDateRanges = new[]
                     {
                         new DateTimeRange
                         {

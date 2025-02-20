@@ -13,6 +13,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// The valid date ranges to run the process.
         /// </value>
         [JsonConverter(typeof(StringToDateTimeRangeArrayJsonConverter))]
-        public DateTimeRange[] IndustryPlacementMissedDeadlineReminderDateRanges { get; set; }
+        public DateTimeRange[] ValidDateRanges { get; set; }
     }
 }

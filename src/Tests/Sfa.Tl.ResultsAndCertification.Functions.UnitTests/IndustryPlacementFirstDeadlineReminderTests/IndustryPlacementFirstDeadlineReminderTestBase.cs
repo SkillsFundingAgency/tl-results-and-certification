@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementFi
             {
                 IPProviderFirstDeadlineReminderSettings = new IPProviderFirstDeadlineReminderSettings
                 {
-                    IndustryPlacementProviderFirstDeadlineReminderDateRanges = new[]
+                    ValidDateRanges = new[]
                     {
                         new DateTimeRange
                         {

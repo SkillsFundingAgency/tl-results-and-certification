@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementCh
             {
                 IPChaseBigGapsReminderExtractSettings = new IPChaseBigGapsReminderExtractSettings
                 {
-                    IndustryPlacementChaseBigGapsReminderDateRanges = new[]
+                    ValidDateRanges = new[]
                     {
                         new DateTimeRange
                         {
