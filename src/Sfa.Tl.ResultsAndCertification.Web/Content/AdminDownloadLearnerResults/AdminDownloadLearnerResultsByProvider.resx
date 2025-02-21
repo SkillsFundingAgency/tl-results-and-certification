@@ -159,7 +159,4 @@
   <data name="Para_Download_Results_Slips_As_PDF_File" xml:space="preserve">
     <value>Download learner results slips as a PDF.</value>
   </data>
-  <data name="Para_File_Update_Next_Working_Day" xml:space="preserve">
-    <value>The downloadable results file and results slips will be updated to reflect any changes to results on the next working day.</value>
-  </data>
 </root>

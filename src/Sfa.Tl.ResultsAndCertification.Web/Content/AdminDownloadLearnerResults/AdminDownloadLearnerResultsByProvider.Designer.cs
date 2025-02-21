@@ -186,14 +186,5 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDownloadLearnerResults
                 return ResourceManager.GetString("Para_Download_Results_Slips_As_PDF_File", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The downloadable results file and results slips will be updated to reflect any changes to results on the next working day..
-        /// </summary>
-        public static string Para_File_Update_Next_Working_Day {
-            get {
-                return ResourceManager.GetString("Para_File_Update_Next_Working_Day", resourceCulture);
-            }
-        }
     }
 }
