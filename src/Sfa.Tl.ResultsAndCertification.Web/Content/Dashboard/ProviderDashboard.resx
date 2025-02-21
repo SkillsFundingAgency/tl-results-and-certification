@@ -160,7 +160,7 @@
     <value>View news and updates (opens in a new tab)</value>
   </data>
   <data name="Manage_Learner_TLevel_Records_Description_Text" xml:space="preserve">
-    <value>Add and edit achievements and industry placement statuses.  You can also order replacement certificates and statements of achievement.</value>
+    <value>Update achievements and industry placement statuses, order replacement certificates, or notify us of pending withdrawals.</value>
   </data>
   <data name="Manage_Learner_TLevel_Records_Text" xml:space="preserve">
     <value>Manage learner records</value>
