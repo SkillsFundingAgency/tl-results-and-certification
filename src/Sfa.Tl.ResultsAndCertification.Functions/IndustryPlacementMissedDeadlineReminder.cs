@@ -4,8 +4,10 @@ using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Helpers;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 
@@ -14,19 +16,30 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
     public class IndustryPlacementMissedDeadlineReminder
     {
         private readonly IIndustryPlacementNotificationService _industryPlacementNotificationService;
+        private readonly IPMissedDeadlineReminderSettings _configuration;
 
         private readonly ICommonService _commonService;
 
-        public IndustryPlacementMissedDeadlineReminder(IIndustryPlacementNotificationService industryPlacementNotificationService, ICommonService commonService)
+        public IndustryPlacementMissedDeadlineReminder(IIndustryPlacementNotificationService industryPlacementNotificationService, ICommonService commonService, ResultsAndCertificationConfiguration configuration)
         {
             _industryPlacementNotificationService = industryPlacementNotificationService;
             _commonService = commonService;
+            _configuration = configuration.IPMissedDeadlineReminderSettings;
         }
 
         [FunctionName(Constants.IndustryPlacementMissedDeadlineReminder)]
         public async Task IndustryPlacementMissedDeadlineReminderAsync([TimerTrigger("%IndustryPlacementMissedDeadlineReminderTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
+
+            var today = DateTime.UtcNow.Date;
+            bool shouldFunctionRunToday = _configuration.ValidDateRanges.Any(r => r.Contains(today));
+
+            if (!shouldFunctionRunToday)
+            {
+                await Task.CompletedTask;
+                return;
+            }
 
             var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.IndustryPlacementMissedDeadlineReminder);
 

@@ -4,8 +4,10 @@ using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Helpers;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions
@@ -13,19 +15,30 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
     public class IndustryPlacementChaseBigGapsReminder
     {
         private readonly IIndustryPlacementNotificationService _industryPlacementNotificationService;
+        private readonly IPChaseBigGapsReminderSettings _configuration;
 
         private readonly ICommonService _commonService;
 
-        public IndustryPlacementChaseBigGapsReminder(IIndustryPlacementNotificationService industryPlacementNotificationService, ICommonService commonService)
+        public IndustryPlacementChaseBigGapsReminder(IIndustryPlacementNotificationService industryPlacementNotificationService, ICommonService commonService, ResultsAndCertificationConfiguration configuration)
         {
             _industryPlacementNotificationService = industryPlacementNotificationService;
             _commonService = commonService;
+            _configuration = configuration.IPChaseBigGapsReminderSettings;
         }
 
         [FunctionName(Constants.IndustryPlacementChaseBigGapsReminder)]
-        public async Task IndustryPlacementMissedDeadlineReminderAsync([TimerTrigger("%IndustryPlacementChaseBigGapsReminderTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
+        public async Task IndustryPlacementChaseBigGapsReminderAsync([TimerTrigger("%IndustryPlacementChaseBigGapsReminderTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
+
+            var today = DateTime.UtcNow.Date;
+            bool shouldFunctionRunToday = _configuration.ValidDateRanges.Any(r => r.Contains(today));
+
+            if (!shouldFunctionRunToday)
+            {
+                await Task.CompletedTask;
+                return;
+            }
 
             var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.IndustryPlacementChaseBigGapsReminder);
 
