@@ -9,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminProvider
 {
     public class When_ProviderDetails_Not_Found : AdminProviderControllerBaseTest
     {
-        private const int ProviderId = 1; 
+        private const int ProviderId = 1;
 
         public override void Given()
         {
@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminProvider
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            AdminProviderLoader.GetProviderDetailsViewModel(ProviderId);
+            AdminProviderLoader.Received(1).GetProviderDetailsViewModel(ProviderId);
         }
 
         [Fact]

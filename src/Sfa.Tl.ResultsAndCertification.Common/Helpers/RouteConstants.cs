@@ -643,5 +643,16 @@
         public const string SubmitAdminAddNotification = "SubmitAdminAddNotification";
 
         #endregion
+
+        #region Admin download learner results
+
+        public const string AdminDownloadLearnerResultsFindProviderClear = "AdminDownloadLearnerResultsFindProviderClear";
+        public const string AdminDownloadLearnerResultsFindProvider = "AdminDownloadLearnerResultsFindProvider";
+        public const string AdminDownloadLearnerResultsSubmitFindProvider = "AdminDownloadLearnerResultsSubmitFindProvider";
+        public const string AdminDownloadLearnerResultsByProvider = "AdminDownloadLearnerResultsByProvider";
+        public const string AdminDownloadLearnerResultsCsv = "AdminDownloadLearnerResultsCsv";
+        public const string AdminDownloadLearnerResultsPdf = "AdminDownloadLearnerResultsPdf";
+
+        #endregion
     }
 }

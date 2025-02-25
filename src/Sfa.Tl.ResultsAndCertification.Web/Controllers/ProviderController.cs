@@ -38,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (viewModel == null || viewModel.Providers == null || viewModel.Providers.Count == 0)
             {
-                _logger.LogInformation(LogEvent.ProviersNotFound, $"No provideproviders found. Method: GetTqAoProviderDetailsAsync(Ukprn: {User.GetUkPrn()}), User: {User.GetUserEmail()}");
+                _logger.LogInformation(LogEvent.ProviderNotFound, $"No provideproviders found. Method: GetTqAoProviderDetailsAsync(Ukprn: {User.GetUkPrn()}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.FindProvider);
             }
 
@@ -205,7 +205,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (viewModel == null || viewModel.Tlevels == null)
             {
-                _logger.LogWarning(LogEvent.ProviersNotFound,
+                _logger.LogWarning(LogEvent.ProviderNotFound,
                     $"No provider found. Method: GetViewProviderTlevelViewModelAsync(Ukprn: {User.GetUkPrn()}, ProviderId: {providerId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
@@ -228,7 +228,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (viewModel == null || viewModel.Tlevels == null)
             {
-                _logger.LogWarning(LogEvent.ProviersNotFound,
+                _logger.LogWarning(LogEvent.ProviderNotFound,
                     $"No provider found. Method: GetSelectProviderTlevelsAsync(Ukprn: {User.GetUkPrn()}, ProviderId: {providerId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
@@ -258,7 +258,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 var providerData = await _providerLoader.GetProviderLookupDataAsync(viewModel.Search, isExactMatch: true);
                 if (providerData == null || providerData.Count() != 1)
                 {
-                    _logger.LogInformation(LogEvent.ProviersNotFound,
+                    _logger.LogInformation(LogEvent.ProviderNotFound,
                     $"No provider found. Method: GetProviderLookupDataAsync(Search: {viewModel.Search}, isExactMatch: {true}), User: {User.GetUserEmail()}");
                     ModelState.AddModelError("Search", Web.Content.Provider.FindProvider.ProviderName_NotValid_Validation_Message);
                     return false;
