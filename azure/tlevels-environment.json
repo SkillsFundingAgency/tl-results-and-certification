@@ -155,7 +155,7 @@
     }
   },
   "variables": {
-    "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/tl-platform-building-blocks/master/ArmTemplates/",
+    "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/tl-platform-building-blocks/feature/TLD-587-disable-sql-public-access/ArmTemplates/",
     "uiAppName": "[concat(parameters('resourceNamePrefix'), '-web')]",
     "internalApiAppName": "[concat(parameters('resourceNamePrefix'), '-internal-api')]",
     "appInsightName": "[concat(parameters('resourceNamePrefix'), '-ai')]",
