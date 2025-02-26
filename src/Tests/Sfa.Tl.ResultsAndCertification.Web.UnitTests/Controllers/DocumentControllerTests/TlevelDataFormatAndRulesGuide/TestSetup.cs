@@ -39,6 +39,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentContr
             HttpContextAccessor.HttpContext.Returns(httpContext);
         }
 
+        public override void Given()
+        {
+        }
+
         public override Task When()
         {
             Result = Controller.TlevelDataFormatAndRulesGuide();

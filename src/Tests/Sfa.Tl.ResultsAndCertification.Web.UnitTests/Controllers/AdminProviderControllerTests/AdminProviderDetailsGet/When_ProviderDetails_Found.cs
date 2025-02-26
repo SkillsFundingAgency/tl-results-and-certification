@@ -38,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminProvider
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            AdminProviderLoader.GetProviderDetailsViewModel(ProviderId);
+            AdminProviderLoader.Received(1).GetProviderDetailsViewModel(ProviderId);
             CacheService.Received(1).GetAndRemoveAsync<NotificationBannerModel>(NotificationCacheKey);
         }
 

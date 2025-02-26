@@ -12,7 +12,11 @@ USING (VALUES
 (N'e4087caf-b68c-4c37-840e-524666c7652a', N'AppealGradeAfterDeadlineRequestUserNotification'),
 (N'a889ff99-af5e-4c66-adff-fa07f7c228bf', N'AppealGradeAfterDeadlineRequestTechnicalTeamNotification'),
 (N'daa342c6-8f92-4695-80ee-f251a7844449', N'GradeChangeRequestTechnicalTeamNotificationCoreComponent'),
-(N'559a3508-432d-4dd2-ac87-e7e15c81bcf3', N'GradeChangeRequestTechnicalTeamNotificationSpecialism')
+(N'559a3508-432d-4dd2-ac87-e7e15c81bcf3', N'GradeChangeRequestTechnicalTeamNotificationSpecialism'),
+(N'3773ec6d-079c-4809-b432-45366de569ef', N'IndustryPlacementFirstDeadlineReminder'),
+(N'507098d4-ce1c-4c92-86ab-eb71fd7ed8a4', N'IndustryPlacementMissedDeadlineReminder'),
+(N'37c1c0cd-4b35-4a2a-ac40-4a1d0f646f29', N'IndustryPlacementChaseBigGapsReminder'),
+(N'0d8977d1-454b-4fbf-945c-7400033fb471', N'IndustryPlacementOneOutstandingUlnReminder')
 )
   AS Source ([TemplateId], [TemplateName]) 
 ON Target.[TemplateName] = Source.[TemplateName] 

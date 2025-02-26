@@ -120,6 +120,12 @@
   <data name="Header_Admin_Dashboard" xml:space="preserve">
     <value>Admin dashboard</value>
   </data>
+  <data name="Tile_Download_Learner_Results" xml:space="preserve">
+    <value>Download learner results</value>
+  </data>
+  <data name="Tile_Download_Results_For_Active_Learners" xml:space="preserve">
+    <value>Download results for active learners in their final year of their T Level.</value>
+  </data>
   <data name="Tile_Manage_Providers_Heading" xml:space="preserve">
     <value>Manage providers</value>
   </data>

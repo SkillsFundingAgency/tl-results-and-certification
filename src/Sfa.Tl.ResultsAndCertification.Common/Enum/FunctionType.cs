@@ -18,6 +18,10 @@
         AnalystCoreResultExtract = 13,
         CoreRommExtract = 14,
         SpecialismRommExtract = 15,
-        CertificateTrackingExtract = 16
+        CertificateTrackingExtract = 16,
+        IndustryPlacementFirstDeadlineReminder = 17,
+        IndustryPlacementMissedDeadlineReminder = 18,
+        IndustryPlacementChaseBigGapsReminder = 19,
+        IndustryPlacementOneOutstandingUlnReminder = 20
     }
 }

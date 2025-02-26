@@ -13,6 +13,10 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Enum
         GradeChangeRequestTechnicalTeamNotificationCoreComponent,
         GradeChangeRequestTechnicalTeamNotificationSpecialism,
         AppealGradeAfterDeadlineRequestUserNotification,
-        AppealGradeAfterDeadlineRequestTechnicalTeamNotification
+        AppealGradeAfterDeadlineRequestTechnicalTeamNotification,
+        IndustryPlacementFirstDeadlineReminder,
+        IndustryPlacementMissedDeadlineReminder,
+        IndustryPlacementChaseBigGapsReminder,
+        IndustryPlacementOneOutstandingUlnReminder
     }
 }

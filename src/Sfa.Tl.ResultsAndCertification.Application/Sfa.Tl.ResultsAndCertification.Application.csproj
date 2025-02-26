@@ -14,10 +14,11 @@
     <PackageReference Include="Aspose.PDF" Version="24.5.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
     <PackageReference Include="GovukNotify" Version="6.0.0" />
-    <PackageReference Include="JWT" Version="8.9.0" />
+    <PackageReference Include="JWT" Version="9.0.3" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Sfa.Tl.ResultsAndCertification.Api.Client\Sfa.Tl.ResultsAndCertification.Api.Client.csproj" />
     <ProjectReference Include="..\Sfa.Tl.ResultsAndCertification.Common.Services\Sfa.Tl.ResultsAndCertification.Common.Services.csproj" />
     <ProjectReference Include="..\Sfa.Tl.ResultsAndCertification.Common\Sfa.Tl.ResultsAndCertification.Common.csproj" />
     <ProjectReference Include="..\Sfa.Tl.ResultsAndCertification.Data\Sfa.Tl.ResultsAndCertification.Data.csproj" />

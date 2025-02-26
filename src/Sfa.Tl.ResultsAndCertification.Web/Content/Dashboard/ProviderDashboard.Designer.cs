@@ -187,7 +187,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add and edit achievements and industry placement statuses.  You can also order replacement certificates and statements of achievement..
+        ///   Looks up a localized string similar to Update achievements and industry placement statuses, order replacement certificates, or notify us of pending withdrawals..
         /// </summary>
         public static string Manage_Learner_TLevel_Records_Description_Text {
             get {

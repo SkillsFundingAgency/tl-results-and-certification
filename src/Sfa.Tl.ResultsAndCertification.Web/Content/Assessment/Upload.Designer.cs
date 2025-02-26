@@ -70,15 +70,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Published 28 November 2024.
-        /// </summary>
-        public static string Assessments_Published_On {
-            get {
-                return ResourceManager.GetString("Assessments_Published_On", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to 1KB.
         /// </summary>
         public static string CSV_File_Size_Kb_Text {
@@ -106,29 +97,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 287KB.
-        /// </summary>
-        public static string File_Size_Kb_Text {
-            get {
-                return ResourceManager.GetString("File_Size_Kb_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to File size too large – must be no more than {0}MB.
         /// </summary>
         public static string File_Size_Too_Large_Validation_Message {
             get {
                 return ResourceManager.GetString("File_Size_Too_Large_Validation_Message", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to XLSX.
-        /// </summary>
-        public static string File_Type {
-            get {
-                return ResourceManager.GetString("File_Type", resourceCulture);
             }
         }
         
@@ -165,15 +138,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         public static string Js_Disabled_Upload_File_Help_Text {
             get {
                 return ResourceManager.GetString("Js_Disabled_Upload_File_Help_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Download T Levels assessment entry data format and rules ({0}, {1}).
-        /// </summary>
-        public static string Link_Tlevels_Assessment_Entry_Data_Format_Rules {
-            get {
-                return ResourceManager.GetString("Link_Tlevels_Assessment_Entry_Data_Format_Rules", resourceCulture);
             }
         }
         
@@ -241,20 +205,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to If you export data from another system, you must check the data is in the right format. .
+        ///   Looks up a localized string similar to guidance and download the template to help you. Once you have added your assessment details to the template, you can upload your file..
         /// </summary>
-        public static string Para_If_You_Export_Data_From_Another_System {
+        public static string Para_Guidance_And_Download_The_Template_To_Help_You {
             get {
-                return ResourceManager.GetString("Para_If_You_Export_Data_From_Another_System", resourceCulture);
+                return ResourceManager.GetString("Para_Guidance_And_Download_The_Template_To_Help_You", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to You can download guidance on data formats and rules to help you. Once you have added your assessment entries to the template, you can upload your file..
+        ///   Looks up a localized string similar to If you export data from another system, you must check the data is in the right format..
         /// </summary>
-        public static string Para_If_You_Export_Data_From_Another_System_Guidance {
+        public static string Para_If_You_Export_Data_Check_The_Data_Is_In_The_Right_Format {
             get {
-                return ResourceManager.GetString("Para_If_You_Export_Data_From_Another_System_Guidance", resourceCulture);
+                return ResourceManager.GetString("Para_If_You_Export_Data_Check_The_Data_Is_In_The_Right_Format", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to See the.
+        /// </summary>
+        public static string Para_See_The {
+            get {
+                return ResourceManager.GetString("Para_See_The", resourceCulture);
             }
         }
         
@@ -282,6 +255,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Assessment {
         public static string Select_File_To_Upload_Required_Validation_Message {
             get {
                 return ResourceManager.GetString("Select_File_To_Upload_Required_Validation_Message", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to T Level data format and rules.
+        /// </summary>
+        public static string Tlevel_Data_Format_And_Rules {
+            get {
+                return ResourceManager.GetString("Tlevel_Data_Format_And_Rules", resourceCulture);
             }
         }
         

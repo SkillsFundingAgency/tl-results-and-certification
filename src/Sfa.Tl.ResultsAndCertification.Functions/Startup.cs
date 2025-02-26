@@ -67,6 +67,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
         private void RegisterApplicationServices(IServiceCollection services)
         {
+            services.AddHttpClient<IDfeSignInApiClient, DfeSignInApiClient>();
+            services.AddTransient<ITokenServiceClient, TokenServiceClient>();
             services.AddTransient<IRegistrationRepository, RegistrationRepository>();
             services.AddTransient<IAssessmentRepository, AssessmentRepository>();
             services.AddTransient<IResultRepository, ResultRepository>();
@@ -88,6 +90,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddTransient<INotificationService, NotificationService>();
             services.AddTransient<IAsyncNotificationClient, NotificationClient>(provider => new NotificationClient(_configuration.GovUkNotifyApiKey));
             services.AddTransient<IIndustryPlacementService, IndustryPlacementService>();
+            services.AddTransient<IIndustryPlacementNotificationService, IndustryPlacementNotificationService>();
             services.AddTransient<IBlobStorageService, BlobStorageService>();
             services.AddTransient<IProviderAddressExtractionService, ProviderAddressExtractionService>();
             services.AddTransient<ICertificateTrackingExtractionService, CertificateTrackingExtractionService>();

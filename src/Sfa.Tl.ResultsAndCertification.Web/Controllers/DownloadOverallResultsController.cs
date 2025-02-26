@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
+using Sfa.Tl.ResultsAndCertification.Web.FileResult;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.DownloadResults;
 using System;
@@ -55,10 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             fileStream.Position = 0;
-            return new FileStreamResult(fileStream, "text/csv")
-            {
-                FileDownloadName = DownloadOverallResultContent.Download_Filename
-            };
+            return new CsvFileStreamResult(fileStream, DownloadOverallResultContent.Download_Filename);
         }
 
         [HttpGet]
@@ -73,10 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             fileStream.Position = 0;
-            return new FileStreamResult(fileStream, "application/pdf")
-            {
-                FileDownloadName = DownloadOverallResultContent.Download_ResultSlips_Filename
-            };
+            return new PdfFileStreamResult(fileStream, DownloadOverallResultContent.Download_ResultSlips_Filename);
         }
 
         [HttpGet]
@@ -91,10 +86,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             fileStream.Position = 0;
-            return new FileStreamResult(fileStream, "application/pdf")
-            {
-                FileDownloadName = DownloadOverallResultContent.Download_ResultSlips_Filename
-            };
+            return new PdfFileStreamResult(fileStream, DownloadOverallResultContent.Download_ResultSlips_Filename);
         }
     }
 }
