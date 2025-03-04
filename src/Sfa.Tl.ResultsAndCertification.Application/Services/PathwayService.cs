@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Sfa.Tl.ResultsAndCertification.Application.Services.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;

@@ -270,4 +270,7 @@
   <data name="Download_Romms_Data" xml:space="preserve">
     <value>Download ROMMs data</value>
   </data>
+  <data name="Select_Awarding_Organisation" xml:space="preserve">
+    <value>Select awarding organisations</value>
+  </data>
 </root>

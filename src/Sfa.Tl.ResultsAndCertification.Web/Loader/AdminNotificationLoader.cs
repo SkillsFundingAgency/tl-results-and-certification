@@ -5,6 +5,7 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminNotification;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminNotification;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -75,6 +76,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             AddNotificationRequest request = _mapper.Map<AddNotificationRequest>(viewModel);
             return _apiClient.AddNotificationAsync(request);
+        }
+
+        public static object DidNotReceive()
+        {
+            throw new NotImplementedException();
         }
     }
 }

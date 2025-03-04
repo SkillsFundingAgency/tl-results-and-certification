@@ -120,8 +120,14 @@
   <data name="Header_Admin_Dashboard" xml:space="preserve">
     <value>Admin dashboard</value>
   </data>
+  <data name="Tile_Download_AO_Results_And_Romm_Data" xml:space="preserve">
+    <value>Download AO results and ROMM data</value>
+  </data>
   <data name="Tile_Download_Learner_Results" xml:space="preserve">
     <value>Download learner results</value>
+  </data>
+  <data name="Tile_Download_Results_And_Romm_Date_For_Awarding_Organisations" xml:space="preserve">
+    <value>Download results and ROMM data for awarding organisations.</value>
   </data>
   <data name="Tile_Download_Results_For_Active_Learners" xml:space="preserve">
     <value>Download results for active learners in their final year of their T Level.</value>

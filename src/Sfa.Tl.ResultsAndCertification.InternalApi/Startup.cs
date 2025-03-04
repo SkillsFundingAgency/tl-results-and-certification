@@ -13,7 +13,6 @@ using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.PathwayResult;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
-using Sfa.Tl.ResultsAndCertification.Application.Services.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Strategies;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
@@ -164,6 +163,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<IRepositoryFactory, RepositoryFactory>();
 
             services.AddTransient<IDateTimeProvider, DateTimeProvider>();
+            services.AddTransient<ITlevelService, TlevelService>();
             services.AddTransient<IAwardingOrganisationService, AwardingOrganisationService>();
             services.AddTransient<IProviderService, ProviderService>();
             services.AddTransient<IPathwayService, PathwayService>();

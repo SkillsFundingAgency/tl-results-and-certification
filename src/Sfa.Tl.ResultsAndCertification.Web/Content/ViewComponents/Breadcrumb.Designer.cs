@@ -385,6 +385,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select awarding organisations.
+        /// </summary>
+        public static string Select_Awarding_Organisation {
+            get {
+                return ResourceManager.GetString("Select_Awarding_Organisation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Post-results.
         /// </summary>
         public static string StartPostResultsService {
