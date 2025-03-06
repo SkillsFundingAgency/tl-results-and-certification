@@ -25,6 +25,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Authentication.Strategies;
 using Sfa.Tl.ResultsAndCertification.Web.Filters;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Web.Middleware;
 using Sfa.Tl.ResultsAndCertification.Web.Session;
 using Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper;
 using StackExchange.Redis;
@@ -113,6 +114,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                 healthCheckBuilder.AddRedis(redisConnection);
             }
 
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(ResultsAndCertificationConfiguration.DfeSignInSettings.Timeout);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
             services.AddSingleton<TokenValidatedStrategy>();
             services.AddSingleton<FreezePeriodTokenValidatedStrategy>();
 
@@ -180,6 +188,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             app.UseXXssProtection(opts => opts.Disabled());
             app.UseXfo(xfo => xfo.Deny());
 
+            app.UseSession();
+            app.UseMiddleware<SessionMiddleware>();
+
             SetConfigSecurityPolicyHeader(app);
 
             app.UseCookiePolicy();
@@ -196,7 +207,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             });
         }
 
-        private void RegisterDependencies(IServiceCollection services)
+        private static void RegisterDependencies(IServiceCollection services)
         {
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSingleton<IWebConfigurationService, WebConfigurationService>();
