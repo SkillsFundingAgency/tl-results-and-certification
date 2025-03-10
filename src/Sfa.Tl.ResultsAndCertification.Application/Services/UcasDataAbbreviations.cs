@@ -35,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             { "Distinction", "D" },
             { "Merit", "M" },
             { "Pass", "P" },
-            { "Partial achievement", "PA" },
+            { "Partial achievement", "PARTACH" },
             { "X - no result", "X" },
             { "Unclassified", "U" },
             { "Q - pending result", "Q"}
