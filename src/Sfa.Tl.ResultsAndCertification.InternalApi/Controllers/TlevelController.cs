@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Sfa.Tl.ResultsAndCertification.Application.Services.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System.Collections.Generic;
@@ -11,13 +11,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
     [ApiController]
     public class TlevelController : ControllerBase, ITlevelController
     {
-        private readonly IAwardingOrganisationService _awardingOrganisationService;
+        private readonly ITlevelService _tlevelService;
         private readonly IPathwayService _pathwayService;
 
-        public TlevelController(IAwardingOrganisationService awardingOrganisationService,
+        public TlevelController(ITlevelService tlevelService,
             IPathwayService pathwayService)
         {
-            _awardingOrganisationService = awardingOrganisationService;
+            _tlevelService = tlevelService;
             _pathwayService = pathwayService;
         }
 
@@ -25,14 +25,14 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         [Route("GetAllTlevels/{ukprn}")]
         public async Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetAllTlevelsByUkprnAsync(long ukprn)
         {
-            return await _awardingOrganisationService.GetAllTlevelsByUkprnAsync(ukprn);
+            return await _tlevelService.GetAllTlevelsByUkprnAsync(ukprn);
         }
 
         [HttpGet]
         [Route("{ukprn}/GetTlevelsByStatus/{statusId}")]
         public async Task<IEnumerable<AwardingOrganisationPathwayStatus>> GetTlevelsByStatusIdAsync(long ukprn, int statusId)
         {
-            return await _awardingOrganisationService.GetTlevelsByStatusIdAsync(ukprn, statusId);
+            return await _tlevelService.GetTlevelsByStatusIdAsync(ukprn, statusId);
         }
 
         [HttpGet]
@@ -46,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         [Route("VerifyTlevel")]
         public async Task<IActionResult> VerifyTlevelAsync(VerifyTlevelDetails model)
         {
-            var result = await _awardingOrganisationService.VerifyTlevelAsync(model);
+            var result = await _tlevelService.VerifyTlevelAsync(model);
             return Ok(result);
         }
 

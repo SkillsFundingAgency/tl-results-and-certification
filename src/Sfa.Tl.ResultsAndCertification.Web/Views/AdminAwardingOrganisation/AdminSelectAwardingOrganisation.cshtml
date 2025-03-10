@@ -1,0 +1,52 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminAwardingOrganisation.AdminSelectAwardingOrganisationViewModel
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Models.Contracts
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminAwardingOrganisation
+@using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminAwardingOrganisation
+
+@{
+    ViewData["Title"] = SelectAwardingOrganisation.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+
+        <form class="form" id="select-awarding-organisation-form" asp-route="@RouteConstants.AdminSubmitSelectAwardingOrganisation">
+            <h1 class="govuk-heading-xl">
+                @SelectAwardingOrganisation.Page_Heading
+            </h1>
+
+            <partial name="_ValidationSummary" />
+
+            <div class="govuk-form-group govuk-!-margin-bottom-9" sfa-validation-for="SelectedAwardingOrganisationUkprn" sfa-validation-class="govuk-form-group--error">
+                <div class="govuk-radios" data-module="govuk-radios">
+                    @for (int i = 0; i < Model.AwardingOrganisations.Length; i++)
+                    {
+                        AwardingOrganisationMetadata current = Model.AwardingOrganisations[i];
+                        string inputId = $"awarding_organisation_{current.Id}";
+
+                        <div class="govuk-radios__item">
+                            <input class="govuk-radios__input" id="@inputId" asp-for="SelectedAwardingOrganisationUkprn" type="radio" value="@current.Ukprn">
+                            <label class="govuk-label govuk-radios__label" for="@inputId">
+                                @current.DisplayName
+                            </label>
+
+                            <input type="hidden" asp-for="@Model.AwardingOrganisations[i].Id" />
+                            <input type="hidden" asp-for="@Model.AwardingOrganisations[i].Ukprn" />
+                            <input type="hidden" asp-for="@Model.AwardingOrganisations[i].DisplayName" />
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="govuk-button-group">
+                <button id="continueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@SelectAwardingOrganisation.Button_Continue</button>
+                <a id="cancelButton" class="govuk-button gov-body govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminHome">@SelectAwardingOrganisation.Button_Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

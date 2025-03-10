@@ -235,6 +235,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             services.AddTransient<IDashboardLoader, DashboardLoader>();
             services.AddTransient<IAdminNotificationLoader, AdminNotificationLoader>();
             services.AddTransient<IAdminDownloadLearnerResultsLoader, AdminDownloadLearnerResultsLoader>();
+            services.AddTransient<IAdminAwardingOrganisationLoader, AdminAwardingOrganisationLoader>();
         }
 
         private static void SetStrictTransportSecurityHeader(IApplicationBuilder app)

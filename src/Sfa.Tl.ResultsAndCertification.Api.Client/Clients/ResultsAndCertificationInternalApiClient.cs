@@ -671,6 +671,16 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
         #endregion
 
+        #region Awarding organisation
+
+        public Task<IEnumerable<AwardingOrganisationMetadata>> GetAllAwardingOrganisationsAsync()
+            => GetAsync<IEnumerable<AwardingOrganisationMetadata>>(ApiConstants.GetAllAwardingOrganisations);
+
+        public Task<AwardingOrganisationMetadata> GetAwardingOrganisationByUkprnAsync(long ukprn)
+            => GetAsync<AwardingOrganisationMetadata>(string.Format(ApiConstants.GetAwardingOrganisationByUkprn, ukprn));
+
+        #endregion
+
         #region Private Methods
 
         /// <summary>

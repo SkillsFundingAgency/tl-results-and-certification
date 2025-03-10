@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Sfa.Tl.ResultsAndCertification.Application.Services.Interfaces
+namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
 {
     public interface IPathwayService
     {
