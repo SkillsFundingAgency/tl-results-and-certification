@@ -578,44 +578,44 @@
       "additionalProperties": false,
       "required": [],
       "type": "object"
-    }
-  },
-  "ServiceFreezePeriodsSettings": {
-    "type": "object",
-    "properties": {
-      "TrainingProvider": {
-        "type": "object",
-        "properties": {
-          "StartDate": {
-            "type": "string",
-            "environmentVariable": "TrainingProviderStartDate"
-          },
-          "EndDate": {
-            "type": "string",
-            "environmentVariable": "TrainingProviderEndDate"
-          }
-        },
-        "required": [],
-        "additionalProperties": false
-      },
-      "AwardingOrganisation": {
-        "type": "object",
-        "properties": {
-          "StartDate": {
-            "type": "string",
-            "environmentVariable": "AwardingOrganisationStartDate"
-          },
-          "EndDate": {
-            "type": "string",
-            "environmentVariable": "AwardingOrganisationEndDate"
-          }
-        },
-        "required": [],
-        "additionalProperties": false
-      }
     },
-    "required": [],
-    "additionalProperties": false
+    "ServiceFreezePeriodsSettings": {
+      "properties": {
+        "TrainingProvider": {
+          "properties": {
+            "StartDate": {
+              "type": "string",
+              "environmentVariable": "TrainingProviderStartDate"
+            },
+            "EndDate": {
+              "type": "string",
+              "environmentVariable": "TrainingProviderEndDate"
+            }
+          },
+          "required": [],
+          "additionalProperties": false,
+          "type": "object"
+        },
+        "AwardingOrganisation": {
+          "properties": {
+            "StartDate": {
+              "type": "string",
+              "environmentVariable": "AwardingOrganisationStartDate"
+            },
+            "EndDate": {
+              "type": "string",
+              "environmentVariable": "AwardingOrganisationEndDate"
+            }
+          },
+          "required": [],
+          "additionalProperties": false,
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "required": [],
+      "type": "object"
+    }
   },
   "additionalProperties": false,
   "required": [
@@ -655,10 +655,7 @@
     "IPMissedDeadlineReminderSettings",
     "IPChaseBigGapsReminderSettings",
     "IPOneOutstandingUlnReminderSettings",
-    "ServiceFreezePeriodsSettings",
-    "TrainingProvider",
-    "AwardingOrganisation"
-
+    "ServiceFreezePeriodsSettings"
   ],
   "type": "object"
 }
