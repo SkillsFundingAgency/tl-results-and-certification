@@ -585,14 +585,14 @@
           "properties": {
             "StartDate": {
               "type": "string",
-              "environmentVariable": "TrainingProviderStartDate"
+              "environmentVariable": "TrainingProviderFreezeStartDate"
             },
             "EndDate": {
               "type": "string",
-              "environmentVariable": "TrainingProviderEndDate"
+              "environmentVariable": "TrainingProviderFreezeEndDate"
             }
           },
-          "required": [],
+          "required": ["StartDate", "EndDate"],
           "additionalProperties": false,
           "type": "object"
         },
@@ -600,20 +600,20 @@
           "properties": {
             "StartDate": {
               "type": "string",
-              "environmentVariable": "AwardingOrganisationStartDate"
+              "environmentVariable": "AwardingOrganisationFreezeStartDate"
             },
             "EndDate": {
               "type": "string",
-              "environmentVariable": "AwardingOrganisationEndDate"
+              "environmentVariable": "AwardingOrganisationFreezeEndDate"
             }
           },
-          "required": [],
+          "required": ["StartDate", "EndDate"],
           "additionalProperties": false,
           "type": "object"
         }
       },
       "additionalProperties": false,
-      "required": [],
+      "required": ["TrainingProvider", "AwardingOrganisation"],
       "type": "object"
     }
   },
