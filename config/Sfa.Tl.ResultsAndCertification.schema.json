@@ -655,7 +655,10 @@
     "IPMissedDeadlineReminderSettings",
     "IPChaseBigGapsReminderSettings",
     "IPOneOutstandingUlnReminderSettings",
-    "ServiceFreezePeriodsSettings"   
+    "ServiceFreezePeriodsSettings",
+    "TrainingProvider",
+    "AwardingOrganisation"
+
   ],
   "type": "object"
 }
