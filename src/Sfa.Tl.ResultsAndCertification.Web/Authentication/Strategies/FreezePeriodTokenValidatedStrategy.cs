@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Services.System.Interface;
+using Sfa.Tl.ResultsAndCertification.Common.Utils.Ranges;
 using Sfa.Tl.ResultsAndCertification.Models.Authentication;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
@@ -20,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication.Strategies
         private readonly IDfeSignInApiClient _dfeSignInApiClient;
         private readonly IResultsAndCertificationInternalApiClient _resultsAndCertificationInternalApiClient;
         private readonly ISystemProvider _systemProvider;
-
+        private readonly ResultsAndCertificationConfiguration _config;
         private readonly int _timeout;
 
         public FreezePeriodTokenValidatedStrategy(
@@ -32,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication.Strategies
             _dfeSignInApiClient = dfeSignInApiClient;
             _resultsAndCertificationInternalApiClient = resultsAndCertificationInternalApiClient;
             _systemProvider = systemProvider;
-            _timeout = config.DfeSignInSettings.Timeout;
+            _config = config;
         }
 
         public async Task GetOnTokenValidatedTask(TokenValidatedContext context)
@@ -43,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication.Strategies
             // so that we don't issue a session cookie but one with a fixed expiration
             context.Properties.IsPersistent = true;
 
-            var cookieAndSessionTimeout = _timeout;
+            var cookieAndSessionTimeout = _config.DfeSignInSettings.Timeout;
             var overallSessionTimeout = TimeSpan.FromMinutes(cookieAndSessionTimeout);
             context.Properties.ExpiresUtc = _systemProvider.UtcNow.Add(overallSessionTimeout);
         }
@@ -61,25 +62,63 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication.Strategies
             var userId = GetUserId(claimsPrincipal);
             DfeUserInfo dfeUserInfo = await _dfeSignInApiClient.GetDfeSignInUserInfo(organisationId, userId);
 
-            LoginUserType loginUseType = await GetLoginUserTypeAsync(dfeUserInfo);
-            if (loginUseType == LoginUserType.NotSpecified)
+            LoginUserType loginUserType = await GetLoginUserTypeAsync(dfeUserInfo);
+            if (loginUserType == LoginUserType.NotSpecified)
             {
                 return Enumerable.Empty<Claim>();
             }
 
-            if (loginUseType != LoginUserType.Admin)
+            if (loginUserType != LoginUserType.Admin)
             {
-                return new[]
-                {
-                    CreateHasAccessToServiceClaim(false),
-                    CreateBooleanClaim(CustomClaimTypes.InFreezePeriod, true)
-                };
+                return GetUserClaims(loginUserType);
             }
 
-            IEnumerable<Claim> createdClaims = CreateClaims(claimsPrincipal, dfeUserInfo, loginUseType);
+            IEnumerable<Claim> createdClaims = CreateClaims(claimsPrincipal, dfeUserInfo, loginUserType);
             IEnumerable<Claim> dfeUserInfoClaims = GetClaims(dfeUserInfo);
 
             return createdClaims.Concat(dfeUserInfoClaims);
+        }
+
+        private Claim[] GetUserClaims(LoginUserType loginUserType) => loginUserType switch
+        {
+            LoginUserType.TrainingProvider => GetProviderClaims(loginUserType),
+            LoginUserType.AwardingOrganisation => GetAwardingOrganisationClaims(loginUserType),
+            _ => throw new NotImplementedException()
+        };
+
+        private Claim[] GetProviderClaims(LoginUserType loginUserType)
+        {
+            var isFreezePeriod = InFreezePeriod(_config.ServiceFreezePeriodsSettings.TrainingProvider.StartDate,
+                _config.ServiceFreezePeriodsSettings.TrainingProvider.EndDate);
+
+            return new[]{
+                CreateHasAccessToServiceClaim(!isFreezePeriod),
+                CreateUserTypeClaim(((int)loginUserType).ToString()),
+                CreateBooleanClaim(CustomClaimTypes.InFreezePeriod, isFreezePeriod)
+            };
+        }
+
+        private Claim[] GetAwardingOrganisationClaims(LoginUserType loginUserType)
+        {
+            var isFreezePeriod = InFreezePeriod(_config.ServiceFreezePeriodsSettings.AwardingOrganisation.StartDate,
+                        _config.ServiceFreezePeriodsSettings.AwardingOrganisation.EndDate);
+
+            return new[]{
+                CreateHasAccessToServiceClaim(!isFreezePeriod),
+                CreateUserTypeClaim(((int)loginUserType).ToString()),
+                CreateBooleanClaim(CustomClaimTypes.InFreezePeriod, isFreezePeriod)
+            };
+        }
+
+        private bool InFreezePeriod(DateTime startDate, DateTime endDate)
+        {
+            var freezePeriods = new DateTimeRange
+            {
+                From = startDate,
+                To = endDate
+            };
+
+            return freezePeriods.Contains(_systemProvider.UtcNow);
         }
 
         private async Task<LoginUserType> GetLoginUserTypeAsync(DfeUserInfo dfeUserInfo)
@@ -129,7 +168,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication.Strategies
                 new Claim(CustomClaimTypes.HasAccessToService, dfeUserInfo.HasAccessToService.ToString()),
 
                 // Login user type
-                new Claim(CustomClaimTypes.LoginUserType, ((int)loginUserType).ToString())
+                new Claim(CustomClaimTypes.LoginUserType, ((int)loginUserType).ToString()),
             };
 
         private static string GetOrganisationId(ClaimsPrincipal claimsPrincipal)
@@ -150,5 +189,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication.Strategies
 
         private static Claim CreateBooleanClaim(string name, bool value)
             => new(name, value ? "true" : "false");
+
+        private static Claim CreateUserTypeClaim(string usertype)
+            => new Claim(CustomClaimTypes.LoginUserType, usertype);
+
     }
 }

@@ -161,7 +161,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                         OnTokenValidated = context =>
                         {
                             var resolver = context.GetService<TokenValidatedStrategyResolver>();
-                            ITokenValidatedStrategy strategy = resolver(config.FreezePeriodStartDate, config.FreezePeriodEndDate);
+                            ITokenValidatedStrategy strategy = resolver(config.ServiceFreezePeriodsSettings);
 
                             return strategy.GetOnTokenValidatedTask(context);
                         }
