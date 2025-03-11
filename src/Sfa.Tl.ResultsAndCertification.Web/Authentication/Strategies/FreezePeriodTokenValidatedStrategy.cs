@@ -68,10 +68,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication.Strategies
                 return Enumerable.Empty<Claim>();
             }
 
-            if (loginUserType != LoginUserType.Admin)
-            {
+            if (loginUserType != LoginUserType.Admin && UserInFreezePeriod(loginUserType))
                 return GetUserClaims(loginUserType);
-            }
 
             IEnumerable<Claim> createdClaims = CreateClaims(claimsPrincipal, dfeUserInfo, loginUserType);
             IEnumerable<Claim> dfeUserInfoClaims = GetClaims(dfeUserInfo);
@@ -79,13 +77,30 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication.Strategies
             return createdClaims.Concat(dfeUserInfoClaims);
         }
 
-        private Claim[] GetUserClaims(LoginUserType loginUserType) => loginUserType switch
+        private bool UserInFreezePeriod(LoginUserType loginUserType) => loginUserType switch
         {
-            LoginUserType.TrainingProvider => GetProviderClaims(loginUserType),
-            LoginUserType.AwardingOrganisation => GetAwardingOrganisationClaims(loginUserType),
+            LoginUserType.TrainingProvider => InFreezePeriod(
+                _config.ServiceFreezePeriodsSettings.TrainingProvider.StartDate,
+                _config.ServiceFreezePeriodsSettings.TrainingProvider.EndDate),
+
+            LoginUserType.AwardingOrganisation => InFreezePeriod(
+                _config.ServiceFreezePeriodsSettings.AwardingOrganisation.StartDate,
+                _config.ServiceFreezePeriodsSettings.AwardingOrganisation.EndDate),
+            _ => throw new Exception("Invalid user type")
+        };
+
+        private Claim[] GetUserClaims(LoginUserType loginUserType, bool freezePeriod = true) => loginUserType switch
+        {
+            LoginUserType.TrainingProvider => GetFreezePeriodClaims(loginUserType, freezePeriod),
+            LoginUserType.AwardingOrganisation => GetFreezePeriodClaims(loginUserType, freezePeriod),
             _ => throw new NotImplementedException()
         };
 
+        private Claim[] GetFreezePeriodClaims(LoginUserType loginUserType, bool isFreezePeriod) => new[]{
+                CreateHasAccessToServiceClaim(!isFreezePeriod),
+                CreateUserTypeClaim(((int)loginUserType).ToString()),
+                CreateBooleanClaim(CustomClaimTypes.InFreezePeriod, isFreezePeriod)
+            };
         private Claim[] GetProviderClaims(LoginUserType loginUserType)
         {
             var isFreezePeriod = InFreezePeriod(_config.ServiceFreezePeriodsSettings.TrainingProvider.StartDate,
@@ -94,7 +109,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication.Strategies
             return new[]{
                 CreateHasAccessToServiceClaim(!isFreezePeriod),
                 CreateUserTypeClaim(((int)loginUserType).ToString()),
-                CreateBooleanClaim(CustomClaimTypes.InFreezePeriod, isFreezePeriod)
+                CreateBooleanClaim(CustomClaimTypes.InFreezePeriod, isFreezePeriod),
             };
         }
 
