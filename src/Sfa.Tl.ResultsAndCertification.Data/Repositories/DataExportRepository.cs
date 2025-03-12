@@ -1,10 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.DataExport;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 {
@@ -113,29 +115,25 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
         public async Task<IList<SpecialismResultsExport>> GetDataExportSpecialismResultsAsync(long aoUkprn)
         {
-            var academicYear = _dbContext.AcademicYear;
+            DbSet<AcademicYear> academicYear = _dbContext.AcademicYear;
 
-            return await _dbContext.TqSpecialismAssessment
-               .Include(sa => sa.TqSpecialismResults.Where(sa => sa.IsOptedin && sa.EndDate == null))
-               .Include(sa => sa.TqRegistrationSpecialism)
-               .Include(sa => sa.AssessmentSeries)
-               .Include(sa => sa.TqRegistrationSpecialism.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlPathway)
-               .Include(sa => sa.TqRegistrationSpecialism.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton)
-               .Include(sa => sa.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile)
-               .Include(sa => sa.TqRegistrationSpecialism.TqRegistrationPathway.TqProvider)
-               .Where(sa => sa.IsOptedin && sa.EndDate == null
+            IQueryable<SpecialismResultsExport> query = _dbContext.TqSpecialismAssessment
+                .Where(sa => sa.IsOptedin && sa.EndDate == null
                       && sa.TqRegistrationSpecialism.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active
                       && sa.TqRegistrationSpecialism.TqRegistrationPathway.EndDate == null
                       && sa.TqRegistrationSpecialism.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn)
-           .Select(sa => new SpecialismResultsExport
-           {
-               Uln = sa.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber,
-               AcademicYear = academicYear.First(e => e.Year == sa.TqRegistrationSpecialism.TqRegistrationPathway.AcademicYear).Name,
-               SpecialismCode = sa.TqRegistrationSpecialism.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
-               SpecialismAssessmentEntry = sa.AssessmentSeries.Name,
-               SpecialismGrade = sa.TqSpecialismResults.Any() ? sa.TqSpecialismResults.First().TlLookup.Value : string.Empty
-           })
-           .ToListAsync();
+                .Select(sa => new SpecialismResultsExport
+                {
+                    Uln = sa.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber,
+                    AcademicYear = academicYear.First(e => e.Year == sa.TqRegistrationSpecialism.TqRegistrationPathway.AcademicYear).Name,
+                    SpecialismCode = sa.TqRegistrationSpecialism.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
+                    SpecialismAssessmentEntry = sa.AssessmentSeries.Name,
+                    SpecialismGrade = sa.TqSpecialismResults.Any(s => s.IsOptedin && s.EndDate == null)
+                        ? sa.TqSpecialismResults.First(s => s.IsOptedin && s.EndDate == null).TlLookup.Value
+                        : string.Empty
+                });
+
+            return await query.ToListAsync();
         }
 
         public async Task<IList<PendingWithdrawalsExport>> GetDataExportPendingWithdrawalsAsync(long aoUkprn)
