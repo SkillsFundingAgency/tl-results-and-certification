@@ -75,13 +75,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
 
         public bool IsOverallResultCalculated => OverallCalculationStatus == CalculationStatus.Completed || OverallCalculationStatus == CalculationStatus.CompletedAppealRaised || OverallCalculationStatus == CalculationStatus.CompletedRommRaised;
 
-        public bool IsTlevelStartedSameAsStartYear => TlevelStartYear == AcademicYear;
-
         public bool IsLearnerWithdrawn => LearnerRegistrationPathwayStatus == nameof(RegistrationPathwayStatus.Withdrawn);
 
         public bool IsLearnerRegisteredFourYearsAgo => (DateTime.Now.Year - AcademicYear) > 4;
 
-        public bool DisplayDevlopmentTicketMessage => (IsOverallResultCalculated && !IsLearnerWithdrawn && !IsTlevelStartedSameAsStartYear && !IsLearnerRegisteredFourYearsAgo);
+        public bool DisplayDevlopmentTicketMessage => (IsOverallResultCalculated && !IsLearnerWithdrawn  && !IsLearnerRegisteredFourYearsAgo);
 
         public string StartYearCannotChangeMessage
         {
@@ -89,7 +87,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
             {
                 if (IsLearnerWithdrawn) return ChangeStartYear.Message_Start_Year_Cannot_Be_Changed_Learner_Has_Been_Withdrawn;
                 else if (IsOverallResultCalculated) return ChangeStartYear.Message_Start_Year_Cannot_Be_Changed_Overall_Result_Already_Calculated;
-                else if (IsTlevelStartedSameAsStartYear) return ChangeStartYear.Message_Start_Year_Cannot_Be_Changed_Tlevel_Became_Available_This_Academic_Year;
                 else if (IsLearnerRegisteredFourYearsAgo) return ChangeStartYear.Message_Start_Year_Cannot_Be_Changed_Learner_Started_Course_More_Than_4_Years;
                 else return string.Empty;
             }
