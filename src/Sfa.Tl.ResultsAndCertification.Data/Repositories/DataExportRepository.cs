@@ -6,7 +6,6 @@ using Sfa.Tl.ResultsAndCertification.Models.DataExport;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 {
@@ -91,9 +90,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
 
         public async Task<IList<CoreResultsExport>> GetDataExportCoreResultsAsync(long aoUkprn)
         {
-            var academicYear = _dbContext.AcademicYear;
+            DbSet<AcademicYear> academicYear = _dbContext.AcademicYear;
 
-            var query = _dbContext.TqPathwayAssessment
+            IQueryable<CoreResultsExport> query = _dbContext.TqPathwayAssessment
                 .Where(pa => pa.IsOptedin && pa.EndDate == null
                        && pa.TqRegistrationPathway.Status == RegistrationPathwayStatus.Active
                        && pa.TqRegistrationPathway.EndDate == null
