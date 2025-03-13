@@ -101,29 +101,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication.Strategies
                 CreateUserTypeClaim(((int)loginUserType).ToString()),
                 CreateBooleanClaim(CustomClaimTypes.InFreezePeriod, isFreezePeriod)
             };
-        private Claim[] GetProviderClaims(LoginUserType loginUserType)
-        {
-            var isFreezePeriod = InFreezePeriod(_config.ServiceFreezePeriodsSettings.TrainingProvider.StartDate,
-                _config.ServiceFreezePeriodsSettings.TrainingProvider.EndDate);
-
-            return new[]{
-                CreateHasAccessToServiceClaim(!isFreezePeriod),
-                CreateUserTypeClaim(((int)loginUserType).ToString()),
-                CreateBooleanClaim(CustomClaimTypes.InFreezePeriod, isFreezePeriod),
-            };
-        }
-
-        private Claim[] GetAwardingOrganisationClaims(LoginUserType loginUserType)
-        {
-            var isFreezePeriod = InFreezePeriod(_config.ServiceFreezePeriodsSettings.AwardingOrganisation.StartDate,
-                        _config.ServiceFreezePeriodsSettings.AwardingOrganisation.EndDate);
-
-            return new[]{
-                CreateHasAccessToServiceClaim(!isFreezePeriod),
-                CreateUserTypeClaim(((int)loginUserType).ToString()),
-                CreateBooleanClaim(CustomClaimTypes.InFreezePeriod, isFreezePeriod)
-            };
-        }
 
         private bool InFreezePeriod(DateTime startDate, DateTime endDate)
         {
@@ -183,7 +160,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication.Strategies
                 new Claim(CustomClaimTypes.HasAccessToService, dfeUserInfo.HasAccessToService.ToString()),
 
                 // Login user type
-                new Claim(CustomClaimTypes.LoginUserType, ((int)loginUserType).ToString()),
+                new Claim(CustomClaimTypes.LoginUserType, ((int)loginUserType).ToString())
             };
 
         private static string GetOrganisationId(ClaimsPrincipal claimsPrincipal)
