@@ -70,11 +70,29 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Download AO results and ROMM data.
+        /// </summary>
+        public static string Tile_Download_AO_Results_And_Romm_Data {
+            get {
+                return ResourceManager.GetString("Tile_Download_AO_Results_And_Romm_Data", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download learner results.
         /// </summary>
         public static string Tile_Download_Learner_Results {
             get {
                 return ResourceManager.GetString("Tile_Download_Learner_Results", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Download results and ROMM data for awarding organisations..
+        /// </summary>
+        public static string Tile_Download_Results_And_Romm_Date_For_Awarding_Organisations {
+            get {
+                return ResourceManager.GetString("Tile_Download_Results_And_Romm_Date_For_Awarding_Organisations", resourceCulture);
             }
         }
         

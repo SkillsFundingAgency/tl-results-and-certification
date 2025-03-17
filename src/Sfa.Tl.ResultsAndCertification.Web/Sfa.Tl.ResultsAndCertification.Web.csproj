@@ -45,6 +45,16 @@
 
 
 	<ItemGroup>
+		<Compile Update="Content\AdminAwardingOrganisation\AdminDownloadResultsRommsByAwardingOrganisation.Designer.cs">
+		  <DependentUpon>AdminDownloadResultsRommsByAwardingOrganisation.resx</DependentUpon>
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		</Compile>
+		<Compile Update="Content\AdminAwardingOrganisation\SelectAwardingOrganisation.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>SelectAwardingOrganisation.resx</DependentUpon>
+		</Compile>
 		<Compile Update="Content\AdminDashboard\LearnerRecord.Designer.cs">
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
@@ -1384,6 +1394,14 @@
 
 
 	<ItemGroup>
+		<EmbeddedResource Update="Content\AdminAwardingOrganisation\AdminDownloadResultsRommsByAwardingOrganisation.resx">
+		  <LastGenOutput>AdminDownloadResultsRommsByAwardingOrganisation.Designer.cs</LastGenOutput>
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminAwardingOrganisation\SelectAwardingOrganisation.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>SelectAwardingOrganisation.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminDashboard\LearnerRecord.resx">
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		  <LastGenOutput>LearnerRecord.Designer.cs</LastGenOutput>

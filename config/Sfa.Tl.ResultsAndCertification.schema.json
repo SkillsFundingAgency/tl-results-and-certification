@@ -578,6 +578,43 @@
       "additionalProperties": false,
       "required": [],
       "type": "object"
+    },
+    "ServiceFreezePeriodsSettings": {
+      "properties": {
+        "TrainingProvider": {
+          "properties": {
+            "StartDate": {
+              "type": "string",
+              "environmentVariable": "TrainingProviderFreezeStartDate"
+            },
+            "EndDate": {
+              "type": "string",
+              "environmentVariable": "TrainingProviderFreezeEndDate"
+            }
+          },
+          "required": ["StartDate", "EndDate"],
+          "additionalProperties": false,
+          "type": "object"
+        },
+        "AwardingOrganisation": {
+          "properties": {
+            "StartDate": {
+              "type": "string",
+              "environmentVariable": "AwardingOrganisationFreezeStartDate"
+            },
+            "EndDate": {
+              "type": "string",
+              "environmentVariable": "AwardingOrganisationFreezeEndDate"
+            }
+          },
+          "required": ["StartDate", "EndDate"],
+          "additionalProperties": false,
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "required": ["TrainingProvider", "AwardingOrganisation"],
+      "type": "object"
     }
   },
   "additionalProperties": false,
@@ -617,7 +654,8 @@
     "IPProviderFirstDeadlineReminderSettings",
     "IPMissedDeadlineReminderSettings",
     "IPChaseBigGapsReminderSettings",
-    "IPOneOutstandingUlnReminderSettings"
+    "IPOneOutstandingUlnReminderSettings",
+    "ServiceFreezePeriodsSettings"
   ],
   "type": "object"
 }

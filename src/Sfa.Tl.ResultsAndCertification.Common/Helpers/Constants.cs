@@ -119,6 +119,7 @@
         public const string ChangeLogId = "changeLogId";
         public const string Type = "type";
         public const string NotificationId = "notificationId";
+        public const string AwardingOrganisationUkprn = "awardingOrganisationUkprn";
 
         // Assessments
         public const int AssessmentEndInYears = 4;

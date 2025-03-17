@@ -25,6 +25,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Authentication.Strategies;
 using Sfa.Tl.ResultsAndCertification.Web.Filters;
 using Sfa.Tl.ResultsAndCertification.Web.Loader;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Web.Middleware;
 using Sfa.Tl.ResultsAndCertification.Web.Session;
 using Sfa.Tl.ResultsAndCertification.Web.WebConfigurationHelper;
 using StackExchange.Redis;
@@ -113,21 +114,37 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                 healthCheckBuilder.AddRedis(redisConnection);
             }
 
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(ResultsAndCertificationConfiguration.DfeSignInSettings.Timeout);
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            });
+
             services.AddSingleton<TokenValidatedStrategy>();
             services.AddSingleton<FreezePeriodTokenValidatedStrategy>();
 
-            services.AddSingleton<TokenValidatedStrategyResolver>(serviceProvider => (from, to) =>
+            services.AddSingleton<TokenValidatedStrategyResolver>(serviceProvider => (freezePeriods) =>
             {
-                var freezePeriod = new DateTimeRange
+                var systemProvider = serviceProvider.GetService<ISystemProvider>();
+
+                var trainingProviderFreezePeriods = new DateTimeRange
                 {
-                    From = from,
-                    To = to
+                    From = freezePeriods.TrainingProvider.StartDate,
+                    To = freezePeriods.TrainingProvider.EndDate
                 };
 
-                var systemProvider = serviceProvider.GetService<ISystemProvider>();
-                bool isFreezePeriodNow = freezePeriod.Contains(systemProvider.UtcNow);
+                bool isTrainingProviderFreezePeriodNow = trainingProviderFreezePeriods.Contains(systemProvider.UtcNow);
 
-                return isFreezePeriodNow
+                var awardingOrganisationFreezePeriods = new DateTimeRange
+                {
+                    From = freezePeriods.AwardingOrganisation.StartDate,
+                    To = freezePeriods.AwardingOrganisation.EndDate
+                };
+
+                bool isAwardingOrganisationFreezePeriodNow = awardingOrganisationFreezePeriods.Contains(systemProvider.UtcNow);
+
+                return isTrainingProviderFreezePeriodNow || isAwardingOrganisationFreezePeriodNow
                     ? serviceProvider.GetService<FreezePeriodTokenValidatedStrategy>()
                     : serviceProvider.GetService<TokenValidatedStrategy>();
             });
@@ -180,6 +197,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             app.UseXXssProtection(opts => opts.Disabled());
             app.UseXfo(xfo => xfo.Deny());
 
+            app.UseSession();
+            app.UseMiddleware<SessionMiddleware>();
+
             SetConfigSecurityPolicyHeader(app);
 
             app.UseCookiePolicy();
@@ -196,7 +216,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             });
         }
 
-        private void RegisterDependencies(IServiceCollection services)
+        private static void RegisterDependencies(IServiceCollection services)
         {
             services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
             services.AddSingleton<IWebConfigurationService, WebConfigurationService>();
@@ -218,12 +238,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             services.AddTransient<IAdminChangeLogLoader, AdminChangeLogLoader>();
             services.AddTransient<IAdminPostResultsLoader, AdminPostResultsLoader>();
             services.AddTransient<IAdminProviderLoader, AdminProviderLoader>();
+            services.AddTransient<IHelpLoader, HelpLoader>();
             services.AddTransient<ISystemProvider, SystemProvider>();
             services.AddTransient<ISearchRegistrationLoader, SearchRegistrationLoader>();
             services.AddTransient<IProviderRegistrationsLoader, ProviderRegistrationsLoader>();
             services.AddTransient<IDashboardLoader, DashboardLoader>();
             services.AddTransient<IAdminNotificationLoader, AdminNotificationLoader>();
             services.AddTransient<IAdminDownloadLearnerResultsLoader, AdminDownloadLearnerResultsLoader>();
+            services.AddTransient<IAdminAwardingOrganisationLoader, AdminAwardingOrganisationLoader>();
         }
 
         private static void SetStrictTransportSecurityHeader(IApplicationBuilder app)

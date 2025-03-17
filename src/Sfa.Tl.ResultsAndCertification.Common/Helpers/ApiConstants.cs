@@ -192,5 +192,9 @@
         public const string GetNotification = "/api/adminnotification/GetNotification/{0}";
         public const string AddNotification = "/api/adminnotification/AddNotification";
         public const string UpdateNotification = "/api/adminnotification/UpdateNotification";
+
+        //Awarding organisations
+        public const string GetAllAwardingOrganisations = "/api/awardingorganisation/GetAllAwardingOrganisations";
+        public const string GetAwardingOrganisationByUkprn = "/api/awardingorganisation/GetAwardingOrganisationByUkprn/{0}";
     }
 }

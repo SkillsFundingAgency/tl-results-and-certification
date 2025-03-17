@@ -654,5 +654,17 @@
         public const string AdminDownloadLearnerResultsPdf = "AdminDownloadLearnerResultsPdf";
 
         #endregion
+
+        #region Admin provider
+
+        public const string AdminSelectAwardingOrganisationClear = "AdminSelectAwardingOrganisationClear";
+        public const string AdminSelectAwardingOrganisation = "AdminSelectAwardingOrganisation";
+        public const string AdminSubmitSelectAwardingOrganisation = "AdminSubmitSelectAwardingOrganisation";
+        public const string AdminDownloadResultsRommsByAwardingOrganisation = "AdminDownloadResultsRommsByAwardingOrganisation";
+        public const string AdminDownloadCoreResultsDataLink = "AdminDownloadCoreResultsDataLink";
+        public const string AdminDownloadSpecialismResultsDataLink = "AdminDownloadSpecialismResultsDataLink";
+        public const string AdminDownloadRommsDataLink = "AdminDownloadRommsDataLink";
+
+        #endregion
     }
 }

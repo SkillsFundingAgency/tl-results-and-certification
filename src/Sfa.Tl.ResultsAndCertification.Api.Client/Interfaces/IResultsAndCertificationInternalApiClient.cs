@@ -242,5 +242,13 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<bool> UpdateNotificationAsync(UpdateNotificationRequest request);
 
         #endregion
+
+        #region Awarding organisation
+
+        Task<IEnumerable<AwardingOrganisationMetadata>> GetAllAwardingOrganisationsAsync();
+
+        Task<AwardingOrganisationMetadata> GetAwardingOrganisationByUkprnAsync(long ukprn);
+
+        #endregion
     }
 }
