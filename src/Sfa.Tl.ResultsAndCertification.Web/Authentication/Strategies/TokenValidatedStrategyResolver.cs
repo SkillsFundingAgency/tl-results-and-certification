@@ -1,6 +1,6 @@
-﻿using System;
+﻿using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Authentication.Strategies
 {
-    public delegate ITokenValidatedStrategy TokenValidatedStrategyResolver(DateTime freezePeriodFrom, DateTime freezePeriodTo);
+    public delegate ITokenValidatedStrategy TokenValidatedStrategyResolver(ServiceFreezePeriods serviceFreezePeriods);
 }

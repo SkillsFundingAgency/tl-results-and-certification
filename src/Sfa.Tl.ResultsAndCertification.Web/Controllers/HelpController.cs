@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
+using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Help;
 using System;
 
@@ -10,11 +12,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
     [AllowAnonymous]
     public class HelpController : Controller
     {
+        protected readonly IHelpLoader _helpLoader;
         private readonly ResultsAndCertificationConfiguration _configuration;
 
-        public HelpController(ResultsAndCertificationConfiguration configuration)
+        public HelpController(ResultsAndCertificationConfiguration configuration, IHelpLoader helpLoader)
         {
             _configuration = configuration;
+            _helpLoader = helpLoader;
         }
 
         [HttpGet]
@@ -73,16 +77,23 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("service-unavailable", Name = RouteConstants.ServiceUnavailable)]
         public IActionResult ServiceUnavailable()
         {
-            DateTime freezePeriodEndDateUtc = _configuration.FreezePeriodEndDate.AddSeconds(1);
+            ServiceUnavailableViewModel viewModel = new();
+            var userType = _helpLoader.GetLoginUserType(User);
+
+            DateTime freezePeriodEndDateUtc = GetFreezerPeriodEndDate(userType);
             DateTime freezePeriodEndDateUkTime = GetUkTimeFromUtc(freezePeriodEndDateUtc);
 
-            var viewModel = new ServiceUnavailableViewModel
-            {
-                ServiceAvailableFrom = $"{freezePeriodEndDateUkTime.AddMinutes(1).ToString("HH:mmtt").ToLower()} on {freezePeriodEndDateUkTime.DayOfWeek} {freezePeriodEndDateUkTime:dd MMMM yyyy}"
-            };
+            viewModel.ServiceAvailableFrom = $"{freezePeriodEndDateUkTime.AddMinutes(1).ToString("HH:mmtt").ToLower()} on {freezePeriodEndDateUkTime.DayOfWeek} {freezePeriodEndDateUkTime:dd MMMM yyyy}";
 
             return View(viewModel);
         }
+
+        private DateTime GetFreezerPeriodEndDate(LoginUserType type) => type switch
+        {
+            LoginUserType.AwardingOrganisation => _configuration.ServiceFreezePeriodsSettings.AwardingOrganisation.EndDate.AddSeconds(1),
+            LoginUserType.TrainingProvider => _configuration.ServiceFreezePeriodsSettings.TrainingProvider.EndDate.AddSeconds(1),
+            _ => throw new InvalidOperationException("Invalid user type")
+        };
 
         private static DateTime GetUkTimeFromUtc(DateTime utc)
         {

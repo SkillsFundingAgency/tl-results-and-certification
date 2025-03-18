@@ -19,6 +19,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.ReviewStatus, opts => opts.MapFrom(s => s.PathwayStatusId))
                 .ForMember(d => d.ModifiedBy, opts => opts.MapFrom(s => s.ModifiedBy))
                 .ForMember(d => d.ModifiedOn, opts => opts.MapFrom<DateTimeResolver<VerifyTlevelDetails, TqAwardingOrganisation>>());
+
+            CreateMap<TlAwardingOrganisation, AwardingOrganisationMetadata>()
+                .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
+                .ForMember(d => d.Ukprn, opts => opts.MapFrom(s => s.UkPrn))
+                .ForMember(d => d.DisplayName, opts => opts.MapFrom(s => s.DisplayName));
         }
     }
 }

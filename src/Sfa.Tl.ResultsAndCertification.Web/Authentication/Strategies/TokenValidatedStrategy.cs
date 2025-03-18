@@ -3,7 +3,6 @@ using Newtonsoft.Json.Linq;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
-using Sfa.Tl.ResultsAndCertification.Common.Services.System.Interface;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using System;
@@ -23,7 +22,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication.Strategies
         public TokenValidatedStrategy(
                 IDfeSignInApiClient dfeSignInApiClient,
                 IResultsAndCertificationInternalApiClient resultsAndCertificationInternalApiClient,
-                ISystemProvider systemProvider,
                 ResultsAndCertificationConfiguration config)
         {
             _dfeSignInApiClient = dfeSignInApiClient;

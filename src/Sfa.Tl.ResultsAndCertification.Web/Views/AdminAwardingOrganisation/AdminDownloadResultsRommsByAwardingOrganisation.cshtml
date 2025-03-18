@@ -1,0 +1,97 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminAwardingOrganisation.AdminDownloadResultsRommsByAwardingOrganisationViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminAwardingOrganisation
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+
+@{
+    ViewData["Title"] = AdminDownloadResultsRommsByAwardingOrganisation.Page_Title;
+}
+
+@section NavigationBar
+{
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <h1 class="govuk-heading-l">
+            @string.Format(AdminDownloadResultsRommsByAwardingOrganisation.Heading_Download_Results_And_Romms_Data, Model.AwardingOrganisationDisplayName)
+        </h1>
+
+        <div class="govuk-!-margin-top-8">
+            @if (Model.CoreResultsDownloadLinkViewModel != null)
+            {
+                <section class="govuk-clearfix">
+                    <div class="attachment__thumbnail">
+                        <a class="govuk-link" target="_self" tabindex="-1" aria-hidden="true" asp-route="@RouteConstants.AdminDownloadCoreResultsDataLink" asp-route-awardingOrganisationUkprn="@Model.AwardingOrganisationUkprn" asp-route-fileId="@Model.CoreResultsDownloadLinkViewModel.BlobUniqueReference">
+                            <partial name="Partials/_attachment_thumbnail.cshtml" />
+                        </a>
+                    </div>
+                    <div class="attachment__details">
+                        <h2 class="govuk-heading-m">
+                            <a class="govuk-link" target="_self" asp-route="@RouteConstants.AdminDownloadCoreResultsDataLink" asp-route-awardingOrganisationUkprn="@Model.AwardingOrganisationUkprn" asp-route-fileId="@Model.CoreResultsDownloadLinkViewModel.BlobUniqueReference">
+                                @AdminDownloadResultsRommsByAwardingOrganisation.Core_Results_Link_DisplayName (@Model.CoreResultsDownloadLinkViewModel.FileType, @Model.CoreResultsDownloadLinkViewModel.FileSize<abbr title="Kilobyte">@AdminDownloadResultsRommsByAwardingOrganisation.File_Size_Units</abbr>)
+                            </a>
+                        </h2>
+                    </div>
+                </section>
+            }
+            else
+            {
+                <p class="govuk-body">@AdminDownloadResultsRommsByAwardingOrganisation.Para_No_Core_Results_Data_Available</p>
+            }
+        </div>
+
+        <div class="govuk-!-margin-top-8">
+            @if (Model.SpecialismResultsDownloadLinkViewModel != null)
+            {
+                <section class="govuk-clearfix">
+                    <div class="attachment__thumbnail">
+                        <a class="govuk-link" target="_self" tabindex="-1" aria-hidden="true" asp-route="@RouteConstants.AdminDownloadSpecialismResultsDataLink" asp-route-awardingOrganisationUkprn="@Model.AwardingOrganisationUkprn" asp-route-fileId="@Model.SpecialismResultsDownloadLinkViewModel.BlobUniqueReference">
+                            <partial name="Partials/_attachment_thumbnail.cshtml" />
+                        </a>
+                    </div>
+                    <div class="attachment__details">
+                        <h2 class="govuk-heading-m">
+                            <a class="govuk-link" target="_self" asp-route="@RouteConstants.AdminDownloadSpecialismResultsDataLink" asp-route-awardingOrganisationUkprn="@Model.AwardingOrganisationUkprn" asp-route-fileId="@Model.SpecialismResultsDownloadLinkViewModel.BlobUniqueReference">
+                                @AdminDownloadResultsRommsByAwardingOrganisation.Specialism_Results_Link_DisplayName (@Model.SpecialismResultsDownloadLinkViewModel.FileType, @Model.SpecialismResultsDownloadLinkViewModel.FileSize<abbr title="Kilobyte">@AdminDownloadResultsRommsByAwardingOrganisation.File_Size_Units</abbr>)
+                            </a>
+                        </h2>
+                    </div>
+                </section>
+            }
+            else
+            {
+                <p class="govuk-body">@AdminDownloadResultsRommsByAwardingOrganisation.Para_No_Specialism_Results_Data_Available</p>
+            }
+        </div>
+
+        <div class="govuk-!-margin-top-8">
+
+            @if (Model.RommsDownloadLinkViewModel != null)
+            {
+                <section class="govuk-clearfix">
+                    <div class="gem-c-attachment__thumbnail">
+                        <a class="govuk-link" target="_self" tabindex="-1" aria-hidden="true" asp-route="@RouteConstants.AdminDownloadRommsDataLink" asp-route-awardingOrganisationUkprn="@Model.AwardingOrganisationUkprn" asp-route-fileId="@Model.RommsDownloadLinkViewModel.BlobUniqueReference">
+                            <partial name="Partials/_attachment_thumbnail.cshtml" />
+                        </a>
+                    </div>
+                    <div class="attachment__details">
+                        <h2 class="govuk-heading-m">
+                            <a class="govuk-link" target="_self" asp-route="@RouteConstants.AdminDownloadRommsDataLink" asp-route-awardingOrganisationUkprn="@Model.AwardingOrganisationUkprn" asp-route-fileId="@Model.RommsDownloadLinkViewModel.BlobUniqueReference">
+                                @AdminDownloadResultsRommsByAwardingOrganisation.Download_Link_Romms_Data (@Model.RommsDownloadLinkViewModel.FileType, @Model.RommsDownloadLinkViewModel.FileSize <abbr title="Kilobyte">@AdminDownloadResultsRommsByAwardingOrganisation.File_Size_Units</abbr>)
+                            </a>
+                        </h2>
+                    </div>
+                </section>
+            }
+            else
+            {
+                <p class="govuk-body">@AdminDownloadResultsRommsByAwardingOrganisation.Para_No_Romms_Data_Available</p>
+            }
+        </div>
+
+        <div class="govuk-button-group govuk-!-margin-top-8">
+            <a id="backToHomeButton" class="govuk-button" role="button" asp-route="@RouteConstants.Home">@AdminDownloadResultsRommsByAwardingOrganisation.Button_Back_To_Home</a>
+        </div>
+    </div>
+</div>

@@ -229,22 +229,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         public OverallResultBatchSettings OverallResultBatchSettings { get; set; }
 
         /// <summary>
-        /// Gets or sets the Freeze period start date.
-        /// </summary>
-        /// <value>
-        /// The Freeze period start date.
-        /// </value>
-        public DateTime FreezePeriodStartDate { get; set; }
-
-        /// <summary>
-        /// Gets or sets the Freeze period end date.
-        /// </summary>
-        /// <value>
-        /// The Freeze period end date.
-        /// </value>
-        public DateTime FreezePeriodEndDate { get; set; }
-
-        /// <summary>
         /// Gets or sets certificate printing batch settings.
         /// </summary>
         /// <value>
@@ -339,6 +323,14 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// The missed deadline reminder extract settings.
         /// </value>
         public IPMissedDeadlineReminderSettings IPMissedDeadlineReminderSettings { get; set; }
+
+        /// <summary>
+        /// Gets service freezee period settings for AO and Provider.
+        /// </summary>
+        /// <value>
+        /// The service freezee period settings for AO and Provider.
+        /// </value>
+        public ServiceFreezePeriods ServiceFreezePeriodsSettings { get; set; }
 
 
     }
