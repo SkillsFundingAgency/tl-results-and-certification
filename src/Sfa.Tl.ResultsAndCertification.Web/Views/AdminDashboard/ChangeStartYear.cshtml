@@ -51,7 +51,7 @@
 
             <div class="govuk-form-group" sfa-validation-for="AcademicYearTo" sfa-validation-class="govuk-form-group--error">
                 @{
-                    if (Model.AcademicStartYearsToBe.Count > 0 && !Model.IsOverallResultCalculated && !Model.IsLearnerWithdrawn && !Model.IsLearnerRegisteredFourYearsAgo && !Model.IsTlevelStartedSameAsStartYear)
+                    if (Model.AcademicStartYearsToBe.Count > 0 && !Model.IsOverallResultCalculated && !Model.IsLearnerWithdrawn && !Model.IsLearnerRegisteredFourYearsAgo)
                     {
                         <partial name="Partials/_academicYearsSelection.cshtml" model="Model" />
                     }

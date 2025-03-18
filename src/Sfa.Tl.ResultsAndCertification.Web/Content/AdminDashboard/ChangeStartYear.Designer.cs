@@ -187,15 +187,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This is because this T Level only became available in this academic year..
-        /// </summary>
-        public static string Message_Start_Year_Cannot_Be_Changed_Tlevel_Became_Available_This_Academic_Year {
-            get {
-                return ResourceManager.GetString("Message_Start_Year_Cannot_Be_Changed_Tlevel_Became_Available_This_Academic_Year", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Change start year – Admin.
         /// </summary>
         public static string Page_Title {
