@@ -57,14 +57,6 @@
       "type": "string",
       "environmentVariable": "OverallResultsCalculationDate"
     },
-    "FreezePeriodStartDate": {
-      "type": "string",
-      "environmentVariable": "FreezePeriodStartDate"
-    },
-    "FreezePeriodEndDate": {
-      "type": "string",
-      "environmentVariable": "FreezePeriodEndDate"
-    },
     "CertificatePrintingBatchesCreateStartDate": {
       "type": "string",
       "environmentVariable": "CertificatePrintingBatchesCreateStartDate"
@@ -629,8 +621,6 @@
     "TechnicalInternalNotificationEmailAddress",
     "OverallResultsAvailableDate",
     "OverallResultsCalculationDate",
-    "FreezePeriodStartDate",
-    "FreezePeriodEndDate",
     "CertificatePrintingBatchesCreateStartDate",
     "KeyVaultUri",
     "RedisSettings",
