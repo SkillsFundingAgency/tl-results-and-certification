@@ -577,11 +577,13 @@
           "properties": {
             "StartDate": {
               "type": "string",
-              "environmentVariable": "TrainingProviderFreezeStartDate"
+              "environmentVariable": "TrainingProviderFreezeStartDate",
+              "pattern": "^\\d{2}/\\d{2}/\\d{4} \\d{2}:\\d{2}:\\d{2}$"
             },
             "EndDate": {
               "type": "string",
-              "environmentVariable": "TrainingProviderFreezeEndDate"
+              "environmentVariable": "TrainingProviderFreezeEndDate",
+              "pattern": "^\\d{2}/\\d{2}/\\d{4} \\d{2}:\\d{2}:\\d{2}$"
             }
           },
           "required": ["StartDate", "EndDate"],
@@ -592,11 +594,13 @@
           "properties": {
             "StartDate": {
               "type": "string",
-              "environmentVariable": "AwardingOrganisationFreezeStartDate"
+              "environmentVariable": "AwardingOrganisationFreezeStartDate",
+              "pattern": "^\\d{2}/\\d{2}/\\d{4} \\d{2}:\\d{2}:\\d{2}$"
             },
             "EndDate": {
               "type": "string",
-              "environmentVariable": "AwardingOrganisationFreezeEndDate"
+              "environmentVariable": "AwardingOrganisationFreezeEndDate",
+              "pattern": "^\\d{2}/\\d{2}/\\d{4} \\d{2}:\\d{2}:\\d{2}$"
             }
           },
           "required": ["StartDate", "EndDate"],
