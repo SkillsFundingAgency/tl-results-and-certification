@@ -13,8 +13,10 @@
   <ItemGroup>
     <PackageReference Include="Aspose.PDF" Version="24.5.1" />
     <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+    <PackageReference Include="Azure.Identity" Version="1.11.4" />
     <PackageReference Include="GovukNotify" Version="6.0.0" />
     <PackageReference Include="JWT" Version="9.0.3" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.35.0" />
   </ItemGroup>
 
   <ItemGroup>
