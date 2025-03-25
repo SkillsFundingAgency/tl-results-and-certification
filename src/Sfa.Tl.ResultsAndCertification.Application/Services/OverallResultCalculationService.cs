@@ -335,7 +335,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         private async Task<IList<T>> DownloadOverallResultsAsync<T>(long providerUkprn)
         {
-            DateTime now = DateTime.Now;
+            DateTime now = DateTime.UtcNow;
             DateTime today = now.Date;
 
             // 1. Get the publish date and the result calculation year from previous assessment
