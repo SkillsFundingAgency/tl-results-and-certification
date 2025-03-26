@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
         {
         }
 
-        public async Task<IList<OverallResult>> GetOverallResults(long providerUkprn, int resultCalculationYear, DateTime resultPublishDate, DateTime today)
+        public async Task<IList<OverallResult>> GetOverallResults(long providerUkprn, int resultCalculationYear, DateTime today)
         {
             IOrderedQueryable<OverallResult> results = _dbContext.OverallResult
                 .Include(r => r.TqRegistrationPathway.TqRegistrationProfile)
@@ -36,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                              x.TqRegistrationPathway.TqProvider.TlProvider.UkPrn == providerUkprn &&
                              x.TqRegistrationPathway.AcademicYear == resultCalculationYear &&
                              x.IsOptedin && !x.EndDate.HasValue &&
-                             today >= resultPublishDate)
+                             today >= x.PublishDate)
                 .OrderBy(x => x.TqRegistrationPathway.TqRegistrationProfile.Lastname);
 
             return await results.ToListAsync();

@@ -327,28 +327,26 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }
         }
 
-        public Task<IList<DownloadOverallResultsData>> DownloadOverallResultsDataAsync(long providerUkprn)
-            => DownloadOverallResultsAsync<DownloadOverallResultsData>(providerUkprn);
+        public Task<IList<DownloadOverallResultsData>> DownloadOverallResultsDataAsync(long providerUkprn, DateTime now)
+            => DownloadOverallResultsAsync<DownloadOverallResultsData>(providerUkprn, now);
 
-        public Task<IList<DownloadOverallResultSlipsData>> DownloadOverallResultSlipsDataAsync(long providerUkprn)
-            => DownloadOverallResultsAsync<DownloadOverallResultSlipsData>(providerUkprn);
+        public Task<IList<DownloadOverallResultSlipsData>> DownloadOverallResultSlipsDataAsync(long providerUkprn, DateTime now)
+            => DownloadOverallResultsAsync<DownloadOverallResultSlipsData>(providerUkprn, now);
 
-        private async Task<IList<T>> DownloadOverallResultsAsync<T>(long providerUkprn)
+        private async Task<IList<T>> DownloadOverallResultsAsync<T>(long providerUkprn, DateTime now)
         {
-            DateTime now = DateTime.UtcNow;
             DateTime today = now.Date;
 
-            // 1. Get the publish date and the result calculation year from previous assessment
+            // 1. Get the the result calculation year from previous assessment.
             AssessmentSeries previousAssessment = await GetResultCalculationAssessmentAsync(now);
 
-            DateTime? resultPublishDate = previousAssessment?.ResultPublishDate;
             int? resultCalculationYear = previousAssessment?.ResultCalculationYear;
 
-            if (!resultPublishDate.HasValue || !resultCalculationYear.HasValue)
+            if (!resultCalculationYear.HasValue)
                 return new List<T>();
 
-            // 2. Get OverallResults on above PublishDate if date reached
-            var overallResults = await _overallResultRepository.GetOverallResults(providerUkprn, resultCalculationYear.Value, resultPublishDate.Value, today);
+            // 2. Get the overall results for learners from the result calculation year, but only if the publish date is today or later.
+            var overallResults = await _overallResultRepository.GetOverallResults(providerUkprn, resultCalculationYear.Value, today);
             return _mapper.Map<IList<T>>(overallResults);
         }
 
