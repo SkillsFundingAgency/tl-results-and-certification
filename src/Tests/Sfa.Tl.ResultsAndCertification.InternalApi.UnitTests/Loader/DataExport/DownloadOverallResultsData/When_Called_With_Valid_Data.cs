@@ -13,9 +13,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.DataExport
 
         public override void Given()
         {
-            _overallResultsData = new List<Models.DownloadOverallResults.DownloadOverallResultsData> 
+            _overallResultsData = new List<Models.DownloadOverallResults.DownloadOverallResultsData>
             {
-                new Models.DownloadOverallResults.DownloadOverallResultsData 
+                new Models.DownloadOverallResults.DownloadOverallResultsData
                 {
                     Uln = 1234567890,
                     FirstName = "John",
@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.DataExport
                     AcademicYear = 2022,
                     DateOfBirth = DateTime.UtcNow.AddYears(-18),
                     OverallResult = "A",
-                    Details = new Models.OverallResults.OverallResultDetail 
+                    Details = new Models.OverallResults.OverallResultDetail
                     {
                         PathwayLarId = "12345678",
                         PathwayName = "Construction",
@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.DataExport
                         IndustryPlacementStatus = "Completed",
                         SpecialismDetails = new List<Models.OverallResults.OverallSpecialismDetail>
                         {
-                            new Models.OverallResults.OverallSpecialismDetail 
+                            new Models.OverallResults.OverallSpecialismDetail
                             {
                                 SpecialismLarId = "23456789",
                                 SpecialismName = "Plumbing",
@@ -40,11 +40,11 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.DataExport
                             }
                         }
                     }
-                    
+
                 }
             };
 
-            OverallResultCalculationService.DownloadOverallResultsDataAsync(ProviderUkprn).Returns(_overallResultsData);
+            OverallResultCalculationService.DownloadOverallResultsDataAsync(ProviderUkprn, Arg.Any<DateTime>()).Returns(_overallResultsData);
         }
 
         [Fact]
@@ -60,7 +60,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.DataExport
         [Fact]
         public void Then_Expected_Methods_Are_Called()
         {
-            OverallResultCalculationService.Received(1).DownloadOverallResultsDataAsync(ProviderUkprn);
+            OverallResultCalculationService.Received(1).DownloadOverallResultsDataAsync(ProviderUkprn, Arg.Any<DateTime>());
             BlobService.Received(1).UploadFromByteArrayAsync(Arg.Any<BlobStorageData>());
         }
     }

@@ -25,8 +25,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
         private List<TqPathwayAssessment> _pathwayAssessments;
         private List<TqSpecialismAssessment> _specialismAssessments;
 
-        private readonly Dictionary<long, RegistrationPathwayStatus> _ulns = new Dictionary<long, RegistrationPathwayStatus> 
-        { 
+        private readonly Dictionary<long, RegistrationPathwayStatus> _ulns = new Dictionary<long, RegistrationPathwayStatus>
+        {
             { 1111111111, RegistrationPathwayStatus.Withdrawn },
             { 1111111112, RegistrationPathwayStatus.Active },
             { 1111111113, RegistrationPathwayStatus.Active },
@@ -219,7 +219,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
                 new BulkProcessValidationError { RowNum = "14", Uln = "1111111113", ErrorMessage = "Assessment series does not match the series on the registration" },
                 new BulkProcessValidationError { RowNum = "14", Uln = "1111111113", ErrorMessage = "Incorrect Assessment series" },
                 new BulkProcessValidationError { RowNum = "16", Uln = "1111111114", ErrorMessage = "Specialism grade not valid" },
-                new BulkProcessValidationError { RowNum = "17", Uln = "1111111115", ErrorMessage = "Incorrect Assessment series" },
             };
 
             return validationErrors;

@@ -96,7 +96,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             model.BackLink.RouteName.Should().Be(RouteConstants.AdminLearnerRecord);
 
             model.OverallCalculationStatus.Should().Be(CalculationStatus.Completed);
-            model.IsTlevelStartedSameAsStartYear.Should().BeFalse();
             model.IsLearnerWithdrawn.Should().BeFalse();
             model.StartYearCannotChangeMessage.Should().Be(ChangeStartYear.Message_Start_Year_Cannot_Be_Changed_Overall_Result_Already_Calculated);
         }

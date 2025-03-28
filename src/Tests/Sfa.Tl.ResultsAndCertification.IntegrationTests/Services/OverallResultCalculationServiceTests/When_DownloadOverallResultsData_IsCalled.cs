@@ -77,7 +77,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             OverallGradeLookupProvider.CreateOverallGradeLookupList(DbContext, _overallGradeLookup);
 
             // Seed Overall results
-            var publishDate = DateTime.Today.AddDays(-1);
+            var publishDate = DateTime.Today;
             var printAvailableFrom = DateTime.Now.Date.AddMonths(5).AddDays(1);
 
             var regPathwayId = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == 1111111111).TqRegistrationPathways.FirstOrDefault().Id;
@@ -103,20 +103,20 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             return Task.CompletedTask;
         }
 
-        public async Task WhenAsync(long providerUkprn, DateTime assessmentPublishDate)
+        public async Task WhenAsync(long providerUkprn, int resultCalculationYear, DateTime now)
         {
             var prevAssessment = DbContext.AssessmentSeries.FirstOrDefault(x => x.Name.Equals(_previousAssessmentName, StringComparison.InvariantCultureIgnoreCase));
-            prevAssessment.ResultPublishDate = assessmentPublishDate;
+            prevAssessment.ResultCalculationYear = resultCalculationYear;
             DbContext.SaveChanges();
 
-            _actualResult = await OverallResultCalculationService.DownloadOverallResultsDataAsync(providerUkprn);
+            _actualResult = await OverallResultCalculationService.DownloadOverallResultsDataAsync(providerUkprn, now);
         }
 
         [Theory]
         [MemberData(nameof(Data))]
-        public async Task Then_Expected_Results_Are_Returned(long providerUkprn, DateTime assessmentPublishDate, List<long> expectedUlns)
+        public async Task Then_Expected_Results_Are_Returned(long providerUkprn, int resultCalculationYear, DateTime now, List<long> expectedUlns)
         {
-            await WhenAsync(providerUkprn, assessmentPublishDate);
+            await WhenAsync(providerUkprn, resultCalculationYear, now);
 
             if (!expectedUlns.Any())
             {
@@ -159,9 +159,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             {
                 return new[]
                 {
-                    new object[] { (long)Provider.BarsleyCollege, DateTime.Today.AddDays(-1), new List<long> { 1111111111 } }, // valid
-                    new object[] { (long)Provider.BarsleyCollege, DateTime.Today.AddDays(1), new List<long>() },  // Publishdate not reached 
-                    new object[] { (long)Provider.WalsallCollege, DateTime.Today.AddDays(-1), new List<long>() }  // Different Proivder
+                    new object[] { (long)Provider.BarsleyCollege, 2020, DateTime.Today, new List<long> { 1111111111 } }, // Valid
+                    new object[] { (long)Provider.BarsleyCollege, 2020, DateTime.Today.AddDays(-1), new List<long>() },  // Publishdate not reached 
+                    new object[] { (long)Provider.BarsleyCollege, 2021, DateTime.Today, new List<long>() },  // No registrations in cohort
+                    new object[] { (long)Provider.WalsallCollege, 2020, DateTime.Today.AddDays(-1), new List<long>() }  // Different provider
                 };
             }
         }
