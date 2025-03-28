@@ -46,13 +46,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
         public async Task<DataExportResponse> DownloadOverallResultsDataAsync(long providerUkprn, string requestedBy)
         {
-            var overallResults = await _overallResultCalculationService.DownloadOverallResultsDataAsync(providerUkprn);
+            var overallResults = await _overallResultCalculationService.DownloadOverallResultsDataAsync(providerUkprn, DateTime.UtcNow);
             return await ProcessDataExportResponseAsync(overallResults, providerUkprn, DocumentType.OverallResults, DataExportType.NotSpecified, requestedBy, classMapType: typeof(DownloadOverallResultsExportMap), isEmptyFileAllowed: true);
         }
 
         public async Task<DataExportResponse> DownloadOverallResultSlipsDataAsync(long providerUkprn, string requestedBy)
         {
-            var overallResults = await _overallResultCalculationService.DownloadOverallResultSlipsDataAsync(providerUkprn);
+            var overallResults = await _overallResultCalculationService.DownloadOverallResultSlipsDataAsync(providerUkprn, DateTime.UtcNow);
             return await ProcessResultSlipsDataExportResponse(overallResults, providerUkprn, DocumentType.ResultSlips, DataExportType.NotSpecified, requestedBy);
         }
 

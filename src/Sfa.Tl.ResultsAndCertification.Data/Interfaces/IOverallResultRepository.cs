@@ -7,7 +7,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
 {
     public interface IOverallResultRepository : IRepository<OverallResult>
     {
-        Task<IList<OverallResult>> GetOverallResults(long providerUkprn, DateTime resultPublishDate);
+        Task<IList<OverallResult>> GetOverallResults(long providerUkprn, int resultCalculationYear, DateTime today);
+
         Task<OverallResult> GetLearnerOverallResults(long providerUkprn, long profileId);
     }
 }

@@ -44,6 +44,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
 
         private IList<DownloadOverallResultsData> _actualResult;
 
+        private readonly DateTime _now = DateTime.Now;
+
         public override void Given()
         {
             // Registrations seed
@@ -134,7 +136,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             prevAssessment.ResultPublishDate = _publishDate;
             DbContext.SaveChanges();
 
-            _actualResult = await OverallResultCalculationService.DownloadOverallResultsDataAsync((long)provider);
+            _actualResult = await OverallResultCalculationService.DownloadOverallResultsDataAsync((long)provider, _now);
         }
 
         [Theory]

@@ -12,8 +12,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Helpers
         public static int GetStartYearOffset(int regAcademicYear, int tlevelStartYear, ComponentType componentType)
         {
             var isTlevelStartYearSameAsAcademicYear = regAcademicYear == tlevelStartYear;
-            var startYearOffset = componentType == ComponentType.Specialism 
-                                ? (isTlevelStartYearSameAsAcademicYear ? Constants.SpecialismAssessmentStartInYears : 0) 
+            var startYearOffset = componentType == ComponentType.Specialism
+                                ? (isTlevelStartYearSameAsAcademicYear ? Constants.SpecialismAssessmentStartInYears : 0)
                                 : Constants.CoreAssessmentStartInYears;
             return startYearOffset;
         }
@@ -26,11 +26,11 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Helpers
                                                                      s.Name.Equals(assessmentEntryName, StringComparison.InvariantCultureIgnoreCase) &&
                                                                      currentDate >= s.StartDate &&
                                                                      currentDate <= s.EndDate &&
-                                                                     s.Year > regAcademicYear &&
+                                                                     s.Year >= regAcademicYear &&
                                                                      s.Year <= regAcademicYear + Constants.AssessmentEndInYears);
 
             return isValidNextAssessmentSeries;
-        }        
+        }
 
         public static IList<AssessmentSeries> GetValidAssessmentSeries(IList<AssessmentSeries> assessmentSeries, TqRegistrationPathway tqRegistrationPathway, ComponentType componentType)
         {

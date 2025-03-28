@@ -327,30 +327,27 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             }
         }
 
-        public async Task<IList<DownloadOverallResultsData>> DownloadOverallResultsDataAsync(long providerUkprn)
+        public Task<IList<DownloadOverallResultsData>> DownloadOverallResultsDataAsync(long providerUkprn, DateTime now)
+            => DownloadOverallResultsAsync<DownloadOverallResultsData>(providerUkprn, now);
+
+        public Task<IList<DownloadOverallResultSlipsData>> DownloadOverallResultSlipsDataAsync(long providerUkprn, DateTime now)
+            => DownloadOverallResultsAsync<DownloadOverallResultSlipsData>(providerUkprn, now);
+
+        private async Task<IList<T>> DownloadOverallResultsAsync<T>(long providerUkprn, DateTime now)
         {
-            // 1. Get PublishDate from previous assessment
-            var previousAssessment = await GetResultCalculationAssessmentAsync(DateTime.UtcNow);
-            var resultPublishDate = previousAssessment?.ResultPublishDate;
-            if (resultPublishDate == null)
-                return new List<DownloadOverallResultsData>();
+            DateTime today = now.Date;
 
-            // 2. Get OverallResults on above PublishDate if date reached
-            var overallResults = await _overallResultRepository.GetOverallResults(providerUkprn, resultPublishDate.Value);
-            return _mapper.Map<IList<DownloadOverallResultsData>>(overallResults);
-        }
+            // 1. Get the the result calculation year from previous assessment.
+            AssessmentSeries previousAssessment = await GetResultCalculationAssessmentAsync(now);
 
-        public async Task<IList<DownloadOverallResultSlipsData>> DownloadOverallResultSlipsDataAsync(long providerUkprn)
-        {
-            // 1. Get PublishDate from previous assessment
-            var previousAssessment = await GetResultCalculationAssessmentAsync(DateTime.UtcNow);
-            var resultPublishDate = previousAssessment?.ResultPublishDate;
-            if (resultPublishDate == null)
-                return new List<DownloadOverallResultSlipsData>();
+            int? resultCalculationYear = previousAssessment?.ResultCalculationYear;
 
-            // 2. Get OverallResults on above PublishDate if date reached
-            var overallResults = await _overallResultRepository.GetOverallResults(providerUkprn, resultPublishDate.Value);
-            return _mapper.Map<IList<DownloadOverallResultSlipsData>>(overallResults);
+            if (!resultCalculationYear.HasValue)
+                return new List<T>();
+
+            // 2. Get the overall results for learners from the result calculation year, but only if the publish date is today or later.
+            var overallResults = await _overallResultRepository.GetOverallResults(providerUkprn, resultCalculationYear.Value, today);
+            return _mapper.Map<IList<T>>(overallResults);
         }
 
         public async Task<DownloadOverallResultSlipsData> DownloadLearnerOverallResultSlipsDataAsync(long providerUkprn, long profileId)
