@@ -42,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.DataExport
                 }
             };
 
-            OverallResultCalculationService.DownloadOverallResultSlipsDataAsync(ProviderUkprn, Arg.Any<DateTime>()).Returns(_overallResultSlipsData);
+            DownloadOverallResultsService.DownloadOverallResultSlipsDataAsync(ProviderUkprn, Arg.Any<DateTime>()).Returns(_overallResultSlipsData);
             ResultSlipsGeneratorService.GetByteData(_overallResultSlipsData).Returns(new byte[10]);
         }
 
@@ -59,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.DataExport
         [Fact]
         public void Then_Expected_Methods_Are_Called()
         {
-            OverallResultCalculationService.Received(1).DownloadOverallResultSlipsDataAsync(ProviderUkprn, Arg.Any<DateTime>());
+            DownloadOverallResultsService.Received(1).DownloadOverallResultSlipsDataAsync(ProviderUkprn, Arg.Any<DateTime>());
             BlobService.Received(1).UploadFromByteArrayAsync(Arg.Any<BlobStorageData>());
         }
     }

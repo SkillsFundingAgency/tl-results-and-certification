@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.DataExport
                 }
             };
 
-            OverallResultCalculationService.DownloadOverallResultsDataAsync(ProviderUkprn, Arg.Any<DateTime>()).Returns(_overallResultsData);
+            DownloadOverallResultsService.DownloadOverallResultsDataAsync(ProviderUkprn, Arg.Any<DateTime>()).Returns(_overallResultsData);
         }
 
         [Fact]
@@ -60,7 +60,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.DataExport
         [Fact]
         public void Then_Expected_Methods_Are_Called()
         {
-            OverallResultCalculationService.Received(1).DownloadOverallResultsDataAsync(ProviderUkprn, Arg.Any<DateTime>());
+            DownloadOverallResultsService.Received(1).DownloadOverallResultsDataAsync(ProviderUkprn, Arg.Any<DateTime>());
             BlobService.Received(1).UploadFromByteArrayAsync(Arg.Any<BlobStorageData>());
         }
     }

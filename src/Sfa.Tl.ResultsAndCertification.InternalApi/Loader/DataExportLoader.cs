@@ -1,4 +1,5 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
@@ -20,17 +21,17 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
     {
         private readonly IDataExportRepository _dataExportRepository;
         private readonly IBlobStorageService _blobStorageService;
-        private readonly IOverallResultCalculationService _overallResultCalculationService;
+        private readonly IDownloadOverallResultsService _downloadOverallResultsService;
         private readonly IResultSlipsGeneratorService _resultSlipsGeneratorService;
 
         public DataExportLoader(IDataExportRepository dataExportRepository,
             IBlobStorageService blobStorageService,
-            IOverallResultCalculationService overallResultCalculationService,
+            IDownloadOverallResultsService downloadOverallResultsService,
             IResultSlipsGeneratorService resultSlipsGeneratorService)
         {
             _dataExportRepository = dataExportRepository;
             _blobStorageService = blobStorageService;
-            _overallResultCalculationService = overallResultCalculationService;
+            _downloadOverallResultsService = downloadOverallResultsService;
             _resultSlipsGeneratorService = resultSlipsGeneratorService;
         }
 
@@ -46,19 +47,19 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Loader
 
         public async Task<DataExportResponse> DownloadOverallResultsDataAsync(long providerUkprn, string requestedBy)
         {
-            var overallResults = await _overallResultCalculationService.DownloadOverallResultsDataAsync(providerUkprn, DateTime.UtcNow);
+            var overallResults = await _downloadOverallResultsService.DownloadOverallResultsDataAsync(providerUkprn, DateTime.UtcNow);
             return await ProcessDataExportResponseAsync(overallResults, providerUkprn, DocumentType.OverallResults, DataExportType.NotSpecified, requestedBy, classMapType: typeof(DownloadOverallResultsExportMap), isEmptyFileAllowed: true);
         }
 
         public async Task<DataExportResponse> DownloadOverallResultSlipsDataAsync(long providerUkprn, string requestedBy)
         {
-            var overallResults = await _overallResultCalculationService.DownloadOverallResultSlipsDataAsync(providerUkprn, DateTime.UtcNow);
+            var overallResults = await _downloadOverallResultsService.DownloadOverallResultSlipsDataAsync(providerUkprn, DateTime.UtcNow);
             return await ProcessResultSlipsDataExportResponse(overallResults, providerUkprn, DocumentType.ResultSlips, DataExportType.NotSpecified, requestedBy);
         }
 
         public async Task<DataExportResponse> DownloadLearnerOverallResultSlipsDataAsync(long providerUkprn, long profileId, string requestedBy)
         {
-            var overallResult = await _overallResultCalculationService.DownloadLearnerOverallResultSlipsDataAsync(providerUkprn, profileId);
+            var overallResult = await _downloadOverallResultsService.DownloadLearnerOverallResultSlipsDataAsync(providerUkprn, profileId);
             return await ProcessLeanerResultSlipsDataExportResponse(overallResult, providerUkprn, DocumentType.ResultSlips, DataExportType.NotSpecified, requestedBy);
         }
 

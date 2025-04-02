@@ -159,6 +159,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<ISearchRegistrationRepository, SearchRegistrationRepository>();
             services.AddTransient<IProviderRegistrationsRepository, ProviderRegistrationsRepository>();
             services.AddTransient<IAdminNotificationRepository, AdminNotificationRepository>();
+            services.AddTransient<IAssessmentSeriesRepository, AssessmentSeriesRepository>();
             services.AddTransient(typeof(IRepository<>), typeof(GenericRepository<>));
             services.AddTransient<IRepositoryFactory, RepositoryFactory>();
 
@@ -235,6 +236,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
             services.AddTransient<IOverallResultCalculationService, OverallResultCalculationService>();
             services.AddTransient<IOverallResultRepository, OverallResultRepository>();
             services.AddTransient<IOverallResultCalculationRepository, OverallResultCalculationRepository>();
+            services.AddTransient<IDownloadOverallResultsService, DownloadOverallResultsService>();
 
             // Converter
             services.AddTransient<IPathwayResultConverter, PathwayResultConverter>();

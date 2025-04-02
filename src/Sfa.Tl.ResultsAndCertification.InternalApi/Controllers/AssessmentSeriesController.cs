@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using System;
@@ -12,12 +13,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
     [ApiController]
     public class AssessmentSeriesController : ControllerBase, IAssessmentSeriesController
     {
-        private readonly IOverallResultCalculationService _overallResultCalculationService;
+        private readonly IAssessmentSeriesRepository _assessmentSeriesRepository;
         private readonly IMapper _mapper;
 
-        public AssessmentSeriesController(IOverallResultCalculationService overallResultCalculationService, IMapper mapper)
+        public AssessmentSeriesController(IAssessmentSeriesRepository assessmentSeriesRepository, IMapper mapper)
         {
-            _overallResultCalculationService = overallResultCalculationService;
+            _assessmentSeriesRepository = assessmentSeriesRepository;
             _mapper = mapper;
         }
 
@@ -25,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         [Route("GetResultCalculationAssessment")]
         public async Task<AssessmentSeriesDetails> GetResultCalculationAssessmentAsync()
         {
-            var assessmentSeries = await _overallResultCalculationService.GetResultCalculationAssessmentAsync(DateTime.Now);
+            AssessmentSeries assessmentSeries = await _assessmentSeriesRepository.GetPreviousAssessmentSeriesAsync(DateTime.Now);
             return _mapper.Map<AssessmentSeriesDetails>(assessmentSeries);
         }
     }

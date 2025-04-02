@@ -1,5 +1,6 @@
 ﻿using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
@@ -15,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.DataExport
     {
         protected IDataExportRepository DataExportRepository;
         protected IBlobStorageService BlobService;
-        protected IOverallResultCalculationService OverallResultCalculationService;
+        protected IDownloadOverallResultsService DownloadOverallResultsService;
         protected IResultSlipsGeneratorService ResultSlipsGeneratorService;
         private DataExportLoader _loader;
         protected IList<DataExportResponse> Response { get; private set; }
@@ -29,12 +30,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.DataExport
         {
             DataExportRepository = Substitute.For<IDataExportRepository>();
             BlobService = Substitute.For<IBlobStorageService>();
-            OverallResultCalculationService = Substitute.For<IOverallResultCalculationService>();
+            DownloadOverallResultsService = Substitute.For<IDownloadOverallResultsService>();
         }
 
         public async override Task When()
         {
-            _loader = new DataExportLoader(DataExportRepository, BlobService, OverallResultCalculationService, ResultSlipsGeneratorService);
+            _loader = new DataExportLoader(DataExportRepository, BlobService, DownloadOverallResultsService, ResultSlipsGeneratorService);
             Response = await _loader.ProcessDataExportAsync(AoUkprn, DataExportType, RequestedBy);
         }
     }
