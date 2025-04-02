@@ -133,6 +133,39 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.OverallRe
             SeedSpecialismResult(henryLewisSpecialismAssessment, new DateTime(2022, 1, 2), new DateTime(2022, 1, 13));
             ExpectedResults.Add(henryLewisRegistration);
 
+            // Registration is active, has an overall result and a specialism result modified afterwards (it should be returned).
+            TqRegistrationProfile ameliaScott = SeedRegistrationProfile(1111111121, "Amelia", "Scott", new DateTime(2004, 4, 4));
+            TqRegistrationPathway ameliaScottRegistration = SeedRegistrationPathway(ameliaScott, derbyCollege, 2022, RegistrationPathwayStatus.Active);
+            SeedOverallResult(ameliaScottRegistration, new DateTime(2024, 10, 10));
+            TqRegistrationSpecialism ameliaScottRegistrationSpecialism = SeedRegistrationSpecialism(ameliaScottRegistration, specialisms["Building Services Design"]);
+            TqSpecialismAssessment ameliaScottSpecialismAssessment = SeedSpecialismAssessment(ameliaScottRegistrationSpecialism, specialismAssessmentSeries["Summer 2023"]);
+            SeedSpecialismResult(ameliaScottSpecialismAssessment, new DateTime(2024, 1, 2), new DateTime(2024, 10, 11));
+            ExpectedResults.Add(ameliaScottRegistration);
+
+            // Registration is active, has an overall result and a specialism result created before (it should NOT be returned).
+            TqRegistrationProfile arthurEdwards = SeedRegistrationProfile(1111111122, "Arthur", "Edwards", new DateTime(2005, 3, 3));
+            TqRegistrationPathway arthurEdwardsRegistration = SeedRegistrationPathway(arthurEdwards, barnsleyCollege, 2022, RegistrationPathwayStatus.Active);
+            SeedOverallResult(arthurEdwardsRegistration, new DateTime(2025, 2, 1));
+            TqRegistrationSpecialism arthurEdwardsRegistrationSpecialism = SeedRegistrationSpecialism(arthurEdwardsRegistration, specialisms["Civil Engineering"]);
+            TqSpecialismAssessment arthurEdwardsSpecialismAssessment = SeedSpecialismAssessment(arthurEdwardsRegistrationSpecialism, specialismAssessmentSeries["Summer 2024"]);
+            SeedSpecialismResult(arthurEdwardsSpecialismAssessment, new DateTime(2025, 1, 31), new DateTime(2025, 1, 31));
+
+            // Registration is active, has an overall result and a specialism result modified before (it should NOT be returned).
+            TqRegistrationProfile muhammadWright = SeedRegistrationProfile(1111111123, "Muhammad", "Wright", new DateTime(2006, 1, 13));
+            TqRegistrationPathway muhammadWrightRegistration = SeedRegistrationPathway(muhammadWright, barnsleyCollege, 2022, RegistrationPathwayStatus.Active);
+            SeedOverallResult(muhammadWrightRegistration, new DateTime(2025, 12, 12));
+            TqRegistrationSpecialism muhammadWrightRegistrationSpecialism = SeedRegistrationSpecialism(muhammadWrightRegistration, specialisms["Building Services Design"]);
+            TqSpecialismAssessment muhammadWrightSpecialismAssessment = SeedSpecialismAssessment(muhammadWrightRegistrationSpecialism, specialismAssessmentSeries["Summer 2022"]);
+            SeedSpecialismResult(muhammadWrightSpecialismAssessment, new DateTime(2025, 12, 2), new DateTime(2025, 12, 11));
+
+            // Registration is active and a specialism result of a future assessment series (it should NOT be returned).
+            TqRegistrationProfile miaThomas = SeedRegistrationProfile(1111111124, "Mia", "Thomas", new DateTime(2005, 11, 11));
+            TqRegistrationPathway miaThomasRegistration = SeedRegistrationPathway(miaThomas, bathCollege, 2022, RegistrationPathwayStatus.Active);
+            SeedOverallResult(miaThomasRegistration, new DateTime(2024, 10, 9));
+            TqRegistrationSpecialism miaThomasRegistrationSpecialism = SeedRegistrationSpecialism(miaThomasRegistration, specialisms["Building Services Design"]);
+            TqSpecialismAssessment miaThomasSpecialismAssessment = SeedSpecialismAssessment(miaThomasRegistrationSpecialism, specialismAssessmentSeries["Summer 2025"]);
+            SeedSpecialismResult(miaThomasSpecialismAssessment, new DateTime(2024, 12, 9), new DateTime(2024, 12, 9));
+
             DbContext.SaveChanges();
         }
 
