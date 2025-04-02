@@ -94,7 +94,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.OverallRe
 
         public async Task WhenAsync(int fromAcademicYear, int toAcademicYear)
         {
-            _result = await OverallResultCalculationRepository.GetLearnersForOverallGradeCalculation(fromAcademicYear, toAcademicYear);
+            AssessmentSeries assessmentSeries = AssessmentSeries.Single(a => a.Name == "Summer 2022");
+            _result = await OverallResultCalculationRepository.GetLearnersForOverallGradeCalculation(assessmentSeries);
         }
 
         [Theory()]
@@ -195,7 +196,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.OverallRe
                 resultToUpdate.CreatedOn = DateTime.UtcNow.AddHours(2);
             }
         }
-        
+
         public void SeedIndustyPlacementData(int uln)
         {
             var pathway = _registrations.FirstOrDefault(x => x.UniqueLearnerNumber == uln).TqRegistrationPathways.FirstOrDefault();

@@ -93,13 +93,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                         NoOfAcademicYearsToProcess = 4
                     }
                 };
+
                 TlLookupRepositoryLogger = new Logger<GenericRepository<TlLookup>>(new NullLoggerFactory());
                 TlLookupRepository = new GenericRepository<TlLookup>(TlLookupRepositoryLogger, DbContext);
                 AssessmentSeriesLogger = new Logger<GenericRepository<AssessmentSeries>>(new NullLoggerFactory());
                 AssessmentSeriesRepository = new GenericRepository<AssessmentSeries>(AssessmentSeriesLogger, DbContext);
                 OverallResultLogger = new Logger<OverallResultRepository>(new NullLoggerFactory());
                 OverallResultRepository = new OverallResultRepository(OverallResultLogger, DbContext);
-                OverallResultCalculationRepository = new OverallResultCalculationRepository(DbContext);
+                OverallResultCalculationRepository = new OverallResultCalculationRepository(DbContext, ResultsAndCertificationConfiguration);
 
                 DualSpecialismOverallGradeLookupLogger = new Logger<GenericRepository<DualSpecialismOverallGradeLookup>>(new NullLoggerFactory());
                 var dualSpecialismOverallGradeLookupRepository = new GenericRepository<DualSpecialismOverallGradeLookup>(DualSpecialismOverallGradeLookupLogger, DbContext);

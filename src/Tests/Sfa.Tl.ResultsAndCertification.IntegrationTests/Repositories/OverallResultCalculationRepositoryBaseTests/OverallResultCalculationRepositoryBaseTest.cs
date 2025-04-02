@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
@@ -38,7 +39,15 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.OverallRe
 
         protected void CreateOverallResultCalculationRepository()
         {
-            OverallResultCalculationRepository = new OverallResultCalculationRepository(DbContext);
+            var config = new ResultsAndCertificationConfiguration
+            {
+                OverallResultBatchSettings = new OverallResultBatchSettings
+                {
+                    NoOfAcademicYearsToProcess = 4
+                }
+            };
+
+            OverallResultCalculationRepository = new OverallResultCalculationRepository(DbContext, config);
         }
 
         protected virtual void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson, bool seedMultipleProviders = false)
@@ -346,7 +355,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.OverallRe
                 actualSpecialismResult.EndDate.Should().BeNull();
             actualSpecialismResult.CreatedBy.Should().Be(expectedSpecialismResult.CreatedBy);
         }
-        
+
         public void AssertIndustryPlacement(IndustryPlacement actualIndustryPlacement, IndustryPlacement expectedIndustryPlacement)
         {
             if (expectedIndustryPlacement == null)
