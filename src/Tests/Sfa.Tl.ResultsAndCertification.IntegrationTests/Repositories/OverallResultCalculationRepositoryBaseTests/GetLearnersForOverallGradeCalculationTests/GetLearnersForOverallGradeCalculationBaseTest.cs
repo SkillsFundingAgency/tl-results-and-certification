@@ -138,8 +138,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.OverallRe
             TqRegistrationPathway ameliaScottRegistration = SeedRegistrationPathway(ameliaScott, derbyCollege, 2022, RegistrationPathwayStatus.Active);
             SeedOverallResult(ameliaScottRegistration, new DateTime(2024, 10, 10));
             TqRegistrationSpecialism ameliaScottRegistrationSpecialism = SeedRegistrationSpecialism(ameliaScottRegistration, specialisms["Building Services Design"]);
-            TqSpecialismAssessment ameliaScottSpecialismAssessment = SeedSpecialismAssessment(ameliaScottRegistrationSpecialism, specialismAssessmentSeries["Summer 2023"]);
-            SeedSpecialismResult(ameliaScottSpecialismAssessment, new DateTime(2024, 1, 2), new DateTime(2024, 10, 11));
+            TqSpecialismAssessment ameliaScottSpecialismAssessment = SeedSpecialismAssessment(ameliaScottRegistrationSpecialism, specialismAssessmentSeries["Summer 2022"]);
+            SeedSpecialismResult(ameliaScottSpecialismAssessment, new DateTime(2023, 1, 1), new DateTime(2023, 10, 15));
+            TqRegistrationSpecialism ameliaScottRegistrationSpecialism2 = SeedRegistrationSpecialism(ameliaScottRegistration, specialisms["Building Services Design"]);
+            TqSpecialismAssessment ameliaScottSpecialismAssessment2 = SeedSpecialismAssessment(ameliaScottRegistrationSpecialism2, specialismAssessmentSeries["Summer 2023"]);
+            SeedSpecialismResult(ameliaScottSpecialismAssessment2, new DateTime(2024, 1, 2), new DateTime(2024, 10, 11));
             ExpectedResults.Add(ameliaScottRegistration);
 
             // Registration is active, has an overall result and a specialism result created before (it should NOT be returned).
@@ -163,8 +166,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.OverallRe
             TqRegistrationPathway miaThomasRegistration = SeedRegistrationPathway(miaThomas, bathCollege, 2022, RegistrationPathwayStatus.Active);
             SeedOverallResult(miaThomasRegistration, new DateTime(2024, 10, 9));
             TqRegistrationSpecialism miaThomasRegistrationSpecialism = SeedRegistrationSpecialism(miaThomasRegistration, specialisms["Building Services Design"]);
-            TqSpecialismAssessment miaThomasSpecialismAssessment = SeedSpecialismAssessment(miaThomasRegistrationSpecialism, specialismAssessmentSeries["Summer 2025"]);
+            TqSpecialismAssessment miaThomasSpecialismAssessment = SeedSpecialismAssessment(miaThomasRegistrationSpecialism, specialismAssessmentSeries["Summer 2023"]);
             SeedSpecialismResult(miaThomasSpecialismAssessment, new DateTime(2024, 12, 9), new DateTime(2024, 12, 9));
+            TqRegistrationSpecialism miaThomasRegistrationSpecialism2 = SeedRegistrationSpecialism(miaThomasRegistration, specialisms["Building Services Design"]);
+            TqSpecialismAssessment miaThomasSpecialismAssessment2 = SeedSpecialismAssessment(miaThomasRegistrationSpecialism2, specialismAssessmentSeries["Summer 2025"]);
+            SeedSpecialismResult(miaThomasSpecialismAssessment2, new DateTime(2024, 10, 19), new DateTime(2024, 10, 19));
 
             DbContext.SaveChanges();
         }
@@ -466,13 +472,13 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.OverallRe
             return RegistrationsDataProvider.CreateTqRegistrationSpecialism(DbContext, registrationSpecialism);
         }
 
-        private TqSpecialismAssessment SeedSpecialismAssessment(TqRegistrationSpecialism registrationSpecialism, AssessmentSeries assessmentSeries)
+        private TqSpecialismAssessment SeedSpecialismAssessment(TqRegistrationSpecialism registrationSpecialism, AssessmentSeries assessmentSeries, bool isOptedin = true)
         {
             var specialismAssessment = new TqSpecialismAssessment
             {
                 TqRegistrationSpecialism = registrationSpecialism,
                 AssessmentSeries = assessmentSeries,
-                IsOptedin = true,
+                IsOptedin = isOptedin,
                 StartDate = registrationSpecialism.StartDate
             };
 
