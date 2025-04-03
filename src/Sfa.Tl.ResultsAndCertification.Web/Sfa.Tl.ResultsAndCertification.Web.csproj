@@ -23,15 +23,23 @@
 		<PackageReference Include="FluentValidation.AspNetCore" Version="11.3.0" />
 		<PackageReference Include="IdentityModel" Version="6.0.0" />
 		<PackageReference Include="JWT" Version="9.0.3" />
+		<PackageReference Include="MessagePack" Version="2.5.187" />
 		<PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.20.0" />
 		<PackageReference Include="Microsoft.AspNetCore.Authentication.OpenIdConnect" Version="6.0.7" />
 		<PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.7" />
 		<PackageReference Include="Microsoft.Extensions.Logging.AzureAppServices" Version="6.0.7" />
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="6.0.0" />
 		<PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.7" />
+		<PackageReference Include="Npgsql" Version="6.0.11" />
+		<PackageReference Include="NuGet.Common" Version="6.2.4" />
+		<PackageReference Include="NuGet.Protocol" Version="5.11.5" />
 		<PackageReference Include="NWebsec.AspNetCore.Middleware" Version="3.0.0" />
 		<PackageReference Include="NWebsec.AspNetCore.Mvc.TagHelpers" Version="3.0.0" />
 		<PackageReference Include="StackExchange.Redis" Version="2.8.16" />
+		<PackageReference Include="System.Formats.Asn1" Version="6.0.1" />
+		<PackageReference Include="System.Security.Cryptography.Xml" Version="6.0.1" />
+		<PackageReference Include="System.Text.Json" Version="6.0.10" />
+		<PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
 	</ItemGroup>
 
 
