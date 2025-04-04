@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Models.BlobStorage;
+using System;
 using System.Collections.Generic;
 using Xunit;
 
@@ -8,8 +9,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.DataExport
 {
     public class When_Called_With_Valid_Data : TestSetup
     {
-        private IList<Models.DownloadOverallResults.DownloadOverallResultSlipsData> _overallResultSlipsData;
-
         public override void Given()
         {
             List<Models.DownloadOverallResults.DownloadOverallResultSlipsData> _overallResultSlipsData = new()
@@ -43,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.DataExport
                 }
             };
 
-            OverallResultCalculationService.DownloadOverallResultSlipsDataAsync(ProviderUkprn).Returns(_overallResultSlipsData);
+            OverallResultCalculationService.DownloadOverallResultSlipsDataAsync(ProviderUkprn, Arg.Any<DateTime>()).Returns(_overallResultSlipsData);
             ResultSlipsGeneratorService.GetByteData(_overallResultSlipsData).Returns(new byte[10]);
         }
 
@@ -60,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.UnitTests.Loader.DataExport
         [Fact]
         public void Then_Expected_Methods_Are_Called()
         {
-            OverallResultCalculationService.Received(1).DownloadOverallResultSlipsDataAsync(ProviderUkprn);
+            OverallResultCalculationService.Received(1).DownloadOverallResultSlipsDataAsync(ProviderUkprn, Arg.Any<DateTime>());
             BlobService.Received(1).UploadFromByteArrayAsync(Arg.Any<BlobStorageData>());
         }
     }
