@@ -1,5 +1,8 @@
 ﻿using Microsoft.Extensions.Logging;
 using Notify.Interfaces;
+using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
@@ -44,6 +47,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
         // Dependencies
         protected ILogger<GenericRepository<TqRegistrationPathway>> RegistrationPathwayRepositoryLogger;
         protected ILogger<IndustryPlacementNotificationService> IndustryPlacementNotificationServiceLogger;
+
+        protected INotificationService NotificationService = Substitute.For<INotificationService>();
+        protected IDfeSignInApiClient DfeSignInApiClient = Substitute.For<IDfeSignInApiClient>();
 
         protected virtual void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson, bool seedMultipleProviders = false)
         {

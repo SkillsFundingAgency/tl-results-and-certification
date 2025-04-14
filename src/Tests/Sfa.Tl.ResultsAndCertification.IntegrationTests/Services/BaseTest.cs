@@ -3,8 +3,6 @@ using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Respawn;
-using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
@@ -22,9 +20,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services
         public ResultsAndCertificationDbContext DbContext;
         public Checkpoint DbCheckpoint;
         private bool _isRelationalDb;
-        protected IOverallResultCalculationService OverallResultCalculationService;
-        protected IDfeSignInApiClient DfeSignInApiClient;
-        protected INotificationService NotificationService;
 
         public BaseTest(bool isRelationalDb = false)
         {
@@ -40,9 +35,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services
             DbContext = _isRelationalDb ? TestDatabaseConfiguration.CreateRelationalDbContext() : InMemoryDbContext.Create();
             Repository = new GenericRepository<T>(Logger, DbContext);
             DbCheckpoint = _isRelationalDb ? new Checkpoint { WithReseed = true } : null;
-            OverallResultCalculationService = Substitute.For<IOverallResultCalculationService>();
-            DfeSignInApiClient = Substitute.For<IDfeSignInApiClient>();
-            NotificationService = Substitute.For<INotificationService>();
         }
 
         public abstract void Given();

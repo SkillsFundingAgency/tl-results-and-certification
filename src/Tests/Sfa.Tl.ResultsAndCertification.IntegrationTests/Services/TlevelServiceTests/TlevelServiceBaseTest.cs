@@ -29,6 +29,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TlevelService
         protected TqAwardingOrganisation _tqAwardingOrganisation;
         protected IEnumerable<AwardingOrganisationPathwayStatus> _result;
 
+        protected NotificationService NotificationService;
+
         protected void CreateService()
         {
             NotificationService = CreateNotificationService();
