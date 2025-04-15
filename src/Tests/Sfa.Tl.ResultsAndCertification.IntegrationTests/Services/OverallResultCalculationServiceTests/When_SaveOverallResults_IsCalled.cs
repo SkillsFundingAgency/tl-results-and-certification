@@ -1,10 +1,6 @@
 ﻿using FluentAssertions;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider;
@@ -15,7 +11,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
-
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResultCalculationServiceTests
 {
     public class When_SaveOverallResults_IsCalled : OverallResultCalculationServiceBaseTest
@@ -25,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
         private Dictionary<long, RegistrationPathwayStatus> _ulns;
         private List<TqRegistrationProfile> _registrations;
         private Dictionary<long, IndustryPlacementStatus> _ulnWithIndustryPlacements;
-        private List<long> _ulnsAlreadyWithCalculatedResult;        
+        private List<long> _ulnsAlreadyWithCalculatedResult;
         private List<OverallGradeLookup> _overallGradeLookup;
         private List<OverallResult> _overallResultToSave;
 
@@ -130,9 +125,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
 
         public async Task WhenAsync()
         {
-            var learnerPathways = await OverallResultCalculationRepository.GetLearnersForOverallGradeCalculation(2020, 2020);
             var tlLookup = TlLookup.Where(x => x.Category.ToLower().Equals(LookupCategory.OverallResult.ToString().ToLower(), StringComparison.InvariantCultureIgnoreCase)).ToList();
             var assessmentSeries = await OverallResultCalculationService.GetResultCalculationAssessmentAsync(DateTime.Today.AddMonths(4));
+            var learnerPathways = await OverallResultCalculationRepository.GetLearnersForOverallGradeCalculation(assessmentSeries);
 
             _overallResultToSave = new List<OverallResult>
             {
@@ -189,7 +184,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
         public async Task Then_Expected_Results_Are_Returned()
         {
             await WhenAsync();
-            _actualResult.Should().BeTrue();            
+            _actualResult.Should().BeTrue();
         }
 
         public void SeedIndustyPlacementData(Dictionary<long, IndustryPlacementStatus> ipUlns)
