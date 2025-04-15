@@ -81,7 +81,6 @@ jobs:
             -industryPlacementChaseBigGapsReminderTrigger "$(industryPlacementChaseBigGapsReminderTrigger)"
             -industryPlacementOneOutstandingUlnReminderTrigger "$(industryPlacementOneOutstandingUlnReminderTrigger)"
             -analystOverallResultExtractTrigger "$(analystOverallResultExtractTrigger)"
-            -analystCoreResultExtractTrigger "$(analystCoreResultExtractTrigger)"
             -coreRommExtractTrigger "$(coreRommExtractTrigger)"
             -specialismRommExtractTrigger "$(specialismRommExtractTrigger)"
             -providerAddressExtractTrigger "$(providerAddressExtractTrigger)"
