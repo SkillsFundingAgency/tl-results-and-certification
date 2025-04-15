@@ -449,17 +449,6 @@
       "required": [],
       "type": "object"
     },
-    "AnalystCoreResultExtractSettings": {
-      "properties": {
-        "CoreValidDateRanges": {
-          "type": "array",
-          "environmentVariable": "AnalystCoreValidDateRanges"
-        }
-      },
-      "additionalProperties": false,
-      "required": [],
-      "type": "object"
-    },
     "CoreRommExtractSettings": {
       "properties": {
         "AssessmentSeriesYearsToProcess": {
@@ -638,7 +627,6 @@
     "UcasDataSettings",
     "OverallResultBatchSettings",
     "CertificatePrintingBatchSettings",
-    "AnalystCoreResultExtractSettings",
     "AnalystOverallResultExtractSettings",
     "CoreRommExtractSettings",
     "SpecialismRommExtractSettings",

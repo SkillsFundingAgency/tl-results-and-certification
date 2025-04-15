@@ -111,9 +111,6 @@
     "analystOverallResultExtractTrigger": {
       "type": "string"
     },
-    "analystCoreResultExtractTrigger": {
-      "type": "string"
-    },
     "coreRommExtractTrigger": {
       "type": "string"
     },
@@ -637,10 +634,6 @@
               {
                 "name": "AnalystOverallResultExtractTrigger",
                 "value": "[parameters('analystOverallResultExtractTrigger')]"
-              },
-              {
-                "name": "AnalystCoreResultExtractTrigger",
-                "value": "[parameters('analystCoreResultExtractTrigger')]"
               },
               {
                 "name": "CoreRommExtractTrigger",
