@@ -6,6 +6,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Interfaces
 {
     public interface IOverallResultCalculationRepository
     {
-        Task<IList<TqRegistrationPathway>> GetLearnersForOverallGradeCalculation(int academicYearFrom, int academicYearTo);
+        Task<IList<TqRegistrationPathway>> GetLearnersForOverallGradeCalculation(AssessmentSeries assessmentSeries);
     }
 }

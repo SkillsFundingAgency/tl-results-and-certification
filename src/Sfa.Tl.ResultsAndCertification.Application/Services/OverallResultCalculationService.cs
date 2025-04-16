@@ -77,11 +77,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public async Task<List<OverallResultResponse>> CalculateOverallResultsAsync(DateTime runDate)
         {
             var response = new List<OverallResultResponse>();
+            
             var resultCalculationAssessment = await GetResultCalculationAssessmentAsync(runDate);
-            var resultCalculationYearFrom = (resultCalculationAssessment.ResultCalculationYear ?? 0) - (_configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess <= 0 ?
-                Constants.OverallResultDefaultNoOfAcademicYearsToProcess : _configuration.OverallResultBatchSettings.NoOfAcademicYearsToProcess) + 1;
-
-            var learners = await _overallGradeCalculationRepository.GetLearnersForOverallGradeCalculation(resultCalculationYearFrom, resultCalculationAssessment.ResultCalculationYear ?? 0);
+            var learners = await _overallGradeCalculationRepository.GetLearnersForOverallGradeCalculation(resultCalculationAssessment);
 
             if (learners == null || !learners.Any())
                 return null;

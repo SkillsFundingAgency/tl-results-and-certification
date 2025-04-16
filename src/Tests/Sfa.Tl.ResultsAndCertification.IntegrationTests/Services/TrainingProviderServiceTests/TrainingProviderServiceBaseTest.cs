@@ -1,6 +1,8 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
+using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
@@ -30,6 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
         protected IRepository<PrintCertificate> PrintCertificateRepository;
         protected ILogger<GenericRepository<PrintCertificate>> PrintCertificateRepositoryLogger;
         protected IMapper TrainingProviderMapper;
+        protected IOverallResultCalculationService OverallResultCalculationService = Substitute.For<IOverallResultCalculationService>();
 
         // Data Seed variables
         protected TlAwardingOrganisation TlAwardingOrganisation;
