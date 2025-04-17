@@ -5,13 +5,10 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Functions.Services;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions
@@ -29,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             _configuration = configuration.ProviderAddressExtractSettings;
         }
 
-        
+
         [FunctionName(Constants.ProviderAddressExtract)]
         public async Task ProviderAddressExtractAsync([TimerTrigger("%ProviderAddressExtractTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
         {
@@ -45,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                 return;
             }
 
-            var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.AnalystCoreResultExtract);
+            var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.ProviderAddressExtract);
             try
             {
                 logger.LogInformation($"Function {context.FunctionName} started");

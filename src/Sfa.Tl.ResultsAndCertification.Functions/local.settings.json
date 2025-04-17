@@ -18,7 +18,6 @@
     "IndustryPlacementChaseBigGapsReminderTrigger": "0 */5 * * * *",
     "IndustryPlacementOneOutstandingUlnReminderTrigger": "0 */5 * * * *",
     "AnalystOverallResultExtractTrigger": "0 15 7 * * *",
-    "AnalystCoreResultExtractTrigger": "0 30 7 * * *",
     "ProviderAddressExtractTrigger": "0 45 7 * * *",
     "CoreRommExtractTrigger": "0 0 8 * * *",
     "SpecialismRommExtractTrigger": "0 45 7 * * *",
