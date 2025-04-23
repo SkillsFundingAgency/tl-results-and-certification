@@ -79,26 +79,6 @@
       ],
       "type": "object"
     },
-    "BlobStorageSettings": {
-      "properties": {
-        "AccountName": {
-          "minLength": 1,
-          "type": "string",
-          "environmentVariable": "BlobStorageAccountName"
-        },
-        "AccountKey": {
-          "minLength": 1,
-          "type": "string",
-          "environmentVariable": "BlobStorageAccountKey"
-        }
-      },
-      "additionalProperties": false,
-      "required": [
-        "AccountName",
-        "AccountKey"
-      ],
-      "type": "object"
-    },
     "DataProtectionSettings": {
       "properties": {
         "ContainerName": {
@@ -617,7 +597,6 @@
     "CertificatePrintingBatchesCreateStartDate",
     "KeyVaultUri",
     "RedisSettings",
-    "BlobStorageSettings",
     "DataProtectionSettings",
     "DfeSignInSettings",
     "ResultsAndCertificationInternalApiSettings",

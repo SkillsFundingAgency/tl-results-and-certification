@@ -28,6 +28,7 @@ stages:
       - group: platform-global-${{parameters.applicationName}}
       - group: platform-${{parameters.environmentName}}
       - group: platform-${{parameters.environmentName}}-${{parameters.applicationName}}
+      - group: platform-${{parameters.environmentName}}-${{parameters.applicationName}}-kv
       - name: BaseName
         value: "s126${{parameters.environmentId}}-${{parameters.applicationName}}-${{parameters.environmentName}}"
       - name: ResourceGroupName
@@ -63,9 +64,6 @@ stages:
           sharedEnvironmentId: ${{ parameters.sharedEnvironmentId }}
           environmentName: ${{ parameters.environmentName }}
           ConfigurationSecrets: 
-            BlobStorageAccountKey: $(BlobStorageAccountKey)
-            ConfigStorageAccountkey: $(ConfigStorageAccountkey)
-            ConfigurationStorageConnectionString: $(ConfigurationStorageConnectionString)
             DfeSignInApiSecret: $(DfeSignInApiSecret)
             DfeSignInClientSecret: $(DfeSignInClientSecret)
             GovUkNotifyApiKey: $(GovUkNotifyApiKey)
@@ -73,9 +71,7 @@ stages:
             OrdnanceSurveyPlacesApiPlacesKey: $(OrdnanceSurveyPlacesApiPlacesKey)
             PrintingApiPassword: $(PrintingApiPassword)
             RedisCacheConnection: $(RedisCacheConnection)
-            RedisCachePassword: $(RedisCachePassword)
             ResacSQLServiceAccountPassword: $(ResacSQLServiceAccountPassword)
-            SharedStorageAccountKey: $(SharedStorageAccountKey)
             SQLServerAdminPassword: $(SQLServerAdminPassword)
             sqlServerReplicaAdminPassword: $(sqlServerReplicaAdminPassword)
             UcasApiPassword: $(UcasApiPassword)
