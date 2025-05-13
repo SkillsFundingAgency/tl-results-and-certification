@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.Printing
 {
@@ -11,7 +12,10 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.Printing
         public string CoreGrade { get; set; }
         public List<OccupationalSpecialism> OccupationalSpecialism { get; set; }
         public string IndustryPlacement { get; set; }
+
+        [JsonIgnore]
         public string EnglishAndMaths { get; set; }
+
         public List<object> MARS { get; set; }
         public string StartYear { get; set; }
     }
