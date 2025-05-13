@@ -101,7 +101,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
                 ? _profiles.SelectMany(p => p.TqRegistrationPathways.Where(p => request.AcademicYear.Contains(p.AcademicYear) && p.TqProvider.TlProvider.UkPrn == request.Ukprn && (p.Status == RegistrationPathwayStatus.Active))).ToList()
                 : _profiles.SelectMany(p => p.TqRegistrationPathways.Where(p => p.TqProvider.TlProvider.UkPrn == request.Ukprn && (p.Status == RegistrationPathwayStatus.Active))).ToList();
 
-            var totalCount = _profiles.SelectMany(p => p.TqRegistrationPathways.Where(p => p.TqProvider.TlProvider.UkPrn == request.Ukprn && (p.Status == RegistrationPathwayStatus.Active))).Count();
+            var totalCount = pathways.Count;
 
             if (!string.IsNullOrWhiteSpace(request.SearchKey))
             {
