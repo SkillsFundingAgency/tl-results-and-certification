@@ -6,7 +6,6 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using ErrorResource = Sfa.Tl.ResultsAndCertification.Web.Content.IndustryPlacement;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
 {
@@ -18,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
         public int AcademicYear { get; set; }
         public string LearnerName { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(ErrorResource.IpCompletion), ErrorMessageResourceName = "Validation_Message")]
+        [Required(ErrorMessageResourceType = typeof(IpCompletion), ErrorMessageResourceName = "Validation_Message")]
         public IndustryPlacementStatus? IndustryPlacementStatus { get; set; }
 
         public bool IsChangeJourney { get; set; }
@@ -30,9 +29,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
         public string ShowCompletedOptionWithWording =>
             IsPeriodActive(DateTime.Today) ? IpCompletion.Yes_Completed_Option_With_Wording : IpCompletion.Yes_Completed_Option_Text;
 
-        public bool IsPeriodActive(DateTime date)
+        private static bool IsPeriodActive(DateTime date)
         {
-            var startDate = new DateTime(date.Year, 06, 01);
+            var startDate = new DateTime(date.Year, 05, 10);
             var endDate = new DateTime(date.Year, 07, 31);
 
             return (date >= startDate && date <= endDate);
