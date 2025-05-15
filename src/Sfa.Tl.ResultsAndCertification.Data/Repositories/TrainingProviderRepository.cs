@@ -32,7 +32,16 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                              .Where(p => p.TqProvider.TlProvider.UkPrn == request.Ukprn && p.Status == RegistrationPathwayStatus.Active)
                                              .AsQueryable();
 
-            var totalCount = pathwayQueryable.Count();
+            bool filteredByAcademicYear = !request.AcademicYear.IsNullOrEmpty();
+
+            var totalCount = filteredByAcademicYear
+                ? pathwayQueryable.Where(p => request.AcademicYear.Contains(p.AcademicYear)).Count()
+                : pathwayQueryable.Count();
+
+            if (filteredByAcademicYear)
+            {
+                pathwayQueryable = pathwayQueryable.Where(p => request.AcademicYear.Contains(p.AcademicYear));
+            }
 
             if (!string.IsNullOrWhiteSpace(request.SearchKey))
             {
@@ -43,9 +52,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     ? pathwayQueryable.Where(p => p.TqRegistrationProfile.UniqueLearnerNumber == searchKey.ToLong())
                     : pathwayQueryable.Where(p => EF.Functions.Like(p.TqRegistrationProfile.Lastname.Trim(), searchKey));
             }
-
-            if (request.AcademicYear != null && request.AcademicYear.Any())
-                pathwayQueryable = pathwayQueryable.Where(p => request.AcademicYear.Contains(p.AcademicYear));
 
             if (request.Tlevels != null && request.Tlevels.Any())
                 pathwayQueryable = pathwayQueryable.Where(p => request.Tlevels.Contains(p.TqProvider.TqAwardingOrganisation.TlPathway.Id));
