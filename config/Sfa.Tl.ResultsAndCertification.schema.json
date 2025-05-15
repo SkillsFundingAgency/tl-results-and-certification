@@ -496,6 +496,10 @@
       "required": [],
       "type": "object"
     },
+    "CertificateTrackingExtractTrigger": {
+      "type": "string",
+      "environmentVariable": "CertificateTrackingExtractTrigger"
+    },
     "IPProviderFirstDeadlineReminderSettings": {
       "properties": {
         "ValidDateRanges": {
@@ -612,6 +616,7 @@
     "ProviderAddressExtractSettings",
     "UcasTransferAmendmentsSettings",
     "CertificateTrackingExtractSettings",
+    "CertificateTrackingExtractTrigger",
     "IPProviderFirstDeadlineReminderSettings",
     "IPMissedDeadlineReminderSettings",
     "IPChaseBigGapsReminderSettings",

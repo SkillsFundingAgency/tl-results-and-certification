@@ -121,7 +121,10 @@
       "type": "string"
     },
     "certificateTrackingExtractTrigger": {
-      "type": "string"
+      "type": "string",
+      "metadata": {
+        "description": "CRON expression for scheduling the certificate tracking extract function."
+      }
     },
     "enableReplica": {
       "type": "bool",

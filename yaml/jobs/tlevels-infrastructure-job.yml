@@ -84,7 +84,7 @@ jobs:
             -coreRommExtractTrigger "$(coreRommExtractTrigger)"
             -specialismRommExtractTrigger "$(specialismRommExtractTrigger)"
             -providerAddressExtractTrigger "$(providerAddressExtractTrigger)"
-            -CertificateTrackingExtractTrigger "$(CertificateTrackingExtractTrigger)"
+            -certificateTrackingExtractTrigger "$(CertificateTrackingExtractTrigger)"
             -enableReplica $(enableReplica)
             -containerLifecyclePolicyRules $(containerLifecyclePolicyRules)
             -ipSecurityRestrictions $(ipSecurityRestrictions)
