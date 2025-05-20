@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
             SeedTestData();
             SeedAdditionalPathways();
 
-            TrainingProviderRepository = new TrainingProviderRepository(DbContext, TraningProviderRepositoryLogger);
+            TrainingProviderRepository = new TrainingProviderRepository(DbContext);
         }
 
         public override Task When()

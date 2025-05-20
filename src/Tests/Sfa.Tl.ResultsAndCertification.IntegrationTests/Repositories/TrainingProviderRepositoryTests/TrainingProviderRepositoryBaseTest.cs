@@ -1,8 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
-using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Printing;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
@@ -33,7 +31,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
         protected IList<TlProviderAddress> TlProviderAddresses;
 
         // Dependencies.
-        protected ILogger<TrainingProviderRepository> TraningProviderRepositoryLogger;
         protected ITrainingProviderRepository TrainingProviderRepository;
 
         protected virtual void SeedTestData(EnumAwardingOrganisation awardingOrganisation = EnumAwardingOrganisation.Pearson, bool seedMultipleProviders = false)

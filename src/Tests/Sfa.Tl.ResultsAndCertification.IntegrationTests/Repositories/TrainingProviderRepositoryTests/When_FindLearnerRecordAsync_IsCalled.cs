@@ -54,7 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
             DbContext.SaveChanges();
 
             // Test class.
-            TrainingProviderRepository = new TrainingProviderRepository(DbContext, TraningProviderRepositoryLogger);
+            TrainingProviderRepository = new TrainingProviderRepository(DbContext);
         }
 
         public override Task When()

@@ -1,5 +1,4 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
@@ -18,12 +17,10 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
     public class TrainingProviderRepository : ITrainingProviderRepository
     {
         protected readonly ResultsAndCertificationDbContext _dbContext;
-        private readonly ILogger<TrainingProviderRepository> _logger;
 
-        public TrainingProviderRepository(ResultsAndCertificationDbContext dbContext, ILogger<TrainingProviderRepository> logger)
+        public TrainingProviderRepository(ResultsAndCertificationDbContext dbContext)
         {
             _dbContext = dbContext;
-            _logger = logger;
         }
 
         public async Task<PagedResponse<SearchLearnerDetail>> SearchLearnerDetailsAsync(SearchLearnerRequest request)
@@ -64,18 +61,18 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 {
                     switch (statusId)
                     {
-                        case (int)LearnerStatusFilter.EnglishIncompleted:
+                        case (int)LearnerStatusFilter.EnglishIncomplete:
                             expressions.Add(p => p.TqRegistrationProfile.EnglishStatus == null);
                             break;
-                        case (int)LearnerStatusFilter.MathsIncompleted:
+                        case (int)LearnerStatusFilter.MathsIncomplete:
                             expressions.Add(p => p.TqRegistrationProfile.MathsStatus == null);
                             break;
-                        case (int)LearnerStatusFilter.IndustryPlacementIncompleted:
+                        case (int)LearnerStatusFilter.IndustryPlacementIncomplete:
                             expressions.Add(p => !p.IndustryPlacements.Any());
                             break;
-                        case (int)LearnerStatusFilter.AllIncomplemented:
+                        case (int)LearnerStatusFilter.AllIncomplete:
                             expressions.Clear();
-                            expressions.Add(p => p.TqRegistrationProfile.EnglishStatus == null && p.TqRegistrationProfile.MathsStatus == null && !p.IndustryPlacements.Any());
+                            expressions.Add(p => p.TqRegistrationProfile.EnglishStatus == null || p.TqRegistrationProfile.MathsStatus == null || !p.IndustryPlacements.Any());
                             break;
                     }
                 }
