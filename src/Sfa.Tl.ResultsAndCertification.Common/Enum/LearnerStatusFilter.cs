@@ -3,9 +3,9 @@
     public enum LearnerStatusFilter
     {
         NotSpecified = 0,
-        EnglishIncompleted = 1,
-        MathsIncompleted = 2,
-        IndustryPlacementIncompleted = 3,
-        AllIncomplemented = 4,
+        EnglishIncomplete = 1,
+        MathsIncomplete = 2,
+        IndustryPlacementIncomplete = 3,
+        AllIncomplete = 4,
     }
 }

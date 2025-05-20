@@ -62,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
             DbContext.SaveChanges();
 
             // Test class.
-            TrainingProviderRepository = new TrainingProviderRepository(DbContext, TraningProviderRepositoryLogger);
+            TrainingProviderRepository = new TrainingProviderRepository(DbContext);
         }
 
         public override Task When()
@@ -121,7 +121,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
                             break;
                         case 4:
                             expressions.Clear();
-                            expressions.Add(p => p.TqRegistrationProfile.EnglishStatus == null && p.TqRegistrationProfile.MathsStatus == null && !p.IndustryPlacements.Any());
+                            expressions.Add(p => p.TqRegistrationProfile.EnglishStatus == null || p.TqRegistrationProfile.MathsStatus == null || !p.IndustryPlacements.Any());
                             break;
                     }
                 }
@@ -173,14 +173,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
                     new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, Ukprn = (int)Provider.BarnsleyCollege } }, // Learners registered for Barnsley college for 2020
                     new object[] { new SearchLearnerRequest { AcademicYear = new List<int>(), Ukprn = (int)Provider.BarnsleyCollege } }, // Learners registered for Barnsley college for 2020 but not passing academic year
 
-                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, Statuses = new List<int> { (int)LearnerStatusFilter.EnglishIncompleted }, Ukprn = (int)Provider.BarnsleyCollege } }, // Academic Year and Status filter (EnglishIncompleted) only
-                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, Statuses = new List<int> { (int)LearnerStatusFilter.MathsIncompleted }, Ukprn = (int)Provider.BarnsleyCollege } }, // Academic Year and Status filter (MathsIncompleted) only
-                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, Statuses = new List<int> { (int)LearnerStatusFilter.IndustryPlacementIncompleted }, Ukprn = (int)Provider.BarnsleyCollege } }, // Academic Year and Status filter (IndustryPlacementIncompleted) only
-                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, Statuses = new List<int> { (int)LearnerStatusFilter.AllIncomplemented }, Ukprn = (int)Provider.BarnsleyCollege } }, // Academic Year and Status filter (IndustryPlacementIncompleted) only
-                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, Statuses = new List<int> { (int)LearnerStatusFilter.EnglishIncompleted, (int)LearnerStatusFilter.MathsIncompleted }, Ukprn = (int)Provider.BarnsleyCollege } }, // Academic Year and Status filter (English & Maths Incompleted) combination
+                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, Statuses = new List<int> { (int)LearnerStatusFilter.EnglishIncomplete }, Ukprn = (int)Provider.BarnsleyCollege } }, // Academic Year and Status filter (EnglishIncompleted) only
+                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, Statuses = new List<int> { (int)LearnerStatusFilter.MathsIncomplete }, Ukprn = (int)Provider.BarnsleyCollege } }, // Academic Year and Status filter (MathsIncompleted) only
+                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, Statuses = new List<int> { (int)LearnerStatusFilter.IndustryPlacementIncomplete }, Ukprn = (int)Provider.BarnsleyCollege } }, // Academic Year and Status filter (IndustryPlacementIncompleted) only
+                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, Statuses = new List<int> { (int)LearnerStatusFilter.AllIncomplete }, Ukprn = (int)Provider.BarnsleyCollege } }, // Academic Year and Status filter (IndustryPlacementIncompleted) only
+                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, Statuses = new List<int> { (int)LearnerStatusFilter.EnglishIncomplete, (int)LearnerStatusFilter.MathsIncomplete }, Ukprn = (int)Provider.BarnsleyCollege } }, // Academic Year and Status filter (English & Maths Incompleted) combination
 
-                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, Statuses = new List<int> { (int)LearnerStatusFilter.AllIncomplemented }, Tlevels = new List<int> { 1 }, Ukprn = (int)Provider.BarnsleyCollege } }, // Valid Tlevel filter
-                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, Statuses = new List<int> { (int)LearnerStatusFilter.AllIncomplemented }, Tlevels = new List<int> { 2 }, Ukprn = (int)Provider.BarnsleyCollege } }, // not Valid Tlevel filter
+                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, Statuses = new List<int> { (int)LearnerStatusFilter.AllIncomplete }, Tlevels = new List<int> { 1 }, Ukprn = (int)Provider.BarnsleyCollege } }, // Valid Tlevel filter
+                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, Statuses = new List<int> { (int)LearnerStatusFilter.AllIncomplete }, Tlevels = new List<int> { 2 }, Ukprn = (int)Provider.BarnsleyCollege } }, // not Valid Tlevel filter
 
                     new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, PageNumber = 1, Ukprn = (int)Provider.BarnsleyCollege } }, // Pagination
 
