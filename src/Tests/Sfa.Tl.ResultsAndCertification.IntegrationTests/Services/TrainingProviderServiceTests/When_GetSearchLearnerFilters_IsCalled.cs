@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
         private SearchLearnerFilters _actualResult;
         private IList<FilterLookupData> _mockAcademicYears;
         private IList<FilterLookupData> _mockTlevels;
-        private IList<FilterLookupData> _expecetedStatusFilters;
+        private IList<FilterLookupData> _expectedStatusFilters;
 
         public override void Given()
         {
@@ -29,7 +29,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             // Create Service
             RegistrationProfileRepositoryLogger = new Logger<GenericRepository<TqRegistrationProfile>>(new NullLoggerFactory());
             RegistrationProfileRepository = new GenericRepository<TqRegistrationProfile>(RegistrationProfileRepositoryLogger, DbContext);
-            TrainingProviderRepositoryLogger = new Logger<TrainingProviderRepository>(new NullLoggerFactory());
             TrainingProviderRepository = Substitute.For<ITrainingProviderRepository>();
             TrainingProviderServiceLogger = new Logger<TrainingProviderService>(new NullLoggerFactory());
             BatchRepositoryLogger = new Logger<GenericRepository<Batch>>(new NullLoggerFactory());
@@ -45,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             _mockTlevels = new List<FilterLookupData> { new FilterLookupData { Id = 1, Name = "Design, Survey and Planning", IsSelected = false }, new FilterLookupData { Id = 2, Name = "Health", IsSelected = false } };
             TrainingProviderRepository.GetSearchTlevelFiltersAsync().Returns(_mockTlevels);
 
-            _expecetedStatusFilters = new List<FilterLookupData>
+            _expectedStatusFilters = new List<FilterLookupData>
             {
                 new FilterLookupData { Id = 1, Name = "English level", IsSelected = false },
                 new FilterLookupData { Id = 2, Name = "Maths level", IsSelected = false },
@@ -75,7 +74,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             _actualResult.Should().NotBeNull();
             _actualResult.AcademicYears.Should().BeEquivalentTo(_mockAcademicYears);
             _actualResult.Tlevels.Should().BeEquivalentTo(_mockTlevels);
-            _actualResult.Status.Should().BeEquivalentTo(_expecetedStatusFilters);
+            _actualResult.Status.Should().BeEquivalentTo(_expectedStatusFilters);
         }
     }
 }

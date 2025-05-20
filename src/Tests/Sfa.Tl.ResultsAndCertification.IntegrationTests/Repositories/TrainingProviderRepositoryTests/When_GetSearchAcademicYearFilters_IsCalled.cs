@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
         public override void Given()
         {
             SeedAcademicYears();
-            TrainingProviderRepository = new TrainingProviderRepository(DbContext, TraningProviderRepositoryLogger);
+            TrainingProviderRepository = new TrainingProviderRepository(DbContext);
         }
 
         public override Task When()
