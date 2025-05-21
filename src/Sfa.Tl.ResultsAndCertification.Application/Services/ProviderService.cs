@@ -52,7 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public async Task<IEnumerable<ProviderMetadata>> FindProviderAsync(string name, bool isExactMatch)
         {
             return await _tlProviderRepository
-                .GetManyAsync(p => EF.Functions.Like(p.DisplayName, isExactMatch ? $"{name.ToLower()}" : $"{name.ToLower()}%"))
+                .GetManyAsync(p => EF.Functions.Like(p.DisplayName, isExactMatch ? $"{name.ToLower()}" : $"{name.ToLower()}%") && p.IsActive)
                 .OrderBy(o => o.DisplayName)
                 .ProjectTo<ProviderMetadata>(_mapper.ConfigurationProvider)
                 .ToListAsync();
