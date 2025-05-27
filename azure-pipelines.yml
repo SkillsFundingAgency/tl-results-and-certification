@@ -8,6 +8,7 @@ resources:
       type: github
       endpoint: DfE-Digital
       name: DFE-Digital/operations-devops-pipeline-templates
+      ref: feature/TLD-376-remove-output-secrets
     - repository: devopsTools
       type: github
       endpoint: DfE-Digital
