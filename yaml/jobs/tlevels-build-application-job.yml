@@ -8,7 +8,9 @@ jobs:
   workspace:
     clean: all
   steps:
-  
+    - checkout: self
+      fetchDepth: 0
+
     - task: UseDotNet@2 
       displayName: "Use .NET Core SDK 2.1.x"
       inputs:
