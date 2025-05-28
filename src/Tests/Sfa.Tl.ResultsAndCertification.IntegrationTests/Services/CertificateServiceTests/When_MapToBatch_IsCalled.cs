@@ -98,12 +98,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
                            new PrintCertificate {
                                                   Uln = 1111111111, LearnerName = "First11 Last11", TqRegistrationPathwayId = 1111, Type = PrintCertificateType.Certificate,
                                                   DisplaySnapshot = null, CreatedBy = Constants.FunctionPerformedBy,
-                                                  LearningDetails = "{\"TLevelTitle\":\"Design, Surveying and Planning for Construction\",\"Grade\":\"Distinction\",\"Date\":\"October 2020\",\"Core\":\"Design, Surveying and Planning\",\"CoreGrade\":\"A*\",\"OccupationalSpecialism\":[{\"Specialism\":\"Surveying and design for construction and the built environment\",\"Grade\":\"Distinction\"}],\"IndustryPlacement\":\"Met\",\"EnglishAndMaths\":\"The named recipient has also achieved a qualification at Level 2 in both maths and English.\",\"MARS\":[],\"StartYear\":\"2021\"}"
+                                                  LearningDetails = "{\"TLevelTitle\":\"Design, Surveying and Planning for Construction\",\"Grade\":\"Distinction\",\"Date\":\"October 2020\",\"Core\":\"Design, Surveying and Planning\",\"CoreGrade\":\"A*\",\"OccupationalSpecialism\":[{\"Specialism\":\"Surveying and design for construction and the built environment\",\"Grade\":\"Distinction\"}],\"IndustryPlacement\":\"Met\",\"MARS\":[],\"StartYear\":\"2021\"}"
                                                 },
                            new PrintCertificate {
                                                   Uln = 1111111112, LearnerName = "First12 Last12", TqRegistrationPathwayId = 1112, Type = PrintCertificateType.StatementOfAchievement,
                                                   DisplaySnapshot = null, CreatedBy = Constants.FunctionPerformedBy,
-                                                  LearningDetails = "{\"TLevelTitle\":\"Health\",\"Grade\":\"\",\"Date\":\"April 2021\",\"Core\":\"Health\",\"CoreGrade\":\"A*\",\"OccupationalSpecialism\":[{\"Specialism\":\"\",\"Grade\":\"Not completed\"}],\"IndustryPlacement\":\"Not met\",\"EnglishAndMaths\":\"The named recipient has also achieved a qualification at Level 2 in English.\",\"MARS\":[],\"StartYear\":\"2021\"}"
+                                                  LearningDetails = "{\"TLevelTitle\":\"Health\",\"Grade\":\"\",\"Date\":\"April 2021\",\"Core\":\"Health\",\"CoreGrade\":\"A*\",\"OccupationalSpecialism\":[{\"Specialism\":\"\",\"Grade\":\"Not completed\"}],\"IndustryPlacement\":\"Not met\",\"MARS\":[],\"StartYear\":\"2021\"}"
                                                 },
                         }
                     },
@@ -116,12 +116,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
                            new PrintCertificate {
                                                    Uln = 2222222221, LearnerName = "First21 Last21", TqRegistrationPathwayId = 2221, Type = PrintCertificateType.Certificate,
                                                    DisplaySnapshot = null, CreatedBy = Constants.FunctionPerformedBy,
-                                                   LearningDetails = "{\"TLevelTitle\":\"Education and Childcare\",\"Grade\":\"Pass\",\"Date\":\"September 2021\",\"Core\":\"Education and Childcare\",\"CoreGrade\":\"A*\",\"OccupationalSpecialism\":[{\"Specialism\":\"Surveying and design for construction and the built environment\",\"Grade\":\"Distinction\"}],\"IndustryPlacement\":\"Met\",\"EnglishAndMaths\":\"The named recipient has also achieved a qualification at Level 2 in maths.\",\"MARS\":[],\"StartYear\":\"2021\"}"
+                                                   LearningDetails = "{\"TLevelTitle\":\"Education and Childcare\",\"Grade\":\"Pass\",\"Date\":\"September 2021\",\"Core\":\"Education and Childcare\",\"CoreGrade\":\"A*\",\"OccupationalSpecialism\":[{\"Specialism\":\"Surveying and design for construction and the built environment\",\"Grade\":\"Distinction\"}],\"IndustryPlacement\":\"Met\",\"MARS\":[],\"StartYear\":\"2021\"}"
                                                 },
                            new PrintCertificate {
                                                     Uln = 2222222222, LearnerName = "First22 Last22", TqRegistrationPathwayId = 2222, Type = PrintCertificateType.StatementOfAchievement,
                                                     DisplaySnapshot = null, CreatedBy = Constants.FunctionPerformedBy,
-                                                    LearningDetails = "{\"TLevelTitle\":\"Science\",\"Grade\":\"\",\"Date\":\"May 2022\",\"Core\":\"Science\",\"CoreGrade\":\"Not completed\",\"OccupationalSpecialism\":[{\"Specialism\":\"Surveying and design for construction and the built environment\",\"Grade\":\"Distinction\"},{\"Specialism\":\"Civil Engineering\",\"Grade\":\"Not completed\"}],\"IndustryPlacement\":\"Not met\",\"EnglishAndMaths\":\"\",\"MARS\":[],\"StartYear\":\"2021\"}"
+                                                    LearningDetails = "{\"TLevelTitle\":\"Science\",\"Grade\":\"\",\"Date\":\"May 2022\",\"Core\":\"Science\",\"CoreGrade\":\"Not completed\",\"OccupationalSpecialism\":[{\"Specialism\":\"Surveying and design for construction and the built environment\",\"Grade\":\"Distinction\"},{\"Specialism\":\"Civil Engineering\",\"Grade\":\"Not completed\"}],\"IndustryPlacement\":\"Not met\",\"MARS\":[],\"StartYear\":\"2021\"}"
                                                 }
                         }
                     }
