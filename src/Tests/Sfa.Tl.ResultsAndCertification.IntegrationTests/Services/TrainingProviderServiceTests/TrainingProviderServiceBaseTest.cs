@@ -26,7 +26,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
         protected IRepository<TqRegistrationProfile> RegistrationProfileRepository;
         protected ILogger<TrainingProviderService> TrainingProviderServiceLogger;
         protected ITrainingProviderRepository TrainingProviderRepository;
-        protected ILogger<TrainingProviderRepository> TrainingProviderRepositoryLogger;
         protected IRepository<Batch> BatchRepository;
         protected ILogger<GenericRepository<Batch>> BatchRepositoryLogger;
         protected IRepository<PrintCertificate> PrintCertificateRepository;
