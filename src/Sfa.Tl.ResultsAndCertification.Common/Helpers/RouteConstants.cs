@@ -448,6 +448,10 @@
         public const string SubmitAdminIndustryPlacementSpecialConsiderationReasons = "SubmitAdminIndustryPlacementSpecialConsiderationReasons";
         public const string AdminReviewChangesIndustryPlacement = "AdminReviewChangesIndustryPlacement";
         public const string SubmitReviewChangesIndustryPlacement = "SubmitReviewChangesIndustryPlacement";
+
+        public const string AdminChangeLevelTwoMathsClear = "AdminChangeLevelTwoMathsClear";
+        public const string AdminChangeLevelTwoMaths = "AdminChangeLevelTwoMaths";
+
         public const string RemoveAssessmentEntryCoreClear = "RemoveAssessmentEntryCoreClear";
         public const string RemoveAssessmentEntryCore = "RemoveAssessmentEntryCore";
         public const string SubmitRemoveAssessmentEntryCore = "SubmitRemoveAssessmentEntryCore";

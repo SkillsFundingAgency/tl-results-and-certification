@@ -14,6 +14,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LevelTwoResults;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
 using System;
@@ -459,6 +460,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
 
         }
+
+        #endregion
+
+        #region Change Level 2 Maths and English
+
+        [HttpGet]
+        [Route("admin/change-level-two-maths/{registrationPathwayId}", Name = RouteConstants.AdminChangeLevelTwoMathsClear)]
+        public async Task<IActionResult> ChangeLevelTwoMathsClearAsync(int registrationPathwayId)
+        {
+            await _cacheService.RemoveAsync<AdminChangeResultsViewModel>(CacheKey);
+            return RedirectToRoute(RouteConstants.AdminChangeLevelTwoMaths, new { registrationPathwayId });
+        }
+
 
         #endregion
 
