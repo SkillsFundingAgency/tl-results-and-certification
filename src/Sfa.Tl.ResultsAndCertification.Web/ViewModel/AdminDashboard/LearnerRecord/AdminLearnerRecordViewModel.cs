@@ -181,14 +181,26 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
 
         #endregion
 
-        # region Summary English & Maths
+        #region Summary English & Maths
 
-        public SummaryItemModel SummaryMathsStatus =>
-            new SummaryItemModel
+        public SummaryItemModel SummaryMathsStatus => 
+            new()
             {
                 Id = "mathsstatus",
                 Title = LearnerRecordDetailsContent.Title_Maths_Text,
                 Value = GetSubjectStatus(MathsStatus),
+                ActionText = CanChangeMathsStatus
+                            ? LearnerRecordDetailsContent.Action_Text_Link_Change
+                            : null,
+                RouteName = CanChangeMathsStatus
+                            ? RouteConstants.AdminChangeLevelTwoMathsClear
+                            : null,
+                RouteAttributes = CanChangeMathsStatus
+                            ? new Dictionary<string, string> { { Constants.RegistrationPathwayId, RegistrationPathwayId.ToString() } }
+                            : null,
+                HiddenActionText = CanChangeMathsStatus
+                            ? LearnerRecordDetailsContent.Hidden_Action_Text_Maths
+                            : null
             };
 
         public SummaryItemModel SummaryEnglishStatus =>
@@ -249,5 +261,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
 
         private string TLevelStatusValue
             => IsPendingWithdrawal ? LearnerRecordDetailsContent.TLevel_Status_Pending_Withdrawal_Text : RegistrationPathwayStatus.ToString();
+
+        private bool CanChangeMathsStatus
+            => GetSubjectStatus(MathsStatus) == SubjectStatusContent.Not_Achieved_Display_Text
+            || GetSubjectStatus(MathsStatus) == SubjectStatusContent.Not_Achieved_Lrs_Display_Text;
     }
 }
