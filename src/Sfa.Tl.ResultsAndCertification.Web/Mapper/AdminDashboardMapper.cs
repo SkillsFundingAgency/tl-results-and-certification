@@ -14,6 +14,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LevelTwoResults;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminPostResults;
 using System;
@@ -179,6 +180,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                         ? null as int?
                         : int.Parse(s.AdminChangeIpViewModel.HoursViewModel.Hours)))
                 .ForMember(d => d.SpecialConsiderationReasons, opts => opts.MapFrom(s => s.SelectedReasons));
+
+            CreateMap<AdminLearnerRecord, AdminChangeResultsViewModel>()
+                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
+                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => $"{s.Firstname} {s.Lastname}"))
+                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+                .ForMember(d => d.Provider, opts => opts.MapFrom(s => $"{s.Pathway.Provider.Name} ({s.Pathway.Provider.Ukprn})"))
+                .ForMember(d => d.TlevelName, opts => opts.MapFrom(s => s.Pathway.Name))
+                .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.Pathway.AcademicYear))
+                .ForMember(d => d.StartYear, opts => opts.MapFrom(s => GetDisplayAcademicYear(s.Pathway.AcademicYear)))
+                .ForMember(d => d.MathsStatus, opts => opts.MapFrom(s => s.MathsStatus));
 
             CreateMap<AdminLearnerRecord, AdminCoreComponentViewModel>()
                 .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))

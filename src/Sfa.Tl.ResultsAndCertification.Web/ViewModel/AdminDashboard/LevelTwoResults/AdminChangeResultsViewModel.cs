@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LevelTwoRe
     {
         public int RegistrationPathwayId { get; set; }
         public string LearnerName { get; set; }
-        public int Uln { get; set; }
+        public long Uln { get; set; }
         public string Provider { get; set; }
         public string TlevelName { get; set; }
         public int AcademicYear { get; set; }

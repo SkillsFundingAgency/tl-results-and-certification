@@ -466,19 +466,40 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         #region Change Level 2 Maths and English
 
         [HttpGet]
-        [Route("admin/change-level-two-maths/{registrationPathwayId}", Name = RouteConstants.AdminChangeLevelTwoMathsClear)]
+        [Route("admin/change-level-two-maths-clear/{registrationPathwayId}", Name = RouteConstants.AdminChangeLevelTwoMathsClear)]
         public async Task<IActionResult> ChangeLevelTwoMathsClearAsync(int registrationPathwayId)
         {
             await _cacheService.RemoveAsync<AdminChangeResultsViewModel>(CacheKey);
             return RedirectToRoute(RouteConstants.AdminChangeLevelTwoMaths, new { registrationPathwayId });
         }
 
-
-        #endregion
-
-        #region Assesment Entry
-
         [HttpGet]
+        [Route("admin/change-level-two-maths/{registrationPathwayId}", Name = RouteConstants.AdminChangeLevelTwoMaths)]
+        public async Task<IActionResult> AdminChangeLevelTwoMathsAsync(int registrationPathwayId)
+        {
+            var cachedModel = await _cacheService.GetAsync<AdminChangeResultsViewModel>(CacheKey);
+
+            if (cachedModel != null)
+            {
+                return View(cachedModel);
+            }
+
+            var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeResultsViewModel>(registrationPathwayId);
+
+            if (viewModel == null)
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+
+            #endregion
+
+            #region Assesment Entry
+
+            [HttpGet]
         [Route("admin/add-assessment-entry-core/{registrationPathwayId}", Name = RouteConstants.AdminCoreComponentAssessmentEntry)]
         public async Task<IActionResult> AdminCoreComponentAssessmentEntry(int registrationPathwayId)
         {

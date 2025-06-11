@@ -29,13 +29,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 
         public async override Task When()
         {
-            Result = await Controller.AdminChangeIndustryPlacementAsync(RegistrationPathwayId);
+            Result = await Controller.AdminChangeLevelTwoMathsAsync(RegistrationPathwayId);
         }
 
         protected void AssertViewResult()
         {
             var model = Result.ShouldBeViewResult<AdminChangeResultsViewModel>();
             var changeResultsModel = ViewModel;
+
             model.RegistrationPathwayId.Should().Be(changeResultsModel.RegistrationPathwayId);
             model.Uln.Should().Be(changeResultsModel.Uln);
             model.LearnerName.Should().Be(changeResultsModel.LearnerName);
