@@ -457,7 +457,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to tell us if a learner has met the minimum standard for English and maths.
+        ///   Looks up a localized string similar to confirm address details for delivery.
+        /// </summary>
+        public static string Service_TellUs_Confirm_Address_Details {
+            get {
+                return ResourceManager.GetString("Service_TellUs_Confirm_Address_Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to confirm if a learner has achieved a level 2 qualification in English and maths.
         /// </summary>
         public static string Service_TellUs_English_And_Maths_Qualification {
             get {
@@ -480,6 +489,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         public static string Service_TellUs_Provider_Offering {
             get {
                 return ResourceManager.GetString("Service_TellUs_Provider_Offering", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to request Statements of achievements or replacement certificates.
+        /// </summary>
+        public static string Service_TellUs_Request_Statement_Of_Achievements {
+            get {
+                return ResourceManager.GetString("Service_TellUs_Request_Statement_Of_Achievements", resourceCulture);
             }
         }
         
