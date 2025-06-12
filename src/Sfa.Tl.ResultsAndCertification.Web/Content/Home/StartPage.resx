@@ -249,9 +249,6 @@
   <data name="Service_TellUs_Add_Update_Results" xml:space="preserve">
     <value>add or update core component and occupational specialism results</value>
   </data>
-  <data name="Service_TellUs_Confirm_Address_Details" xml:space="preserve">
-    <value>confirm address details for delivery</value>
-  </data>
   <data name="Service_TellUs_English_And_Maths_Qualification" xml:space="preserve">
     <value>confirm if a learner has achieved a level 2 qualification in English and maths</value>
   </data>
@@ -260,9 +257,6 @@
   </data>
   <data name="Service_TellUs_Provider_Offering" xml:space="preserve">
     <value>tell us which T Levels each provider is offering</value>
-  </data>
-  <data name="Service_TellUs_Request_Statement_Of_Achievements" xml:space="preserve">
-    <value>request Statements of achievements or replacement certificates</value>
   </data>
   <data name="Service_TellUs_Tlevel_Details_Correct" xml:space="preserve">
     <value>tell us if T Level details are correct</value>
@@ -278,5 +272,11 @@
   </data>
   <data name="You_Need_DfE_SignIn_Account_To_Use_This_Service_Text" xml:space="preserve">
     <value>You will need a DfE Sign-in account and an assigned role.</value>
+  </data>
+  <data name="Service_TellUs_Confirm_Address_Details" xml:space="preserve">
+    <value>confirm address details for delivery</value>
+  </data>
+  <data name="Service_TellUs_Request_Statement_Of_Achievements" xml:space="preserve">
+    <value>request statements of achievements or replacement certificates</value>
   </data>
 </root>

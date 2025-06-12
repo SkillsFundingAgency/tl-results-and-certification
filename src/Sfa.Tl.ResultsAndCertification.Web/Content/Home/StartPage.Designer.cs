@@ -493,7 +493,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to request Statements of achievements or replacement certificates.
+        ///   Looks up a localized string similar to request statements of achievements or replacement certificates.
         /// </summary>
         public static string Service_TellUs_Request_Statement_Of_Achievements {
             get {
