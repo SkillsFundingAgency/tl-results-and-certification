@@ -68,13 +68,13 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.Services
 
         private BlobStorageData CreateBlobStorageData(byte[] data)
         {
-            Guid blobUniqueReference = Guid.NewGuid();
+            string dateTimeString = DateTime.Now.ToString("ddMMyyyyHHmmss");
 
             return new BlobStorageData
             {
                 ContainerName = DocumentType.AnalystOverallResults.ToString(),
                 SourceFilePath = Constants.AnalystOverallResultExtractsFolder,
-                BlobFileName = $"{blobUniqueReference}.{FileType.Csv}",
+                BlobFileName = $"AOR_{dateTimeString}.{FileType.Csv}",
                 FileData = data,
                 UserName = Constants.FunctionPerformedBy
             };
