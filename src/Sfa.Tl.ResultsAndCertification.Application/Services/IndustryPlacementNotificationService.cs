@@ -285,15 +285,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         private async Task<IEnumerable<TqRegistrationPathway>> GetPathwaysWithoutIndustryPlacementsAsync(int academicYear)
         {
-            var filteredPathways = _tqRegistrationPathwayRepository.GetManyAsync()
-                .Include(x => x.TqRegistrationProfile)
-                .Include(x => x.IndustryPlacements)
-                .Include(x => x.TqProvider)
-                    .ThenInclude(x => x.TlProvider)
-                .Where(w => w.Status == RegistrationPathwayStatus.Active &&
-                            w.IsPendingWithdrawal == false &&
-                            w.EndDate == null &&
-                            w.AcademicYear == academicYear).ToList();
+            var filteredPathways = await _tqRegistrationPathwayRepository.GetManyAsync()
+               .Include(x => x.TqRegistrationProfile)
+               .Include(x => x.IndustryPlacements)
+               .Include(x => x.TqProvider)
+               .ThenInclude(x => x.TlProvider)
+               .Where(w => w.Status == RegistrationPathwayStatus.Active &&
+                           w.IsPendingWithdrawal == false &&
+                           w.EndDate == null &&
+                           w.AcademicYear == academicYear).ToListAsync();
 
             return filteredPathways.Where(w => !w.IndustryPlacements.Any()).ToList();
         }
