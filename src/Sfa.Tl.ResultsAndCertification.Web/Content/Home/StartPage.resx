@@ -250,7 +250,7 @@
     <value>add or update core component and occupational specialism results</value>
   </data>
   <data name="Service_TellUs_English_And_Maths_Qualification" xml:space="preserve">
-    <value>tell us if a learner has met the minimum standard for English and maths</value>
+    <value>confirm if a learner has achieved a level 2 qualification in English and maths</value>
   </data>
   <data name="Service_TellUs_IndustryPlacement_Status" xml:space="preserve">
     <value>tell us if a learner has completed their industry placement</value>
@@ -272,5 +272,11 @@
   </data>
   <data name="You_Need_DfE_SignIn_Account_To_Use_This_Service_Text" xml:space="preserve">
     <value>You will need a DfE Sign-in account and an assigned role.</value>
+  </data>
+  <data name="Service_TellUs_Confirm_Address_Details" xml:space="preserve">
+    <value>confirm address details for delivery</value>
+  </data>
+  <data name="Service_TellUs_Request_Statement_Of_Achievements" xml:space="preserve">
+    <value>request statements of achievements or replacement certificates</value>
   </data>
 </root>
