@@ -39,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PrintingServi
                 { 1111111112, RegistrationPathwayStatus.Withdrawn },
                 { 1111111113, RegistrationPathwayStatus.Withdrawn },
                 { 1111111114, RegistrationPathwayStatus.Withdrawn },
-                { 1111111115, RegistrationPathwayStatus.Withdrawn }                
+                { 1111111115, RegistrationPathwayStatus.Withdrawn }
             };
 
             // Seed Registrations
@@ -87,8 +87,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PrintingServi
             NotificationTemplateRepository = new GenericRepository<NotificationTemplate>(NotificationTemplateRepositoryLogger, DbContext);
             NotificationService = new NotificationService(NotificationTemplateRepository, NotificationsClient, NotificationLogger);
 
+            TechnicalInternalNotificationEmailAddressSettings technicalInternalNotificationEmailAddressSettings = new();
+            technicalInternalNotificationEmailAddressSettings.Recipients = new[] { "test@test.com" };
+
             Configuration = new ResultsAndCertificationConfiguration
             {
+                TechnicalInternalNotificationEmailAddress = technicalInternalNotificationEmailAddressSettings,
                 TlevelQueriedSupportEmailAddress = "test@test.com"
             };
 
@@ -142,7 +146,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PrintingServi
                         actualBatch.PrintingStatus.Should().Be(expectedBatchStatus);
                         actualBatch.ResponseStatus.Should().Be(ResponseStatus.Success);
                         actualBatch.ResponseMessage.Should().BeNullOrWhiteSpace();
-                    }                    
+                    }
                 }
             }
         }

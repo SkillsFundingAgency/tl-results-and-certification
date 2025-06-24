@@ -121,7 +121,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     { "sender_name", Constants.FunctionPerformedBy }
                 };
 
-            return await _notificationService.SendEmailNotificationAsync(NotificationTemplateName.FunctionJobFailedNotification.ToString(), _configuration.TechnicalInternalNotificationEmailAddress, tokens);
+            return await _notificationService.SendEmailNotificationAsync(NotificationTemplateName.FunctionJobFailedNotification.ToString(), _configuration.TechnicalInternalNotificationEmailAddress.Recipients.ToList(), tokens);
         }
 
         public bool IsIndustryPlacementTriggerDateValid()

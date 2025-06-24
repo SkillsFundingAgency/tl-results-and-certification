@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
@@ -302,7 +301,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     { "sender_name", Constants.FunctionPerformedBy }
                 };
 
-            return await _notificationService.SendEmailNotificationAsync(NotificationTemplateName.PrintingJobFailedNotification.ToString(), _configuration.TechnicalInternalNotificationEmailAddress, tokens);
+            return await _notificationService.SendEmailNotificationAsync(NotificationTemplateName.PrintingJobFailedNotification.ToString(), _configuration.TechnicalInternalNotificationEmailAddress.Recipients.ToList(), tokens);
         }
     }
 }
