@@ -33,10 +33,6 @@
       "type": "string",
       "environmentVariable": "FeedbackEmailAddress"
     },
-    "TechnicalInternalNotificationEmailAddress": {
-      "type": "string",
-      "environmentVariable": "TechnicalInternalNotificationEmailAddress"
-    },
     "SoaAvailableDate": {
       "type": "string",
       "environmentVariable": "SoaAvailableDate"
@@ -64,6 +60,19 @@
     "KeyVaultUri": {
       "type": "string",
       "environmentVariable": "KeyVaultUri"
+    },
+    "TechnicalInternalNotificationRecipients": {
+      "properties": {
+        "TechnicalInternalNotificationRecipients": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "environmentVariable": "TechnicalInternalNotificationRecipients"
+        }
+      },
+      "additionalProperties": false,
+      "type": "object"
     },
     "RedisSettings": {
       "properties": {
@@ -591,7 +600,7 @@
     "TlevelQueriedSupportEmailAddress",
     "TechnicalSupportEmailAddress",
     "FeedbackEmailAddress",
-    "TechnicalInternalNotificationEmailAddress",
+    "TechnicalInternalNotificationRecipients",
     "OverallResultsAvailableDate",
     "OverallResultsCalculationDate",
     "CertificatePrintingBatchesCreateStartDate",

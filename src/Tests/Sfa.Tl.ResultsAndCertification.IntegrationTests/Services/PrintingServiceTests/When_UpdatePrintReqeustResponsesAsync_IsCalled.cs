@@ -67,8 +67,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PrintingServi
             NotificationTemplateRepository = new GenericRepository<NotificationTemplate>(NotificationTemplateRepositoryLogger, DbContext);
             NotificationService = new NotificationService(NotificationTemplateRepository, NotificationsClient, NotificationLogger);
 
+            TechnicalInternalNotificationRecipientsSettings technicalInternalNotificationEmailAddressSettings = new();
+            technicalInternalNotificationEmailAddressSettings.TechnicalInternalNotificationRecipients = new[] { "test@test.com" };
+
             Configuration = new ResultsAndCertificationConfiguration
             {
+                TechnicalInternalNotificationRecipients = technicalInternalNotificationEmailAddressSettings,
                 TlevelQueriedSupportEmailAddress = "test@test.com"
             };
 
