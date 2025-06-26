@@ -90,7 +90,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// <value>
         /// The technical internal notification email address.
         /// </value>
-        public string TechnicalInternalNotificationEmailAddress { get; set; }
+        public TechnicalInternalNotificationRecipientsSettings TechnicalInternalNotificationRecipients { get; set; }
 
         /// <summary>
         /// Gets or sets the soa available date.
