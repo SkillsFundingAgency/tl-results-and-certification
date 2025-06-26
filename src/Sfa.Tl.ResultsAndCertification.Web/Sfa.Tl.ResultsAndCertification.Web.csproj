@@ -55,11 +55,6 @@
 		  <AutoGen>True</AutoGen>
 		  <DependentUpon>SelectAwardingOrganisation.resx</DependentUpon>
 		</Compile>
-		<Compile Update="Content\AdminDashboard\AdminChangeLevelTwoMaths.Designer.cs">
-		  <DesignTime>True</DesignTime>
-		  <AutoGen>True</AutoGen>
-		  <DependentUpon>AdminChangeLevelTwoMaths.resx</DependentUpon>
-		</Compile>
 		<Compile Update="Content\AdminDashboard\ChangeStartYear.Designer.cs">
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
@@ -1413,8 +1408,7 @@
 		  <LastGenOutput>SelectAwardingOrganisation.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminDashboard\AdminChangeLevelTwoMaths.resx">
-		  <Generator>PublicResXFileCodeGenerator</Generator>
-		  <LastGenOutput>AdminChangeLevelTwoMaths.Designer.cs</LastGenOutput>
+		  <Generator></Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminDashboard\ChangeStartYear.resx">
 		  <Generator>PublicResXFileCodeGenerator</Generator>
@@ -1423,6 +1417,12 @@
 		<EmbeddedResource Update="Content\AdminDashboard\LearnerRecord.resx">
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		  <LastGenOutput>LearnerRecord.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminDashboard\ReviewChangeLevelTwoMaths.resx">
+		  <Generator></Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminDashboard\ReviewChangesLevelTwoMaths.resx">
+		  <Generator></Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminDownloadLearnerResults\AdminDownloadLearnerResultsFindProvider.resx">
 		  <LastGenOutput>AdminDownloadLearnerResultsFindProvider.Designer.cs</LastGenOutput>

@@ -19,6 +19,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LevelTwoRe
         public int AcademicYear { get; set; }
         public string StartYear { get; set; }
         public SubjectStatus? MathsStatus { get; set; }
+
+        [Required(ErrorMessageResourceType = typeof(AdminChangeLevelTwoMaths), ErrorMessageResourceName = "Validation_Message")]
+        public SubjectStatus? MathsStatusTo { get; set; }
+
         public bool IsLearnerRegisteredFourYearsAgo => DateTime.Now.Year - AcademicYear > 4;
 
         public SummaryItemModel SummaryLearner => new()
@@ -69,10 +73,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LevelTwoRe
             RouteAttributes = new Dictionary<string, string> { { Constants.PathwayId, RegistrationPathwayId.ToString() } }
         };
 
-        public string GetSubjectStatusDisplayText(SubjectStatus? mathsStatus) => mathsStatus switch
+        public string GetSubjectStatusDisplayText(SubjectStatus? status) => status switch
         {
+            SubjectStatus.Achieved => AdminChangeLevelTwoMaths.Status_Achieved_Text,
             SubjectStatus.NotAchieved => AdminChangeLevelTwoMaths.Status_NotAchieved_Text,
-            SubjectStatus.NotAchievedByLrs => AdminChangeLevelTwoMaths.Status_NotAchievedByLrs_Text
+            SubjectStatus.AchievedByLrs => AdminChangeLevelTwoMaths.Status_AchievedByLrs_Text,
+            SubjectStatus.NotAchievedByLrs => AdminChangeLevelTwoMaths.Status_NotAchievedByLrs_Text,
+            _ => AdminChangeLevelTwoMaths.Status_Not_Yet_Received_Text
         };
     }
 }
