@@ -138,17 +138,35 @@
   <data name="Heading_Change_Level_Two_Maths" xml:space="preserve">
     <value>Change level 2 maths result</value>
   </data>
+  <data name="Heading_Has_Learner_Achieved_Level2_Or_Equivalent" xml:space="preserve">
+    <value>Has {0} achieved a level 2 or equivalent in Maths?</value>
+  </data>
   <data name="Heading_Personal_Details" xml:space="preserve">
     <value>Personal details</value>
   </data>
+  <data name="Option_No" xml:space="preserve">
+    <value>No</value>
+  </data>
+  <data name="Option_Yes" xml:space="preserve">
+    <value>Yes</value>
+  </data>
   <data name="Page_Title" xml:space="preserve">
     <value>Change level 2 maths result  – Admin</value>
+  </data>
+  <data name="Status_AchievedByLrs_Text" xml:space="preserve">
+    <value>Achieved (LRS)</value>
+  </data>
+  <data name="Status_Achieved_Text" xml:space="preserve">
+    <value>Achieved</value>
   </data>
   <data name="Status_NotAchievedByLrs_Text" xml:space="preserve">
     <value>Not achieved (LRS)</value>
   </data>
   <data name="Status_NotAchieved_Text" xml:space="preserve">
     <value>Not achieved</value>
+  </data>
+  <data name="Status_Not_Yet_Received_Text" xml:space="preserve">
+    <value>Not yet received</value>
   </data>
   <data name="Title_Learner_Text" xml:space="preserve">
     <value>Learner</value>
@@ -167,5 +185,8 @@
   </data>
   <data name="Title_ULN_Text" xml:space="preserve">
     <value>ULN</value>
+  </data>
+  <data name="Validation_Message" xml:space="preserve">
+    <value>Select whether the learner has achieved level 2 maths or equivalent</value>
   </data>
 </root>

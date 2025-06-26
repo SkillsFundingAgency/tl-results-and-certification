@@ -189,7 +189,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.TlevelName, opts => opts.MapFrom(s => s.Pathway.Name))
                 .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.Pathway.AcademicYear))
                 .ForMember(d => d.StartYear, opts => opts.MapFrom(s => GetDisplayAcademicYear(s.Pathway.AcademicYear)))
-                .ForMember(d => d.MathsStatus, opts => opts.MapFrom(s => s.MathsStatus));
+                .ForMember(d => d.MathsStatus, opts => opts.MapFrom(s => s.MathsStatus))
+                .ForMember(d => d.MathsStatusTo, opts => opts.MapFrom(s => s.MathsStatus));
 
             CreateMap<AdminLearnerRecord, AdminCoreComponentViewModel>()
                 .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))

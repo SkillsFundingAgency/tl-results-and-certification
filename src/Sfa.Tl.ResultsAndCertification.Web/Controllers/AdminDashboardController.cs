@@ -494,6 +494,37 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
+        [HttpPost]
+        [Route("admin/submit-change-level-two-maths", Name = RouteConstants.SubmitAdminChangeLevelTwoMaths)]
+        public async Task<IActionResult> AdminChangeLevelTwoMathsAsync(AdminChangeResultsViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(nameof(AdminChangeLevelTwoMaths), model);
+            }
+
+            // If "No" is selected, redirect back to learner record
+            if (model.MathsStatusTo == SubjectStatus.NotAchieved || model.MathsStatusTo == SubjectStatus.NotAchievedByLrs)
+            {
+                return RedirectToRoute(model.BackLink.RouteName, model.BackLink.RouteAttributes);
+            }
+
+            var originalViewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeResultsViewModel>(model.RegistrationPathwayId);
+            if (originalViewModel != null)
+            {
+                // Keep the original MathsStatus for display in the "From" column
+                model.MathsStatus = originalViewModel.MathsStatus;
+
+                // Set the appropriate "To" status based on LRS source
+                bool isFromLrs = model.MathsStatus == SubjectStatus.AchievedByLrs ||
+                                 model.MathsStatus == SubjectStatus.NotAchievedByLrs;
+                model.MathsStatusTo = isFromLrs ? SubjectStatus.AchievedByLrs : SubjectStatus.Achieved;
+            }
+
+            // If "Yes" is selected, cache the model and redirect to review page
+            await _cacheService.SetAsync(CacheKey, model);
+            return RedirectToRoute(RouteConstants.AdminReviewChangesLevelTwoMaths, new { pathwayId = model.RegistrationPathwayId });
+        }
 
             #endregion
 

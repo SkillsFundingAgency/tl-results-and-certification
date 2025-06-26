@@ -1,0 +1,49 @@
+using FluentAssertions;
+using Microsoft.AspNetCore.Mvc;
+using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LevelTwoResults;
+using System.Threading.Tasks;
+using Xunit;
+
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.ChangeLevelTwoMathsPost
+{
+    public class When_No_Selected : TestSetup
+    {
+        private const int ExpectedRegistrationPathwayId = 1;
+        private const string PathwayIdRouteName = Constants.PathwayId;
+
+        public override void Given()
+        {
+            ViewModel = CreateViewModel(ExpectedRegistrationPathwayId, SubjectStatus.NotSpecified, SubjectStatus.NotAchieved);
+
+            Controller.ModelState.Clear();
+        }
+
+        public async override Task When()
+        {
+            Result = await Controller.AdminChangeLevelTwoMathsAsync(ViewModel);
+        }
+
+        [Fact]
+        public void Then_No_Relevant_Methods_AreCalled()
+        {
+            AdminDashboardLoader.DidNotReceive().GetAdminLearnerRecordAsync<AdminChangeResultsViewModel>(Arg.Any<int>());
+
+            CacheService.DidNotReceive().SetAsync(Arg.Any<string>(), Arg.Any<AdminChangeResultsViewModel>(), Arg.Any<CacheExpiryTime>());
+        }
+
+        [Fact]
+        public void Then_Redirected_To_BackLink()
+        {
+            var redirectToRouteResult = Result.Should().BeOfType<RedirectToRouteResult>().Which;
+            redirectToRouteResult.RouteName.Should().Be(RouteConstants.AdminLearnerRecord);
+            redirectToRouteResult.RouteValues.Should().NotBeNull();
+
+            redirectToRouteResult.RouteValues.Should().ContainKey(PathwayIdRouteName);
+
+            redirectToRouteResult.RouteValues[PathwayIdRouteName].Should().Be(ExpectedRegistrationPathwayId.ToString());
+        }
+    }
+}

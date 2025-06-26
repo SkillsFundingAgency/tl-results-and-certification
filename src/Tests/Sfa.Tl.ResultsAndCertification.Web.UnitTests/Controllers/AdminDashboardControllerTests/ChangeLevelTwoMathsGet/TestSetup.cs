@@ -51,7 +51,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             model.TlevelName.Should().Be(changeResultsModel.TlevelName);
             model.MathsStatus.Should().Be(changeResultsModel.MathsStatus);
 
-            // Learner
             model.SummaryLearner.Title.Should().Be(AdminChangeLevelTwoMaths.Title_Learner_Text);
             model.SummaryLearner.Value.Should().Be(changeResultsModel.LearnerName);
 

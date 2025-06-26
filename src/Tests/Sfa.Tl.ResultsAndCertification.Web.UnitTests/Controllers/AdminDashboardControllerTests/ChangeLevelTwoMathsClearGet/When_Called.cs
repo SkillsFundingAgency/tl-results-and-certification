@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
     public class When_Called : AdminDashboardControllerTestBase
     {
         private IActionResult _result;
-        private const int RegistrationPathwayId = 1250;
+        private const int RegistrationPathwayId = 1;
 
         public override async Task When()
         {

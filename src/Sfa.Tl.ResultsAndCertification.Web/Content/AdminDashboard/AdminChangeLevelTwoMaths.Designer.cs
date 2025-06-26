@@ -125,6 +125,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Has {0} achieved a level 2 or equivalent in Maths?.
+        /// </summary>
+        public static string Heading_Has_Learner_Achieved_Level2_Or_Equivalent {
+            get {
+                return ResourceManager.GetString("Heading_Has_Learner_Achieved_Level2_Or_Equivalent", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Personal details.
         /// </summary>
         public static string Heading_Personal_Details {
@@ -134,11 +143,56 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No.
+        /// </summary>
+        public static string Option_No {
+            get {
+                return ResourceManager.GetString("Option_No", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Yes.
+        /// </summary>
+        public static string Option_Yes {
+            get {
+                return ResourceManager.GetString("Option_Yes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change level 2 maths result  – Admin.
         /// </summary>
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Achieved.
+        /// </summary>
+        public static string Status_Achieved_Text {
+            get {
+                return ResourceManager.GetString("Status_Achieved_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Achieved (LRS).
+        /// </summary>
+        public static string Status_AchievedByLrs_Text {
+            get {
+                return ResourceManager.GetString("Status_AchievedByLrs_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not yet received.
+        /// </summary>
+        public static string Status_Not_Yet_Received_Text {
+            get {
+                return ResourceManager.GetString("Status_Not_Yet_Received_Text", resourceCulture);
             }
         }
         
@@ -211,6 +265,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         public static string Title_ULN_Text {
             get {
                 return ResourceManager.GetString("Title_ULN_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select whether the learner has achieved level 2 maths or equivalent.
+        /// </summary>
+        public static string Validation_Message {
+            get {
+                return ResourceManager.GetString("Validation_Message", resourceCulture);
             }
         }
     }
