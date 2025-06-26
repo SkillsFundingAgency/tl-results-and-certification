@@ -138,6 +138,7 @@
         public const string GetAllowedChangeAcademicYearsUri = "/api/admindashboard/GetAllowedChangeAcademicYears/{0}/{1}";
         public const string ProcessChangeStartYearUri = "/api/admindashboard/ProcessChangeStartYear";
         public const string ProcessChangeIPUri = "/api/admindashboard/ProcessChangeIndustryPlacement";
+        public const string ProcessChangeMathsStatus = "/api/admindashboard/ProcessChangeMathsStatus";
         public const string ProcessAddCoreAssessmentUri = "/api/admindashboard/ProcessAddCoreAssessmentRequest";
         public const string ProcessAddSpecialismAssessmentUri = "/api/admindashboard/ProcessAddSpecialismAssessmentRequest";
         public const string ReviewRemoveCoreAssessmentEntryUri = "/api/admindashboard/ReviewRemoveCoreAssessmentEntry";

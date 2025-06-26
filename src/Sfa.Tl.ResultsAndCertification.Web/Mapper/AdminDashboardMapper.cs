@@ -181,6 +181,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                         : int.Parse(s.AdminChangeIpViewModel.HoursViewModel.Hours)))
                 .ForMember(d => d.SpecialConsiderationReasons, opts => opts.MapFrom(s => s.SelectedReasons));
 
+            CreateMap<AdminReviewChangesLevelTwoMathsViewModel, ReviewChangeMathsStatusRequest>()
+                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.AdminChangeResultsViewModel.RegistrationPathwayId))
+                .ForMember(d => d.ContactName, opts => opts.MapFrom(s => s.ContactName))
+                .ForMember(d => d.RequestDate, opts => opts.MapFrom(s => s.RequestDate))
+                .ForMember(d => d.ChangeReason, opts => opts.MapFrom(s => s.ChangeReason))
+                .ForMember(d => d.ZendeskId, opts => opts.MapFrom(s => s.ZendeskId))
+                .ForMember(d => d.CreatedBy, opts => opts.MapFrom<UserNameResolver<AdminReviewChangesLevelTwoMathsViewModel, ReviewChangeMathsStatusRequest>>())
+                .ForMember(d => d.MathsStatusTo, opts => opts.MapFrom(s => s.AdminChangeResultsViewModel.MathsStatusTo));
+
             CreateMap<AdminLearnerRecord, AdminChangeResultsViewModel>()
                 .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
                 .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => $"{s.Firstname} {s.Lastname}"))

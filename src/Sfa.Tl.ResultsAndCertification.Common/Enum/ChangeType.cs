@@ -19,6 +19,7 @@
         OpenPathwayAppeal = 15,
         OpenSpecialismAppeal = 16,
         PathwayAppealOutcome = 17,
-        SpecialismAppealOutcome = 18
+        SpecialismAppealOutcome = 18,
+        MathsStatus = 19
     }
 }

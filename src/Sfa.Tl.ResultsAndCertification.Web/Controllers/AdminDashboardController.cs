@@ -515,22 +515,76 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 // Keep the original MathsStatus for display in the "From" column
                 model.MathsStatus = originalViewModel.MathsStatus;
 
-                // Set the appropriate "To" status based on LRS source
-                bool isFromLrs = model.MathsStatus == SubjectStatus.AchievedByLrs ||
-                                 model.MathsStatus == SubjectStatus.NotAchievedByLrs;
+                bool isFromLrs = model.MathsStatus == SubjectStatus.NotAchievedByLrs;
+
                 model.MathsStatusTo = isFromLrs ? SubjectStatus.AchievedByLrs : SubjectStatus.Achieved;
             }
 
-            // If "Yes" is selected, cache the model and redirect to review page
             await _cacheService.SetAsync(CacheKey, model);
             return RedirectToRoute(RouteConstants.AdminReviewChangesLevelTwoMaths, new { pathwayId = model.RegistrationPathwayId });
         }
 
-            #endregion
+        [HttpGet]
+        [Route("admin/review-changes-level-two-maths/{pathwayId}", Name = RouteConstants.AdminReviewChangesLevelTwoMaths)]
+        public async Task<IActionResult> AdminReviewChangesLevelTwoMathsAsync(int pathwayId)
+        {
+            AdminReviewChangesLevelTwoMathsViewModel viewModel = new();
 
-            #region Assesment Entry
+            var cachedModel = await _cacheService.GetAsync<AdminChangeResultsViewModel>(CacheKey);
 
-            [HttpGet]
+            if (cachedModel == null)
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            viewModel.AdminChangeResultsViewModel = cachedModel;
+
+            await _cacheService.SetAsync<AdminReviewChangesLevelTwoMathsViewModel>(CacheKey, viewModel);
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/submit-review-changes-level-two-maths", Name = RouteConstants.SubmitReviewChangesLevelTwoMaths)]
+        public async Task<IActionResult> AdminReviewChangesLevelTwoMathsAsync(AdminReviewChangesLevelTwoMathsViewModel model)
+        {
+            var cachedModel = await _cacheService.GetAsync<AdminChangeResultsViewModel>(CacheKey);
+
+            if (cachedModel == null)
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            model.AdminChangeResultsViewModel = cachedModel;
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            bool isSuccess = await _loader.ProcessChangeMathsStatusAsync(model);
+
+            if (isSuccess)
+            {
+                await _cacheService.SetAsync(CacheKey, new NotificationBannerModel
+                {
+                    DisplayMessageBody = true,
+                    Message = ReviewChangeLevelTwoMaths.Message_Notification_Success,
+                    IsRawHtml = true,
+                }, CacheExpiryTime.XSmall);
+
+                return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.AdminChangeResultsViewModel.RegistrationPathwayId });
+            }
+            else
+            {
+                return RedirectToAction(RouteConstants.ProblemWithService);
+            }
+        }
+
+        #endregion
+
+        #region Assesment Entry
+
+        [HttpGet]
         [Route("admin/add-assessment-entry-core/{registrationPathwayId}", Name = RouteConstants.AdminCoreComponentAssessmentEntry)]
         public async Task<IActionResult> AdminCoreComponentAssessmentEntry(int registrationPathwayId)
         {

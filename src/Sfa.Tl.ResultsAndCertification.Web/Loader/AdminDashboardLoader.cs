@@ -14,6 +14,7 @@ using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LevelTwoResults;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
 using System.Collections.Generic;
@@ -157,6 +158,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             var reviewIndustryPlacementRequest = _mapper.Map<ReviewChangeIndustryPlacementRequest>(adminChangeIpViewModel);
             return await _internalApiClient.ProcessChangeIndustryPlacementAsync(reviewIndustryPlacementRequest);
+        }
+
+        public async Task<bool> ProcessChangeMathsStatusAsync(AdminReviewChangesLevelTwoMathsViewModel model)
+        {
+            var reviewChangeMathsStatusRequest = _mapper.Map<ReviewChangeMathsStatusRequest>(model);
+            return await _internalApiClient.ProcessChangeMathsStatusAsync(reviewChangeMathsStatusRequest);
         }
 
         #region Remove assessment

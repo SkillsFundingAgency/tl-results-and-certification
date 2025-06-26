@@ -20,6 +20,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
 
         Task<bool> ProcessChangeIndustryPlacementAsync(ReviewChangeIndustryPlacementRequest request);
 
+        Task<bool> ProcessChangeMathsStatusAsync(ReviewChangeMathsStatusRequest request);
+
         Task<bool> ProcessAddCoreAssessmentAsync(ReviewAddCoreAssessmentRequest request);
 
         Task<bool> ProcessAddSpecialismAssessmentAsync(ReviewAddSpecialismAssessmentRequest request);
