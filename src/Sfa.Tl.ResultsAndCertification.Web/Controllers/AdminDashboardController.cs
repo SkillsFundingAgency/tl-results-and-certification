@@ -585,7 +585,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/change-english-status-clear/{registrationPathwayId}", Name = RouteConstants.AdminChangeEnglishStatusClear)]
         public async Task<IActionResult> ChangeEnglishStatusClearAsync(int registrationPathwayId)
         {
-            await _cacheService.RemoveAsync<AdminChangeMathsResultsViewModel>(CacheKey);
+            await _cacheService.RemoveAsync<AdminChangeEnglishResultsViewModel>(CacheKey);
             return RedirectToRoute(RouteConstants.AdminChangeEnglishStatus, new { registrationPathwayId });
         }
 
