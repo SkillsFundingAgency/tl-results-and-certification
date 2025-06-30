@@ -17,8 +17,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         public override void Given()
         {
             ViewModel = CreateViewModel(ExpectedRegistrationPathwayId, SubjectStatus.NotSpecified, SubjectStatus.NotAchieved);
-
-            Controller.ModelState.Clear();
         }
 
         public async override Task When()
