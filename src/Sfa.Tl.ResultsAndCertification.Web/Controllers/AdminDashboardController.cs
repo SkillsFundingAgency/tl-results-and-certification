@@ -610,6 +610,55 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
+        [HttpPost]
+        [Route("admin/submit-change-english-status", Name = RouteConstants.SubmitAdminChangeEnglishStatus)]
+        public async Task<IActionResult> AdminChangeEnglishStatusAsync(AdminChangeEnglishResultsViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(nameof(AdminChangeLevelTwoEnglish), model);
+            }
+
+            // If "No" is selected, redirect back to learner record
+            if (model.EnglishStatusTo == SubjectStatus.NotAchieved || model.EnglishStatusTo == SubjectStatus.NotAchievedByLrs)
+            {
+                return RedirectToRoute(model.BackLink.RouteName, model.BackLink.RouteAttributes);
+            }
+
+            var originalViewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeEnglishResultsViewModel>(model.RegistrationPathwayId);
+            if (originalViewModel != null)
+            {
+                // Keep the original EnglishStatus for display in the "From" column
+                model.EnglishStatus = originalViewModel.EnglishStatus;
+
+                bool isFromLrs = model.EnglishStatus == SubjectStatus.NotAchievedByLrs;
+
+                model.EnglishStatusTo = isFromLrs ? SubjectStatus.AchievedByLrs : SubjectStatus.Achieved;
+            }
+
+            await _cacheService.SetAsync(CacheKey, model);
+            return RedirectToRoute(RouteConstants.AdminReviewChangesEnglishSubject, new { pathwayId = model.RegistrationPathwayId });
+        }
+
+        [HttpGet]
+        [Route("admin/review-changes-english-status/{pathwayId}", Name = RouteConstants.AdminReviewChangesEnglishSubject)]
+        public async Task<IActionResult> AdminReviewChangesEnglishStatusAsync(int pathwayId)
+        {
+            AdminReviewChangesEnglishSubjectViewModel viewModel = new();
+
+            var cachedModel = await _cacheService.GetAsync<AdminChangeEnglishResultsViewModel>(CacheKey);
+
+            if (cachedModel == null)
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+            viewModel.AdminChangeResultsViewModel = cachedModel;
+
+            await _cacheService.SetAsync<AdminReviewChangesEnglishSubjectViewModel>(CacheKey, viewModel);
+
+            return View(viewModel);
+        }
+
         #endregion
 
         #region Assesment Entry

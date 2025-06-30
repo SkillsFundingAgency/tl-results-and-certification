@@ -1,9 +1,9 @@
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 
-public class ReviewChangeMathsStatusRequest : ReviewChangeRequest
+public class ReviewChangeEnglishStatusRequest : ReviewChangeRequest
 {
-    public SubjectStatus? MathsStatusFrom { get; set; }
-    public SubjectStatus? MathsStatusTo { get; set; }
+    public SubjectStatus? EnglishStatusFrom { get; set; }
+    public SubjectStatus? EnglishStatusTo { get; set; }
     public override ChangeType ChangeType => ChangeType.SubjectStatus;
 }
