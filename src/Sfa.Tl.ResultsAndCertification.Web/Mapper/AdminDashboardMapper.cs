@@ -201,6 +201,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.MathsStatus, opts => opts.MapFrom(s => s.MathsStatus))
                 .ForMember(d => d.MathsStatusTo, opts => opts.MapFrom(s => s.MathsStatus));
 
+            CreateMap<AdminLearnerRecord, AdminChangeEnglishResultsViewModel>()
+                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
+                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => $"{s.Firstname} {s.Lastname}"))
+                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+                .ForMember(d => d.Provider, opts => opts.MapFrom(s => $"{s.Pathway.Provider.Name} ({s.Pathway.Provider.Ukprn})"))
+                .ForMember(d => d.TlevelName, opts => opts.MapFrom(s => s.Pathway.Name))
+                .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.Pathway.AcademicYear))
+                .ForMember(d => d.StartYear, opts => opts.MapFrom(s => GetDisplayAcademicYear(s.Pathway.AcademicYear)))
+                .ForMember(d => d.EnglishStatus, opts => opts.MapFrom(s => s.EnglishStatus))
+                .ForMember(d => d.EnglishStatusTo, opts => opts.MapFrom(s => s.EnglishStatus));
+
             CreateMap<AdminLearnerRecord, AdminCoreComponentViewModel>()
                 .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
                 .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => $"{s.Firstname} {s.Lastname}"))

@@ -1407,6 +1407,9 @@
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		  <LastGenOutput>SelectAwardingOrganisation.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
+		<EmbeddedResource Update="Content\AdminDashboard\AdminChangeLevelTwoEnglish.resx">
+		  <Generator></Generator>
+		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminDashboard\AdminChangeLevelTwoMaths.resx">
 		  <Generator></Generator>
 		</EmbeddedResource>

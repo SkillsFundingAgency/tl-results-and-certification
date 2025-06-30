@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class AdminChangeLevelTwoMaths {
+    public class AdminChangeLevelTwoEnglish {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal AdminChangeLevelTwoMaths() {
+        internal AdminChangeLevelTwoEnglish() {
         }
         
         /// <summary>
@@ -39,8 +39,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.AdminChangeLevelTwoMath" +
-                            "s", typeof(AdminChangeLevelTwoMaths).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.AdminChangeLevelTwoEngl" +
+                            "ish", typeof(AdminChangeLevelTwoEnglish).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -107,7 +107,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select whether the learner has completed their level 2 maths.
+        ///   Looks up a localized string similar to Select whether the learner has completed their level 2 English.
         /// </summary>
         public static string Error_Summary_Text {
             get {
@@ -116,16 +116,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change level 2 maths result.
+        ///   Looks up a localized string similar to Change level 2 English result.
         /// </summary>
-        public static string Heading_Change_Level_Two_Maths {
+        public static string Heading_Change_Level_Two_English {
             get {
-                return ResourceManager.GetString("Heading_Change_Level_Two_Maths", resourceCulture);
+                return ResourceManager.GetString("Heading_Change_Level_Two_English", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Has {0} achieved a level 2 or equivalent in maths?.
+        ///   Looks up a localized string similar to Has {0} achieved a level 2 or equivalent in English?.
         /// </summary>
         public static string Heading_Has_Learner_Achieved_Level2_Or_Equivalent {
             get {
@@ -161,7 +161,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Change level 2 maths result  – Admin.
+        ///   Looks up a localized string similar to Change level 2 English result  – Admin.
         /// </summary>
         public static string Page_Title {
             get {
@@ -215,20 +215,20 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to English status.
+        /// </summary>
+        public static string Title_English_Status {
+            get {
+                return ResourceManager.GetString("Title_English_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Learner.
         /// </summary>
         public static string Title_Learner_Text {
             get {
                 return ResourceManager.GetString("Title_Learner_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Maths status.
-        /// </summary>
-        public static string Title_Maths_Status {
-            get {
-                return ResourceManager.GetString("Title_Maths_Status", resourceCulture);
             }
         }
         
@@ -269,7 +269,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select whether the learner has achieved level 2 maths or equivalent.
+        ///   Looks up a localized string similar to Select whether the learner has achieved level 2 English or equivalent.
         /// </summary>
         public static string Validation_Message {
             get {

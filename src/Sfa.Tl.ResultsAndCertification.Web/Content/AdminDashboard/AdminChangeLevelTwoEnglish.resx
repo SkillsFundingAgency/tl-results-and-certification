@@ -133,13 +133,13 @@
     <value>There is a problem</value>
   </data>
   <data name="Error_Summary_Text" xml:space="preserve">
-    <value>Select whether the learner has completed their level 2 maths</value>
+    <value>Select whether the learner has completed their level 2 English</value>
   </data>
-  <data name="Heading_Change_Level_Two_Maths" xml:space="preserve">
-    <value>Change level 2 maths result</value>
+  <data name="Heading_Change_Level_Two_English" xml:space="preserve">
+    <value>Change level 2 English result</value>
   </data>
   <data name="Heading_Has_Learner_Achieved_Level2_Or_Equivalent" xml:space="preserve">
-    <value>Has {0} achieved a level 2 or equivalent in maths?</value>
+    <value>Has {0} achieved a level 2 or equivalent in English?</value>
   </data>
   <data name="Heading_Personal_Details" xml:space="preserve">
     <value>Personal details</value>
@@ -151,7 +151,7 @@
     <value>Yes</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Change level 2 maths result  – Admin</value>
+    <value>Change level 2 English result  – Admin</value>
   </data>
   <data name="Status_AchievedByLrs_Text" xml:space="preserve">
     <value>Achieved (LRS)</value>
@@ -171,8 +171,8 @@
   <data name="Title_Learner_Text" xml:space="preserve">
     <value>Learner</value>
   </data>
-  <data name="Title_Maths_Status" xml:space="preserve">
-    <value>Maths status</value>
+  <data name="Title_English_Status" xml:space="preserve">
+    <value>English status</value>
   </data>
   <data name="Title_Provider_Text" xml:space="preserve">
     <value>Provider (UKPRN)</value>
@@ -187,6 +187,6 @@
     <value>ULN</value>
   </data>
   <data name="Validation_Message" xml:space="preserve">
-    <value>Select whether the learner has achieved level 2 maths or equivalent</value>
+    <value>Select whether the learner has achieved level 2 English or equivalent</value>
   </data>
 </root>

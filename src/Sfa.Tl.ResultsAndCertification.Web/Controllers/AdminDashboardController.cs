@@ -456,14 +456,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.AdminChangeIpViewModel.AdminIpCompletion.RegistrationPathwayId });
             }
             else { return RedirectToAction(RouteConstants.ProblemWithService); }
-
-
-
         }
 
         #endregion
 
-        #region Change Level 2 Maths and English
+        #region Change Maths Status
 
         [HttpGet]
         [Route("admin/change-maths-status-clear/{registrationPathwayId}", Name = RouteConstants.AdminChangeMathsStatusClear)]
@@ -578,6 +575,39 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             {
                 return RedirectToAction(RouteConstants.ProblemWithService);
             }
+        }
+
+        #endregion
+
+        #region Change English status
+
+        [HttpGet]
+        [Route("admin/change-english-status-clear/{registrationPathwayId}", Name = RouteConstants.AdminChangeEnglishStatusClear)]
+        public async Task<IActionResult> ChangeEnglishStatusClearAsync(int registrationPathwayId)
+        {
+            await _cacheService.RemoveAsync<AdminChangeMathsResultsViewModel>(CacheKey);
+            return RedirectToRoute(RouteConstants.AdminChangeEnglishStatus, new { registrationPathwayId });
+        }
+
+        [HttpGet]
+        [Route("admin/change-english-status/{registrationPathwayId}", Name = RouteConstants.AdminChangeEnglishStatus)]
+        public async Task<IActionResult> AdminChangeEnglishStatusAsync(int registrationPathwayId)
+        {
+            var cachedModel = await _cacheService.GetAsync<AdminChangeEnglishResultsViewModel>(CacheKey);
+
+            if (cachedModel != null)
+            {
+                return View(cachedModel);
+            }
+
+            var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeEnglishResultsViewModel>(registrationPathwayId);
+
+            if (viewModel == null)
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
         }
 
         #endregion

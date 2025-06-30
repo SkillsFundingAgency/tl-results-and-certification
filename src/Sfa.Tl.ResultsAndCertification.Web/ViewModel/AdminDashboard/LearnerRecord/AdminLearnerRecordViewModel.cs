@@ -204,11 +204,23 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
             };
 
         public SummaryItemModel SummaryEnglishStatus =>
-            new SummaryItemModel
+            new()
             {
                 Id = "englishstatus",
                 Title = LearnerRecordDetailsContent.Title_English_Text,
                 Value = GetSubjectStatus(EnglishStatus),
+                ActionText = CanChangeEnglishStatus
+                            ? LearnerRecordDetailsContent.Action_Text_Link_Change
+                            : null,
+                RouteName = CanChangeEnglishStatus
+                            ? RouteConstants.AdminChangeEnglishStatusClear
+                            : null,
+                RouteAttributes = CanChangeEnglishStatus
+                            ? new Dictionary<string, string> { { Constants.RegistrationPathwayId, RegistrationPathwayId.ToString() } }
+                            : null,
+                HiddenActionText = CanChangeEnglishStatus
+                            ? LearnerRecordDetailsContent.Hidden_Action_Text_English
+                            : null
             };
 
         #endregion
@@ -265,5 +277,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
         private bool CanChangeMathsStatus
             => GetSubjectStatus(MathsStatus) == SubjectStatusContent.Not_Achieved_Display_Text
             || GetSubjectStatus(MathsStatus) == SubjectStatusContent.Not_Achieved_Lrs_Display_Text;
+
+        private bool CanChangeEnglishStatus
+            => GetSubjectStatus(EnglishStatus) == SubjectStatusContent.Not_Achieved_Display_Text
+            || GetSubjectStatus(EnglishStatus) == SubjectStatusContent.Not_Achieved_Lrs_Display_Text;
     }
 }
