@@ -533,8 +533,48 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 var changeLongRepository = _repositoryFactory.GetRepository<ChangeLog>();
                 var changeLog = CreateChangeLog(request, new
                 {
-                    MathsStatusFrom = originalMathsStatus,
-                    request.MathsStatusTo
+                    MathsStatusFrom = originalMathsStatus.ToString(),
+                    MathsStatusTo = request.MathsStatusTo.ToString()
+                });
+
+                return await changeLongRepository.CreateAsync(changeLog) > 0;
+            }
+
+            return false;
+        }
+
+        public async Task<bool> ProcessChangeEnglishStatusAsync(ReviewChangeEnglishStatusRequest request)
+        {
+            var tqRegistrationPathwayRepository = _repositoryFactory.GetRepository<TqRegistrationPathway>();
+            var pathway = await tqRegistrationPathwayRepository.GetFirstOrDefaultAsync(
+                p => p.Id == request.RegistrationPathwayId,
+                navigationPropertyPath: new Expression<Func<TqRegistrationPathway, object>>[]
+                {
+            p => p.TqRegistrationProfile
+                });
+
+            if (pathway == null || pathway.TqRegistrationProfile == null)
+                return false;
+
+            var profile = pathway.TqRegistrationProfile;
+            var originalEnglishStatus = profile.EnglishStatus;
+            profile.EnglishStatus = request.EnglishStatusTo;
+            profile.ModifiedBy = request.CreatedBy;
+            profile.ModifiedOn = _systemProvider.UtcNow;
+
+            var profileRepository = _repositoryFactory.GetRepository<TqRegistrationProfile>();
+            bool updated = await profileRepository.UpdateWithSpecifedColumnsOnlyAsync(profile,
+                u => u.EnglishStatus,
+                u => u.ModifiedBy,
+                u => u.ModifiedOn) > 0;
+
+            if (updated)
+            {
+                var changeLongRepository = _repositoryFactory.GetRepository<ChangeLog>();
+                var changeLog = CreateChangeLog(request, new
+                {
+                    EnglishStatusFrom = originalEnglishStatus.ToString(),
+                    EnglishStatusTo = request.EnglishStatusTo.ToString()
                 });
 
                 return await changeLongRepository.CreateAsync(changeLog) > 0;

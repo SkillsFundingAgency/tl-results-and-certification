@@ -659,6 +659,43 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
+        [HttpPost]
+        [Route("admin/submit-review-changes-english-status", Name = RouteConstants.SubmitReviewChangesEnglishSubject)]
+        public async Task<IActionResult> AdminReviewChangesEnglishStatusAsync(AdminReviewChangesEnglishSubjectViewModel model)
+        {
+            var cachedModel = await _cacheService.GetAsync<AdminChangeEnglishResultsViewModel>(CacheKey);
+
+            if (cachedModel == null)
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            model.AdminChangeResultsViewModel = cachedModel;
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            bool isSuccess = await _loader.ProcessChangeEnglishStatusAsync(model);
+
+            if (isSuccess)
+            {
+                await _cacheService.SetAsync(CacheKey, new NotificationBannerModel
+                {
+                    DisplayMessageBody = true,
+                    Message = ReviewChangeLevelTwoEnglish.Message_Notification_Success,
+                    IsRawHtml = true,
+                }, CacheExpiryTime.XSmall);
+
+                return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.AdminChangeResultsViewModel.RegistrationPathwayId });
+            }
+            else
+            {
+                return RedirectToAction(RouteConstants.ProblemWithService);
+            }
+        }
+
         #endregion
 
         #region Assesment Entry

@@ -22,6 +22,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
 
         Task<bool> ProcessChangeMathsStatusAsync(ReviewChangeMathsStatusRequest request);
 
+        Task<bool> ProcessChangeEnglishStatusAsync(ReviewChangeEnglishStatusRequest request);
+
         Task<bool> ProcessAddCoreAssessmentAsync(ReviewAddCoreAssessmentRequest request);
 
         Task<bool> ProcessAddSpecialismAssessmentAsync(ReviewAddSpecialismAssessmentRequest request);

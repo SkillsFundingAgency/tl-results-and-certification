@@ -41,14 +41,14 @@
             <dt class="govuk-summary-list__key">@ReviewChangeLevelTwoEnglish.Title_Change_Summary_From_Text</dt>
             <dt class="govuk-summary-list__key">@ReviewChangeLevelTwoEnglish.Title_Change_Summary_To_Text</dt>
             <dt class="govuk-summary-list__key"></dt>
-            @foreach (var rowItem in Model.GetMathsResultDetailsList())
+            @foreach (var rowItem in Model.GetEnglishResultDetailsList())
             {
                 <vc:summary-item model=rowItem></vc:summary-item>
             }
         </dl>
     </div>
 
-    <form asp-route="@RouteConstants.SubmitReviewChangesMathsSubject">
+    <form asp-route="@RouteConstants.SubmitReviewChangesEnglishSubject">
         <input type="hidden" asp-for="AdminChangeResultsViewModel.RegistrationPathwayId" />
         <input type="hidden" asp-for="AdminChangeResultsViewModel.LearnerName" />
         <input type="hidden" asp-for="AdminChangeResultsViewModel.Uln" />
@@ -60,7 +60,7 @@
             <fieldset class="govuk-fieldset">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                     <h2 class="govuk-fieldset__heading">
-                        @ReviewChangeLevelTwoMaths.Heading_Who_has_asked_for_change
+                        @ReviewChangeLevelTwoEnglish.Heading_Who_has_asked_for_change
                     </h2>
                 </legend>
                 <div class="govuk-form-group">

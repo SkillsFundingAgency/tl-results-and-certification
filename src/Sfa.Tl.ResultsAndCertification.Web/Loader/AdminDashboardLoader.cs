@@ -166,6 +166,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.ProcessChangeMathsStatusAsync(reviewChangeMathsStatusRequest);
         }
 
+        public async Task<bool> ProcessChangeEnglishStatusAsync(AdminReviewChangesEnglishSubjectViewModel model)
+        {
+            var reviewChangeEnglishStatusRequest = _mapper.Map<ReviewChangeEnglishStatusRequest>(model);
+            return await _internalApiClient.ProcessChangeEnglishStatusAsync(reviewChangeEnglishStatusRequest);
+        }
+
         #region Remove assessment
 
         public Task<AdminRemovePathwayAssessmentEntryViewModel> GetRemovePathwayAssessmentEntryAsync(int registrationPathwayId, int pathwayAssessmentId)

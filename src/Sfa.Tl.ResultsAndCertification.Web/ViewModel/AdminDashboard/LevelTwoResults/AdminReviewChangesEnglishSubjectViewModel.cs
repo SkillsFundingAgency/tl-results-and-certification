@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LevelTwoRe
             Value = ZendeskId
         };
 
-        public List<SummaryItemModel> GetMathsResultDetailsList()
+        public List<SummaryItemModel> GetEnglishResultDetailsList()
         {
             var detailsList = new List<SummaryItemModel>();
             var englishResult = AdminChangeResultsViewModel;

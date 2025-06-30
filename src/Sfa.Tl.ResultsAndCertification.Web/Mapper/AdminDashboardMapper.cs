@@ -190,6 +190,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.CreatedBy, opts => opts.MapFrom<UserNameResolver<AdminReviewChangesMathsSubjectViewModel, ReviewChangeMathsStatusRequest>>())
                 .ForMember(d => d.MathsStatusTo, opts => opts.MapFrom(s => s.AdminChangeResultsViewModel.MathsStatusTo));
 
+            CreateMap<AdminReviewChangesEnglishSubjectViewModel, ReviewChangeEnglishStatusRequest>()
+                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.AdminChangeResultsViewModel.RegistrationPathwayId))
+                .ForMember(d => d.ContactName, opts => opts.MapFrom(s => s.ContactName))
+                .ForMember(d => d.RequestDate, opts => opts.MapFrom(s => s.RequestDate))
+                .ForMember(d => d.ChangeReason, opts => opts.MapFrom(s => s.ChangeReason))
+                .ForMember(d => d.ZendeskId, opts => opts.MapFrom(s => s.ZendeskId))
+                .ForMember(d => d.CreatedBy, opts => opts.MapFrom<UserNameResolver<AdminReviewChangesEnglishSubjectViewModel, ReviewChangeEnglishStatusRequest>>())
+                .ForMember(d => d.EnglishStatusTo, opts => opts.MapFrom(s => s.AdminChangeResultsViewModel.EnglishStatusTo));
+
             CreateMap<AdminLearnerRecord, AdminChangeMathsResultsViewModel>()
                 .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
                 .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => $"{s.Firstname} {s.Lastname}"))

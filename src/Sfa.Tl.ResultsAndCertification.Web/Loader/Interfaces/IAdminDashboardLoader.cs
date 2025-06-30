@@ -27,6 +27,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
 
         Task<bool> ProcessChangeMathsStatusAsync(AdminReviewChangesMathsSubjectViewModel model);
 
+        Task<bool> ProcessChangeEnglishStatusAsync(AdminReviewChangesEnglishSubjectViewModel model);
+
         Task<AdminRemovePathwayAssessmentEntryViewModel> GetRemovePathwayAssessmentEntryAsync(int registrationPathwayId, int pathwayAssessmentId);
 
         Task<AdminRemoveSpecialismAssessmentEntryViewModel> GetRemoveSpecialismAssessmentEntryAsync(int registrationPathwayId, int specialismAssessmentId);

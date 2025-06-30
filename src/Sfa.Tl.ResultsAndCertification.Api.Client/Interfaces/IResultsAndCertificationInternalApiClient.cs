@@ -147,6 +147,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
 
         Task<bool> ProcessChangeMathsStatusAsync(ReviewChangeMathsStatusRequest request);
 
+        Task<bool> ProcessChangeEnglishStatusAsync(ReviewChangeEnglishStatusRequest request);
+
         Task<bool> ProcessAddCoreAssessmentRequestAsync(ReviewAddCoreAssessmentRequest request);
 
         Task<bool> ProcessAddSpecialismAssessmentRequestAsync(ReviewAddSpecialismAssessmentRequest request);

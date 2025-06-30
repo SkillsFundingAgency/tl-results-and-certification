@@ -11,6 +11,8 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
         Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearRequest request);
 
         Task<bool> ProcessChangeIndustryPlacementAsync(ReviewChangeIndustryPlacementRequest request);
+        Task<bool> ProcessChangeMathsStatusAsync(ReviewChangeMathsStatusRequest request);
+        Task<bool> ProcessChangeEnglishStatusAsync(ReviewChangeEnglishStatusRequest request);
         Task<bool> ProcessAddCoreAssessmentRequestAsync(ReviewAddCoreAssessmentRequest request);
         Task<bool> ProcessAddSpecialismAssessmentRequestAsync(ReviewAddSpecialismAssessmentRequest request);
 

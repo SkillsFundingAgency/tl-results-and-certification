@@ -42,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
         {
             var changeLog = await DbContext.ChangeLog.SingleOrDefaultAsync(
                 c => c.TqRegistrationPathwayId == _registrationPathwayId &&
-                     c.ChangeType == ChangeType.MathsStatus);
+                     c.ChangeType == ChangeType.SubjectStatus);
 
             changeLog.Should().NotBeNull();
             changeLog.ReasonForChange.Should().Be(Request.ChangeReason);
@@ -51,8 +51,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             changeLog.CreatedBy.Should().Be(Request.CreatedBy);
 
             var details = JsonConvert.DeserializeObject<dynamic>(changeLog.Details);
-            ((int?)details.MathsStatusFrom).Should().Be((int?)OriginalMathsStatus);
-            ((int?)details.MathsStatusTo).Should().Be((int?)NewMathsStatus);
+            ((string)details.MathsStatusFrom).Should().Be(OriginalMathsStatus.ToString());
+            ((string)details.MathsStatusTo).Should().Be(NewMathsStatus.ToString());
         }
     }
 }
