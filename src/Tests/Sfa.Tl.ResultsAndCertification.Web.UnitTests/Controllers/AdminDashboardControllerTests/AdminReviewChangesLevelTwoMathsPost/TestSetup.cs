@@ -8,21 +8,21 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
     public abstract class TestSetup : AdminDashboardControllerTestBase
     {
         public IActionResult ActualResult { get; set; }
-        protected AdminReviewChangesLevelTwoMathsViewModel ViewModel;
+        protected AdminReviewChangesMathsSubjectViewModel ViewModel;
 
         public async override Task When()
         {
-            ActualResult = await Controller.AdminReviewChangesLevelTwoMathsAsync(ViewModel);
+            ActualResult = await Controller.AdminReviewChangesMathsStatusAsync(ViewModel);
         }
 
-        protected AdminReviewChangesLevelTwoMathsViewModel CreateViewModel(SubjectStatus? mathsStatus)
+        protected AdminReviewChangesMathsSubjectViewModel CreateViewModel(SubjectStatus? mathsStatus)
         {
-            return new AdminReviewChangesLevelTwoMathsViewModel
+            return new AdminReviewChangesMathsSubjectViewModel
             {
                 ChangeReason = "change-reason",
                 ContactName = "contact-name",
                 ZendeskId = "1234567890",
-                AdminChangeResultsViewModel = new AdminChangeResultsViewModel()
+                AdminChangeResultsViewModel = new AdminChangeMathsResultsViewModel()
                 {
                     RegistrationPathwayId = 1,
                     MathsStatusTo = mathsStatus

@@ -9,12 +9,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 {
     public class When_Called_With_Invalid_Data : TestSetup
     {
-        protected AdminReviewChangesLevelTwoMathsViewModel _mockResult = null;
+        protected AdminReviewChangesMathsSubjectViewModel _mockResult = null;
 
         public override void Given()
         {
             PathwayId = 0;
-            AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminReviewChangesLevelTwoMathsViewModel>(PathwayId).Returns(_mockResult);
+            AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminReviewChangesMathsSubjectViewModel>(PathwayId).Returns(_mockResult);
         }
 
         [Fact]

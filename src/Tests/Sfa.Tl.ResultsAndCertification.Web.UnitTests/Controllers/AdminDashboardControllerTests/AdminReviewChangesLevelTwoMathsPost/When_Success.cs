@@ -13,19 +13,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 {
     public class When_Success : TestSetup
     {
-        private AdminChangeResultsViewModel _cacheModel;
+        private AdminChangeMathsResultsViewModel _cacheModel;
 
         public override void Given()
         {
             ViewModel = CreateViewModel(SubjectStatus.Achieved);
 
-            _cacheModel = new AdminChangeResultsViewModel
+            _cacheModel = new AdminChangeMathsResultsViewModel
             {
                 RegistrationPathwayId = 1,
                 MathsStatusTo = SubjectStatus.Achieved
             };
 
-            CacheService.GetAsync<AdminChangeResultsViewModel>(CacheKey).Returns(_cacheModel);
+            CacheService.GetAsync<AdminChangeMathsResultsViewModel>(CacheKey).Returns(_cacheModel);
             AdminDashboardLoader.ProcessChangeMathsStatusAsync(ViewModel).Returns(true);
         }
 

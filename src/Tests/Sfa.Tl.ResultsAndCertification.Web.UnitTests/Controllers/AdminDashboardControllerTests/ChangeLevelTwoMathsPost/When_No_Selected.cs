@@ -23,15 +23,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 
         public async override Task When()
         {
-            Result = await Controller.AdminChangeLevelTwoMathsAsync(ViewModel);
+            Result = await Controller.AdminChangeMathsStatusAsync(ViewModel);
         }
 
         [Fact]
         public void Then_No_Relevant_Methods_AreCalled()
         {
-            AdminDashboardLoader.DidNotReceive().GetAdminLearnerRecordAsync<AdminChangeResultsViewModel>(Arg.Any<int>());
+            AdminDashboardLoader.DidNotReceive().GetAdminLearnerRecordAsync<AdminChangeMathsResultsViewModel>(Arg.Any<int>());
 
-            CacheService.DidNotReceive().SetAsync(Arg.Any<string>(), Arg.Any<AdminChangeResultsViewModel>(), Arg.Any<CacheExpiryTime>());
+            CacheService.DidNotReceive().SetAsync(Arg.Any<string>(), Arg.Any<AdminChangeMathsResultsViewModel>(), Arg.Any<CacheExpiryTime>());
         }
 
         [Fact]

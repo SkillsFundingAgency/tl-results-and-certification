@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         protected const int RegistrationPathwayId = 999;
         protected IActionResult Result { get; private set; }
 
-        protected static AdminChangeResultsViewModel ViewModel 
+        protected static AdminChangeMathsResultsViewModel ViewModel 
             => new()
             {
                 RegistrationPathwayId = RegistrationPathwayId,
@@ -29,12 +29,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 
         public async override Task When()
         {
-            Result = await Controller.AdminChangeLevelTwoMathsAsync(RegistrationPathwayId);
+            Result = await Controller.AdminChangeMathsStatusAsync(RegistrationPathwayId);
         }
 
         protected void AssertViewResult()
         {
-            var model = Result.ShouldBeViewResult<AdminChangeResultsViewModel>();
+            var model = Result.ShouldBeViewResult<AdminChangeMathsResultsViewModel>();
             var changeResultsModel = ViewModel;
 
             model.RegistrationPathwayId.Should().Be(changeResultsModel.RegistrationPathwayId);

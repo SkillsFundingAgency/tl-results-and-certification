@@ -1,4 +1,4 @@
-@model AdminChangeResultsViewModel
+@model AdminChangeMathsResultsViewModel
 @using Sfa.Tl.ResultsAndCertification.Common.Helpers
 @using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
 @using Sfa.Tl.ResultsAndCertification.Common.Enum
@@ -16,7 +16,7 @@
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
 
-        <form asp-route="@RouteConstants.SubmitAdminChangeLevelTwoMaths" method="post">
+        <form asp-route="@RouteConstants.SubmitAdminChangeMathsStatus" method="post">
             <input type="hidden" asp-for="RegistrationPathwayId" />
             <input type="hidden" asp-for="LearnerName" />
             <input type="hidden" asp-for="Uln" />

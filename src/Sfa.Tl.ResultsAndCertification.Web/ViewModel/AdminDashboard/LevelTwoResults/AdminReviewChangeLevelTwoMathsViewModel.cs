@@ -7,9 +7,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LevelTwoResults
 {
-    public class AdminReviewChangesLevelTwoMathsViewModel
+    public class AdminReviewChangesMathsSubjectViewModel
     {
-        public AdminChangeResultsViewModel AdminChangeResultsViewModel { get; set; }
+        public AdminChangeMathsResultsViewModel AdminChangeResultsViewModel { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(ReviewChangeLevelTwoMaths), ErrorMessageResourceName = "Validation_Contact_Name_Blank_Text")]
         public string ContactName { get; set; }
@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LevelTwoRe
 
         public BackLinkModel BackLink => new()
         {
-            RouteName = RouteConstants.AdminChangeLevelTwoMaths,
+            RouteName = RouteConstants.AdminChangeMathsStatus,
             RouteAttributes = new Dictionary<string, string>() { { Constants.RegistrationPathwayId, AdminChangeResultsViewModel.RegistrationPathwayId.ToString() }, { Constants.IsBack, "true" } }
         };
 
@@ -85,7 +85,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LevelTwoRe
                 Value2 = mathsResult.GetSubjectStatusDisplayText(mathsResult?.MathsStatusTo),
                 TitleCss = default,
                 ActionText = ReviewChangeLevelTwoMaths.Link_Change_Text,
-                RouteName = RouteConstants.AdminChangeLevelTwoMaths,
+                RouteName = RouteConstants.AdminChangeMathsStatus,
                 RouteAttributes = new Dictionary<string, string>() { { Constants.RegistrationPathwayId, AdminChangeResultsViewModel.RegistrationPathwayId.ToString() }, { Constants.IsBack, "true" } }
             });
 

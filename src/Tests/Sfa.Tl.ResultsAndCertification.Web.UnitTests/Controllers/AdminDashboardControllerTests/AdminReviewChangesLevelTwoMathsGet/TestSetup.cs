@@ -6,13 +6,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 {
     public abstract class TestSetup : AdminDashboardControllerTestBase
     {
-        protected AdminReviewChangesLevelTwoMathsViewModel ReviewChangesLevelTwoMathsViewModel;
+        protected AdminReviewChangesMathsSubjectViewModel ReviewChangesLevelTwoMathsViewModel;
         public IActionResult Result { get; private set; }
         protected int PathwayId { get; set; }
 
         public async override Task When()
         {
-            Result = await Controller.AdminReviewChangesLevelTwoMathsAsync(PathwayId);
+            Result = await Controller.AdminReviewChangesMathsStatusAsync(PathwayId);
         }
     }
 }

@@ -10,33 +10,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 {
     public class When_ModelState_Invalid : TestSetup
     {
-        private AdminChangeResultsViewModel _cacheModel;
+        private AdminChangeMathsResultsViewModel _cacheModel;
         private const string ErrorKey = "AdminReviewChangesLevelTwoMaths";
 
         public override void Given()
         {
             ViewModel = CreateViewModel(SubjectStatus.Achieved);
 
-            _cacheModel = new AdminChangeResultsViewModel
+            _cacheModel = new AdminChangeMathsResultsViewModel
             {
                 RegistrationPathwayId = 1,
                 MathsStatusTo = SubjectStatus.Achieved
             };
 
             Controller.ModelState.AddModelError(ErrorKey, ReviewChangeLevelTwoMaths.Validation_Contact_Name_Blank_Text);
-            CacheService.GetAsync<AdminChangeResultsViewModel>(CacheKey).Returns(_cacheModel);
+            CacheService.GetAsync<AdminChangeMathsResultsViewModel>(CacheKey).Returns(_cacheModel);
         }
 
         [Fact]
         public void Then_Expected_Method_Are_Called()
         {
-            CacheService.Received(1).GetAsync<AdminChangeResultsViewModel>(CacheKey);
+            CacheService.Received(1).GetAsync<AdminChangeMathsResultsViewModel>(CacheKey);
         }
 
         [Fact]
         public void Then_Redirected_To_ProblemWithService()
         {
-            var model = ActualResult.ShouldBeViewResult<AdminReviewChangesLevelTwoMathsViewModel>();
+            var model = ActualResult.ShouldBeViewResult<AdminReviewChangesMathsSubjectViewModel>();
 
             model.Should().NotBeNull();
         }

@@ -9,7 +9,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LevelTwoResults
 {
-    public class AdminChangeResultsViewModel
+    public class AdminChangeMathsResultsViewModel
     {
         public int RegistrationPathwayId { get; set; }
         public string LearnerName { get; set; }

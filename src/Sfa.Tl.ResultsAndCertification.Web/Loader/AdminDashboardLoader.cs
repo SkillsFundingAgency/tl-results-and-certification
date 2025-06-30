@@ -160,7 +160,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return await _internalApiClient.ProcessChangeIndustryPlacementAsync(reviewIndustryPlacementRequest);
         }
 
-        public async Task<bool> ProcessChangeMathsStatusAsync(AdminReviewChangesLevelTwoMathsViewModel model)
+        public async Task<bool> ProcessChangeMathsStatusAsync(AdminReviewChangesMathsSubjectViewModel model)
         {
             var reviewChangeMathsStatusRequest = _mapper.Map<ReviewChangeMathsStatusRequest>(model);
             return await _internalApiClient.ProcessChangeMathsStatusAsync(reviewChangeMathsStatusRequest);

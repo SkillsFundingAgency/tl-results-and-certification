@@ -15,15 +15,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         {
             ViewModel = CreateViewModel(SubjectStatus.Achieved);
 
-            CacheService.GetAsync<AdminChangeResultsViewModel>(CacheKey).Returns((AdminChangeResultsViewModel)null);
+            CacheService.GetAsync<AdminChangeMathsResultsViewModel>(CacheKey).Returns((AdminChangeMathsResultsViewModel)null);
         }
 
         [Fact]
         public void Then_Expected_Methods_Are_Called()
         {
-            CacheService.Received(1).GetAsync<AdminChangeResultsViewModel>(CacheKey);
+            CacheService.Received(1).GetAsync<AdminChangeMathsResultsViewModel>(CacheKey);
 
-            AdminDashboardLoader.DidNotReceive().ProcessChangeMathsStatusAsync(Arg.Any<AdminReviewChangesLevelTwoMathsViewModel>());
+            AdminDashboardLoader.DidNotReceive().ProcessChangeMathsStatusAsync(Arg.Any<AdminReviewChangesMathsSubjectViewModel>());
 
             CacheService.DidNotReceive().SetAsync(
                 Arg.Any<string>(),
@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             );
             CacheService.DidNotReceive().SetAsync(
                 Arg.Any<string>(),
-                Arg.Any<AdminReviewChangesLevelTwoMathsViewModel>()
+                Arg.Any<AdminReviewChangesMathsSubjectViewModel>()
             );
         }
 

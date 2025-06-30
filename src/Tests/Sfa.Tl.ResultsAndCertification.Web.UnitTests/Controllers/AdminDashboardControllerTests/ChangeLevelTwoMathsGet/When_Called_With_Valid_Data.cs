@@ -8,13 +8,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
     {
         public override void Given()
         {
-            AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminChangeResultsViewModel>(RegistrationPathwayId).Returns(ViewModel);
+            AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminChangeMathsResultsViewModel>(RegistrationPathwayId).Returns(ViewModel);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            AdminDashboardLoader.Received(1).GetAdminLearnerRecordAsync<AdminChangeResultsViewModel>(RegistrationPathwayId);
+            AdminDashboardLoader.Received(1).GetAdminLearnerRecordAsync<AdminChangeMathsResultsViewModel>(RegistrationPathwayId);
         }
 
         [Fact]

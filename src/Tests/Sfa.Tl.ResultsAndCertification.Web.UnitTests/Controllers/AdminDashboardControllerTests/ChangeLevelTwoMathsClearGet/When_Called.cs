@@ -15,19 +15,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 
         public override async Task When()
         {
-            _result = await Controller.ChangeLevelTwoMathsClearAsync(RegistrationPathwayId);
+            _result = await Controller.ChangeMathsStatusClearAsync(RegistrationPathwayId);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            CacheService.Received(1).RemoveAsync<AdminChangeResultsViewModel>(CacheKey);
+            CacheService.Received(1).RemoveAsync<AdminChangeMathsResultsViewModel>(CacheKey);
         }
 
         [Fact]
         public void Then_Redirected_To_AdminSearchLearnersRecords()
         {
-            _result.ShouldBeRedirectToRouteResult(RouteConstants.AdminChangeLevelTwoMaths, (Constants.RegistrationPathwayId, RegistrationPathwayId));
+            _result.ShouldBeRedirectToRouteResult(RouteConstants.AdminChangeMathsStatus, (Constants.RegistrationPathwayId, RegistrationPathwayId));
         }
     }
 }

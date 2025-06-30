@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
     public class When_Yes_Selected_Lrs : TestSetup
     {
         private const int ExpectedRegistrationPathwayId = 1;
-        private AdminChangeResultsViewModel _originalViewModel;
+        private AdminChangeMathsResultsViewModel _originalViewModel;
 
         public override void Given()
         {
@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             _originalViewModel = CreateViewModel(ExpectedRegistrationPathwayId, SubjectStatus.NotAchievedByLrs, null);
 
             AdminDashboardLoader
-                .GetAdminLearnerRecordAsync<AdminChangeResultsViewModel>(ExpectedRegistrationPathwayId)
+                .GetAdminLearnerRecordAsync<AdminChangeMathsResultsViewModel>(ExpectedRegistrationPathwayId)
                 .Returns(_originalViewModel);
         }
 
@@ -31,12 +31,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         {
             AdminDashboardLoader
                 .Received(1)
-                .GetAdminLearnerRecordAsync<AdminChangeResultsViewModel>(ExpectedRegistrationPathwayId);
+                .GetAdminLearnerRecordAsync<AdminChangeMathsResultsViewModel>(ExpectedRegistrationPathwayId);
 
             CacheService
                 .Received(1)
                 .SetAsync(Arg.Is<string>(s => s.Contains(CacheConstants.AdminDashboardCacheKey)),
-                         Arg.Is<AdminChangeResultsViewModel>(m =>
+                         Arg.Is<AdminChangeMathsResultsViewModel>(m =>
                              m.MathsStatus == SubjectStatus.NotAchievedByLrs &&
                              m.MathsStatusTo == SubjectStatus.AchievedByLrs),
                          Arg.Any<CacheExpiryTime>());
@@ -46,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         public void Then_Redirected_To_Review_Page()
         {
             var redirectToRouteResult = Result.Should().BeOfType<RedirectToRouteResult>().Which;
-            redirectToRouteResult.RouteName.Should().Be(RouteConstants.AdminReviewChangesLevelTwoMaths);
+            redirectToRouteResult.RouteName.Should().Be(RouteConstants.AdminReviewChangesMathsSubject);
             redirectToRouteResult.RouteValues.Should().ContainKey("pathwayId");
             redirectToRouteResult.RouteValues["pathwayId"].Should().Be(ExpectedRegistrationPathwayId);
         }

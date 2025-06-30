@@ -11,13 +11,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 {
     public class When_Called_With_Valid_Data : TestSetup
     {
-        protected AdminReviewChangesLevelTwoMathsViewModel _mockResult = null;
+        protected AdminReviewChangesMathsSubjectViewModel _mockResult = null;
 
         public override void Given()
         {
             PathwayId = 5772;
 
-            var adminChangeResultsViewModel = new AdminChangeResultsViewModel
+            var adminChangeResultsViewModel = new AdminChangeMathsResultsViewModel
             {
                 Uln = 123789555,
                 LearnerName = "firstname",
@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 MathsStatusTo = SubjectStatus.Achieved
             };
 
-            _mockResult = new AdminReviewChangesLevelTwoMathsViewModel
+            _mockResult = new AdminReviewChangesMathsSubjectViewModel
             {
                 ContactName = "contact-name",
                 Day = "01",
@@ -37,8 +37,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 AdminChangeResultsViewModel = adminChangeResultsViewModel
             };
 
-            AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminReviewChangesLevelTwoMathsViewModel>(PathwayId).Returns(_mockResult);
-            CacheService.GetAsync<AdminChangeResultsViewModel>(CacheKey).Returns(adminChangeResultsViewModel);
+            AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminReviewChangesMathsSubjectViewModel>(PathwayId).Returns(_mockResult);
+            CacheService.GetAsync<AdminChangeMathsResultsViewModel>(CacheKey).Returns(adminChangeResultsViewModel);
         }
 
         [Fact]
@@ -47,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             Result.Should().NotBeNull();
             (Result as ViewResult).Model.Should().NotBeNull();
 
-            var model = (Result as ViewResult).Model as AdminReviewChangesLevelTwoMathsViewModel;
+            var model = (Result as ViewResult).Model as AdminReviewChangesMathsSubjectViewModel;
 
             model.AdminChangeResultsViewModel.RegistrationPathwayId.Should().Be(_mockResult.AdminChangeResultsViewModel.RegistrationPathwayId);
             model.AdminChangeResultsViewModel.Uln.Should().Be(_mockResult.AdminChangeResultsViewModel.Uln);
@@ -67,7 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             model.AdminChangeResultsViewModel.SummaryTlevel.Value.Should().Be(_mockResult.AdminChangeResultsViewModel.TlevelName);
 
             model.BackLink.Should().NotBeNull();
-            model.BackLink.RouteName.Should().Be(RouteConstants.AdminChangeLevelTwoMaths);
+            model.BackLink.RouteName.Should().Be(RouteConstants.AdminChangeMathsStatus);
         }
     }
 }

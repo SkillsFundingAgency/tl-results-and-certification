@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 
     public class When_ModelState_Invalid_And_CachedModel_Is_Present : TestSetup
     {
-        private AdminChangeResultsViewModel _cachedMathsModel;
+        private AdminChangeMathsResultsViewModel _cachedMathsModel;
         private const string ErrorKey = "ContactName";
 
         public override void Given()
@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             ViewModel = CreateViewModel(SubjectStatus.Achieved);
             ViewModel.ContactName = "";
 
-            _cachedMathsModel = new AdminChangeResultsViewModel
+            _cachedMathsModel = new AdminChangeMathsResultsViewModel
             {
                 RegistrationPathwayId = 1,
                 MathsStatusTo = SubjectStatus.Achieved,
@@ -35,16 +35,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 MathsStatus = SubjectStatus.NotAchieved
             };
 
-            CacheService.GetAsync<AdminChangeResultsViewModel>(CacheKey).Returns(_cachedMathsModel);
+            CacheService.GetAsync<AdminChangeMathsResultsViewModel>(CacheKey).Returns(_cachedMathsModel);
             Controller.ModelState.AddModelError(ErrorKey, ReviewChangeLevelTwoMaths.Validation_Contact_Name_Blank_Text);
         }
 
         [Fact]
         public void Then_Expected_Methods_Are_Called()
         {
-            CacheService.Received(1).GetAsync<AdminChangeResultsViewModel>(CacheKey);
+            CacheService.Received(1).GetAsync<AdminChangeMathsResultsViewModel>(CacheKey);
 
-            AdminDashboardLoader.DidNotReceive().ProcessChangeMathsStatusAsync(Arg.Any<AdminReviewChangesLevelTwoMathsViewModel>());
+            AdminDashboardLoader.DidNotReceive().ProcessChangeMathsStatusAsync(Arg.Any<AdminReviewChangesMathsSubjectViewModel>());
 
             CacheService.DidNotReceive().SetAsync(
                 Arg.Any<string>(),
@@ -57,7 +57,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         public void Then_Returns_View_With_Model_And_Errors()
         {
             var viewResult = ActualResult.Should().BeOfType<ViewResult>().Subject;
-            var model = viewResult.Model.Should().BeAssignableTo<AdminReviewChangesLevelTwoMathsViewModel>().Subject;
+            var model = viewResult.Model.Should().BeAssignableTo<AdminReviewChangesMathsSubjectViewModel>().Subject;
 
             model.Should().NotBeNull();
 

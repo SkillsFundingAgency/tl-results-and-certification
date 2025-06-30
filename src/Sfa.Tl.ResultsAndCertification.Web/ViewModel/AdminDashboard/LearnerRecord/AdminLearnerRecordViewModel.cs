@@ -193,7 +193,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
                             ? LearnerRecordDetailsContent.Action_Text_Link_Change
                             : null,
                 RouteName = CanChangeMathsStatus
-                            ? RouteConstants.AdminChangeLevelTwoMathsClear
+                            ? RouteConstants.AdminChangeMathsStatusClear
                             : null,
                 RouteAttributes = CanChangeMathsStatus
                             ? new Dictionary<string, string> { { Constants.RegistrationPathwayId, RegistrationPathwayId.ToString() } }

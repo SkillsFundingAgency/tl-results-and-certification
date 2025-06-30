@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         [Fact]
         public void Then_Returns_Expected_Results()
         {
-            var model = Result.ShouldBeViewResult<AdminChangeResultsViewModel>();
+            var model = Result.ShouldBeViewResult<AdminChangeMathsResultsViewModel>();
 
             model.Should().NotBeNull();
             model.RegistrationPathwayId.Should().Be(ViewModel.RegistrationPathwayId);

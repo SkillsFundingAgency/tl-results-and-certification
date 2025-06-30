@@ -7,18 +7,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 {
     public abstract class TestSetup : AdminDashboardControllerTestBase
     {
-        protected AdminChangeResultsViewModel ViewModel;
+        protected AdminChangeMathsResultsViewModel ViewModel;
 
         protected IActionResult Result;
 
         public override async Task When()
         {
-            Result = await Controller.AdminChangeLevelTwoMathsAsync(ViewModel);
+            Result = await Controller.AdminChangeMathsStatusAsync(ViewModel);
         }
 
-        protected AdminChangeResultsViewModel CreateViewModel(int registrationPathwayId, SubjectStatus? originalStatus, SubjectStatus? statusTo)
+        protected AdminChangeMathsResultsViewModel CreateViewModel(int registrationPathwayId, SubjectStatus? originalStatus, SubjectStatus? statusTo)
         {
-            return new AdminChangeResultsViewModel
+            return new AdminChangeMathsResultsViewModel
             {
                 RegistrationPathwayId = registrationPathwayId,
                 LearnerName = "Frank West",

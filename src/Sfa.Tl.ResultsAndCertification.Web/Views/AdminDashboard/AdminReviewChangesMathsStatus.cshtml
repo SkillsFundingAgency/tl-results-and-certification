@@ -1,4 +1,4 @@
-@model AdminReviewChangesLevelTwoMathsViewModel
+@model AdminReviewChangesMathsSubjectViewModel
 @using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LevelTwoResults
 @using Sfa.Tl.ResultsAndCertification.Common.Helpers
 @using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
@@ -48,7 +48,7 @@
         </dl>
     </div>
 
-    <form asp-route="@RouteConstants.SubmitReviewChangesLevelTwoMaths">
+    <form asp-route="@RouteConstants.SubmitReviewChangesMathsSubject">
         <input type="hidden" asp-for="AdminChangeResultsViewModel.RegistrationPathwayId" />
         <input type="hidden" asp-for="AdminChangeResultsViewModel.LearnerName" />
         <input type="hidden" asp-for="AdminChangeResultsViewModel.Uln" />
