@@ -6,26 +6,26 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectResults;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectsStatus;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.AdminReviewChangesMathsStatusPost
 {
     public class When_Success : TestSetup
     {
-        private AdminChangeMathsResultsViewModel _cacheModel;
+        private AdminChangeMathsStatusViewModel _cacheModel;
 
         public override void Given()
         {
             ViewModel = CreateViewModel(SubjectStatus.Achieved);
 
-            _cacheModel = new AdminChangeMathsResultsViewModel
+            _cacheModel = new AdminChangeMathsStatusViewModel
             {
                 RegistrationPathwayId = 1,
                 MathsStatusTo = SubjectStatus.Achieved
             };
 
-            CacheService.GetAsync<AdminChangeMathsResultsViewModel>(CacheKey).Returns(_cacheModel);
+            CacheService.GetAsync<AdminChangeMathsStatusViewModel>(CacheKey).Returns(_cacheModel);
             AdminDashboardLoader.ProcessChangeMathsStatusAsync(ViewModel).Returns(true);
         }
 

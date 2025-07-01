@@ -7,9 +7,9 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectResults
+namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectsStatus
 {
-    public class AdminChangeMathsResultsViewModel
+    public class AdminChangeEnglishStatusViewModel
     {
         public int RegistrationPathwayId { get; set; }
         public string LearnerName { get; set; }
@@ -18,53 +18,53 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectRes
         public string TlevelName { get; set; }
         public int AcademicYear { get; set; }
         public string StartYear { get; set; }
-        public SubjectStatus? MathsStatus { get; set; }
+        public SubjectStatus? EnglishStatus { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(AdminChangeMathsStatus), ErrorMessageResourceName = "Validation_Message")]
-        public SubjectStatus? MathsStatusTo { get; set; }
+        [Required(ErrorMessageResourceType = typeof(AdminChangeEnglishStatus), ErrorMessageResourceName = "Validation_Message")]
+        public SubjectStatus? EnglishStatusTo { get; set; }
 
         public bool IsLearnerRegisteredFourYearsAgo => DateTime.Now.Year - AcademicYear > 4;
 
         public SummaryItemModel SummaryLearner => new()
         {
             Id = "learner",
-            Title = AdminChangeMathsStatus.Title_Learner_Text,
+            Title = AdminChangeEnglishStatus.Title_Learner_Text,
             Value = LearnerName
         };
 
         public SummaryItemModel SummaryULN => new()
         {
             Id = "uln",
-            Title = AdminChangeMathsStatus.Title_ULN_Text,
+            Title = AdminChangeEnglishStatus.Title_ULN_Text,
             Value = Uln.ToString()
         };
 
         public SummaryItemModel SummaryProvider => new()
         {
             Id = "provider",
-            Title = AdminChangeMathsStatus.Title_Provider_Text,
+            Title = AdminChangeEnglishStatus.Title_Provider_Text,
             Value = Provider
         };
 
         public SummaryItemModel SummaryTlevel => new()
         {
             Id = "tlevel",
-            Title = AdminChangeMathsStatus.Title_TLevel_Text,
+            Title = AdminChangeEnglishStatus.Title_TLevel_Text,
             Value = TlevelName
         };
 
         public SummaryItemModel SummaryAcademicYear => new()
         {
             Id = "academicyear",
-            Title = AdminChangeMathsStatus.Title_StartYear_Text,
+            Title = AdminChangeEnglishStatus.Title_StartYear_Text,
             Value = StartYear
         };
 
-        public SummaryItemModel SummaryMathsStatus => new()
+        public SummaryItemModel SummaryEnglishStatus => new()
         {
-            Id = "mathsstatus",
-            Title = AdminChangeMathsStatus.Title_Maths_Status,
-            Value = GetSubjectStatusDisplayText(MathsStatus)
+            Id = "englishstatus",
+            Title = AdminChangeEnglishStatus.Title_English_Status,
+            Value = GetSubjectStatusDisplayText(EnglishStatus)
         };
 
         public BackLinkModel BackLink => new()
@@ -75,11 +75,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectRes
 
         public string GetSubjectStatusDisplayText(SubjectStatus? status) => status switch
         {
-            SubjectStatus.Achieved => AdminChangeMathsStatus.Status_Achieved_Text,
-            SubjectStatus.NotAchieved => AdminChangeMathsStatus.Status_NotAchieved_Text,
-            SubjectStatus.AchievedByLrs => AdminChangeMathsStatus.Status_AchievedByLrs_Text,
-            SubjectStatus.NotAchievedByLrs => AdminChangeMathsStatus.Status_NotAchievedByLrs_Text,
-            _ => AdminChangeMathsStatus.Status_Not_Yet_Received_Text
+            SubjectStatus.Achieved => AdminChangeEnglishStatus.Status_Achieved_Text,
+            SubjectStatus.NotAchieved => AdminChangeEnglishStatus.Status_NotAchieved_Text,
+            SubjectStatus.AchievedByLrs => AdminChangeEnglishStatus.Status_AchievedByLrs_Text,
+            SubjectStatus.NotAchievedByLrs => AdminChangeEnglishStatus.Status_NotAchievedByLrs_Text,
+            _ => AdminChangeEnglishStatus.Status_Not_Yet_Received_Text
         };
     }
 }

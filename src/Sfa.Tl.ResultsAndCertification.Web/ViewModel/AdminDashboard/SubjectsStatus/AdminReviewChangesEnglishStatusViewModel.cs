@@ -5,11 +5,11 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectResults
+namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectsStatus
 {
-    public class AdminReviewChangesEnglishSubjectViewModel
+    public class AdminReviewChangesEnglishStatusViewModel
     {
-        public AdminChangeEnglishResultsViewModel AdminChangeResultsViewModel { get; set; }
+        public AdminChangeEnglishStatusViewModel AdminChangeStatusViewModel { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(ReviewChangesEnglishStatus), ErrorMessageResourceName = "Validation_Contact_Name_Blank_Text")]
         public string ContactName { get; set; }
@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectRes
         public BackLinkModel BackLink => new()
         {
             RouteName = RouteConstants.AdminChangeEnglishStatus,
-            RouteAttributes = new Dictionary<string, string>() { { Constants.RegistrationPathwayId, AdminChangeResultsViewModel.RegistrationPathwayId.ToString() }, { Constants.IsBack, "true" } }
+            RouteAttributes = new Dictionary<string, string>() { { Constants.RegistrationPathwayId, AdminChangeStatusViewModel.RegistrationPathwayId.ToString() }, { Constants.IsBack, "true" } }
         };
 
         public SummaryItemModel SummaryContactName => new()
@@ -71,22 +71,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectRes
             Value = ZendeskId
         };
 
-        public List<SummaryItemModel> GetEnglishResultDetailsList()
+        public List<SummaryItemModel> GetEnglishStatusDetailsList()
         {
             var detailsList = new List<SummaryItemModel>();
-            var englishResult = AdminChangeResultsViewModel;
+            var englishStatus = AdminChangeStatusViewModel;
 
             // Status Row
             detailsList.Add(new()
             {
                 Id = "englishresultstatus",
                 Title = ReviewChangesMathsStatus.Title_Status_Text,
-                Value = englishResult.GetSubjectStatusDisplayText(englishResult?.EnglishStatus),
-                Value2 = englishResult.GetSubjectStatusDisplayText(englishResult?.EnglishStatusTo),
+                Value = englishStatus.GetSubjectStatusDisplayText(englishStatus?.EnglishStatus),
+                Value2 = englishStatus.GetSubjectStatusDisplayText(englishStatus?.EnglishStatusTo),
                 TitleCss = default,
                 ActionText = ReviewChangesMathsStatus.Link_Change_Text,
                 RouteName = RouteConstants.AdminChangeMathsStatus,
-                RouteAttributes = new Dictionary<string, string>() { { Constants.RegistrationPathwayId, AdminChangeResultsViewModel.RegistrationPathwayId.ToString() }, { Constants.IsBack, "true" } }
+                RouteAttributes = new Dictionary<string, string>() { { Constants.RegistrationPathwayId, AdminChangeStatusViewModel.RegistrationPathwayId.ToString() }, { Constants.IsBack, "true" } }
             });
 
             return detailsList;

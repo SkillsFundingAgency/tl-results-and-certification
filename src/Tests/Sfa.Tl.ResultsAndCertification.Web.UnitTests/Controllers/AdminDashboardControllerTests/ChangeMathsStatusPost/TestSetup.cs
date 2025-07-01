@@ -1,13 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectResults;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectsStatus;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.ChangeMathsStatusPost
 {
     public abstract class TestSetup : AdminDashboardControllerTestBase
     {
-        protected AdminChangeMathsResultsViewModel ViewModel;
+        protected AdminChangeMathsStatusViewModel ViewModel;
 
         protected IActionResult Result;
 
@@ -16,9 +16,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             Result = await Controller.AdminChangeMathsStatusAsync(ViewModel);
         }
 
-        protected AdminChangeMathsResultsViewModel CreateViewModel(int registrationPathwayId, SubjectStatus? originalStatus, SubjectStatus? statusTo)
+        protected AdminChangeMathsStatusViewModel CreateViewModel(int registrationPathwayId, SubjectStatus? originalStatus, SubjectStatus? statusTo)
         {
-            return new AdminChangeMathsResultsViewModel
+            return new AdminChangeMathsStatusViewModel
             {
                 RegistrationPathwayId = registrationPathwayId,
                 LearnerName = "Frank West",

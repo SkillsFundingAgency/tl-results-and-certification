@@ -4,7 +4,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectResults;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectsStatus;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.ChangeEnglishStatusPost
@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
     public class When_Yes_Selected : TestSetup
     {
         private const int ExpectedRegistrationPathwayId = 1;
-        private AdminChangeEnglishResultsViewModel _originalViewModel;
+        private AdminChangeEnglishStatusViewModel _originalViewModel;
 
         public override void Given()
         {
@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             _originalViewModel = CreateViewModel(ExpectedRegistrationPathwayId, SubjectStatus.NotAchieved, null);
 
             AdminDashboardLoader
-                .GetAdminLearnerRecordAsync<AdminChangeEnglishResultsViewModel>(ExpectedRegistrationPathwayId)
+                .GetAdminLearnerRecordAsync<AdminChangeEnglishStatusViewModel>(ExpectedRegistrationPathwayId)
                 .Returns(_originalViewModel);
         }
 
@@ -31,12 +31,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         {
             AdminDashboardLoader
                 .Received(1)
-                .GetAdminLearnerRecordAsync<AdminChangeEnglishResultsViewModel>(ExpectedRegistrationPathwayId);
+                .GetAdminLearnerRecordAsync<AdminChangeEnglishStatusViewModel>(ExpectedRegistrationPathwayId);
 
             CacheService
                 .Received(1)
                 .SetAsync(Arg.Is<string>(s => s.Contains(CacheConstants.AdminDashboardCacheKey)),
-                         Arg.Is<AdminChangeEnglishResultsViewModel>(m =>
+                         Arg.Is<AdminChangeEnglishStatusViewModel>(m =>
                              m.EnglishStatus == SubjectStatus.NotAchieved &&
                              m.EnglishStatusTo == SubjectStatus.Achieved),
                          Arg.Any<CacheExpiryTime>());

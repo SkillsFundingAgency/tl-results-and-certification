@@ -4,20 +4,20 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectResults;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectsStatus;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.AdminReviewChangesEnglishStatusGet
 {
     public class When_Called_With_Valid_Data : TestSetup
     {
-        protected AdminReviewChangesEnglishSubjectViewModel _mockResult = null;
+        protected AdminReviewChangesEnglishStatusViewModel _mockResult = null;
 
         public override void Given()
         {
             PathwayId = 5772;
 
-            var adminChangeResultsViewModel = new AdminChangeEnglishResultsViewModel
+            var adminChangeResultsViewModel = new AdminChangeEnglishStatusViewModel
             {
                 Uln = 123789555,
                 LearnerName = "firstname",
@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 EnglishStatusTo = SubjectStatus.Achieved
             };
 
-            _mockResult = new AdminReviewChangesEnglishSubjectViewModel
+            _mockResult = new AdminReviewChangesEnglishStatusViewModel
             {
                 ContactName = "contact-name",
                 Day = "01",
@@ -34,11 +34,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 Year = "1970",
                 ChangeReason = "change-reason",
                 ZendeskId = "1234567890",
-                AdminChangeResultsViewModel = adminChangeResultsViewModel
+                AdminChangeStatusViewModel = adminChangeResultsViewModel
             };
 
-            AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminReviewChangesEnglishSubjectViewModel>(PathwayId).Returns(_mockResult);
-            CacheService.GetAsync<AdminChangeEnglishResultsViewModel>(CacheKey).Returns(adminChangeResultsViewModel);
+            AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminReviewChangesEnglishStatusViewModel>(PathwayId).Returns(_mockResult);
+            CacheService.GetAsync<AdminChangeEnglishStatusViewModel>(CacheKey).Returns(adminChangeResultsViewModel);
         }
 
         [Fact]
@@ -47,24 +47,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             Result.Should().NotBeNull();
             (Result as ViewResult).Model.Should().NotBeNull();
 
-            var model = (Result as ViewResult).Model as AdminReviewChangesEnglishSubjectViewModel;
+            var model = (Result as ViewResult).Model as AdminReviewChangesEnglishStatusViewModel;
 
-            model.AdminChangeResultsViewModel.RegistrationPathwayId.Should().Be(_mockResult.AdminChangeResultsViewModel.RegistrationPathwayId);
-            model.AdminChangeResultsViewModel.Uln.Should().Be(_mockResult.AdminChangeResultsViewModel.Uln);
-            model.AdminChangeResultsViewModel.Provider.Should().Be(_mockResult.AdminChangeResultsViewModel.Provider);
-            model.AdminChangeResultsViewModel.TlevelName.Should().Be(_mockResult.AdminChangeResultsViewModel.TlevelName);
+            model.AdminChangeStatusViewModel.RegistrationPathwayId.Should().Be(_mockResult.AdminChangeStatusViewModel.RegistrationPathwayId);
+            model.AdminChangeStatusViewModel.Uln.Should().Be(_mockResult.AdminChangeStatusViewModel.Uln);
+            model.AdminChangeStatusViewModel.Provider.Should().Be(_mockResult.AdminChangeStatusViewModel.Provider);
+            model.AdminChangeStatusViewModel.TlevelName.Should().Be(_mockResult.AdminChangeStatusViewModel.TlevelName);
 
-            model.AdminChangeResultsViewModel.SummaryLearner.Title.Should().Be(AdminChangeEnglishStatus.Title_Learner_Text);
-            model.AdminChangeResultsViewModel.SummaryLearner.Value.Should().Be(_mockResult.AdminChangeResultsViewModel.LearnerName);
+            model.AdminChangeStatusViewModel.SummaryLearner.Title.Should().Be(AdminChangeEnglishStatus.Title_Learner_Text);
+            model.AdminChangeStatusViewModel.SummaryLearner.Value.Should().Be(_mockResult.AdminChangeStatusViewModel.LearnerName);
 
-            model.AdminChangeResultsViewModel.SummaryULN.Title.Should().Be(AdminChangeEnglishStatus.Title_ULN_Text);
-            model.AdminChangeResultsViewModel.SummaryULN.Value.Should().Be(_mockResult.AdminChangeResultsViewModel.Uln.ToString());
+            model.AdminChangeStatusViewModel.SummaryULN.Title.Should().Be(AdminChangeEnglishStatus.Title_ULN_Text);
+            model.AdminChangeStatusViewModel.SummaryULN.Value.Should().Be(_mockResult.AdminChangeStatusViewModel.Uln.ToString());
 
-            model.AdminChangeResultsViewModel.SummaryProvider.Title.Should().Be(AdminChangeEnglishStatus.Title_Provider_Text);
-            model.AdminChangeResultsViewModel.SummaryProvider.Value.Should().Be(_mockResult.AdminChangeResultsViewModel.Provider);
+            model.AdminChangeStatusViewModel.SummaryProvider.Title.Should().Be(AdminChangeEnglishStatus.Title_Provider_Text);
+            model.AdminChangeStatusViewModel.SummaryProvider.Value.Should().Be(_mockResult.AdminChangeStatusViewModel.Provider);
 
-            model.AdminChangeResultsViewModel.SummaryTlevel.Title.Should().Be(AdminChangeEnglishStatus.Title_TLevel_Text);
-            model.AdminChangeResultsViewModel.SummaryTlevel.Value.Should().Be(_mockResult.AdminChangeResultsViewModel.TlevelName);
+            model.AdminChangeStatusViewModel.SummaryTlevel.Title.Should().Be(AdminChangeEnglishStatus.Title_TLevel_Text);
+            model.AdminChangeStatusViewModel.SummaryTlevel.Value.Should().Be(_mockResult.AdminChangeStatusViewModel.TlevelName);
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.AdminChangeEnglishStatus);

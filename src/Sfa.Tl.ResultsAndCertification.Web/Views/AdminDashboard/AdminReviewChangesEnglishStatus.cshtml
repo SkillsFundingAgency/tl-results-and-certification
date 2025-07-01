@@ -1,7 +1,7 @@
-@model AdminReviewChangesEnglishSubjectViewModel
-@using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectResults
+@model AdminReviewChangesEnglishStatusViewModel
 @using Sfa.Tl.ResultsAndCertification.Common.Helpers
 @using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
+@using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectsStatus
 
 @{
     ViewData["Title"] = ReviewChangesEnglishStatus.Page_Title;
@@ -24,10 +24,10 @@
     </h2>
 
     <dl class="govuk-summary-list govuk-!-margin-bottom-4">
-        <vc:summary-item model=Model.AdminChangeResultsViewModel.SummaryLearner></vc:summary-item>
-        <vc:summary-item model=Model.AdminChangeResultsViewModel.SummaryULN></vc:summary-item>
-        <vc:summary-item model=Model.AdminChangeResultsViewModel.SummaryProvider></vc:summary-item>
-        <vc:summary-item model=Model.AdminChangeResultsViewModel.SummaryTlevel></vc:summary-item>
+        <vc:summary-item model=Model.AdminChangeStatusViewModel.SummaryLearner></vc:summary-item>
+        <vc:summary-item model=Model.AdminChangeStatusViewModel.SummaryULN></vc:summary-item>
+        <vc:summary-item model=Model.AdminChangeStatusViewModel.SummaryProvider></vc:summary-item>
+        <vc:summary-item model=Model.AdminChangeStatusViewModel.SummaryTlevel></vc:summary-item>
     </dl>
 
     <h2 class="govuk-heading-m">
@@ -41,7 +41,7 @@
             <dt class="govuk-summary-list__key">@ReviewChangesEnglishStatus.Title_Change_Summary_From_Text</dt>
             <dt class="govuk-summary-list__key">@ReviewChangesEnglishStatus.Title_Change_Summary_To_Text</dt>
             <dt class="govuk-summary-list__key"></dt>
-            @foreach (var rowItem in Model.GetEnglishResultDetailsList())
+            @foreach (var rowItem in Model.GetEnglishStatusDetailsList())
             {
                 <vc:summary-item model=rowItem></vc:summary-item>
             }
@@ -49,12 +49,12 @@
     </div>
 
     <form asp-route="@RouteConstants.SubmitReviewChangesEnglishStatus">
-        <input type="hidden" asp-for="AdminChangeResultsViewModel.RegistrationPathwayId" />
-        <input type="hidden" asp-for="AdminChangeResultsViewModel.LearnerName" />
-        <input type="hidden" asp-for="AdminChangeResultsViewModel.Uln" />
-        <input type="hidden" asp-for="AdminChangeResultsViewModel.Provider" />
-        <input type="hidden" asp-for="AdminChangeResultsViewModel.TlevelName" />
-        <input type="hidden" asp-for="AdminChangeResultsViewModel.EnglishStatusTo" />
+        <input type="hidden" asp-for="AdminChangeStatusViewModel.RegistrationPathwayId" />
+        <input type="hidden" asp-for="AdminChangeStatusViewModel.LearnerName" />
+        <input type="hidden" asp-for="AdminChangeStatusViewModel.Uln" />
+        <input type="hidden" asp-for="AdminChangeStatusViewModel.Provider" />
+        <input type="hidden" asp-for="AdminChangeStatusViewModel.TlevelName" />
+        <input type="hidden" asp-for="AdminChangeStatusViewModel.EnglishStatusTo" />
 
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset">
@@ -104,7 +104,7 @@
 
         <div class="govuk-button-group">
             <button id="submitButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@ReviewChangesEnglishStatus.Button_Submit</button>
-            <a id="returnButton" class="govuk-button gov-body govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.AdminChangeResultsViewModel.RegistrationPathwayId">@ReviewChangesEnglishStatus.Button_Cancel</a>
+            <a id="returnButton" class="govuk-button gov-body govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.AdminChangeStatusViewModel.RegistrationPathwayId">@ReviewChangesEnglishStatus.Button_Cancel</a>
         </div>
     </form>
 </div>

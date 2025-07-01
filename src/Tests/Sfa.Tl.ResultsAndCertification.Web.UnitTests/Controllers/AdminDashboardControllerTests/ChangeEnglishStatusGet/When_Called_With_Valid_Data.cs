@@ -1,5 +1,5 @@
 ﻿using NSubstitute;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectResults;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectsStatus;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.ChangeEnglishStatusGet
@@ -8,13 +8,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
     {
         public override void Given()
         {
-            AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminChangeEnglishResultsViewModel>(RegistrationPathwayId).Returns(ViewModel);
+            AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminChangeEnglishStatusViewModel>(RegistrationPathwayId).Returns(ViewModel);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            AdminDashboardLoader.Received(1).GetAdminLearnerRecordAsync<AdminChangeEnglishResultsViewModel>(RegistrationPathwayId);
+            AdminDashboardLoader.Received(1).GetAdminLearnerRecordAsync<AdminChangeEnglishStatusViewModel>(RegistrationPathwayId);
         }
 
         [Fact]

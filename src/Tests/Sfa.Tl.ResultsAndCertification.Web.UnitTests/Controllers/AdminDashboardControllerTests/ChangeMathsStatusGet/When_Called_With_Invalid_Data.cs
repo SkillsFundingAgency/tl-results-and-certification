@@ -1,6 +1,6 @@
 ﻿using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Web.UnitTests.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectResults;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectsStatus;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.ChangeMathsStatusGet
@@ -9,13 +9,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
     {
         public override void Given()
         {
-            AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminChangeMathsResultsViewModel>(RegistrationPathwayId).Returns(null as AdminChangeMathsResultsViewModel);
+            AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminChangeMathsStatusViewModel>(RegistrationPathwayId).Returns(null as AdminChangeMathsStatusViewModel);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
-            AdminDashboardLoader.Received(1).GetAdminLearnerRecordAsync<AdminChangeMathsResultsViewModel>(RegistrationPathwayId);
+            AdminDashboardLoader.Received(1).GetAdminLearnerRecordAsync<AdminChangeMathsStatusViewModel>(RegistrationPathwayId);
         }
 
         [Fact]

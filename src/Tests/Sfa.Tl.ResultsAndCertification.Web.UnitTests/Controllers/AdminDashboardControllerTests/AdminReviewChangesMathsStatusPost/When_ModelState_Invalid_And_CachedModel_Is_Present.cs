@@ -4,7 +4,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectResults;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectsStatus;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.AdminReviewChangesMathsStatusPost
@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 
     public class When_ModelState_Invalid_And_CachedModel_Is_Present : TestSetup
     {
-        private AdminChangeMathsResultsViewModel _cachedMathsModel;
+        private AdminChangeMathsStatusViewModel _cachedMathsModel;
         private const string ErrorKey = "ContactName";
 
         public override void Given()
@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             ViewModel = CreateViewModel(SubjectStatus.Achieved);
             ViewModel.ContactName = "";
 
-            _cachedMathsModel = new AdminChangeMathsResultsViewModel
+            _cachedMathsModel = new AdminChangeMathsStatusViewModel
             {
                 RegistrationPathwayId = 1,
                 MathsStatusTo = SubjectStatus.Achieved,
@@ -35,16 +35,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 MathsStatus = SubjectStatus.NotAchieved
             };
 
-            CacheService.GetAsync<AdminChangeMathsResultsViewModel>(CacheKey).Returns(_cachedMathsModel);
+            CacheService.GetAsync<AdminChangeMathsStatusViewModel>(CacheKey).Returns(_cachedMathsModel);
             Controller.ModelState.AddModelError(ErrorKey, ReviewChangesMathsStatus.Validation_Contact_Name_Blank_Text);
         }
 
         [Fact]
         public void Then_Expected_Methods_Are_Called()
         {
-            CacheService.Received(1).GetAsync<AdminChangeMathsResultsViewModel>(CacheKey);
+            CacheService.Received(1).GetAsync<AdminChangeMathsStatusViewModel>(CacheKey);
 
-            AdminDashboardLoader.DidNotReceive().ProcessChangeMathsStatusAsync(Arg.Any<AdminReviewChangesMathsSubjectViewModel>());
+            AdminDashboardLoader.DidNotReceive().ProcessChangeMathsStatusAsync(Arg.Any<AdminReviewChangesMathsStatusViewModel>());
 
             CacheService.DidNotReceive().SetAsync(
                 Arg.Any<string>(),
@@ -57,11 +57,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         public void Then_Returns_View_With_Model_And_Errors()
         {
             var viewResult = ActualResult.Should().BeOfType<ViewResult>().Subject;
-            var model = viewResult.Model.Should().BeAssignableTo<AdminReviewChangesMathsSubjectViewModel>().Subject;
+            var model = viewResult.Model.Should().BeAssignableTo<AdminReviewChangesMathsStatusViewModel>().Subject;
 
             model.Should().NotBeNull();
 
-            model.AdminChangeResultsViewModel.Should().BeEquivalentTo(_cachedMathsModel);
+            model.AdminChangeStatusViewModel.Should().BeEquivalentTo(_cachedMathsModel);
 
             viewResult.ViewData.ModelState.IsValid.Should().BeFalse();
             viewResult.ViewData.ModelState.Should().ContainKey(ErrorKey);

@@ -15,7 +15,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectResults;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectsStatus;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
 using System;
 using System.Collections.Generic;
@@ -466,7 +466,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/change-maths-status-clear/{registrationPathwayId}", Name = RouteConstants.AdminChangeMathsStatusClear)]
         public async Task<IActionResult> ChangeMathsStatusClearAsync(int registrationPathwayId)
         {
-            await _cacheService.RemoveAsync<AdminChangeMathsResultsViewModel>(CacheKey);
+            await _cacheService.RemoveAsync<AdminChangeMathsStatusViewModel>(CacheKey);
             return RedirectToRoute(RouteConstants.AdminChangeMathsStatus, new { registrationPathwayId });
         }
 
@@ -474,14 +474,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/change-maths-status/{registrationPathwayId}", Name = RouteConstants.AdminChangeMathsStatus)]
         public async Task<IActionResult> AdminChangeMathsStatusAsync(int registrationPathwayId)
         {
-            var cachedModel = await _cacheService.GetAsync<AdminChangeMathsResultsViewModel>(CacheKey);
+            var cachedModel = await _cacheService.GetAsync<AdminChangeMathsStatusViewModel>(CacheKey);
 
             if (cachedModel != null)
             {
                 return View(cachedModel);
             }
 
-            var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeMathsResultsViewModel>(registrationPathwayId);
+            var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeMathsStatusViewModel>(registrationPathwayId);
 
             if (viewModel == null)
             {
@@ -493,7 +493,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("admin/submit-change-maths-status", Name = RouteConstants.SubmitAdminChangeMathsStatus)]
-        public async Task<IActionResult> AdminChangeMathsStatusAsync(AdminChangeMathsResultsViewModel model)
+        public async Task<IActionResult> AdminChangeMathsStatusAsync(AdminChangeMathsStatusViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -505,7 +505,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(model.BackLink.RouteName, model.BackLink.RouteAttributes);
             }
 
-            var originalViewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeMathsResultsViewModel>(model.RegistrationPathwayId);
+            var originalViewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeMathsStatusViewModel>(model.RegistrationPathwayId);
             if (originalViewModel != null)
             {
                 // Keep the original MathsStatus for display in the "From" column
@@ -524,33 +524,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/review-changes-maths-status/{pathwayId}", Name = RouteConstants.AdminReviewChangesMathsStatus)]
         public async Task<IActionResult> AdminReviewChangesMathsStatusAsync(int pathwayId)
         {
-            AdminReviewChangesMathsSubjectViewModel viewModel = new();
+            AdminReviewChangesMathsStatusViewModel viewModel = new();
 
-            var cachedModel = await _cacheService.GetAsync<AdminChangeMathsResultsViewModel>(CacheKey);
+            var cachedModel = await _cacheService.GetAsync<AdminChangeMathsStatusViewModel>(CacheKey);
 
             if (cachedModel == null)
             {
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
-            viewModel.AdminChangeResultsViewModel = cachedModel;
+            viewModel.AdminChangeStatusViewModel = cachedModel;
 
-            await _cacheService.SetAsync<AdminReviewChangesMathsSubjectViewModel>(CacheKey, viewModel);
+            await _cacheService.SetAsync<AdminReviewChangesMathsStatusViewModel>(CacheKey, viewModel);
 
             return View(viewModel);
         }
 
         [HttpPost]
         [Route("admin/submit-review-changes-maths-status", Name = RouteConstants.SubmitReviewChangesMathsStatus)]
-        public async Task<IActionResult> AdminReviewChangesMathsStatusAsync(AdminReviewChangesMathsSubjectViewModel model)
+        public async Task<IActionResult> AdminReviewChangesMathsStatusAsync(AdminReviewChangesMathsStatusViewModel model)
         {
-            var cachedModel = await _cacheService.GetAsync<AdminChangeMathsResultsViewModel>(CacheKey);
+            var cachedModel = await _cacheService.GetAsync<AdminChangeMathsStatusViewModel>(CacheKey);
 
             if (cachedModel == null)
             {
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            model.AdminChangeResultsViewModel = cachedModel;
+            model.AdminChangeStatusViewModel = cachedModel;
 
             if (!ModelState.IsValid)
             {
@@ -568,7 +568,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                     IsRawHtml = true,
                 }, CacheExpiryTime.XSmall);
 
-                return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.AdminChangeResultsViewModel.RegistrationPathwayId });
+                return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.AdminChangeStatusViewModel.RegistrationPathwayId });
             }
             else
             {
@@ -584,7 +584,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/change-english-status-clear/{registrationPathwayId}", Name = RouteConstants.AdminChangeEnglishStatusClear)]
         public async Task<IActionResult> ChangeEnglishStatusClearAsync(int registrationPathwayId)
         {
-            await _cacheService.RemoveAsync<AdminChangeEnglishResultsViewModel>(CacheKey);
+            await _cacheService.RemoveAsync<AdminChangeEnglishStatusViewModel>(CacheKey);
             return RedirectToRoute(RouteConstants.AdminChangeEnglishStatus, new { registrationPathwayId });
         }
 
@@ -592,14 +592,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/change-english-status/{registrationPathwayId}", Name = RouteConstants.AdminChangeEnglishStatus)]
         public async Task<IActionResult> AdminChangeEnglishStatusAsync(int registrationPathwayId)
         {
-            var cachedModel = await _cacheService.GetAsync<AdminChangeEnglishResultsViewModel>(CacheKey);
+            var cachedModel = await _cacheService.GetAsync<AdminChangeEnglishStatusViewModel>(CacheKey);
 
             if (cachedModel != null)
             {
                 return View(cachedModel);
             }
 
-            var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeEnglishResultsViewModel>(registrationPathwayId);
+            var viewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeEnglishStatusViewModel>(registrationPathwayId);
 
             if (viewModel == null)
             {
@@ -611,7 +611,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpPost]
         [Route("admin/submit-change-english-status", Name = RouteConstants.SubmitAdminChangeEnglishStatus)]
-        public async Task<IActionResult> AdminChangeEnglishStatusAsync(AdminChangeEnglishResultsViewModel model)
+        public async Task<IActionResult> AdminChangeEnglishStatusAsync(AdminChangeEnglishStatusViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -623,7 +623,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(model.BackLink.RouteName, model.BackLink.RouteAttributes);
             }
 
-            var originalViewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeEnglishResultsViewModel>(model.RegistrationPathwayId);
+            var originalViewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeEnglishStatusViewModel>(model.RegistrationPathwayId);
             if (originalViewModel != null)
             {
                 // Keep the original EnglishStatus for display in the "From" column
@@ -642,33 +642,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         [Route("admin/review-changes-english-status/{pathwayId}", Name = RouteConstants.AdminReviewChangesEnglishStatus)]
         public async Task<IActionResult> AdminReviewChangesEnglishStatusAsync(int pathwayId)
         {
-            AdminReviewChangesEnglishSubjectViewModel viewModel = new();
+            AdminReviewChangesEnglishStatusViewModel viewModel = new();
 
-            var cachedModel = await _cacheService.GetAsync<AdminChangeEnglishResultsViewModel>(CacheKey);
+            var cachedModel = await _cacheService.GetAsync<AdminChangeEnglishStatusViewModel>(CacheKey);
 
             if (cachedModel == null)
             {
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
-            viewModel.AdminChangeResultsViewModel = cachedModel;
+            viewModel.AdminChangeStatusViewModel = cachedModel;
 
-            await _cacheService.SetAsync<AdminReviewChangesEnglishSubjectViewModel>(CacheKey, viewModel);
+            await _cacheService.SetAsync<AdminReviewChangesEnglishStatusViewModel>(CacheKey, viewModel);
 
             return View(viewModel);
         }
 
         [HttpPost]
         [Route("admin/submit-review-changes-english-status", Name = RouteConstants.SubmitReviewChangesEnglishStatus)]
-        public async Task<IActionResult> AdminReviewChangesEnglishStatusAsync(AdminReviewChangesEnglishSubjectViewModel model)
+        public async Task<IActionResult> AdminReviewChangesEnglishStatusAsync(AdminReviewChangesEnglishStatusViewModel model)
         {
-            var cachedModel = await _cacheService.GetAsync<AdminChangeEnglishResultsViewModel>(CacheKey);
+            var cachedModel = await _cacheService.GetAsync<AdminChangeEnglishStatusViewModel>(CacheKey);
 
             if (cachedModel == null)
             {
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            model.AdminChangeResultsViewModel = cachedModel;
+            model.AdminChangeStatusViewModel = cachedModel;
 
             if (!ModelState.IsValid)
             {
@@ -686,7 +686,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                     IsRawHtml = true,
                 }, CacheExpiryTime.XSmall);
 
-                return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.AdminChangeResultsViewModel.RegistrationPathwayId });
+                return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.AdminChangeStatusViewModel.RegistrationPathwayId });
             }
             else
             {

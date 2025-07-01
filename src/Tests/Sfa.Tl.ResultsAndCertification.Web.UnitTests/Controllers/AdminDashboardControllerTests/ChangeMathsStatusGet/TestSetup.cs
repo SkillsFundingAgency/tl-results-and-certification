@@ -4,7 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.UnitTests.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectResults;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectsStatus;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.ChangeMathsStatusGet
@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         protected const int RegistrationPathwayId = 999;
         protected IActionResult Result { get; private set; }
 
-        protected static AdminChangeMathsResultsViewModel ViewModel 
+        protected static AdminChangeMathsStatusViewModel ViewModel 
             => new()
             {
                 RegistrationPathwayId = RegistrationPathwayId,
@@ -34,40 +34,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 
         protected void AssertViewResult()
         {
-            var model = Result.ShouldBeViewResult<AdminChangeMathsResultsViewModel>();
-            var changeResultsModel = ViewModel;
+            var model = Result.ShouldBeViewResult<AdminChangeMathsStatusViewModel>();
+            var changeStatusModel = ViewModel;
 
-            model.RegistrationPathwayId.Should().Be(changeResultsModel.RegistrationPathwayId);
-            model.Uln.Should().Be(changeResultsModel.Uln);
-            model.LearnerName.Should().Be(changeResultsModel.LearnerName);
-            model.Provider.Should().Be(changeResultsModel.Provider);
-            model.TlevelName.Should().Be(changeResultsModel.TlevelName);
-            model.MathsStatus.Should().Be(changeResultsModel.MathsStatus);
-
-            model.RegistrationPathwayId.Should().Be(changeResultsModel.RegistrationPathwayId);
-            model.Uln.Should().Be(changeResultsModel.Uln);
-            model.LearnerName.Should().Be(changeResultsModel.LearnerName);
-            model.Provider.Should().Be(changeResultsModel.Provider);
-            model.TlevelName.Should().Be(changeResultsModel.TlevelName);
-            model.MathsStatus.Should().Be(changeResultsModel.MathsStatus);
+            model.RegistrationPathwayId.Should().Be(changeStatusModel.RegistrationPathwayId);
+            model.Uln.Should().Be(changeStatusModel.Uln);
+            model.LearnerName.Should().Be(changeStatusModel.LearnerName);
+            model.Provider.Should().Be(changeStatusModel.Provider);
+            model.TlevelName.Should().Be(changeStatusModel.TlevelName);
+            model.MathsStatus.Should().Be(changeStatusModel.MathsStatus);
 
             model.SummaryLearner.Title.Should().Be(AdminChangeMathsStatus.Title_Learner_Text);
-            model.SummaryLearner.Value.Should().Be(changeResultsModel.LearnerName);
+            model.SummaryLearner.Value.Should().Be(changeStatusModel.LearnerName);
 
             model.SummaryULN.Title.Should().Be(AdminChangeMathsStatus.Title_ULN_Text);
-            model.SummaryULN.Value.Should().Be(changeResultsModel.Uln.ToString());
+            model.SummaryULN.Value.Should().Be(changeStatusModel.Uln.ToString());
 
             model.SummaryProvider.Title.Should().Be(AdminChangeMathsStatus.Title_Provider_Text);
-            model.SummaryProvider.Value.Should().Be(changeResultsModel.Provider);
+            model.SummaryProvider.Value.Should().Be(changeStatusModel.Provider);
 
             model.SummaryTlevel.Title.Should().Be(AdminChangeMathsStatus.Title_TLevel_Text);
-            model.SummaryTlevel.Value.Should().Be(changeResultsModel.TlevelName);
+            model.SummaryTlevel.Value.Should().Be(changeStatusModel.TlevelName);
 
             model.SummaryAcademicYear.Title.Should().Be(AdminChangeMathsStatus.Title_StartYear_Text);
-            model.SummaryAcademicYear.Value.Should().Be(changeResultsModel.StartYear);
+            model.SummaryAcademicYear.Value.Should().Be(changeStatusModel.StartYear);
 
             model.SummaryMathsStatus.Title.Should().Be(AdminChangeMathsStatus.Title_Maths_Status);
-            model.SummaryMathsStatus.Value.Should().Be(changeResultsModel.GetSubjectStatusDisplayText(changeResultsModel.MathsStatus));
+            model.SummaryMathsStatus.Value.Should().Be(changeStatusModel.GetSubjectStatusDisplayText(changeStatusModel.MathsStatus));
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.AdminLearnerRecord);

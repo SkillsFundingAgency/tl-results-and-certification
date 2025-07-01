@@ -4,7 +4,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectResults;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectsStatus;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.AdminReviewChangesEnglishStatusPost
@@ -15,15 +15,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         {
             ViewModel = CreateViewModel(SubjectStatus.Achieved);
 
-            CacheService.GetAsync<AdminChangeEnglishResultsViewModel>(CacheKey).Returns((AdminChangeEnglishResultsViewModel)null);
+            CacheService.GetAsync<AdminChangeEnglishStatusViewModel>(CacheKey).Returns((AdminChangeEnglishStatusViewModel)null);
         }
 
         [Fact]
         public void Then_Expected_Methods_Are_Called()
         {
-            CacheService.Received(1).GetAsync<AdminChangeEnglishResultsViewModel>(CacheKey);
+            CacheService.Received(1).GetAsync<AdminChangeEnglishStatusViewModel>(CacheKey);
 
-            AdminDashboardLoader.DidNotReceive().ProcessChangeEnglishStatusAsync(Arg.Any<AdminReviewChangesEnglishSubjectViewModel>());
+            AdminDashboardLoader.DidNotReceive().ProcessChangeEnglishStatusAsync(Arg.Any<AdminReviewChangesEnglishStatusViewModel>());
 
             CacheService.DidNotReceive().SetAsync(
                 Arg.Any<string>(),
@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             );
             CacheService.DidNotReceive().SetAsync(
                 Arg.Any<string>(),
-                Arg.Any<AdminReviewChangesEnglishSubjectViewModel>()
+                Arg.Any<AdminReviewChangesEnglishStatusViewModel>()
             );
         }
 

@@ -5,11 +5,11 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectResults
+namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectsStatus
 {
-    public class AdminReviewChangesMathsSubjectViewModel
+    public class AdminReviewChangesMathsStatusViewModel
     {
-        public AdminChangeMathsResultsViewModel AdminChangeResultsViewModel { get; set; }
+        public AdminChangeMathsStatusViewModel AdminChangeStatusViewModel { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(ReviewChangesMathsStatus), ErrorMessageResourceName = "Validation_Contact_Name_Blank_Text")]
         public string ContactName { get; set; }
@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectRes
         public BackLinkModel BackLink => new()
         {
             RouteName = RouteConstants.AdminChangeMathsStatus,
-            RouteAttributes = new Dictionary<string, string>() { { Constants.RegistrationPathwayId, AdminChangeResultsViewModel.RegistrationPathwayId.ToString() }, { Constants.IsBack, "true" } }
+            RouteAttributes = new Dictionary<string, string>() { { Constants.RegistrationPathwayId, AdminChangeStatusViewModel.RegistrationPathwayId.ToString() }, { Constants.IsBack, "true" } }
         };
 
         public SummaryItemModel SummaryContactName => new()
@@ -71,22 +71,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectRes
             Value = ZendeskId
         };
 
-        public List<SummaryItemModel> GetMathsResultDetailsList()
+        public List<SummaryItemModel> GetMathsStatusDetailsList()
         {
             var detailsList = new List<SummaryItemModel>();
-            var mathsResult = AdminChangeResultsViewModel;
+            var mathsStatus = AdminChangeStatusViewModel;
 
             // Status Row
             detailsList.Add(new()
             {
                 Id = "mathsresultstatus",
                 Title = ReviewChangesMathsStatus.Title_Status_Text,
-                Value = mathsResult.GetSubjectStatusDisplayText(mathsResult?.MathsStatus),
-                Value2 = mathsResult.GetSubjectStatusDisplayText(mathsResult?.MathsStatusTo),
+                Value = mathsStatus.GetSubjectStatusDisplayText(mathsStatus?.MathsStatus),
+                Value2 = mathsStatus.GetSubjectStatusDisplayText(mathsStatus?.MathsStatusTo),
                 TitleCss = default,
                 ActionText = ReviewChangesMathsStatus.Link_Change_Text,
                 RouteName = RouteConstants.AdminChangeMathsStatus,
-                RouteAttributes = new Dictionary<string, string>() { { Constants.RegistrationPathwayId, AdminChangeResultsViewModel.RegistrationPathwayId.ToString() }, { Constants.IsBack, "true" } }
+                RouteAttributes = new Dictionary<string, string>() { { Constants.RegistrationPathwayId, AdminChangeStatusViewModel.RegistrationPathwayId.ToString() }, { Constants.IsBack, "true" } }
             });
 
             return detailsList;

@@ -4,7 +4,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectResults;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectsStatus;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.AdminReviewChangesMathsStatusPost
@@ -15,15 +15,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         {
             ViewModel = CreateViewModel(SubjectStatus.Achieved);
 
-            CacheService.GetAsync<AdminChangeMathsResultsViewModel>(CacheKey).Returns((AdminChangeMathsResultsViewModel)null);
+            CacheService.GetAsync<AdminChangeMathsStatusViewModel>(CacheKey).Returns((AdminChangeMathsStatusViewModel)null);
         }
 
         [Fact]
         public void Then_Expected_Methods_Are_Called()
         {
-            CacheService.Received(1).GetAsync<AdminChangeMathsResultsViewModel>(CacheKey);
+            CacheService.Received(1).GetAsync<AdminChangeMathsStatusViewModel>(CacheKey);
 
-            AdminDashboardLoader.DidNotReceive().ProcessChangeMathsStatusAsync(Arg.Any<AdminReviewChangesMathsSubjectViewModel>());
+            AdminDashboardLoader.DidNotReceive().ProcessChangeMathsStatusAsync(Arg.Any<AdminReviewChangesMathsStatusViewModel>());
 
             CacheService.DidNotReceive().SetAsync(
                 Arg.Any<string>(),
@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             );
             CacheService.DidNotReceive().SetAsync(
                 Arg.Any<string>(),
-                Arg.Any<AdminReviewChangesMathsSubjectViewModel>()
+                Arg.Any<AdminReviewChangesMathsStatusViewModel>()
             );
         }
 

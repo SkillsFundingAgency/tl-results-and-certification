@@ -4,7 +4,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectResults;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectsStatus;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.AdminReviewChangesEnglishStatusPost
@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 
     public class When_ModelState_Invalid_And_CachedModel_Is_Present : TestSetup
     {
-        private AdminChangeEnglishResultsViewModel _cachedEnglishModel;
+        private AdminChangeEnglishStatusViewModel _cachedEnglishModel;
         private const string ErrorKey = "ContactName";
 
         public override void Given()
@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             ViewModel = CreateViewModel(SubjectStatus.Achieved);
             ViewModel.ContactName = "";
 
-            _cachedEnglishModel = new AdminChangeEnglishResultsViewModel
+            _cachedEnglishModel = new AdminChangeEnglishStatusViewModel
             {
                 RegistrationPathwayId = 1,
                 EnglishStatusTo = SubjectStatus.Achieved,
@@ -35,16 +35,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 EnglishStatus = SubjectStatus.NotAchieved
             };
 
-            CacheService.GetAsync<AdminChangeEnglishResultsViewModel>(CacheKey).Returns(_cachedEnglishModel);
+            CacheService.GetAsync<AdminChangeEnglishStatusViewModel>(CacheKey).Returns(_cachedEnglishModel);
             Controller.ModelState.AddModelError(ErrorKey, ReviewChangesEnglishStatus.Validation_Contact_Name_Blank_Text);
         }
 
         [Fact]
         public void Then_Expected_Methods_Are_Called()
         {
-            CacheService.Received(1).GetAsync<AdminChangeEnglishResultsViewModel>(CacheKey);
+            CacheService.Received(1).GetAsync<AdminChangeEnglishStatusViewModel>(CacheKey);
 
-            AdminDashboardLoader.DidNotReceive().ProcessChangeEnglishStatusAsync(Arg.Any<AdminReviewChangesEnglishSubjectViewModel>());
+            AdminDashboardLoader.DidNotReceive().ProcessChangeEnglishStatusAsync(Arg.Any<AdminReviewChangesEnglishStatusViewModel>());
 
             CacheService.DidNotReceive().SetAsync(
                 Arg.Any<string>(),
@@ -57,11 +57,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         public void Then_Returns_View_With_Model_And_Errors()
         {
             var viewResult = ActualResult.Should().BeOfType<ViewResult>().Subject;
-            var model = viewResult.Model.Should().BeAssignableTo<AdminReviewChangesEnglishSubjectViewModel>().Subject;
+            var model = viewResult.Model.Should().BeAssignableTo<AdminReviewChangesEnglishStatusViewModel>().Subject;
 
             model.Should().NotBeNull();
 
-            model.AdminChangeResultsViewModel.Should().BeEquivalentTo(_cachedEnglishModel);
+            model.AdminChangeStatusViewModel.Should().BeEquivalentTo(_cachedEnglishModel);
 
             viewResult.ViewData.ModelState.IsValid.Should().BeFalse();
             viewResult.ViewData.ModelState.Should().ContainKey(ErrorKey);

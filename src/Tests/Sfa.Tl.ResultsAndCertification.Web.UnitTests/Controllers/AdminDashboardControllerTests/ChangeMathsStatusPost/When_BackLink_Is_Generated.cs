@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectResults;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectsStatus;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -27,9 +27,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         [Fact]
         public void Then_No_Relevant_Methods_AreCalled()
         {
-            AdminDashboardLoader.DidNotReceive().GetAdminLearnerRecordAsync<AdminChangeMathsResultsViewModel>(Arg.Any<int>());
+            AdminDashboardLoader.DidNotReceive().GetAdminLearnerRecordAsync<AdminChangeMathsStatusViewModel>(Arg.Any<int>());
 
-            CacheService.DidNotReceive().SetAsync(Arg.Any<string>(), Arg.Any<AdminChangeMathsResultsViewModel>(), Arg.Any<CacheExpiryTime>());
+            CacheService.DidNotReceive().SetAsync(Arg.Any<string>(), Arg.Any<AdminChangeMathsStatusViewModel>(), Arg.Any<CacheExpiryTime>());
         }
 
         [Fact]

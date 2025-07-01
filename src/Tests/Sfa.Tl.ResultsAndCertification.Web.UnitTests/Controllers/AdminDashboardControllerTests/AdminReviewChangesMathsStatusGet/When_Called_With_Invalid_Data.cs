@@ -2,19 +2,19 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectResults;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectsStatus;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.AdminReviewChangesMathsStatusGet
 {
     public class When_Called_With_Invalid_Data : TestSetup
     {
-        protected AdminReviewChangesMathsSubjectViewModel _mockResult = null;
+        protected AdminReviewChangesMathsStatusViewModel _mockResult = null;
 
         public override void Given()
         {
             PathwayId = 0;
-            AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminReviewChangesMathsSubjectViewModel>(PathwayId).Returns(_mockResult);
+            AdminDashboardLoader.GetAdminLearnerRecordAsync<AdminReviewChangesMathsStatusViewModel>(PathwayId).Returns(_mockResult);
         }
 
         [Fact]

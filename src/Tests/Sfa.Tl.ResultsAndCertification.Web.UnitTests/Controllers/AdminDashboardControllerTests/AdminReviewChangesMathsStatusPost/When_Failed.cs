@@ -3,27 +3,27 @@ using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectResults;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectsStatus;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.AdminReviewChangesMathsStatusPost
 {
     public class When_Failed : TestSetup
     {
-        private AdminChangeMathsResultsViewModel _cacheModel;
+        private AdminChangeMathsStatusViewModel _cacheModel;
 
         public override void Given()
         {
             var isSuccess = false;
             ViewModel = CreateViewModel(SubjectStatus.Achieved);
 
-            _cacheModel = new AdminChangeMathsResultsViewModel
+            _cacheModel = new AdminChangeMathsStatusViewModel
             {
                 RegistrationPathwayId = 1,
                 MathsStatusTo = SubjectStatus.Achieved
             };
 
-            CacheService.GetAsync<AdminChangeMathsResultsViewModel>(CacheKey).Returns(_cacheModel);
+            CacheService.GetAsync<AdminChangeMathsStatusViewModel>(CacheKey).Returns(_cacheModel);
             AdminDashboardLoader.ProcessChangeMathsStatusAsync(ViewModel).Returns(isSuccess);
         }
 

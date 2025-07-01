@@ -2,7 +2,7 @@
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectResults;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectsStatus;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
@@ -25,9 +25,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
 
         Task<bool> ProcessChangeIndustryPlacementAsync(AdminReviewChangesIndustryPlacementViewModel adminChangeIpViewModel);
 
-        Task<bool> ProcessChangeMathsStatusAsync(AdminReviewChangesMathsSubjectViewModel model);
+        Task<bool> ProcessChangeMathsStatusAsync(AdminReviewChangesMathsStatusViewModel model);
 
-        Task<bool> ProcessChangeEnglishStatusAsync(AdminReviewChangesEnglishSubjectViewModel model);
+        Task<bool> ProcessChangeEnglishStatusAsync(AdminReviewChangesEnglishStatusViewModel model);
 
         Task<AdminRemovePathwayAssessmentEntryViewModel> GetRemovePathwayAssessmentEntryAsync(int registrationPathwayId, int pathwayAssessmentId);
 

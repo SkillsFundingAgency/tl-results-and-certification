@@ -4,7 +4,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectResults;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectsStatus;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.ChangeMathsStatusPost
@@ -12,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
     public class When_Yes_Selected : TestSetup
     {
         private const int ExpectedRegistrationPathwayId = 1;
-        private AdminChangeMathsResultsViewModel _originalViewModel;
+        private AdminChangeMathsStatusViewModel _originalViewModel;
 
         public override void Given()
         {
@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             _originalViewModel = CreateViewModel(ExpectedRegistrationPathwayId, SubjectStatus.NotAchieved, null);
 
             AdminDashboardLoader
-                .GetAdminLearnerRecordAsync<AdminChangeMathsResultsViewModel>(ExpectedRegistrationPathwayId)
+                .GetAdminLearnerRecordAsync<AdminChangeMathsStatusViewModel>(ExpectedRegistrationPathwayId)
                 .Returns(_originalViewModel);
         }
 
@@ -31,12 +31,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         {
             AdminDashboardLoader
                 .Received(1)
-                .GetAdminLearnerRecordAsync<AdminChangeMathsResultsViewModel>(ExpectedRegistrationPathwayId);
+                .GetAdminLearnerRecordAsync<AdminChangeMathsStatusViewModel>(ExpectedRegistrationPathwayId);
 
             CacheService
                 .Received(1)
                 .SetAsync(Arg.Is<string>(s => s.Contains(CacheConstants.AdminDashboardCacheKey)),
-                         Arg.Is<AdminChangeMathsResultsViewModel>(m =>
+                         Arg.Is<AdminChangeMathsStatusViewModel>(m =>
                              m.MathsStatus == SubjectStatus.NotAchieved &&
                              m.MathsStatusTo == SubjectStatus.Achieved),
                          Arg.Any<CacheExpiryTime>());
