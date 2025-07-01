@@ -4,7 +4,7 @@
 @using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
 
 @{
-    ViewData["Title"] = ReviewChangeLevelTwoMaths.Page_Title;
+    ViewData["Title"] = ReviewChangesMathsStatus.Page_Title;
 }
 
 @section NavigationBar
@@ -15,12 +15,12 @@
 <div class="govuk-grid-row">
     <div class="record-header">
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
-            @ReviewChangeLevelTwoMaths.Heading_Change_Start_Year
+            @ReviewChangesMathsStatus.Heading_Change_Start_Year
         </h1>
     </div>
     <partial name="_ValidationSummary" />
     <h2 class="govuk-heading-m">
-        @ReviewChangeLevelTwoMaths.Heading_Personal_Details
+        @ReviewChangesMathsStatus.Heading_Personal_Details
     </h2>
 
     <dl class="govuk-summary-list govuk-!-margin-bottom-4">
@@ -31,15 +31,15 @@
     </dl>
 
     <h2 class="govuk-heading-m">
-        @ReviewChangeLevelTwoMaths.Heading_Change_Summary
+        @ReviewChangesMathsStatus.Heading_Change_Summary
     </h2>
 
     <div class="govuk-summary-list__row">
 
         <dl class="govuk-summary-list govuk-!-margin-bottom-8">
-            <dt class="govuk-summary-list__key">@ReviewChangeLevelTwoMaths.Title_Change_Summary_Change_Text</dt>
-            <dt class="govuk-summary-list__key">@ReviewChangeLevelTwoMaths.Title_Change_Summary_From_Text</dt>
-            <dt class="govuk-summary-list__key">@ReviewChangeLevelTwoMaths.Title_Change_Summary_To_Text</dt>
+            <dt class="govuk-summary-list__key">@ReviewChangesMathsStatus.Title_Change_Summary_Change_Text</dt>
+            <dt class="govuk-summary-list__key">@ReviewChangesMathsStatus.Title_Change_Summary_From_Text</dt>
+            <dt class="govuk-summary-list__key">@ReviewChangesMathsStatus.Title_Change_Summary_To_Text</dt>
             <dt class="govuk-summary-list__key"></dt>
             @foreach (var rowItem in Model.GetMathsResultDetailsList())
             {
@@ -60,51 +60,51 @@
             <fieldset class="govuk-fieldset">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--m">
                     <h2 class="govuk-fieldset__heading">
-                        @ReviewChangeLevelTwoMaths.Heading_Who_has_asked_for_change
+                        @ReviewChangesMathsStatus.Heading_Who_has_asked_for_change
                     </h2>
                 </legend>
                 <div class="govuk-form-group">
-                    <label class="govuk-label govuk-label--s" for="contactname">@ReviewChangeLevelTwoMaths.Title_Contact_Name_Text</label>
+                    <label class="govuk-label govuk-label--s" for="contactname">@ReviewChangesMathsStatus.Title_Contact_Name_Text</label>
                     <input id="contactname" class="govuk-input govuk-input--width-20" asp-for="ContactName" sfa-validation-class="govuk-input-error" sfa-validation-for="ContactName" type="text" maxlength="100">
                 </div>
                 <div class="govuk-form-group" id="requestdate">
-                    <label class="govuk-label govuk-label--s" for="dateofrequest">@ReviewChangeLevelTwoMaths.Title_Date_Of_Request</label>
+                    <label class="govuk-label govuk-label--s" for="dateofrequest">@ReviewChangesMathsStatus.Title_Date_Of_Request</label>
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
-                            <label class="govuk-label govuk-date-input__label" for="day">@ReviewChangeLevelTwoMaths.Title_Day_Text</label>
+                            <label class="govuk-label govuk-date-input__label" for="day">@ReviewChangesMathsStatus.Title_Day_Text</label>
                             <input id="day" asp-for="Day" sfa-validation-for="Day" sfa-validation-class="govuk-input--error" class="govuk-input govuk-date-input__input govuk-input--width-2" maxlength="2" inputmode="numeric">
                         </div>
                     </div>
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
-                            <label class="govuk-label govuk-date-input__label" for="month">@ReviewChangeLevelTwoMaths.Title_Month_Text</label>
+                            <label class="govuk-label govuk-date-input__label" for="month">@ReviewChangesMathsStatus.Title_Month_Text</label>
                             <input id="month" asp-for="Month" sfa-validation-for="Month" sfa-validation-class="govuk-input--error" class="govuk-input govuk-date-input__input govuk-input--width-2" maxlength="2" inputmode="numeric">
                         </div>
                     </div>
                     <div class="govuk-date-input__item">
                         <div class="govuk-form-group">
-                            <label class="govuk-label govuk-date-input__label" for="year">@ReviewChangeLevelTwoMaths.Title_Year_Text</label>
+                            <label class="govuk-label govuk-date-input__label" for="year">@ReviewChangesMathsStatus.Title_Year_Text</label>
                             <input id="year" asp-for="Year" sfa-validation-for="Year" sfa-validation-class="govuk-input--error" class="govuk-input govuk-date-input__input govuk-input--width-4" maxlength="4" inputmode="numeric">
                         </div>
                     </div>
                 </div>
                 <div class="govuk-character-count" data-module="govuk-character-count" data-maxlength="2000">
                     <div class="govuk-form-group">
-                        <label class="govuk-label govuk-label--s" for="changereason">@ReviewChangeLevelTwoMaths.Title_Reason_For_Change_Text</label>
+                        <label class="govuk-label govuk-label--s" for="changereason">@ReviewChangesMathsStatus.Title_Reason_For_Change_Text</label>
                         <textarea class="govuk-textarea govuk-js-character-count" id="changereason" name="changereason" rows="5" maxlength="2000" asp-for="ChangeReason"></textarea>
                         <partial name="Partials/_changeReasonCharacterHint.cshtml" />
                     </div>
                 </div>
                 <div class="govuk-form-group">
-                    <label class="govuk-label govuk-label--s" for="zenticketid">@ReviewChangeLevelTwoMaths.Title_Zendesk_Ticket_Id</label>
+                    <label class="govuk-label govuk-label--s" for="zenticketid">@ReviewChangesMathsStatus.Title_Zendesk_Ticket_Id</label>
                     <input id="zenticketid" class="govuk-input govuk-input--width-10" asp-for="ZendeskId" type="text" maxlength="10">
                 </div>
             </fieldset>
         </div>
 
         <div class="govuk-button-group">
-            <button id="submitButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@ReviewChangeLevelTwoMaths.Button_Submit</button>
-            <a id="returnButton" class="govuk-button gov-body govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.AdminChangeResultsViewModel.RegistrationPathwayId">@ReviewChangeLevelTwoMaths.Button_Cancel</a>
+            <button id="submitButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@ReviewChangesMathsStatus.Button_Submit</button>
+            <a id="returnButton" class="govuk-button gov-body govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.AdminChangeResultsViewModel.RegistrationPathwayId">@ReviewChangesMathsStatus.Button_Cancel</a>
         </div>
     </form>
 </div>

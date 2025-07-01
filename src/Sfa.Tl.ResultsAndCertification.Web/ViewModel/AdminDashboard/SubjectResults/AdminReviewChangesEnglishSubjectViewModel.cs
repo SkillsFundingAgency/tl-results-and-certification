@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectRes
     {
         public AdminChangeEnglishResultsViewModel AdminChangeResultsViewModel { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(ReviewChangeLevelTwoEnglish), ErrorMessageResourceName = "Validation_Contact_Name_Blank_Text")]
+        [Required(ErrorMessageResourceType = typeof(ReviewChangesEnglishStatus), ErrorMessageResourceName = "Validation_Contact_Name_Blank_Text")]
         public string ContactName { get; set; }
 
         public string RequestDate => $"{Year}/{Month}/{Day}";
@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectRes
 
         public string Year { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(ReviewChangeLevelTwoEnglish), ErrorMessageResourceName = "Validation_Reason_For_Change_Blank_Text")]
+        [Required(ErrorMessageResourceType = typeof(ReviewChangesEnglishStatus), ErrorMessageResourceName = "Validation_Reason_For_Change_Blank_Text")]
         public string ChangeReason { get; set; }
 
         public string ZendeskId { get; set; }
@@ -36,38 +36,38 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectRes
         public SummaryItemModel SummaryContactName => new()
         {
             Id = "contactname",
-            Title = ReviewChangeLevelTwoEnglish.Title_Contact_Name_Text,
+            Title = ReviewChangesEnglishStatus.Title_Contact_Name_Text,
             Value = ContactName
         };
 
         public SummaryItemModel SummaryDay => new()
         {
             Id = "dateofrequestday",
-            Title = ReviewChangeLevelTwoEnglish.Title_Day_Text,
+            Title = ReviewChangesEnglishStatus.Title_Day_Text,
             Value = Day
         };
         public SummaryItemModel SummaryMonth => new()
         {
             Id = "dateofrequestmonth",
-            Title = ReviewChangeLevelTwoEnglish.Title_Month_Text,
+            Title = ReviewChangesEnglishStatus.Title_Month_Text,
             Value = Month
         };
         public SummaryItemModel SummaryYear => new()
         {
             Id = "dateofrequestyear",
-            Title = ReviewChangeLevelTwoEnglish.Title_Year_Text,
+            Title = ReviewChangesEnglishStatus.Title_Year_Text,
             Value = Year
         };
         public SummaryItemModel SummaryChangeReason => new()
         {
             Id = "changereason",
-            Title = ReviewChangeLevelTwoEnglish.Title_Reason_For_Change_Text,
+            Title = ReviewChangesEnglishStatus.Title_Reason_For_Change_Text,
             Value = ChangeReason
         };
         public SummaryItemModel SummaryZendeskTicketId => new()
         {
             Id = "zendeskticketid",
-            Title = ReviewChangeLevelTwoEnglish.Title_Zendesk_Ticket_Id,
+            Title = ReviewChangesEnglishStatus.Title_Zendesk_Ticket_Id,
             Value = ZendeskId
         };
 
@@ -80,11 +80,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectRes
             detailsList.Add(new()
             {
                 Id = "englishresultstatus",
-                Title = ReviewChangeLevelTwoMaths.Title_Status_Text,
+                Title = ReviewChangesMathsStatus.Title_Status_Text,
                 Value = englishResult.GetSubjectStatusDisplayText(englishResult?.EnglishStatus),
                 Value2 = englishResult.GetSubjectStatusDisplayText(englishResult?.EnglishStatusTo),
                 TitleCss = default,
-                ActionText = ReviewChangeLevelTwoMaths.Link_Change_Text,
+                ActionText = ReviewChangesMathsStatus.Link_Change_Text,
                 RouteName = RouteConstants.AdminChangeMathsStatus,
                 RouteAttributes = new Dictionary<string, string>() { { Constants.RegistrationPathwayId, AdminChangeResultsViewModel.RegistrationPathwayId.ToString() }, { Constants.IsBack, "true" } }
             });

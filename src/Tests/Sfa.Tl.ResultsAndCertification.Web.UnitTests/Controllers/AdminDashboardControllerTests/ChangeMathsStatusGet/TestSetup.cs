@@ -51,22 +51,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             model.TlevelName.Should().Be(changeResultsModel.TlevelName);
             model.MathsStatus.Should().Be(changeResultsModel.MathsStatus);
 
-            model.SummaryLearner.Title.Should().Be(AdminChangeLevelTwoMaths.Title_Learner_Text);
+            model.SummaryLearner.Title.Should().Be(AdminChangeMathsStatus.Title_Learner_Text);
             model.SummaryLearner.Value.Should().Be(changeResultsModel.LearnerName);
 
-            model.SummaryULN.Title.Should().Be(AdminChangeLevelTwoMaths.Title_ULN_Text);
+            model.SummaryULN.Title.Should().Be(AdminChangeMathsStatus.Title_ULN_Text);
             model.SummaryULN.Value.Should().Be(changeResultsModel.Uln.ToString());
 
-            model.SummaryProvider.Title.Should().Be(AdminChangeLevelTwoMaths.Title_Provider_Text);
+            model.SummaryProvider.Title.Should().Be(AdminChangeMathsStatus.Title_Provider_Text);
             model.SummaryProvider.Value.Should().Be(changeResultsModel.Provider);
 
-            model.SummaryTlevel.Title.Should().Be(AdminChangeLevelTwoMaths.Title_TLevel_Text);
+            model.SummaryTlevel.Title.Should().Be(AdminChangeMathsStatus.Title_TLevel_Text);
             model.SummaryTlevel.Value.Should().Be(changeResultsModel.TlevelName);
 
-            model.SummaryAcademicYear.Title.Should().Be(AdminChangeLevelTwoMaths.Title_StartYear_Text);
+            model.SummaryAcademicYear.Title.Should().Be(AdminChangeMathsStatus.Title_StartYear_Text);
             model.SummaryAcademicYear.Value.Should().Be(changeResultsModel.StartYear);
 
-            model.SummaryMathsStatus.Title.Should().Be(AdminChangeLevelTwoMaths.Title_Maths_Status);
+            model.SummaryMathsStatus.Title.Should().Be(AdminChangeMathsStatus.Title_Maths_Status);
             model.SummaryMathsStatus.Value.Should().Be(changeResultsModel.GetSubjectStatusDisplayText(changeResultsModel.MathsStatus));
 
             model.BackLink.Should().NotBeNull();

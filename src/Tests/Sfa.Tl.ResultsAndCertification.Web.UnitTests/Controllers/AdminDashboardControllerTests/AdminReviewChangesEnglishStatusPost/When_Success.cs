@@ -51,7 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                     Arg.Is<string>(s => s.Contains(CacheConstants.AdminDashboardCacheKey)),
                     Arg.Is<NotificationBannerModel>(b =>
                         b.DisplayMessageBody == true &&
-                        b.Message == ReviewChangeLevelTwoEnglish.Message_Notification_Success &&
+                        b.Message == ReviewChangesEnglishStatus.Message_Notification_Success &&
                         b.IsRawHtml == true),
                     Arg.Any<CacheExpiryTime>());
         }

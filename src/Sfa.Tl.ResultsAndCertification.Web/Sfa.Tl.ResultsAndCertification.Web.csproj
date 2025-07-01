@@ -55,6 +55,11 @@
 		  <AutoGen>True</AutoGen>
 		  <DependentUpon>SelectAwardingOrganisation.resx</DependentUpon>
 		</Compile>
+		<Compile Update="Content\AdminDashboard\AdminChangeEnglishStatus.Designer.cs">
+		  <DesignTime>True</DesignTime>
+		  <AutoGen>True</AutoGen>
+		  <DependentUpon>AdminChangeEnglishStatus.resx</DependentUpon>
+		</Compile>
 		<Compile Update="Content\AdminDashboard\ChangeStartYear.Designer.cs">
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
@@ -1407,10 +1412,11 @@
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		  <LastGenOutput>SelectAwardingOrganisation.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
-		<EmbeddedResource Update="Content\AdminDashboard\AdminChangeLevelTwoEnglish.resx">
-		  <Generator></Generator>
+		<EmbeddedResource Update="Content\AdminDashboard\AdminChangeEnglishStatus.resx">
+		  <Generator>PublicResXFileCodeGenerator</Generator>
+		  <LastGenOutput>AdminChangeEnglishStatus.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
-		<EmbeddedResource Update="Content\AdminDashboard\AdminChangeLevelTwoMaths.resx">
+		<EmbeddedResource Update="Content\AdminDashboard\AdminChangeMathsStatus.resx">
 		  <Generator></Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminDashboard\ChangeStartYear.resx">
@@ -1421,13 +1427,10 @@
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		  <LastGenOutput>LearnerRecord.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
-		<EmbeddedResource Update="Content\AdminDashboard\ReviewChangeLevelTwoEnglish.resx">
+		<EmbeddedResource Update="Content\AdminDashboard\ReviewChangesEnglishStatus.resx">
 		  <Generator></Generator>
 		</EmbeddedResource>
-		<EmbeddedResource Update="Content\AdminDashboard\ReviewChangeLevelTwoMaths.resx">
-		  <Generator></Generator>
-		</EmbeddedResource>
-		<EmbeddedResource Update="Content\AdminDashboard\ReviewChangesLevelTwoMaths.resx">
+		<EmbeddedResource Update="Content\AdminDashboard\ReviewChangesMathsStatus.resx">
 		  <Generator></Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminDownloadLearnerResults\AdminDownloadLearnerResultsFindProvider.resx">

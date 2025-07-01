@@ -136,7 +136,7 @@
     <value>Select whether the learner has completed their level 2 maths</value>
   </data>
   <data name="Heading_Change_Level_Two_Maths" xml:space="preserve">
-    <value>Change level 2 maths result</value>
+    <value>Change level 2 Maths result</value>
   </data>
   <data name="Heading_Has_Learner_Achieved_Level2_Or_Equivalent" xml:space="preserve">
     <value>Has {0} achieved a level 2 or equivalent in maths?</value>
@@ -151,7 +151,7 @@
     <value>Yes</value>
   </data>
   <data name="Page_Title" xml:space="preserve">
-    <value>Change level 2 maths result  – Admin</value>
+    <value>Change level 2 Maths result  – Admin</value>
   </data>
   <data name="Status_AchievedByLrs_Text" xml:space="preserve">
     <value>Achieved (LRS)</value>

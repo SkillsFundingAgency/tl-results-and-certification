@@ -148,7 +148,7 @@
     <value>Any assessment entries or results assigned to this learner will remain active.</value>
   </data>
   <data name="Message_Notification_Success" xml:space="preserve">
-    <value>&lt;b&gt;Level 2 Maths status updated&lt;/b&gt;</value>
+    <value>&lt;b&gt;Level 2 maths status updated&lt;/b&gt;</value>
   </data>
   <data name="Message_You_Can_Enter_Up_To_Characters" xml:space="preserve">
     <value>You can enter up to 2,000 characters</value>

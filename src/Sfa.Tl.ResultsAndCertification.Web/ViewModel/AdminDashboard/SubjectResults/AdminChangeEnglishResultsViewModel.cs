@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectRes
         public string StartYear { get; set; }
         public SubjectStatus? EnglishStatus { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(AdminChangeLevelTwoEnglish), ErrorMessageResourceName = "Validation_Message")]
+        [Required(ErrorMessageResourceType = typeof(AdminChangeEnglishStatus), ErrorMessageResourceName = "Validation_Message")]
         public SubjectStatus? EnglishStatusTo { get; set; }
 
         public bool IsLearnerRegisteredFourYearsAgo => DateTime.Now.Year - AcademicYear > 4;
@@ -28,42 +28,42 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectRes
         public SummaryItemModel SummaryLearner => new()
         {
             Id = "learner",
-            Title = AdminChangeLevelTwoEnglish.Title_Learner_Text,
+            Title = AdminChangeEnglishStatus.Title_Learner_Text,
             Value = LearnerName
         };
 
         public SummaryItemModel SummaryULN => new()
         {
             Id = "uln",
-            Title = AdminChangeLevelTwoEnglish.Title_ULN_Text,
+            Title = AdminChangeEnglishStatus.Title_ULN_Text,
             Value = Uln.ToString()
         };
 
         public SummaryItemModel SummaryProvider => new()
         {
             Id = "provider",
-            Title = AdminChangeLevelTwoEnglish.Title_Provider_Text,
+            Title = AdminChangeEnglishStatus.Title_Provider_Text,
             Value = Provider
         };
 
         public SummaryItemModel SummaryTlevel => new()
         {
             Id = "tlevel",
-            Title = AdminChangeLevelTwoEnglish.Title_TLevel_Text,
+            Title = AdminChangeEnglishStatus.Title_TLevel_Text,
             Value = TlevelName
         };
 
         public SummaryItemModel SummaryAcademicYear => new()
         {
             Id = "academicyear",
-            Title = AdminChangeLevelTwoEnglish.Title_StartYear_Text,
+            Title = AdminChangeEnglishStatus.Title_StartYear_Text,
             Value = StartYear
         };
 
         public SummaryItemModel SummaryEnglishStatus => new()
         {
             Id = "englishstatus",
-            Title = AdminChangeLevelTwoEnglish.Title_English_Status,
+            Title = AdminChangeEnglishStatus.Title_English_Status,
             Value = GetSubjectStatusDisplayText(EnglishStatus)
         };
 
@@ -75,11 +75,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectRes
 
         public string GetSubjectStatusDisplayText(SubjectStatus? status) => status switch
         {
-            SubjectStatus.Achieved => AdminChangeLevelTwoEnglish.Status_Achieved_Text,
-            SubjectStatus.NotAchieved => AdminChangeLevelTwoEnglish.Status_NotAchieved_Text,
-            SubjectStatus.AchievedByLrs => AdminChangeLevelTwoEnglish.Status_AchievedByLrs_Text,
-            SubjectStatus.NotAchievedByLrs => AdminChangeLevelTwoEnglish.Status_NotAchievedByLrs_Text,
-            _ => AdminChangeLevelTwoEnglish.Status_Not_Yet_Received_Text
+            SubjectStatus.Achieved => AdminChangeEnglishStatus.Status_Achieved_Text,
+            SubjectStatus.NotAchieved => AdminChangeEnglishStatus.Status_NotAchieved_Text,
+            SubjectStatus.AchievedByLrs => AdminChangeEnglishStatus.Status_AchievedByLrs_Text,
+            SubjectStatus.NotAchievedByLrs => AdminChangeEnglishStatus.Status_NotAchievedByLrs_Text,
+            _ => AdminChangeEnglishStatus.Status_Not_Yet_Received_Text
         };
     }
 }

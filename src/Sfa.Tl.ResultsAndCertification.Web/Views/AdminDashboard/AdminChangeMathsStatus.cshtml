@@ -5,7 +5,7 @@
 @using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectResults
 
 @{
-    ViewData["Title"] = AdminChangeLevelTwoMaths.Page_Title;
+    ViewData["Title"] = AdminChangeMathsStatus.Page_Title;
 }
 
 @section NavigationBar
@@ -28,12 +28,12 @@
 
             <div class="record-header">
                 <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
-                    @AdminChangeLevelTwoMaths.Heading_Change_Level_Two_Maths
+                    @AdminChangeMathsStatus.Heading_Change_Level_Two_Maths
                 </h1>
             </div>
             <partial name="_ValidationSummary" />
             <h2 class="govuk-heading-m">
-            @AdminChangeLevelTwoMaths.Heading_Personal_Details
+            @AdminChangeMathsStatus.Heading_Personal_Details
             </h2>
 
             <dl class="govuk-summary-list govuk-!-margin-bottom-4">
@@ -48,26 +48,26 @@
             <div class="govuk-form-group govuk-!-margin-top-8" sfa-validation-for="MathsStatusTo" sfa-validation-class="govuk-form-group--error">
                 <fieldset class="govuk-fieldset">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                        <h1 class="govuk-fieldset__heading">@string.Format(AdminChangeLevelTwoMaths.Heading_Has_Learner_Achieved_Level2_Or_Equivalent, Model.LearnerName)</h1>
+                        <h1 class="govuk-fieldset__heading">@string.Format(AdminChangeMathsStatus.Heading_Has_Learner_Achieved_Level2_Or_Equivalent, Model.LearnerName)</h1>
                     </legend>
                     <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
                         <span sfa-validation-for="MathsStatusTo"></span>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="isachieved" asp-for="MathsStatusTo" type="radio" value="@((int)SubjectStatus.Achieved)">
                             <label class="govuk-label govuk-radios__label" for="isachieved">
-                                @AdminChangeLevelTwoMaths.Option_Yes
+                                @AdminChangeMathsStatus.Option_Yes
                             </label>
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="isachieved-no" asp-for="MathsStatusTo" type="radio" value="@((int)SubjectStatus.NotAchieved)">
                             <label class="govuk-label govuk-radios__label" for="isachieved-no">
-                                @AdminChangeLevelTwoMaths.Option_No
+                                @AdminChangeMathsStatus.Option_No
                             </label>
                         </div>
                     </div>
                 </fieldset>
             </div>
-            <button id="continueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@AdminChangeLevelTwoMaths.Button_Continue</button>
+            <button id="continueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@AdminChangeMathsStatus.Button_Continue</button>
         </form>
     </div>
 </div>

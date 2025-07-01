@@ -36,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             };
 
             CacheService.GetAsync<AdminChangeEnglishResultsViewModel>(CacheKey).Returns(_cachedEnglishModel);
-            Controller.ModelState.AddModelError(ErrorKey, ReviewChangeLevelTwoEnglish.Validation_Contact_Name_Blank_Text);
+            Controller.ModelState.AddModelError(ErrorKey, ReviewChangesEnglishStatus.Validation_Contact_Name_Blank_Text);
         }
 
         [Fact]
@@ -66,7 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             viewResult.ViewData.ModelState.IsValid.Should().BeFalse();
             viewResult.ViewData.ModelState.Should().ContainKey(ErrorKey);
             viewResult.ViewData.ModelState[ErrorKey].Errors.Should().ContainSingle(
-                e => e.ErrorMessage == ReviewChangeLevelTwoEnglish.Validation_Contact_Name_Blank_Text);
+                e => e.ErrorMessage == ReviewChangesEnglishStatus.Validation_Contact_Name_Blank_Text);
         }
     }
 }

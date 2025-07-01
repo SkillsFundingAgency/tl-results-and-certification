@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         {
             ViewModel = CreateViewModel(ExpectedRegistrationPathwayId, SubjectStatus.NotAchieved, null);
 
-            Controller.ModelState.AddModelError(nameof(ViewModel.EnglishStatusTo), AdminChangeLevelTwoEnglish.Validation_Message);
+            Controller.ModelState.AddModelError(nameof(ViewModel.EnglishStatusTo), AdminChangeEnglishStatus.Validation_Message);
         }
 
         [Fact]
@@ -38,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             ModelStateDictionary modelState = Controller.ViewData.ModelState;
             modelState.Should().HaveCount(1);
             modelState.Should().ContainKey(nameof(ViewModel.EnglishStatusTo));
-            modelState[nameof(ViewModel.EnglishStatusTo)].Errors[0].ErrorMessage.Should().Be(AdminChangeLevelTwoEnglish.Validation_Message);
+            modelState[nameof(ViewModel.EnglishStatusTo)].Errors[0].ErrorMessage.Should().Be(AdminChangeEnglishStatus.Validation_Message);
         }
     }
 }

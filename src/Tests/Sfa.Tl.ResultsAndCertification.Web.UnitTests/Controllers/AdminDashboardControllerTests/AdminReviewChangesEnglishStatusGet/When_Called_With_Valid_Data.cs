@@ -54,16 +54,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             model.AdminChangeResultsViewModel.Provider.Should().Be(_mockResult.AdminChangeResultsViewModel.Provider);
             model.AdminChangeResultsViewModel.TlevelName.Should().Be(_mockResult.AdminChangeResultsViewModel.TlevelName);
 
-            model.AdminChangeResultsViewModel.SummaryLearner.Title.Should().Be(AdminChangeLevelTwoEnglish.Title_Learner_Text);
+            model.AdminChangeResultsViewModel.SummaryLearner.Title.Should().Be(AdminChangeEnglishStatus.Title_Learner_Text);
             model.AdminChangeResultsViewModel.SummaryLearner.Value.Should().Be(_mockResult.AdminChangeResultsViewModel.LearnerName);
 
-            model.AdminChangeResultsViewModel.SummaryULN.Title.Should().Be(AdminChangeLevelTwoEnglish.Title_ULN_Text);
+            model.AdminChangeResultsViewModel.SummaryULN.Title.Should().Be(AdminChangeEnglishStatus.Title_ULN_Text);
             model.AdminChangeResultsViewModel.SummaryULN.Value.Should().Be(_mockResult.AdminChangeResultsViewModel.Uln.ToString());
 
-            model.AdminChangeResultsViewModel.SummaryProvider.Title.Should().Be(AdminChangeLevelTwoEnglish.Title_Provider_Text);
+            model.AdminChangeResultsViewModel.SummaryProvider.Title.Should().Be(AdminChangeEnglishStatus.Title_Provider_Text);
             model.AdminChangeResultsViewModel.SummaryProvider.Value.Should().Be(_mockResult.AdminChangeResultsViewModel.Provider);
 
-            model.AdminChangeResultsViewModel.SummaryTlevel.Title.Should().Be(AdminChangeLevelTwoEnglish.Title_TLevel_Text);
+            model.AdminChangeResultsViewModel.SummaryTlevel.Title.Should().Be(AdminChangeEnglishStatus.Title_TLevel_Text);
             model.AdminChangeResultsViewModel.SummaryTlevel.Value.Should().Be(_mockResult.AdminChangeResultsViewModel.TlevelName);
 
             model.BackLink.Should().NotBeNull();

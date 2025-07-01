@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class ReviewChangeLevelTwoMaths {
+    public class ReviewChangesMathsStatus {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal ReviewChangeLevelTwoMaths() {
+        internal ReviewChangesMathsStatus() {
         }
         
         /// <summary>
@@ -39,8 +39,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.ReviewChangeLevelTwoMat" +
-                            "hs", typeof(ReviewChangeLevelTwoMaths).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.ReviewChangesMathsStatu" +
+                            "s", typeof(ReviewChangesMathsStatus).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -152,7 +152,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;b&gt;Level 2 Maths status updated&lt;/b&gt;.
+        ///   Looks up a localized string similar to &lt;b&gt;Level 2 maths status updated&lt;/b&gt;.
         /// </summary>
         public static string Message_Notification_Success {
             get {

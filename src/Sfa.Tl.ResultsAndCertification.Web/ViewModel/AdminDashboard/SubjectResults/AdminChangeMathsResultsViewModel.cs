@@ -20,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectRes
         public string StartYear { get; set; }
         public SubjectStatus? MathsStatus { get; set; }
 
-        [Required(ErrorMessageResourceType = typeof(AdminChangeLevelTwoMaths), ErrorMessageResourceName = "Validation_Message")]
+        [Required(ErrorMessageResourceType = typeof(AdminChangeMathsStatus), ErrorMessageResourceName = "Validation_Message")]
         public SubjectStatus? MathsStatusTo { get; set; }
 
         public bool IsLearnerRegisteredFourYearsAgo => DateTime.Now.Year - AcademicYear > 4;
@@ -28,42 +28,42 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectRes
         public SummaryItemModel SummaryLearner => new()
         {
             Id = "learner",
-            Title = AdminChangeLevelTwoMaths.Title_Learner_Text,
+            Title = AdminChangeMathsStatus.Title_Learner_Text,
             Value = LearnerName
         };
 
         public SummaryItemModel SummaryULN => new()
         {
             Id = "uln",
-            Title = AdminChangeLevelTwoMaths.Title_ULN_Text,
+            Title = AdminChangeMathsStatus.Title_ULN_Text,
             Value = Uln.ToString()
         };
 
         public SummaryItemModel SummaryProvider => new()
         {
             Id = "provider",
-            Title = AdminChangeLevelTwoMaths.Title_Provider_Text,
+            Title = AdminChangeMathsStatus.Title_Provider_Text,
             Value = Provider
         };
 
         public SummaryItemModel SummaryTlevel => new()
         {
             Id = "tlevel",
-            Title = AdminChangeLevelTwoMaths.Title_TLevel_Text,
+            Title = AdminChangeMathsStatus.Title_TLevel_Text,
             Value = TlevelName
         };
 
         public SummaryItemModel SummaryAcademicYear => new()
         {
             Id = "academicyear",
-            Title = AdminChangeLevelTwoMaths.Title_StartYear_Text,
+            Title = AdminChangeMathsStatus.Title_StartYear_Text,
             Value = StartYear
         };
 
         public SummaryItemModel SummaryMathsStatus => new()
         {
             Id = "mathsstatus",
-            Title = AdminChangeLevelTwoMaths.Title_Maths_Status,
+            Title = AdminChangeMathsStatus.Title_Maths_Status,
             Value = GetSubjectStatusDisplayText(MathsStatus)
         };
 
@@ -75,11 +75,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectRes
 
         public string GetSubjectStatusDisplayText(SubjectStatus? status) => status switch
         {
-            SubjectStatus.Achieved => AdminChangeLevelTwoMaths.Status_Achieved_Text,
-            SubjectStatus.NotAchieved => AdminChangeLevelTwoMaths.Status_NotAchieved_Text,
-            SubjectStatus.AchievedByLrs => AdminChangeLevelTwoMaths.Status_AchievedByLrs_Text,
-            SubjectStatus.NotAchievedByLrs => AdminChangeLevelTwoMaths.Status_NotAchievedByLrs_Text,
-            _ => AdminChangeLevelTwoMaths.Status_Not_Yet_Received_Text
+            SubjectStatus.Achieved => AdminChangeMathsStatus.Status_Achieved_Text,
+            SubjectStatus.NotAchieved => AdminChangeMathsStatus.Status_NotAchieved_Text,
+            SubjectStatus.AchievedByLrs => AdminChangeMathsStatus.Status_AchievedByLrs_Text,
+            SubjectStatus.NotAchievedByLrs => AdminChangeMathsStatus.Status_NotAchievedByLrs_Text,
+            _ => AdminChangeMathsStatus.Status_Not_Yet_Received_Text
         };
     }
 }

@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 MathsStatusTo = SubjectStatus.Achieved
             };
 
-            Controller.ModelState.AddModelError(ErrorKey, ReviewChangeLevelTwoMaths.Validation_Contact_Name_Blank_Text);
+            Controller.ModelState.AddModelError(ErrorKey, ReviewChangesMathsStatus.Validation_Contact_Name_Blank_Text);
             CacheService.GetAsync<AdminChangeMathsResultsViewModel>(CacheKey).Returns(_cacheModel);
         }
 

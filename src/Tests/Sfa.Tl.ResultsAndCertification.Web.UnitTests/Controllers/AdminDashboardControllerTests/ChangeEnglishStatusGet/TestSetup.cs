@@ -44,22 +44,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             model.TlevelName.Should().Be(changeResultsModel.TlevelName);
             model.EnglishStatus.Should().Be(changeResultsModel.EnglishStatus);
 
-            model.SummaryLearner.Title.Should().Be(AdminChangeLevelTwoEnglish.Title_Learner_Text);
+            model.SummaryLearner.Title.Should().Be(AdminChangeEnglishStatus.Title_Learner_Text);
             model.SummaryLearner.Value.Should().Be(changeResultsModel.LearnerName);
 
-            model.SummaryULN.Title.Should().Be(AdminChangeLevelTwoEnglish.Title_ULN_Text);
+            model.SummaryULN.Title.Should().Be(AdminChangeEnglishStatus.Title_ULN_Text);
             model.SummaryULN.Value.Should().Be(changeResultsModel.Uln.ToString());
 
-            model.SummaryProvider.Title.Should().Be(AdminChangeLevelTwoEnglish.Title_Provider_Text);
+            model.SummaryProvider.Title.Should().Be(AdminChangeEnglishStatus.Title_Provider_Text);
             model.SummaryProvider.Value.Should().Be(changeResultsModel.Provider);
 
-            model.SummaryTlevel.Title.Should().Be(AdminChangeLevelTwoEnglish.Title_TLevel_Text);
+            model.SummaryTlevel.Title.Should().Be(AdminChangeEnglishStatus.Title_TLevel_Text);
             model.SummaryTlevel.Value.Should().Be(changeResultsModel.TlevelName);
 
-            model.SummaryAcademicYear.Title.Should().Be(AdminChangeLevelTwoEnglish.Title_StartYear_Text);
+            model.SummaryAcademicYear.Title.Should().Be(AdminChangeEnglishStatus.Title_StartYear_Text);
             model.SummaryAcademicYear.Value.Should().Be(changeResultsModel.StartYear);
 
-            model.SummaryEnglishStatus.Title.Should().Be(AdminChangeLevelTwoEnglish.Title_English_Status);
+            model.SummaryEnglishStatus.Title.Should().Be(AdminChangeEnglishStatus.Title_English_Status);
             model.SummaryEnglishStatus.Value.Should().Be(changeResultsModel.GetSubjectStatusDisplayText(changeResultsModel.EnglishStatus));
 
             model.BackLink.Should().NotBeNull();

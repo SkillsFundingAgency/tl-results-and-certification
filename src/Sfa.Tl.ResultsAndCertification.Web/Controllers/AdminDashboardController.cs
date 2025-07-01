@@ -497,7 +497,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(nameof(AdminChangeLevelTwoMaths), model);
+                return View(nameof(AdminChangeMathsStatus), model);
             }
 
             // If "No" is selected, redirect back to learner record
@@ -565,7 +565,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 await _cacheService.SetAsync(CacheKey, new NotificationBannerModel
                 {
                     DisplayMessageBody = true,
-                    Message = ReviewChangeLevelTwoMaths.Message_Notification_Success,
+                    Message = ReviewChangesMathsStatus.Message_Notification_Success,
                     IsRawHtml = true,
                 }, CacheExpiryTime.XSmall);
 
@@ -616,7 +616,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(nameof(AdminChangeLevelTwoEnglish), model);
+                return View(nameof(AdminChangeEnglishStatus), model);
             }
 
             // If "No" is selected, redirect back to learner record
@@ -684,7 +684,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 await _cacheService.SetAsync(CacheKey, new NotificationBannerModel
                 {
                     DisplayMessageBody = true,
-                    Message = ReviewChangeLevelTwoEnglish.Message_Notification_Success,
+                    Message = ReviewChangesEnglishStatus.Message_Notification_Success,
                     IsRawHtml = true,
                 }, CacheExpiryTime.XSmall);
 

@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 EnglishStatusTo = SubjectStatus.Achieved
             };
 
-            Controller.ModelState.AddModelError(ErrorKey, ReviewChangeLevelTwoEnglish.Validation_Contact_Name_Blank_Text);
+            Controller.ModelState.AddModelError(ErrorKey, ReviewChangesEnglishStatus.Validation_Contact_Name_Blank_Text);
             CacheService.GetAsync<AdminChangeEnglishResultsViewModel>(CacheKey).Returns(_cacheModel);
         }
 

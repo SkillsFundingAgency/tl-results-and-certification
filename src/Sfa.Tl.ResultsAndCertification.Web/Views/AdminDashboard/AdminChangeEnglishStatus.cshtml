@@ -5,7 +5,7 @@
 @using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectResults
 
 @{
-    ViewData["Title"] = AdminChangeLevelTwoEnglish.Page_Title;
+    ViewData["Title"] = AdminChangeEnglishStatus.Page_Title;
 }
 
 @section NavigationBar
@@ -28,12 +28,12 @@
 
             <div class="record-header">
                 <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
-                    @AdminChangeLevelTwoEnglish.Heading_Change_Level_Two_English
+                    @AdminChangeEnglishStatus.Heading_Change_Level_Two_English
                 </h1>
             </div>
             <partial name="_ValidationSummary" />
             <h2 class="govuk-heading-m">
-            @AdminChangeLevelTwoEnglish.Heading_Personal_Details
+            @AdminChangeEnglishStatus.Heading_Personal_Details
             </h2>
 
             <dl class="govuk-summary-list govuk-!-margin-bottom-4">
@@ -48,26 +48,26 @@
             <div class="govuk-form-group govuk-!-margin-top-8" sfa-validation-for="EnglishStatusTo" sfa-validation-class="govuk-form-group--error">
                 <fieldset class="govuk-fieldset">
                     <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
-                        <h1 class="govuk-fieldset__heading">@string.Format(AdminChangeLevelTwoEnglish.Heading_Has_Learner_Achieved_Level2_Or_Equivalent, Model.LearnerName)</h1>
+                        <h1 class="govuk-fieldset__heading">@string.Format(AdminChangeEnglishStatus.Heading_Has_Learner_Achieved_Level2_Or_Equivalent, Model.LearnerName)</h1>
                     </legend>
                     <div class="govuk-radios govuk-radios--inline" data-module="govuk-radios">
                         <span sfa-validation-for="EnglishStatusTo"></span>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="isachieved" asp-for="EnglishStatusTo" type="radio" value="@((int)SubjectStatus.Achieved)">
                             <label class="govuk-label govuk-radios__label" for="isachieved">
-                                @AdminChangeLevelTwoEnglish.Option_Yes
+                                @AdminChangeEnglishStatus.Option_Yes
                             </label>
                         </div>
                         <div class="govuk-radios__item">
                             <input class="govuk-radios__input" id="isachieved-no" asp-for="EnglishStatusTo" type="radio" value="@((int)SubjectStatus.NotAchieved)">
                             <label class="govuk-label govuk-radios__label" for="isachieved-no">
-                                @AdminChangeLevelTwoEnglish.Option_No
+                                @AdminChangeEnglishStatus.Option_No
                             </label>
                         </div>
                     </div>
                 </fieldset>
             </div>
-            <button id="continueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@AdminChangeLevelTwoEnglish.Button_Continue</button>
+            <button id="continueButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@AdminChangeEnglishStatus.Button_Continue</button>
         </form>
     </div>
 </div>
