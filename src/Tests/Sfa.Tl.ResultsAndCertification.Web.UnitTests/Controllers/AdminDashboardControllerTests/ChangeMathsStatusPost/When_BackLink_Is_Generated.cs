@@ -7,9 +7,9 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectResults
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.ChangeEnglishStatusPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.ChangeMathsStatusPost
 {
-    public class When_No_Selected : TestSetup
+    public class When_BackLink_Is_Generated : TestSetup
     {
         private const int ExpectedRegistrationPathwayId = 1;
         private const string PathwayIdRouteName = Constants.PathwayId;
@@ -21,19 +21,19 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
 
         public async override Task When()
         {
-            Result = await Controller.AdminChangeEnglishStatusAsync(ViewModel);
+            Result = await Controller.AdminChangeMathsStatusAsync(ViewModel);
         }
 
         [Fact]
         public void Then_No_Relevant_Methods_AreCalled()
         {
-            AdminDashboardLoader.DidNotReceive().GetAdminLearnerRecordAsync<AdminChangeEnglishResultsViewModel>(Arg.Any<int>());
+            AdminDashboardLoader.DidNotReceive().GetAdminLearnerRecordAsync<AdminChangeMathsResultsViewModel>(Arg.Any<int>());
 
-            CacheService.DidNotReceive().SetAsync(Arg.Any<string>(), Arg.Any<AdminChangeEnglishResultsViewModel>(), Arg.Any<CacheExpiryTime>());
+            CacheService.DidNotReceive().SetAsync(Arg.Any<string>(), Arg.Any<AdminChangeMathsResultsViewModel>(), Arg.Any<CacheExpiryTime>());
         }
 
         [Fact]
-        public void Then_Redirected_To_BackLink()
+        public void Then_BackLink_Should_Generate_Correctly()
         {
             var redirectToRouteResult = Result.Should().BeOfType<RedirectToRouteResult>().Which;
             redirectToRouteResult.RouteName.Should().Be(RouteConstants.AdminLearnerRecord);
