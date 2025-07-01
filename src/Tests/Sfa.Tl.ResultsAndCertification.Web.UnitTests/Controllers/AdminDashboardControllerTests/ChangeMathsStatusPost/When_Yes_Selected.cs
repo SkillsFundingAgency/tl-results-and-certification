@@ -7,9 +7,9 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectResults;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.ChangeLevelTwoMathsPost
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.ChangeMathsStatusPost
 {
-    public class When_Yes_Selected_Lrs : TestSetup
+    public class When_Yes_Selected : TestSetup
     {
         private const int ExpectedRegistrationPathwayId = 1;
         private AdminChangeMathsResultsViewModel _originalViewModel;
@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             ViewModel = CreateViewModel(ExpectedRegistrationPathwayId, null, SubjectStatus.Achieved);
 
             // Set up the original view model that will be returned by the loader
-            _originalViewModel = CreateViewModel(ExpectedRegistrationPathwayId, SubjectStatus.NotAchievedByLrs, null);
+            _originalViewModel = CreateViewModel(ExpectedRegistrationPathwayId, SubjectStatus.NotAchieved, null);
 
             AdminDashboardLoader
                 .GetAdminLearnerRecordAsync<AdminChangeMathsResultsViewModel>(ExpectedRegistrationPathwayId)
@@ -37,8 +37,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 .Received(1)
                 .SetAsync(Arg.Is<string>(s => s.Contains(CacheConstants.AdminDashboardCacheKey)),
                          Arg.Is<AdminChangeMathsResultsViewModel>(m =>
-                             m.MathsStatus == SubjectStatus.NotAchievedByLrs &&
-                             m.MathsStatusTo == SubjectStatus.AchievedByLrs),
+                             m.MathsStatus == SubjectStatus.NotAchieved &&
+                             m.MathsStatusTo == SubjectStatus.Achieved),
                          Arg.Any<CacheExpiryTime>());
         }
 

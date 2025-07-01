@@ -6,7 +6,7 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectResults
 using System.Threading.Tasks;
 using Xunit;
 
-namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.ChangeLevelTwoMathsClearGet
+namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboardControllerTests.ChangeMathsStatusClearGet
 {
     public class When_Called : AdminDashboardControllerTestBase
     {
