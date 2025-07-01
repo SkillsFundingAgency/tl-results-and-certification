@@ -46,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
         public void Then_Redirected_To_Review_Page()
         {
             var redirectToRouteResult = Result.Should().BeOfType<RedirectToRouteResult>().Which;
-            redirectToRouteResult.RouteName.Should().Be(RouteConstants.AdminReviewChangesEnglishSubject);
+            redirectToRouteResult.RouteName.Should().Be(RouteConstants.AdminReviewChangesEnglishStatus);
             redirectToRouteResult.RouteValues.Should().ContainKey("pathwayId");
             redirectToRouteResult.RouteValues["pathwayId"].Should().Be(ExpectedRegistrationPathwayId);
         }

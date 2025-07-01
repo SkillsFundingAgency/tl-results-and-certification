@@ -500,7 +500,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(nameof(AdminChangeMathsStatus), model);
             }
 
-            // If "No" is selected, redirect back to learner record
             if (model.MathsStatusTo == SubjectStatus.NotAchieved || model.MathsStatusTo == SubjectStatus.NotAchievedByLrs)
             {
                 return RedirectToRoute(model.BackLink.RouteName, model.BackLink.RouteAttributes);
@@ -518,11 +517,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             await _cacheService.SetAsync(CacheKey, model);
-            return RedirectToRoute(RouteConstants.AdminReviewChangesMathsSubject, new { pathwayId = model.RegistrationPathwayId });
+            return RedirectToRoute(RouteConstants.AdminReviewChangesMathsStatus, new { pathwayId = model.RegistrationPathwayId });
         }
 
         [HttpGet]
-        [Route("admin/review-changes-maths-status/{pathwayId}", Name = RouteConstants.AdminReviewChangesMathsSubject)]
+        [Route("admin/review-changes-maths-status/{pathwayId}", Name = RouteConstants.AdminReviewChangesMathsStatus)]
         public async Task<IActionResult> AdminReviewChangesMathsStatusAsync(int pathwayId)
         {
             AdminReviewChangesMathsSubjectViewModel viewModel = new();
@@ -541,7 +540,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("admin/submit-review-changes-maths-status", Name = RouteConstants.SubmitReviewChangesMathsSubject)]
+        [Route("admin/submit-review-changes-maths-status", Name = RouteConstants.SubmitReviewChangesMathsStatus)]
         public async Task<IActionResult> AdminReviewChangesMathsStatusAsync(AdminReviewChangesMathsSubjectViewModel model)
         {
             var cachedModel = await _cacheService.GetAsync<AdminChangeMathsResultsViewModel>(CacheKey);
@@ -619,7 +618,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(nameof(AdminChangeEnglishStatus), model);
             }
 
-            // If "No" is selected, redirect back to learner record
             if (model.EnglishStatusTo == SubjectStatus.NotAchieved || model.EnglishStatusTo == SubjectStatus.NotAchievedByLrs)
             {
                 return RedirectToRoute(model.BackLink.RouteName, model.BackLink.RouteAttributes);
@@ -637,11 +635,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             await _cacheService.SetAsync(CacheKey, model);
-            return RedirectToRoute(RouteConstants.AdminReviewChangesEnglishSubject, new { pathwayId = model.RegistrationPathwayId });
+            return RedirectToRoute(RouteConstants.AdminReviewChangesEnglishStatus, new { pathwayId = model.RegistrationPathwayId });
         }
 
         [HttpGet]
-        [Route("admin/review-changes-english-status/{pathwayId}", Name = RouteConstants.AdminReviewChangesEnglishSubject)]
+        [Route("admin/review-changes-english-status/{pathwayId}", Name = RouteConstants.AdminReviewChangesEnglishStatus)]
         public async Task<IActionResult> AdminReviewChangesEnglishStatusAsync(int pathwayId)
         {
             AdminReviewChangesEnglishSubjectViewModel viewModel = new();
@@ -660,7 +658,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpPost]
-        [Route("admin/submit-review-changes-english-status", Name = RouteConstants.SubmitReviewChangesEnglishSubject)]
+        [Route("admin/submit-review-changes-english-status", Name = RouteConstants.SubmitReviewChangesEnglishStatus)]
         public async Task<IActionResult> AdminReviewChangesEnglishStatusAsync(AdminReviewChangesEnglishSubjectViewModel model)
         {
             var cachedModel = await _cacheService.GetAsync<AdminChangeEnglishResultsViewModel>(CacheKey);

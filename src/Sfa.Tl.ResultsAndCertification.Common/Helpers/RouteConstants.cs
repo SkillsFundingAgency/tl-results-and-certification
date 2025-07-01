@@ -452,14 +452,14 @@
         public const string AdminChangeMathsStatusClear = "AdminChangeMathsStatusClear";
         public const string AdminChangeMathsStatus = "AdminChangeMathsStatus";
         public const string SubmitAdminChangeMathsStatus = "SubmitAdminChangeMathsStatus";
-        public const string AdminReviewChangesMathsSubject = "AdminReviewChangesMathsSubject";
-        public const string SubmitReviewChangesMathsSubject = "SubmitReviewChangesMathsSubject";
+        public const string AdminReviewChangesMathsStatus = "AdminReviewChangesMathsStatus";
+        public const string SubmitReviewChangesMathsStatus = "SubmitReviewChangesMathsStatus";
 
         public const string AdminChangeEnglishStatusClear = "AdminChangeEnglishStatusClear";
         public const string AdminChangeEnglishStatus = "AdminChangeEnglishStatus";
         public const string SubmitAdminChangeEnglishStatus = "SubmitAdminChangeEnglishStatus";
-        public const string AdminReviewChangesEnglishSubject = "AdminReviewChangesEnglishSubject";
-        public const string SubmitReviewChangesEnglishSubject = "SubmitReviewChangesEnglishSubject";
+        public const string AdminReviewChangesEnglishStatus = "AdminReviewChangesEnglishStatus";
+        public const string SubmitReviewChangesEnglishStatus = "SubmitReviewChangesEnglishStatus";
 
         public const string RemoveAssessmentEntryCoreClear = "RemoveAssessmentEntryCoreClear";
         public const string RemoveAssessmentEntryCore = "RemoveAssessmentEntryCore";
