@@ -1,5 +1,6 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Web.Utilities.CustomValidations;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectsSt
         [Required(ErrorMessageResourceType = typeof(ReviewChangesMathsStatus), ErrorMessageResourceName = "Validation_Contact_Name_Blank_Text")]
         public string ContactName { get; set; }
 
+        [DateValidator(Property = nameof(RequestDate), ErrorResourceType = typeof(ReviewChangesMathsStatus))]
         public string RequestDate => $"{Year}/{Month}/{Day}";
 
         public string Day { get; set; }
