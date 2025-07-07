@@ -42,5 +42,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<AdminViewChangeRecordViewModel> GetAdminViewChangePathwayAppealOutcomeRecord(int changeLogId);
 
         Task<AdminViewChangeRecordViewModel> GetAdminViewChangeSpecialismAppealOutcomeRecord(int changeLogId);
+
+        Task<AdminViewChangeRecordViewModel> GetAdminViewChangeMathsStatusRecord(int changeLogId);
+
+        Task<AdminViewChangeRecordViewModel> GetAdminViewChangeEnglishStatusRecord(int changeLogId);
+
     }
 }

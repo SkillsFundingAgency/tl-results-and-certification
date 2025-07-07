@@ -535,8 +535,8 @@
         public const string AdminViewOpenSpecialismAppealRecord = "AdminViewOpenSpecialismAppealRecord";
         public const string AdminViewPathwayAppealOutcomeRecord = "AdminViewPathwayAppealOutcomeRecord";
         public const string AdminViewSpecialismAppealOutcomeRecord = "AdminViewSpecialismAppealOutcomeRecord";
-
-
+        public const string AdminViewChangeMathsStatusRecord = "AdminViewChangeMathsStatusRecord";
+        public const string AdminViewChangeEnglishStatusRecord = "AdminViewChangeEnglishStatusRecord";
 
         #endregion
 

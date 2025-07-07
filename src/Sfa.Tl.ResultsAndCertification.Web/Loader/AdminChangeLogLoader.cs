@@ -159,5 +159,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             var changeLogRecord = await _internalApiClient.GetAdminChangeLogRecordAsync(changeLogId);
             return _mapper.Map<AdminViewChangeRecordSpecialismAppealOutcomeViewModel>(changeLogRecord);
         }
+
+        public async Task<AdminViewChangeRecordViewModel> GetAdminViewChangeMathsStatusRecord(int changeLogId)
+        {
+            var changeLogRecord = await _internalApiClient.GetAdminChangeLogRecordAsync(changeLogId);
+            return _mapper.Map<AdminViewChangeRecordMathsStatusViewModel>(changeLogRecord);
+        }
+
+        public async Task<AdminViewChangeRecordViewModel> GetAdminViewChangeEnglishStatusRecord(int changeLogId)
+        {
+            var changeLogRecord = await _internalApiClient.GetAdminChangeLogRecordAsync(changeLogId);
+            return _mapper.Map<AdminViewChangeRecordEnglishStatusViewModel>(changeLogRecord);
+        }
     }
 }
