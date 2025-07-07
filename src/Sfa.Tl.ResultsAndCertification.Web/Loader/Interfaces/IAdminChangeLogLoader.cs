@@ -46,6 +46,5 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         Task<AdminViewChangeRecordViewModel> GetAdminViewChangeMathsStatusRecord(int changeLogId);
 
         Task<AdminViewChangeRecordViewModel> GetAdminViewChangeEnglishStatusRecord(int changeLogId);
-
     }
 }

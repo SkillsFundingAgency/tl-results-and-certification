@@ -261,9 +261,6 @@
   <data name="Title_Who_Asked_For_This_Change" xml:space="preserve">
     <value>Who asked for this change?</value>
   </data>
-  <data name="Heading_Change_Record" xml:space="preserve">
-    <value>Change record for {0}</value>
-  </data>
   <data name="Title_Maths_Status" xml:space="preserve">
     <value>Maths status</value>
   </data>
