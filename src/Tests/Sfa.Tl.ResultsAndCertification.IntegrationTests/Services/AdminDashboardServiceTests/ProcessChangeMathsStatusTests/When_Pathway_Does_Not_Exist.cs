@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
         {
             var changeLog = await DbContext.ChangeLog.SingleOrDefaultAsync(
                 c => c.TqRegistrationPathwayId == NonExistentPathwayId &&
-                     c.ChangeType == ChangeType.SubjectStatus);
+                     c.ChangeType == ChangeType.MathsStatus);
 
             changeLog.Should().BeNull();
         }
