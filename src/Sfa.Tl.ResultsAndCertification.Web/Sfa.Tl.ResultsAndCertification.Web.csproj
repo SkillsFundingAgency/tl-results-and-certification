@@ -5,6 +5,7 @@
 	</PropertyGroup>
 
 	<ItemGroup>
+		<Content Remove="Views\AdminChangeLog\AdminViewChangeRecordEnglishStatus.cshtml" />
 		<Content Remove="Views\AdminDashboard\AdminChangeStartYear.cshtml" />
 		<Content Remove="__azurite_db_blob_extent__.json" />
 		<Content Remove="__azurite_db_blob__.json" />
@@ -12,6 +13,10 @@
 
 	<ItemGroup>
 		<Folder Include="Frontend\src\stylesheets\css\" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <None Include="Views\AdminChangeLog\AdminViewChangeRecordEnglishStatus.cshtml" />
 	</ItemGroup>
 
 	<ItemGroup>
