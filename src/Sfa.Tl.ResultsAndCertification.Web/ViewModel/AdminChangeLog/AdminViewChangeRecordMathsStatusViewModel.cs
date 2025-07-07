@@ -1,6 +1,6 @@
-﻿using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog;
-using Sfa.Tl.ResultsAndCertification.Web.Helpers;
+using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog
@@ -13,8 +13,17 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog
         {
             Id = AdminViewChangeRecord.Summary_Maths_Status_Id,
             Title = AdminViewChangeRecord.Title_Maths_Status,
-            Value = ChangeMathsStatusRequest.MathsStatusFrom.ToDisplayText(),
-            Value2 = ChangeMathsStatusRequest.MathsStatusTo.ToDisplayText()
+            Value = GetSubjectStatusDisplayText(ChangeMathsStatusRequest.MathsStatusFrom),
+            Value2 = GetSubjectStatusDisplayText(ChangeMathsStatusRequest.MathsStatusTo)
+        };
+
+        private static string GetSubjectStatusDisplayText(SubjectStatus? status) => status switch
+        {
+            SubjectStatus.Achieved => AdminChangeMathsStatus.Status_Achieved_Text,
+            SubjectStatus.NotAchieved => AdminChangeMathsStatus.Status_NotAchieved_Text,
+            SubjectStatus.AchievedByLrs => AdminChangeMathsStatus.Status_AchievedByLrs_Text,
+            SubjectStatus.NotAchievedByLrs => AdminChangeMathsStatus.Status_NotAchievedByLrs_Text,
+            _ => AdminChangeMathsStatus.Status_Not_Yet_Received_Text
         };
     };
 }

@@ -4,7 +4,6 @@ using Newtonsoft.Json;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog;
 using System.Threading.Tasks;
