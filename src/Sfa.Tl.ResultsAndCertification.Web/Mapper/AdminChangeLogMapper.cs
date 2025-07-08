@@ -202,6 +202,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.DateAndTimeOfChange, opts => opts.MapFrom(s => FormatDateTime2(s.DateAndTimeOfChange)))
                 .ForMember(d => d.ChangeDateOfRequest, opts => opts.MapFrom(s => s.ChangeDateOfRequest.ToDobFormat()))
                 .ForMember(d => d.AppealOutcomeDetails, opts => opts.MapFrom(s => GetDetails<SpecialismAppealOutcomeDetails>(s.ChangeDetails)));
+
+            CreateMap<AdminChangeLogRecord, AdminViewChangeRecordMathsStatusViewModel>()
+                .ForMember(d => d.Learner, opts => opts.MapFrom(s => $"{s.FirstName} {s.LastName}"))
+                .ForMember(d => d.DateAndTimeOfChange, opts => opts.MapFrom(s => FormatDateTime2(s.DateAndTimeOfChange)))
+                .ForMember(d => d.ChangeDateOfRequest, opts => opts.MapFrom(s => s.ChangeDateOfRequest.ToDobFormat()))
+                .ForMember(d => d.ChangeMathsStatusRequest, opts => opts.MapFrom(s => GetDetails<ReviewChangeMathsStatusRequest>(s.ChangeDetails)));
+
+            CreateMap<AdminChangeLogRecord, AdminViewChangeRecordEnglishStatusViewModel>()
+                .ForMember(d => d.Learner, opts => opts.MapFrom(s => $"{s.FirstName} {s.LastName}"))
+                .ForMember(d => d.DateAndTimeOfChange, opts => opts.MapFrom(s => FormatDateTime2(s.DateAndTimeOfChange)))
+                .ForMember(d => d.ChangeDateOfRequest, opts => opts.MapFrom(s => s.ChangeDateOfRequest.ToDobFormat()))
+                .ForMember(d => d.ChangeEnglishStatusRequest, opts => opts.MapFrom(s => GetDetails<ReviewChangeEnglishStatusRequest>(s.ChangeDetails)));
         }
 
         private T GetDetails<T>(string details)
@@ -293,6 +305,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             ChangeType.OpenSpecialismAppeal => RouteConstants.AdminViewOpenSpecialismAppealRecord,
             ChangeType.PathwayAppealOutcome => RouteConstants.AdminViewPathwayAppealOutcomeRecord,
             ChangeType.SpecialismAppealOutcome => RouteConstants.AdminViewSpecialismAppealOutcomeRecord,
+            ChangeType.MathsStatus => RouteConstants.AdminViewChangeMathsStatusRecord,
+            ChangeType.EnglishStatus => RouteConstants.AdminViewChangeEnglishStatusRecord,
             _ => string.Empty
         };
     }

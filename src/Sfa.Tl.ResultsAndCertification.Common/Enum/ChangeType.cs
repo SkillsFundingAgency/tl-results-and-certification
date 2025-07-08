@@ -20,6 +20,7 @@
         OpenSpecialismAppeal = 16,
         PathwayAppealOutcome = 17,
         SpecialismAppealOutcome = 18,
-        SubjectStatus = 19
+        MathsStatus = 19,
+        EnglishStatus = 20
     }
 }
