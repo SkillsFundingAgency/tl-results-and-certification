@@ -15,16 +15,18 @@
 
         <partial name="Partials/_viewRecordLogDetails.cshtml" />
 
-        <h2 class="govuk-heading-m">@AdminViewChangeRecord.Title_Change_Summary</h2>
-        <dl class="govuk-summary-list govuk-!-margin-bottom-6">
-            <div class="govuk-summary-list__row">
-                <dt class="govuk-summary-list__key">@AdminViewChangeRecord.Title_Change</dt>
-                <dt class="govuk-summary-list__key">@AdminViewChangeRecord.Title_From</dt>
-                <dt class="govuk-summary-list__key">@AdminViewChangeRecord.Title_To</dt>
-                <dt class="govuk-summary-list__key"></dt>
-            </div>
-            <vc:summary-item model=Model.SummaryEnglishStatus></vc:summary-item>
-        </dl>
+        <div class="govuk-!-margin-top-8">
+            <h2 class="govuk-heading-m">@AdminViewChangeRecord.Title_Change_Summary</h2>
+            <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row">
+                    <dt class="govuk-summary-list__key">@AdminViewChangeRecord.Title_Change</dt>
+                    <dt class="govuk-summary-list__key">@AdminViewChangeRecord.Title_From</dt>
+                    <dt class="govuk-summary-list__key">@AdminViewChangeRecord.Title_To</dt>
+                    <dt class="govuk-summary-list__key"></dt>
+                </div>
+                <vc:summary-item model=Model.SummaryEnglishStatus></vc:summary-item>
+            </dl>
+        </div>
 
         <partial name="Partials/_viewRecordChangeRequestedDetails.cshtml" />
     </div>
