@@ -38,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 .SetAsync(Arg.Is<string>(s => s.Contains(CacheConstants.AdminDashboardCacheKey)),
                          Arg.Is<AdminChangeMathsStatusViewModel>(m =>
                              m.MathsStatus == SubjectStatus.NotAchievedByLrs &&
-                             m.MathsStatusTo == SubjectStatus.AchievedByLrs),
+                             m.MathsStatusTo == SubjectStatus.Achieved),
                          Arg.Any<CacheExpiryTime>());
         }
 
