@@ -511,9 +511,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 // Keep the original MathsStatus for display in the "From" column
                 model.MathsStatus = originalViewModel.MathsStatus;
 
-                bool isFromLrs = model.MathsStatus == SubjectStatus.NotAchievedByLrs;
-
-                model.MathsStatusTo = isFromLrs ? SubjectStatus.AchievedByLrs : SubjectStatus.Achieved;
+                model.MathsStatusTo = SubjectStatus.Achieved;
             }
 
             await _cacheService.SetAsync(CacheKey, model);
@@ -629,9 +627,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 // Keep the original EnglishStatus for display in the "From" column
                 model.EnglishStatus = originalViewModel.EnglishStatus;
 
-                bool isFromLrs = model.EnglishStatus == SubjectStatus.NotAchievedByLrs;
-
-                model.EnglishStatusTo = isFromLrs ? SubjectStatus.AchievedByLrs : SubjectStatus.Achieved;
+                model.EnglishStatusTo = SubjectStatus.Achieved;
             }
 
             await _cacheService.SetAsync(CacheKey, model);
