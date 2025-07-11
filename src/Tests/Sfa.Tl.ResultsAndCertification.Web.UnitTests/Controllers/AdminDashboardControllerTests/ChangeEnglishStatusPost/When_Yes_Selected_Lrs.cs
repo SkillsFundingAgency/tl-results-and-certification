@@ -38,7 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 .SetAsync(Arg.Is<string>(s => s.Contains(CacheConstants.AdminDashboardCacheKey)),
                          Arg.Is<AdminChangeEnglishStatusViewModel>(m =>
                              m.EnglishStatus == SubjectStatus.NotAchievedByLrs &&
-                             m.EnglishStatusTo == SubjectStatus.AchievedByLrs),
+                             m.EnglishStatusTo == SubjectStatus.Achieved),
                          Arg.Any<CacheExpiryTime>());
         }
 
