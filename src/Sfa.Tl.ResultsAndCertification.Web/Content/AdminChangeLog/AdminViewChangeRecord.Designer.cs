@@ -295,6 +295,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to englishstatus.
+        /// </summary>
+        public static string Summary_English_Status_Id {
+            get {
+                return ResourceManager.GetString("Summary_English_Status_Id", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to examperiod.
         /// </summary>
         public static string Summary_Exam_Period_Id {
@@ -345,6 +354,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog {
         public static string Summary_Learner_Text {
             get {
                 return ResourceManager.GetString("Summary_Learner_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to mathsstatus.
+        /// </summary>
+        public static string Summary_Maths_Status_Id {
+            get {
+                return ResourceManager.GetString("Summary_Maths_Status_Id", resourceCulture);
             }
         }
         
@@ -403,6 +421,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to English status.
+        /// </summary>
+        public static string Title_English_Status {
+            get {
+                return ResourceManager.GetString("Title_English_Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to From.
         /// </summary>
         public static string Title_From {
@@ -426,6 +453,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminChangeLog {
         public static string Title_Log_Details {
             get {
                 return ResourceManager.GetString("Title_Log_Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Maths status.
+        /// </summary>
+        public static string Title_Maths_Status {
+            get {
+                return ResourceManager.GetString("Title_Maths_Status", resourceCulture);
             }
         }
         

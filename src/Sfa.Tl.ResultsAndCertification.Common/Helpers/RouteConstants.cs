@@ -448,6 +448,19 @@
         public const string SubmitAdminIndustryPlacementSpecialConsiderationReasons = "SubmitAdminIndustryPlacementSpecialConsiderationReasons";
         public const string AdminReviewChangesIndustryPlacement = "AdminReviewChangesIndustryPlacement";
         public const string SubmitReviewChangesIndustryPlacement = "SubmitReviewChangesIndustryPlacement";
+       
+        public const string AdminChangeMathsStatusClear = "AdminChangeMathsStatusClear";
+        public const string AdminChangeMathsStatus = "AdminChangeMathsStatus";
+        public const string SubmitAdminChangeMathsStatus = "SubmitAdminChangeMathsStatus";
+        public const string AdminReviewChangesMathsStatus = "AdminReviewChangesMathsStatus";
+        public const string SubmitReviewChangesMathsStatus = "SubmitReviewChangesMathsStatus";
+
+        public const string AdminChangeEnglishStatusClear = "AdminChangeEnglishStatusClear";
+        public const string AdminChangeEnglishStatus = "AdminChangeEnglishStatus";
+        public const string SubmitAdminChangeEnglishStatus = "SubmitAdminChangeEnglishStatus";
+        public const string AdminReviewChangesEnglishStatus = "AdminReviewChangesEnglishStatus";
+        public const string SubmitReviewChangesEnglishStatus = "SubmitReviewChangesEnglishStatus";
+
         public const string RemoveAssessmentEntryCoreClear = "RemoveAssessmentEntryCoreClear";
         public const string RemoveAssessmentEntryCore = "RemoveAssessmentEntryCore";
         public const string SubmitRemoveAssessmentEntryCore = "SubmitRemoveAssessmentEntryCore";
@@ -522,8 +535,8 @@
         public const string AdminViewOpenSpecialismAppealRecord = "AdminViewOpenSpecialismAppealRecord";
         public const string AdminViewPathwayAppealOutcomeRecord = "AdminViewPathwayAppealOutcomeRecord";
         public const string AdminViewSpecialismAppealOutcomeRecord = "AdminViewSpecialismAppealOutcomeRecord";
-
-
+        public const string AdminViewChangeMathsStatusRecord = "AdminViewChangeMathsStatusRecord";
+        public const string AdminViewChangeEnglishStatusRecord = "AdminViewChangeEnglishStatusRecord";
 
         #endregion
 

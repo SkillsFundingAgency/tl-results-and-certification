@@ -19,6 +19,7 @@
         public const int DownloadRegistrationErrorsFailed = 1023;
         public const int EmailTemplateNotFound = 1030;
         public const int EmailSendFailed = 1031;
+        public const int EmailRecipientsNotFound = 1032;
 
         // Tlevel events
         public const int TlevelsNotFound = 2001;
