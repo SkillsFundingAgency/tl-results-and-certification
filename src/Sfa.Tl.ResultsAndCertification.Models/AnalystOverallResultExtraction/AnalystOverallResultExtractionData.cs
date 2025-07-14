@@ -60,5 +60,11 @@ namespace Sfa.Tl.ResultsAndCertification.Models.AnalystOverallResultExtraction
 
         [DisplayName(AnalystOverallResultExtractionHeader.OverallResult)]
         public string OverallResult { get; set; }
+
+        [DisplayName(AnalystOverallResultExtractionHeader.CreatedOn)]
+        [Format("dd-MM-yyyy")]
+        public DateOnly CreatedOn { get; set; }
+
+
     }
 }
