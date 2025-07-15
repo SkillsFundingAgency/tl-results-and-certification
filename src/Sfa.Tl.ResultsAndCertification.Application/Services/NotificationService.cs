@@ -40,10 +40,47 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 await _notificationClient.SendEmailAsync(emailAddress: toAddress, templateId: notificationTemplate.TemplateId.ToString(), personalisation: personalisationTokens);
                 hasEmailSent = true;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.LogError(LogEvent.EmailSendFailed, ex, $"Error sending notification email, templateName: {notificationTemplate.TemplateName}, templateId: {notificationTemplate.TemplateId} to {toAddress}");
             }
+            return hasEmailSent;
+        }
+
+        public async Task<bool> SendEmailNotificationAsync(string templateName, List<string> recipients, IDictionary<string, dynamic> tokens)
+        {
+            if (recipients == null || !recipients.Any())
+            {
+                _logger.LogWarning(LogEvent.EmailRecipientsNotFound, $"No recipients found for notification email template {templateName}");
+                return false;
+            }
+
+            var hasEmailSent = false;
+            var notificationTemplate = await _notificationTemplateRepository.GetFirstOrDefaultAsync(t => t.TemplateName == templateName);
+            if (notificationTemplate == null)
+            {
+                _logger.LogWarning(LogEvent.EmailTemplateNotFound, $"Notification email template {templateName} not found");
+                return hasEmailSent;
+            }
+
+            var personalisationTokens = tokens.ToDictionary(t => t.Key, t => t.Value);
+
+            List<Task> emailTasks = new();
+
+            foreach (var recipient in recipients)
+            {
+                try
+                {
+                    emailTasks.Add(_notificationClient.SendEmailAsync(emailAddress: recipient, templateId: notificationTemplate.TemplateId.ToString(), personalisation: personalisationTokens));
+                }
+                catch (Exception ex)
+                {
+                    _logger.LogError(LogEvent.EmailSendFailed, ex, $"Error sending notification email, templateName: {notificationTemplate.TemplateName}, templateId: {notificationTemplate.TemplateId} to {recipient}");
+                }
+            }
+            await Task.WhenAll(emailTasks);
+            hasEmailSent = true;
+
             return hasEmailSent;
         }
     }

@@ -213,6 +213,9 @@
   <data name="Summary_Learner_Text" xml:space="preserve">
     <value>Learner</value>
   </data>
+  <data name="Summary_Maths_Status_Id" xml:space="preserve">
+    <value>mathsstatus</value>
+  </data>
   <data name="Summary_Selected_Grade_Id" xml:space="preserve">
     <value>selectedgradecode</value>
   </data>
@@ -257,5 +260,14 @@
   </data>
   <data name="Title_Who_Asked_For_This_Change" xml:space="preserve">
     <value>Who asked for this change?</value>
+  </data>
+  <data name="Title_Maths_Status" xml:space="preserve">
+    <value>Maths status</value>
+  </data>
+  <data name="Summary_English_Status_Id" xml:space="preserve">
+    <value>englishstatus</value>
+  </data>
+  <data name="Title_English_Status" xml:space="preserve">
+    <value>English status</value>
   </data>
 </root>
