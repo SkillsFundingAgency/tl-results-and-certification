@@ -37,6 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.SpecialismResult, opts => opts.MapFrom(s => GetSpecialismResultAwarded(s)))
                 .ForMember(d => d.IndustryPlacementStatus, opts => opts.ConvertUsing(new IndustryPlacementStatusStringConverter(), p => p.IndustryPlacements))
                 .ForMember(d => d.OverallResult, opts => opts.MapFrom(s => GetResultAwarded(s)))
+                .ForMember(d => d.CreatedOn, opts => opts.MapFrom(s => GetCreatedOnDate(s)))
                 .AfterMap<AnalystOverallResultExtractionEmptyToNullTextAction>();
         }
 
@@ -44,6 +45,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
         {
             OverallResult overallResult = GetOverallResult(registrationPathway);
             return overallResult != null ? overallResult.ResultAwarded : string.Empty;
+        }
+
+        private static DateOnly GetCreatedOnDate(TqRegistrationPathway registrationPathway)
+        {
+            OverallResult overallResult = GetOverallResult(registrationPathway);
+            return overallResult != null ? DateOnly.FromDateTime(overallResult.CreatedOn) : default;
         }
 
         private static string GetSpecialismResultAwarded(TqRegistrationPathway registrationPathway)
