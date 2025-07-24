@@ -20,5 +20,6 @@
         public const string SpecialismResult = "Specialism result";
         public const string IndustryPlacementStatus = "Industry placement status";
         public const string OverallResult = "Overall result";
+        public const string CreatedOn = "Modified On";
     }
 }
