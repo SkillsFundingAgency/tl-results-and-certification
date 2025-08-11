@@ -10,7 +10,9 @@ USING (VALUES
   (3,2,11),  
   (4,2,16), 
   (5,3,14), 
-  (6,3,15)
+  (6,3,15),
+  (7,4,83),
+  (8,4,84)
   )
   AS Source ([Id], [TlDualSpecialismId], [TlSpecialismId]) 
 ON Target.[TlDualSpecialismId] = Source.[TlDualSpecialismId] 
