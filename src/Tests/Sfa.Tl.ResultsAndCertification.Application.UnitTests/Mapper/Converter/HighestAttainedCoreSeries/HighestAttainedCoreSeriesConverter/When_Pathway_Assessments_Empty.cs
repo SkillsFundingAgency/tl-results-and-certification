@@ -5,7 +5,7 @@ using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Mapper.Converter.HighestAttainedCoreSeries.HighestAttainedCoreSeriesConverter
 {
-    public class When_Assessments_Empty : TestSetup
+    public class When_Pathway_Assessments_Empty : TestSetup
     {
         public override void Given()
         {
