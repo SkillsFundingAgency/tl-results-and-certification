@@ -46,6 +46,9 @@ namespace Sfa.Tl.ResultsAndCertification.Models.AnalystOverallResultExtraction
         [DisplayName(AnalystOverallResultExtractionHeader.CoreResult)]
         public string CoreResult { get; set; }
 
+        [DisplayName(AnalystOverallResultExtractionHeader.HighestAttainedCoreSeries)]
+        public string HighestAttainedCoreSeries { get; set; }
+
         [DisplayName(AnalystOverallResultExtractionHeader.OccupationalSpecialism)]
         public string OccupationalSpecialism { get; set; }
 

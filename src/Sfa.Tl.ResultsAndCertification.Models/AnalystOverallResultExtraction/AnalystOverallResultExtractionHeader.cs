@@ -15,6 +15,7 @@
         public const string CoreComponent = "Core component";
         public const string CoreCode = "Core code";
         public const string CoreResult = "Core result";
+        public const string HighestAttainedCoreSeries = "Highest attained Core assessment series";
         public const string OccupationalSpecialism = "Occupational specialism";
         public const string SpecialismCode = "Specialism code";
         public const string SpecialismResult = "Specialism result";
