@@ -19,6 +19,7 @@
         public const string OccupationalSpecialism = "Occupational specialism";
         public const string SpecialismCode = "Specialism code";
         public const string SpecialismResult = "Specialism result";
+        public const string HighestAttainedSpecialismSeries = "Highest attained Specialism assessment series";
         public const string IndustryPlacementStatus = "Industry placement status";
         public const string OverallResult = "Overall result";
         public const string CreatedOn = "Modified On";

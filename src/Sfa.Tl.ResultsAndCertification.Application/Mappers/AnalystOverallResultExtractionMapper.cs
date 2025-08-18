@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers.Action;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.HighestAttainedCoreSeries;
+using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.HighestAttainedSpecialismSeries;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.PathwayResult;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers.Converter.Specialism;
@@ -37,6 +38,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.OccupationalSpecialism, opts => opts.ConvertUsing(new SpecialismNameConverter(), p => p.TqRegistrationSpecialisms))
                 .ForMember(d => d.SpecialismCode, opts => opts.ConvertUsing(new SpecialismCodeConverter(), p => p.TqRegistrationSpecialisms))
                 .ForMember(d => d.SpecialismResult, opts => opts.MapFrom(s => GetSpecialismResultAwarded(s)))
+                .ForMember(d => d.HighestAttainedSpecialismSeries, opts => opts.ConvertUsing(new HighestAttainedSpecialismSeriesConverter(), p => p.TqRegistrationSpecialisms))
                 .ForMember(d => d.IndustryPlacementStatus, opts => opts.ConvertUsing(new IndustryPlacementStatusStringConverter(), p => p.IndustryPlacements))
                 .ForMember(d => d.OverallResult, opts => opts.MapFrom(s => GetResultAwarded(s)))
                 .ForMember(d => d.CreatedOn, opts => opts.MapFrom(s => GetCreatedOnDate(s)))

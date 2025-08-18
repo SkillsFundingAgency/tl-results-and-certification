@@ -25,6 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers.Action
             destination.OccupationalSpecialism = ToNullTextIfNullOrEmptyOrOnlyQuotes(destination.OccupationalSpecialism);
             destination.SpecialismCode = ToNullTextIfNullOrEmptyOrOnlyQuotes(destination.SpecialismCode);
             destination.SpecialismResult = ToNullTextIfNullOrEmptyOrOnlyQuotes(destination.SpecialismResult);
+            destination.HighestAttainedSpecialismSeries = ToNullTextIfNullOrEmptyOrOnlyQuotes(destination.HighestAttainedSpecialismSeries);
             destination.IndustryPlacementStatus = ToNullTextIfNullOrEmptyOrOnlyQuotes(destination.IndustryPlacementStatus);
             destination.OverallResult = ToNullTextIfNullOrEmptyOrOnlyQuotes(destination.OverallResult);
         }
