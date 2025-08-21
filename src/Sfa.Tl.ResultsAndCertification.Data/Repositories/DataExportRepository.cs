@@ -125,7 +125,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 {
                     Uln = sa.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber,
                     AcademicYear = academicYear.First(e => e.Year == sa.TqRegistrationSpecialism.TqRegistrationPathway.AcademicYear).Name,
-                    SpecialismCode = sa.TqRegistrationSpecialism.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
+                    CoreCode = sa.TqRegistrationSpecialism.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
+                    SpecialismCode = sa.TqRegistrationSpecialism.TlSpecialism.LarId,
                     SpecialismAssessmentEntry = sa.AssessmentSeries.Name,
                     SpecialismGrade = sa.TqSpecialismResults.Any(s => s.IsOptedin && s.EndDate == null)
                         ? sa.TqSpecialismResults.First(s => s.IsOptedin && s.EndDate == null).TlLookup.Value

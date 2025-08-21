@@ -10,12 +10,14 @@ namespace Sfa.Tl.ResultsAndCertification.Models.DataExport
         [DisplayName(SpecialismResultsExportHeader.AcademicYear)]
         public string? AcademicYear { get; set; }
 
+        [DisplayName(SpecialismResultsExportHeader.CoreCode)]
+        public string CoreCode { get; set; }
+
         [DisplayName(SpecialismResultsExportHeader.SpecialismCode)]
         public string SpecialismCode { get; set; }
 
         [DisplayName(SpecialismResultsExportHeader.SpecialismAssessmentEntry)]
         public string SpecialismAssessmentEntry { get; set; }
-
 
         [DisplayName(SpecialismResultsExportHeader.SpecialismGrade)]
         public string SpecialismGrade { get; set; }
