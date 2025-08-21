@@ -90,6 +90,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.DataExpor
                         {
                             Uln = x.TqRegistrationSpecialism.TqRegistrationPathway.TqRegistrationProfile.UniqueLearnerNumber,
                             AcademicYear = DbContext.AcademicYear.Single(e => e.Year == x.TqRegistrationSpecialism.TqRegistrationPathway.AcademicYear).Name,
+                            CoreCode = x.TqRegistrationSpecialism.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
                             SpecialismCode = x.TqRegistrationSpecialism.TlSpecialism.LarId,
                             SpecialismAssessmentEntry = x.AssessmentSeries.Name,
                             SpecialismGrade = x.TqSpecialismResults.First().TlLookup != null ? x.TqSpecialismResults.First().TlLookup.Value : string.Empty
