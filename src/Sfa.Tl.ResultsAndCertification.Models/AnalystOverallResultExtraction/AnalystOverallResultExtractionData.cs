@@ -46,6 +46,9 @@ namespace Sfa.Tl.ResultsAndCertification.Models.AnalystOverallResultExtraction
         [DisplayName(AnalystOverallResultExtractionHeader.CoreResult)]
         public string CoreResult { get; set; }
 
+        [DisplayName(AnalystOverallResultExtractionHeader.HighestAttainedCoreSeries)]
+        public string HighestAttainedCoreSeries { get; set; }
+
         [DisplayName(AnalystOverallResultExtractionHeader.OccupationalSpecialism)]
         public string OccupationalSpecialism { get; set; }
 
@@ -54,6 +57,9 @@ namespace Sfa.Tl.ResultsAndCertification.Models.AnalystOverallResultExtraction
 
         [DisplayName(AnalystOverallResultExtractionHeader.SpecialismResult)]
         public string SpecialismResult { get; set; }
+
+        [DisplayName(AnalystOverallResultExtractionHeader.HighestAttainedSpecialismSeries)]
+        public string HighestAttainedSpecialismSeries { get; set; }
 
         [DisplayName(AnalystOverallResultExtractionHeader.IndustryPlacementStatus)]
         public string IndustryPlacementStatus { get; set; }
