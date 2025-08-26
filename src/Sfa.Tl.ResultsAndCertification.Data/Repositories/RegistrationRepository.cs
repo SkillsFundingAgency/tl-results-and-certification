@@ -145,6 +145,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                 .ThenInclude(p => p.TqAwardingOrganisation)
                                 .ThenInclude(p => p.TlPathway)
                             .Include(p => p.TqPathwayAssessments)
+                                .ThenInclude(p => p.AssessmentSeries)
+                            .Include(p => p.TqPathwayAssessments)
                                 .ThenInclude(p => p.TqPathwayResults.Where(p => p.IsOptedin))
                                 .ThenInclude(p => p.TlLookup)
                             .Include(p => p.TqRegistrationSpecialisms
@@ -157,6 +159,13 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                     && p.IsOptedin && !_dbContext.TqRegistrationSpecialism.Any(p2 => p2.TqRegistrationPathwayId == p.TqRegistrationPathwayId && p2.TlSpecialismId == p.TlSpecialismId && p2.EndDate > p.EndDate))
                                     // If the learner is NOT withdrawn we pick the ones with no end date.
                                     || (p.TqRegistrationPathway.Status != RegistrationPathwayStatus.Withdrawn && p.IsOptedin && !p.EndDate.HasValue)))
+                                .ThenInclude(s => s.TqSpecialismAssessments)
+                                .ThenInclude(sa => sa.AssessmentSeries)
+                            .Include(p => p.TqRegistrationSpecialisms)
+                                .ThenInclude(s => s.TqSpecialismAssessments)
+                                .ThenInclude(sa => sa.TqSpecialismResults.Where(p => p.IsOptedin))
+                                .ThenInclude(sr => sr.TlLookup)
+                            .Include(p => p.TqRegistrationSpecialisms)
                                 .ThenInclude(p => p.TlSpecialism)
                                 .ThenInclude(s => s.TlDualSpecialismToSpecialisms)
                                 .ThenInclude(s => s.DualSpecialism)
