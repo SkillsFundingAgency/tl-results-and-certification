@@ -8,7 +8,8 @@ MERGE INTO [dbo].[TlAwardingOrganisation] AS Target
 USING (VALUES 
   (1, 10009696, N'Ncfe', N'NCFE'),
   (2, 10022490, N'Pearson', N'Pearson'),
-  (3, 10009931, N'City & Guilds', N'City & Guilds')
+  (3, 10009931, N'City & Guilds', N'City & Guilds'),
+  (4, 10022716, N'Wjec', N'WJEC')
   )
   AS Source ([Id], [UkPrn], [Name], [DisplayName]) 
 ON Target.[Id] = Source.[Id] 
