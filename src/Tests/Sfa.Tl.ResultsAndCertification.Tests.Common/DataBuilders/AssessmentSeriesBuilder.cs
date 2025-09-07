@@ -246,6 +246,60 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
                 ModifiedOn = Constants.ModifiedOn
+            },
+            new AssessmentSeries
+            {
+                ComponentType = ComponentType.Core,
+                Name = "Summer 2025",
+                Description = "Summer 2025",
+                Year = 2025,
+                StartDate = CurrentDate.AddYears(2).AddDays(-1),
+                EndDate = CurrentDate.AddYears(2).AddMonths(3),
+                RommEndDate = CurrentDate.AddYears(3).AddMonths(4),
+                AppealEndDate = CurrentDate.AddYears(3).AddMonths(5),
+                ResultCalculationYear = null,
+                ResultPublishDate = null,
+                PrintAvailableDate = null,
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new AssessmentSeries
+            {
+                ComponentType = ComponentType.Core,
+                Name = "Autumn 2025",
+                Description = "Autumn 2025",
+                Year = 2025,
+                StartDate = CurrentDate.AddMonths(3).AddDays(1),
+                EndDate = CurrentDate.AddMonths(6),
+                RommEndDate = CurrentDate.AddMonths(7),
+                AppealEndDate = CurrentDate.AddMonths(8),
+                ResultCalculationYear = 2020,
+                ResultPublishDate  = CurrentDate.AddMonths(9),
+                PrintAvailableDate = CurrentDate.AddMonths(10),
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new AssessmentSeries
+            {
+                ComponentType = ComponentType.Specialism,
+                Name = "Summer 2025",
+                Description = "Summer 2025",
+                Year = 2025,
+                StartDate = CurrentDate.AddYears(2).AddDays(-1),
+                EndDate = CurrentDate.AddYears(2).AddMonths(3),
+                RommEndDate = CurrentDate.AddYears(3).AddMonths(4),
+                AppealEndDate = CurrentDate.AddYears(3).AddMonths(5),
+                ResultCalculationYear = null,
+                ResultPublishDate = null,
+                PrintAvailableDate = null,
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
             }
         };
     }
