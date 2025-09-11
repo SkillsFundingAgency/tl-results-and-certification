@@ -39,9 +39,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
 
             var expectedResult = new List<FilterLookupData>
             {
-               new FilterLookupData { Id = 1, Name = "Design, Surveying and Planning", IsSelected = false },
-               new FilterLookupData { Id = 3, Name = "Health", IsSelected = false },
-               new FilterLookupData { Id = 2, Name = "Onsite Construction", IsSelected = false },
+               new FilterLookupData { Id = 1, Name = "Design, Surveying and Planning", CoreCode = "10123456", IsSelected = false },
+               new FilterLookupData { Id = 3, Name = "Health",  CoreCode = "6037066X", IsSelected = false },
+               new FilterLookupData { Id = 2, Name = "Onsite Construction", CoreCode = "60369176", IsSelected = false },
             };
 
             _actualResult.Should().BeEquivalentTo(expectedResult);
