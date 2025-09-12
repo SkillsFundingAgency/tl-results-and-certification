@@ -30,7 +30,7 @@ pr:
 
 pool:
   name: 'Azure Pipelines'
-  vmImage: 'windows-latest'
+  vmImage: 'windows-2025'
   
 variables:
 - template: ./Automation/variables/vars-global.yml@devopsTemplates

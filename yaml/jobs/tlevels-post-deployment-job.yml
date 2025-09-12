@@ -5,7 +5,7 @@ jobs:
   - job: PostDeployment
     pool:
         name: 'Azure Pipelines'
-        vmImage: 'windows-latest'
+        vmImage: 'windows-2025'
     dependsOn:
       - "${{ each dependency in parameters.dependencies }}":
          - "${{dependency}}" 
@@ -17,3 +17,4 @@ jobs:
           gitHubConnection: SkillsFundingAgency
           tagSource: userSpecifiedTag
           tag: '$(Build.BuildNumber)'
+          
