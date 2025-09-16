@@ -21,7 +21,7 @@ USING (VALUES
   (13, 2, N'Summer 2025', N'Summer 2025', 2025, N'2024-08-06', N'2025-08-04', N'2025-09-26', N'2025-10-31', NULL, NULL, NULL),
   -- The following Autumn 2025 row is a placeholder and needs to be replaced with the correct dates in the future
   (14, 1, N'Autumn 2025', N'Autumn 2025', 2025, N'2025-08-05', N'2026-03-10', N'2026-05-01', N'2026-05-31', 2023, N'2026-03-19', N'2026-06-01'),
-  (17, 2, N'Summer 2026', N'Summer 2026', 2026,	N'2025-08-04', N'2026-08-04', N'2026-09-26', N'2026-10-31', 2024, N'2026-03-19', N'2026-06-01')
+  (15, 2, N'Summer 2026', N'Summer 2026', 2026,	N'2025-08-04', N'2026-08-04', N'2026-09-26', N'2026-10-31', 2024, N'2026-03-19', N'2026-06-01')
   )
   AS Source ([Id], [ComponentType], [Name], [Description], [Year], [StartDate], [EndDate], [RommEndDate], [AppealEndDate], [ResultCalculationYear], [ResultPublishDate], [PrintAvailableDate]) 
 ON Target.[Id] = Source.[Id] 
