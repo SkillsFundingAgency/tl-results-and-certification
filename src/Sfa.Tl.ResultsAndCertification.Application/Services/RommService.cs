@@ -314,8 +314,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     SpecialismAssessmentSeriesId = activeSpecialismAssessmentEntry.AssessmentSeriesId
                 });
             }
-            ;
-
             return response;
         }
 
