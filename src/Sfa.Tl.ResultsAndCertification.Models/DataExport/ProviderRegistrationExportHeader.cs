@@ -3,6 +3,7 @@
     public class ProviderRegistrationExportHeader
     {
         public const string Uln = "ULN";
+        public const string IsPendingWithdrawal = "Is pending withdrawal?";
         public const string FirstName = "First name";
         public const string LastName = "Last name";
         public const string DateOfBirth = "Date of birth";
