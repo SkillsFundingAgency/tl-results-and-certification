@@ -100,7 +100,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
             if (request.Tlevels != null && request.Tlevels.Any())
                 pathways = pathways.Where(p => request.Tlevels.Contains(p.TqProvider.TqAwardingOrganisation.TlPathway.Id)).ToList();
 
-            if (request.Statuses != null && request.Statuses.Any())
+            if (request.Statuses != null && request.Statuses.Any()
+                || request.IndustryPlacementStatus != null && request.IndustryPlacementStatus.Any())
             {
                 Expression<Func<TqRegistrationPathway, bool>> criteria = null;
                 var expressions = new List<Expression<Func<TqRegistrationPathway, bool>>>();
@@ -116,12 +117,27 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
                         case 2:
                             expressions.Add(e => e.TqRegistrationProfile.MathsStatus == null);
                             break;
-                        case 3:
-                            expressions.Add(e => !e.IndustryPlacements.Any());
+                    }
+                }
+
+                foreach (var statusId in request.IndustryPlacementStatus.OrderBy(s => s))
+                {
+                    switch (statusId)
+                    {
+                        case (int)IndustryPlacementSearchFilterStatus.IndustryPlacementCompleted:
+                            expressions.Add(p => p.IndustryPlacements.Any(ip => ip.Status == IndustryPlacementStatus.Completed));
                             break;
-                        case 4:
-                            expressions.Clear();
-                            expressions.Add(p => p.TqRegistrationProfile.EnglishStatus == null || p.TqRegistrationProfile.MathsStatus == null || !p.IndustryPlacements.Any());
+                        case (int)IndustryPlacementSearchFilterStatus.IndustryPlacementCompletedWithConsideration:
+                            expressions.Add(p => p.IndustryPlacements.Any(ip => ip.Status == IndustryPlacementStatus.CompletedWithSpecialConsideration));
+                            break;
+                        case (int)IndustryPlacementSearchFilterStatus.IndustryPlacementNotCompleted:
+                            expressions.Add(p => p.IndustryPlacements.Any(ip => ip.Status == IndustryPlacementStatus.NotCompleted));
+                            break;
+                        case (int)IndustryPlacementSearchFilterStatus.IndustryPlacementWillNotComplete:
+                            expressions.Add(p => p.IndustryPlacements.Any(ip => ip.Status == IndustryPlacementStatus.WillNotComplete));
+                            break;
+                        case (int)IndustryPlacementSearchFilterStatus.IndustryPlacementNotReported:
+                            expressions.Add(p => !p.IndustryPlacements.Any());
                             break;
                     }
                 }
@@ -173,14 +189,16 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.TrainingP
                     new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, Ukprn = (int)Provider.BarnsleyCollege } }, // Learners registered for Barnsley college for 2020
                     new object[] { new SearchLearnerRequest { AcademicYear = new List<int>(), Ukprn = (int)Provider.BarnsleyCollege } }, // Learners registered for Barnsley college for 2020 but not passing academic year
 
-                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, Statuses = new List<int> { (int)LearnerStatusFilter.EnglishIncomplete }, Ukprn = (int)Provider.BarnsleyCollege } }, // Academic Year and Status filter (EnglishIncompleted) only
-                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, Statuses = new List<int> { (int)LearnerStatusFilter.MathsIncomplete }, Ukprn = (int)Provider.BarnsleyCollege } }, // Academic Year and Status filter (MathsIncompleted) only
-                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, Statuses = new List<int> { (int)LearnerStatusFilter.IndustryPlacementIncomplete }, Ukprn = (int)Provider.BarnsleyCollege } }, // Academic Year and Status filter (IndustryPlacementIncompleted) only
-                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, Statuses = new List<int> { (int)LearnerStatusFilter.AllIncomplete }, Ukprn = (int)Provider.BarnsleyCollege } }, // Academic Year and Status filter (IndustryPlacementIncompleted) only
-                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, Statuses = new List<int> { (int)LearnerStatusFilter.EnglishIncomplete, (int)LearnerStatusFilter.MathsIncomplete }, Ukprn = (int)Provider.BarnsleyCollege } }, // Academic Year and Status filter (English & Maths Incompleted) combination
+                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, IndustryPlacementStatus = new List<int>(), Statuses = new List<int> { (int)LearnerStatusFilter.EnglishIncomplete }, Ukprn = (int)Provider.BarnsleyCollege } }, // Academic Year and Status filter (EnglishIncompleted) only
+                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, IndustryPlacementStatus = new List<int>(), Statuses = new List<int> { (int)LearnerStatusFilter.MathsIncomplete }, Ukprn = (int)Provider.BarnsleyCollege } }, // Academic Year and Status filter (MathsIncompleted) only
+                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, IndustryPlacementStatus = new List<int>(), Statuses = new List<int> { (int)LearnerStatusFilter.EnglishIncomplete, (int)LearnerStatusFilter.MathsIncomplete }, Ukprn = (int)Provider.BarnsleyCollege } }, // Academic Year and Status filter (English & Maths Incompleted) combination
+                    
+                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, IndustryPlacementStatus = new List<int> { (int)IndustryPlacementSearchFilterStatus.IndustryPlacementCompleted }, Statuses = new List<int>(), Ukprn = (int)Provider.BarnsleyCollege } }, // Academic Year and Status filter (IndustryPlacementIncompleted) only
+                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, IndustryPlacementStatus = new List<int> { (int)IndustryPlacementSearchFilterStatus.IndustryPlacementCompletedWithConsideration }, Statuses = new List<int>(), Ukprn = (int)Provider.BarnsleyCollege } }, // Academic Year and Status filter (IndustryPlacementIncompleted) only
 
-                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, Statuses = new List<int> { (int)LearnerStatusFilter.AllIncomplete }, Tlevels = new List<int> { 1 }, Ukprn = (int)Provider.BarnsleyCollege } }, // Valid Tlevel filter
-                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, Statuses = new List<int> { (int)LearnerStatusFilter.AllIncomplete }, Tlevels = new List<int> { 2 }, Ukprn = (int)Provider.BarnsleyCollege } }, // not Valid Tlevel filter
+                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, IndustryPlacementStatus = new List<int> { (int)IndustryPlacementSearchFilterStatus.IndustryPlacementNotCompleted }, Statuses = new List<int>(), Tlevels = new List<int> { 1 }, Ukprn = (int)Provider.BarnsleyCollege } }, // Valid Tlevel filter
+                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, IndustryPlacementStatus = new List<int> { (int)IndustryPlacementSearchFilterStatus.IndustryPlacementWillNotComplete }, Statuses = new List<int>(), Tlevels = new List<int> { 2 }, Ukprn = (int)Provider.BarnsleyCollege } }, // not Valid Tlevel filter
+                    new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, IndustryPlacementStatus = new List<int> { (int)IndustryPlacementSearchFilterStatus.IndustryPlacementNotReported }, Statuses = new List<int>(), Tlevels = new List<int> { 2 }, Ukprn = (int)Provider.BarnsleyCollege } }, // not Valid Tlevel filter
 
                     new object[] { new SearchLearnerRequest { AcademicYear = new List<int> { 2020 }, PageNumber = 1, Ukprn = (int)Provider.BarnsleyCollege } }, // Pagination
 
