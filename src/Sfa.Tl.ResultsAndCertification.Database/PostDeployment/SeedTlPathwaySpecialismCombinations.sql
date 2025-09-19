@@ -11,7 +11,9 @@ USING (VALUES
 	(3, 3, 11, 2, 1),
 	(4, 3, 13, 2, 1),
 	(5, 3, 14, 3, 1),
-	(6, 3, 15, 3, 1)
+	(6, 3, 15, 3, 1),
+	(7, 22, 83, 4, 1),
+	(8, 22, 84, 4, 1)
   )
   AS Source ([Id], [TlPathwayId], [TlSpecialismId], [GroupId], [IsActive]) 
 ON Target.[Id] = Source.[Id] 
