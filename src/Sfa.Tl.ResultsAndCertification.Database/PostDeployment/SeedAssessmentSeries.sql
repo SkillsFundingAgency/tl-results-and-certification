@@ -17,11 +17,13 @@ USING (VALUES
   (9, 2, N'Summer 2024', N'Summer 2024', 2024, N'2023-08-08', N'2024-08-05', N'2024-09-26', N'2024-10-31', NULL, NULL, NULL),
   (10, 1, N'Summer 2024', N'Summer 2024', 2024, N'2024-03-12', N'2024-08-05', N'2024-09-26', N'2024-10-31', 2022, N'2024-08-14', N'2024-11-01'),
   (11, 1, N'Autumn 2024', N'Autumn 2024', 2024, N'2024-08-06', N'2025-03-10', N'2025-05-01', N'2025-05-31', 2022, N'2025-03-19', N'2025-06-01'),
-  (12, 1, N'Summer 2025', N'Summer 2025', 2025, N'2025-03-11', N'2025-08-04', N'2025-09-26', N'2025-10-31', 2023, N'2025-08-12', N'2025-11-01'),
+  (12, 1, N'Summer 2025', N'Summer 2025', 2025, N'2025-03-11', N'2025-08-04', N'2025-09-25', N'2025-10-31', 2023, N'2025-08-12', N'2025-11-01'),
   (13, 2, N'Summer 2025', N'Summer 2025', 2025, N'2024-08-06', N'2025-08-04', N'2025-09-26', N'2025-10-31', NULL, NULL, NULL),
-  -- The following Autumn 2025 row is a placeholder and needs to be replaced with the correct dates in the future
-  (14, 1, N'Autumn 2025', N'Autumn 2025', 2025, N'2025-08-05', N'2026-03-10', N'2026-05-01', N'2026-05-31', 2023, N'2026-03-19', N'2026-06-01'),
-  (15, 2, N'Summer 2026', N'Summer 2026', 2026,	N'2025-08-04', N'2026-08-04', N'2026-09-26', N'2026-10-31', 2024, N'2026-03-19', N'2026-06-01')
+  (14, 1, N'Autumn 2025', N'Autumn 2025', 2025, N'2025-08-05', N'2026-03-09', N'2026-04-30', N'2026-05-31', 2023, N'2026-03-18', N'2026-06-01'),
+  -- The following rows are provisional dates and will be confirmed in the future
+  (15, 1, N'Summer 2026', N'Summer 2026', 2026, N'2026-03-10', N'2026-08-03', N'2026-09-24', N'2026-10-31', 2024, N'2026-08-12', N'2026-11-01'),
+  (16, 1, N'Autumn 2026', N'Autumn 2026', 2026, N'2026-08-04', N'2027-03-08', N'2027-04-29', N'2027-05-31', 2024, N'2027-03-18', N'2027-06-01'),
+  (17, 1, N'Summer 2027', N'Summer 2027', 2027, N'2027-03-09', N'2027-08-02', N'2027-09-23', N'2027-10-31', 2025, N'2027-08-11', N'2027-11-01')
   )
   AS Source ([Id], [ComponentType], [Name], [Description], [Year], [StartDate], [EndDate], [RommEndDate], [AppealEndDate], [ResultCalculationYear], [ResultPublishDate], [PrintAvailableDate]) 
 ON Target.[Id] = Source.[Id] 
