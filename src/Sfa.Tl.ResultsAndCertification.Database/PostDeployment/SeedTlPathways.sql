@@ -26,8 +26,14 @@ USING (VALUES
   (18, N'61029336', N'T Level in Agriculture, Land Management and Production', N'Agriculture, Land Management and Production', 2023, 8),
   (19, N'61041580', N'T Level in Animal Care and Management', N'Animal Care and Management', 2024, 8),
   (20, N'61040915', N'T Level in Craft and Design', N'Craft and Design', 2024, 9),
-  (21, N'61040927', N'T Level in Media, Broadcast and Production', N'Media, Broadcast and Production', 2024, 9)
-  )
+  (21, N'61040927', N'T Level in Media, Broadcast and Production', N'Media, Broadcast and Production', 2024, 9),
+  (22, N'61057800', N'T Level in Building Services Engineering for Construction' ,N'Building Services Engineering', 2025, 1),
+  (23, N'61053107', N'T Level in Design, Surveying and Planning for Construction' ,N'Design, Surveying and Planning', 2025, 1),
+  (24, N'61058002', N'T Level in Digital Data Analytics' ,N'Digital Data Analytics', 2025, 3),
+  (25, N'61058014', N'T Level in Digital Software Development' ,N'Digital Software Development', 2025, 3),
+  (26, N'6105799X', N'T Level in Digital Support and Security' ,N'Digital Support and Security', 2025, 3),
+  (27, N'61057484', N'T Level in Education and Early Years' ,N'Education and Early Years', 2025, 2)
+)
   AS Source ([Id], [LarId], [TlevelTitle], [Name], [StartYear], [TlRouteId]) 
 ON Target.[Id] = Source.[Id] 
 -- Update from Source when Id is Matched
