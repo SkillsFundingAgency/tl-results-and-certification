@@ -35,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             return await _dbContext.AcademicYear
                 .Where(x => searchDate >= x.EndDate || (searchDate >= x.StartDate && searchDate <= x.EndDate))
                 .OrderByDescending(x => x.Year)
-                .Take(5)
+                .Take(6)
                 .Select(x => new FilterLookupData { Id = x.Year, Name = $"{x.Year} to {x.Year + 1}", IsSelected = false })
                 .ToListAsync();
         }
