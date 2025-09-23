@@ -26,7 +26,8 @@ USING (VALUES
   (18, N'61029336', N'T Level in Agriculture, Land Management and Production', N'Agriculture, Land Management and Production', 2023, 8),
   (19, N'61041580', N'T Level in Animal Care and Management', N'Animal Care and Management', 2024, 8),
   (20, N'61040915', N'T Level in Craft and Design', N'Craft and Design', 2024, 9),
-  (21, N'61040927', N'T Level in Media, Broadcast and Production', N'Media, Broadcast and Production', 2024, 9)
+  (21, N'61040927', N'T Level in Media, Broadcast and Production', N'Media, Broadcast and Production', 2024, 9),
+  (22, N'61051251', N'T Level in Marketing', N'Marketing', 2025, 10)
   )
   AS Source ([Id], [LarId], [TlevelTitle], [Name], [StartYear], [TlRouteId]) 
 ON Target.[Id] = Source.[Id] 
