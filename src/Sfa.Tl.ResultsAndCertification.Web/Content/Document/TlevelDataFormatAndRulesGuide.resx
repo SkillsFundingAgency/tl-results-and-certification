@@ -127,7 +127,7 @@
     <value>Assessment entries</value>
   </data>
   <data name="Assessment_Entries_PublishedDate_Text" xml:space="preserve">
-    <value>07 February 2025</value>
+    <value>01 September 2025</value>
   </data>
   <data name="Awarding_Organisations_Heading" xml:space="preserve">
     <value>Awarding organisations</value>
@@ -169,7 +169,7 @@
     <value>Registrations</value>
   </data>
   <data name="Registrations_PublishedDate_Text" xml:space="preserve">
-    <value>07 February 2025</value>
+    <value>01 September 2025</value>
   </data>
   <data name="Registration_DataFormat_And_Rules" xml:space="preserve">
     <value>Registrations data format and rules ({0}, {1})</value>
@@ -181,7 +181,7 @@
     <value>Results</value>
   </data>
   <data name="Results_PublishedDate_Text" xml:space="preserve">
-    <value>07 February 2025</value>
+    <value>01 September 2025</value>
   </data>
   <data name="Results_DataFormat_And_Rules" xml:space="preserve">
     <value>Results data format and rules ({0}, {1})</value>
@@ -238,7 +238,7 @@
     <value>ROMMs</value>
   </data>
   <data name="Romms_PublishedDate_Text" xml:space="preserve">
-    <value>07 February 2025</value>
+    <value>01 September 2025</value>
   </data>
   <data name="Widthdrawals_FileSize_Text" xml:space="preserve">
     <value>296KB</value>
@@ -250,7 +250,7 @@
     <value>Withdrawals</value>
   </data>
   <data name="Withdrawals_PublishedDate_Text" xml:space="preserve">
-    <value>07 February 2025</value>
+    <value>01 September 2025</value>
   </data>
   <data name="XlsxFileType" xml:space="preserve">
     <value>XLSX</value>
