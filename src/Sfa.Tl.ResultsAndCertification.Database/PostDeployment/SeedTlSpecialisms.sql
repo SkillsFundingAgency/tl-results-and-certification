@@ -98,7 +98,8 @@ USING (VALUES
 	(92, N'ZTLOS093', N'Digital Support', 26, 1),
 	(93, N'ZTLOS094', N'Cyber Security', 26, 1),
 	(94, N'ZTLOS079', N'Early Years Educator', 27, 1),
-	(95, N'ZTLOS080', N'Assisting Teaching', 27, 1)
+	(95, N'ZTLOS080', N'Assisting Teaching', 27, 1),
+	(96, N'ZTLOS088', N'Heating Engineering and Ventilation', 22, 1)
   )
   AS Source ([Id], [LarId], [Name], [TlPathwayId], [IsActive]) 
 ON Target.[Id] = Source.[Id] 
