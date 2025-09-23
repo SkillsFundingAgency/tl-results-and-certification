@@ -81,7 +81,24 @@ USING (VALUES
 	(75, N'ZTLOS072', N'Creative Media Technician', 21, 1),
 	(76, N'ZTLOS073', N'Events and Venues Technician', 21, 1),
 	(77, N'ZTLOS071', N'Content Creation and Production', 21, 1),
-	(78, N'ZTLOS077', N'Furniture Maker (Upholsterer)', 20, 1)
+	(78, N'ZTLOS077', N'Furniture Maker (Upholsterer)', 20, 1),
+	(79, N'ZTLOS084', N'Electrotechnical Engineering', 22, 1),
+	(80, N'ZTLOS086', N'Protection Systems Engineering', 22, 1),
+	(81, N'ZTLOS087', N'Plumbing and Heating Engineering', 22, 1),
+	(82, N'ZTLOS085', N'Gas Engineering', 22, 1),
+	(83, N'10202106', N'Refrigeration Engineering', 22, 1),
+	(84, N'10202107', N'Air Conditioning Engineering', 22, 1),
+	(85, N'ZTLOS083', N'Building Services Design', 23, 1),
+	(86, N'ZTLOS082', N'Civil Engineering', 23, 1),
+	(87, N'ZTLOS081', N'Surveying and Design for Construction and the Built Environment', 23, 1),
+	(88, N'ZTLOS095', N'Data Analytics Technician', 24, 1),
+	(89, N'ZTLOS090', N'Digital Software Development', 25, 1),
+	(90, N'ZTLOS091', N'Digital Infrastructure', 26, 1),
+	(91, N'ZTLOS092', N'Network Cabling', 26, 1),
+	(92, N'ZTLOS093', N'Digital Support', 26, 1),
+	(93, N'ZTLOS094', N'Cyber Security', 26, 1),
+	(94, N'ZTLOS079', N'Early Years Educator', 27, 1),
+	(95, N'ZTLOS080', N'Assisting Teaching', 27, 1)
   )
   AS Source ([Id], [LarId], [Name], [TlPathwayId], [IsActive]) 
 ON Target.[Id] = Source.[Id] 
