@@ -126,7 +126,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
         {
             return await _dbContext.TlPathway
                     .OrderBy(x => x.Name)
-                    .Select(x => new FilterLookupData { Id = x.Id, Name = x.Name, IsSelected = false })
+                    .Select(x => new FilterLookupData { Id = x.Id, Name = x.Name, CoreCode = x.LarId, IsSelected = false })
                     .ToListAsync();
 
         }

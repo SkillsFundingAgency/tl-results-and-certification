@@ -59,6 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 if (searchCriteria.SearchLearnerFilters != null)
                 {
                     searchCriteria.SearchLearnerFilters.Tlevels?.ToList().ForEach(tl => tl.Name = searchFilters.Tlevels.FirstOrDefault(x => x.Id == tl.Id)?.Name);
+                    searchCriteria.SearchLearnerFilters.Tlevels?.ToList().ForEach(tl => tl.CoreCode = searchFilters.Tlevels.FirstOrDefault(x => x.Id == tl.Id)?.CoreCode);
                     searchCriteria.SearchLearnerFilters.Status?.ToList().ForEach(s => s.Name = searchFilters.Status.FirstOrDefault(x => x.Id == s.Id)?.Name);
                 }
             }
@@ -475,7 +476,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 _logger.LogWarning(LogEvent.NoDataFound, $"No learner record details found or learner is not registerd or learner record not added. Method: LearnerRecordDetailsAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
-            
+
             viewModel.InformationBanner = await _cacheService.GetAndRemoveAsync<InformationBannerModel>(InformationCacheKey);
             viewModel.SuccessBanner = await _cacheService.GetAndRemoveAsync<NotificationBannerModel>(CacheKey);
 

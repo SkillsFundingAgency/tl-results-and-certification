@@ -142,7 +142,7 @@
     <value>register an </value>
   </data>
   <data name="Section_Heading" xml:space="preserve">
-    <value>Results uploaded</value>
+    <value>Results uploaded successfully</value>
   </data>
   <data name="Successfully_Sent_One_Result_Text" xml:space="preserve">
     <value>You successfully sent results data for one registration.</value>

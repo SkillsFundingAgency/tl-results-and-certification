@@ -16,6 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
         {
             CreateMap<TqRegistrationPathway, ProviderRegistrationExport>()
                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.TqRegistrationProfile.UniqueLearnerNumber))
+               .ForMember(d => d.IsPendingWithdrawal, opts => opts.MapFrom(s => s.IsPendingWithdrawal))
                .ForMember(d => d.Firstname, opts => opts.MapFrom(s => s.TqRegistrationProfile.Firstname.ToDoubleQuotesWrappedString()))
                .ForMember(d => d.Lastname, opts => opts.MapFrom(s => s.TqRegistrationProfile.Lastname.ToDoubleQuotesWrappedString()))
                .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.TqRegistrationProfile.DateofBirth.ToString("dd-MMM-yyyy")))
