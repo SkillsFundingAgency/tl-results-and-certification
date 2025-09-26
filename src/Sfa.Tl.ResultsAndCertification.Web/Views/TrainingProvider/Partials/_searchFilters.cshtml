@@ -80,7 +80,7 @@
                         <div class="govuk-checkboxes__item govuk-checkboxes--small">
                             <input class="govuk-checkboxes__input" id="@elementId" type="checkbox" asp-for="@Model.SearchLearnerFilters.Tlevels[tlevel.i].IsSelected">
                             <label class="govuk-label govuk-checkboxes__label" for="@elementId">
-                                @tlevel.value.Name
+                                @tlevel.value.Name (@tlevel.value.CoreCode)
                             </label>
                         </div>
                         <input type="hidden" asp-for="@Model.SearchLearnerFilters.Tlevels[@tlevel.i].Id" />                        
