@@ -61,6 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                     searchCriteria.SearchLearnerFilters.Tlevels?.ToList().ForEach(tl => tl.Name = searchFilters.Tlevels.FirstOrDefault(x => x.Id == tl.Id)?.Name);
                     searchCriteria.SearchLearnerFilters.Tlevels?.ToList().ForEach(tl => tl.CoreCode = searchFilters.Tlevels.FirstOrDefault(x => x.Id == tl.Id)?.CoreCode);
                     searchCriteria.SearchLearnerFilters.Status?.ToList().ForEach(s => s.Name = searchFilters.Status.FirstOrDefault(x => x.Id == s.Id)?.Name);
+                    searchCriteria.SearchLearnerFilters.IndustryPlacementStatus?.ToList().ForEach(s => s.Name = searchFilters.IndustryPlacementStatus.FirstOrDefault(x => x.Id == s.Id)?.Name);
                 }
             }
 

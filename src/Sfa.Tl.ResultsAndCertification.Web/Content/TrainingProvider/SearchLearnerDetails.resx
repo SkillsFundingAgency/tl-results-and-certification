@@ -144,6 +144,9 @@
   <data name="Filters_Incomplete" xml:space="preserve">
     <value>Incomplete</value>
   </data>
+  <data name="Filters_Industry_Placements" xml:space="preserve">
+    <value>Industry Placement</value>
+  </data>
   <data name="Filters_Selected_Filters" xml:space="preserve">
     <value>Selected filters</value>
   </data>

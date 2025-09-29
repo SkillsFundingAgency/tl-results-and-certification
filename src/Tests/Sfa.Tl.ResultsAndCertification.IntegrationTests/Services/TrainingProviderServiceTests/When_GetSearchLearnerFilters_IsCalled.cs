@@ -21,6 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
         private IList<FilterLookupData> _mockAcademicYears;
         private IList<FilterLookupData> _mockTlevels;
         private IList<FilterLookupData> _expectedStatusFilters;
+        private IList<FilterLookupData> _expectedIndustryPlacementStatusFilters;
 
         public override void Given()
         {
@@ -48,8 +49,15 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             {
                 new FilterLookupData { Id = 1, Name = "English level", IsSelected = false },
                 new FilterLookupData { Id = 2, Name = "Maths level", IsSelected = false },
-                new FilterLookupData { Id = 3, Name = "Industry placement", IsSelected = false },
-                new FilterLookupData { Id = 4, Name = "All incomplete records", IsSelected = false }
+            };
+
+            _expectedIndustryPlacementStatusFilters = new List<FilterLookupData>
+            {
+                new FilterLookupData { Id = 1, Name = "Completed", IsSelected = false },
+                new FilterLookupData { Id = 2, Name = "Completed with Special Consideration", IsSelected = false },
+                new FilterLookupData { Id = 3, Name = "Not completed", IsSelected = false },
+                new FilterLookupData { Id = 4, Name = "Will not complete", IsSelected = false },
+                new FilterLookupData { Id = 5, Name = "Not yet reported", IsSelected = false },
             };
         }
 
@@ -75,6 +83,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             _actualResult.AcademicYears.Should().BeEquivalentTo(_mockAcademicYears);
             _actualResult.Tlevels.Should().BeEquivalentTo(_mockTlevels);
             _actualResult.Status.Should().BeEquivalentTo(_expectedStatusFilters);
+            _actualResult.IndustryPlacementStatus.Should().BeEquivalentTo(_expectedIndustryPlacementStatusFilters);
         }
     }
 }

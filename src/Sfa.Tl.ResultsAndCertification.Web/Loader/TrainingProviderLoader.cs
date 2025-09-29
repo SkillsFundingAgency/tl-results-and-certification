@@ -5,7 +5,6 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -32,6 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 SearchKey = searchCriteriaViewModel?.SearchKey,
                 AcademicYear = new List<int> { searchCriteriaViewModel?.AcademicYear ?? 0 },
                 Statuses = searchCriteriaViewModel?.SearchLearnerFilters?.Status?.Where(a => a.IsSelected)?.Select(a => a.Id)?.ToList() ?? new List<int>(),
+                IndustryPlacementStatus = searchCriteriaViewModel?.SearchLearnerFilters?.IndustryPlacementStatus?.Where(a => a.IsSelected)?.Select(a => a.Id)?.ToList() ?? new List<int>(),
                 Tlevels = searchCriteriaViewModel?.SearchLearnerFilters?.Tlevels?.Where(a => a.IsSelected)?.Select(a => a.Id)?.ToList() ?? new List<int>(),
             };
             var apiResponse = await _internalApiClient.SearchLearnerDetailsAsync(apiRequest);
