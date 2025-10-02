@@ -181,8 +181,15 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .Where(pr => pr.EndDate == null
                     && pr.Status == RegistrationPathwayStatus.Active
                     && pr.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn
-                    && (pr.TqPathwayAssessments.Any(pa => pa.TqPathwayResults.Any(pr => pr.PrsStatus == PrsStatus.UnderReview || pr.PrsStatus == PrsStatus.Reviewed))
-                        || pr.TqRegistrationSpecialisms.Any(rs => rs.IsOptedin && rs.EndDate == null && rs.TqSpecialismAssessments.Any(sa => sa.IsOptedin && sa.EndDate == null && sa.TqSpecialismResults.Any(sr => sr.PrsStatus == PrsStatus.UnderReview || sr.PrsStatus == PrsStatus.Reviewed)))));
+                    && (pr.TqPathwayAssessments
+                        .Any(pa => pa.TqPathwayResults
+                            .Any(pr => pr.IsOptedin && pr.EndDate == null &&
+                                (pr.PrsStatus == PrsStatus.UnderReview || pr.PrsStatus == PrsStatus.BeingAppealed)))
+                    || pr.TqRegistrationSpecialisms
+                        .Any(rs => rs.IsOptedin && rs.EndDate == null && rs.TqSpecialismAssessments
+                            .Any(sa => sa.IsOptedin && sa.EndDate == null && sa.TqSpecialismResults
+                                .Any(sr => sr.IsOptedin && sr.EndDate == null &&
+                                    (sr.PrsStatus == PrsStatus.UnderReview || sr.PrsStatus == PrsStatus.BeingAppealed))))));
 
             var result = await query
                 .Select(romm => new RommsExport
@@ -193,14 +200,52 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     DateOfBirth = romm.TqRegistrationProfile.DateofBirth,
                     Ukprn = romm.TqProvider.TlProvider.UkPrn,
                     AcademicYear = romm.AcademicYear,
-                    AssessmentSeriesCore = romm.TqPathwayAssessments.First().AssessmentSeries.Name,
+                    AssessmentSeriesCore = romm.TqPathwayAssessments
+                        .Where(pa => pa.IsOptedin && pa.EndDate == null)
+                            .SelectMany(pr => pr.TqPathwayResults
+                                .Where(pr => pr.IsOptedin && pr.EndDate == null &&
+                                    (pr.PrsStatus == PrsStatus.UnderReview || pr.PrsStatus == PrsStatus.BeingAppealed)))
+                                .FirstOrDefault()
+                                .TqPathwayAssessment.AssessmentSeries.Name,
                     CoreComponentCode = romm.TqPathwayAssessments.First().TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
-                    CoreRommOpen = romm.TqPathwayAssessments.Any(pa => pa.TqPathwayResults.Any(pr => pr.PrsStatus == PrsStatus.UnderReview || pr.PrsStatus == PrsStatus.Reviewed)),
-                    CoreRommOutcome = romm.TqPathwayAssessments.First(pa => pa.IsOptedin && pa.EndDate == null).TqPathwayResults.First(pr => pr.IsOptedin && pr.EndDate == null && pr.PrsStatus == PrsStatus.Reviewed || pr.PrsStatus == PrsStatus.BeingAppealed).TlLookup.Value,
-                    AssessmentSeriesSpecialisms = romm.TqRegistrationSpecialisms.First().TqSpecialismAssessments.First().AssessmentSeries.Name,
+                    CoreRommOpen = romm.TqPathwayAssessments
+                        .Where(pa => pa.IsOptedin && pa.EndDate == null)
+                            .Any(pr => pr.TqPathwayResults
+                                .Any(pr => pr.IsOptedin && pr.EndDate == null &&
+                                    (pr.PrsStatus == PrsStatus.UnderReview || pr.PrsStatus == PrsStatus.BeingAppealed))),
+                    CoreRommOutcome = romm.TqPathwayAssessments
+                        .Where(pa => pa.IsOptedin && pa.EndDate == null)
+                            .SelectMany(pr => pr.TqPathwayResults
+                                .Where(pr => pr.IsOptedin && pr.EndDate == null &&
+                                    (pr.PrsStatus == PrsStatus.UnderReview || pr.PrsStatus == PrsStatus.BeingAppealed)))
+                                .FirstOrDefault()
+                                .TlLookup.Value,
+                    AssessmentSeriesSpecialisms = romm.TqRegistrationSpecialisms
+                        .Where(rs => rs.IsOptedin && rs.EndDate == null)
+                            .SelectMany(sa => sa.TqSpecialismAssessments
+                                .Where(sa => sa.IsOptedin && sa.EndDate == null))
+                                    .SelectMany(sr => sr.TqSpecialismResults
+                                        .Where(sr => sr.IsOptedin && sr.EndDate == null
+                                            && (sr.PrsStatus == PrsStatus.UnderReview  || sr.PrsStatus == PrsStatus.BeingAppealed)))
+                                        .FirstOrDefault()
+                                        .TqSpecialismAssessment.AssessmentSeries.Name,
                     SpecialismComponentCode = romm.TqRegistrationSpecialisms.First().TlSpecialism.LarId,
-                    SpecialismRommOpen = romm.TqRegistrationSpecialisms.Any(rs => rs.TqSpecialismAssessments.Any(sa => sa.TqSpecialismResults.Any(sr => sr.IsOptedin && sr.EndDate == null && sr.PrsStatus == PrsStatus.UnderReview || sr.PrsStatus == PrsStatus.Reviewed))),
-                    SpecialismRommOutcome = romm.TqRegistrationSpecialisms.First().TqSpecialismAssessments.First().TqSpecialismResults.First(sr => sr.IsOptedin && sr.EndDate == null && sr.PrsStatus == PrsStatus.Reviewed || sr.PrsStatus == PrsStatus.BeingAppealed).TlLookup.Value
+                    SpecialismRommOpen = romm.TqRegistrationSpecialisms
+                        .Where(rs => rs.IsOptedin && rs.EndDate == null)
+                            .Any(sa => sa.TqSpecialismAssessments
+                                .Any(sa => sa.IsOptedin && sa.EndDate == null
+                                    && sa.TqSpecialismResults
+                                        .Any(sr => sr.IsOptedin && sr.EndDate == null
+                                            && (sr.PrsStatus == PrsStatus.UnderReview  || sr.PrsStatus == PrsStatus.BeingAppealed)))),
+                    SpecialismRommOutcome = romm.TqRegistrationSpecialisms
+                    .Where(rs => rs.IsOptedin && rs.EndDate == null)
+                        .SelectMany(sa => sa.TqSpecialismAssessments
+                            .Where(sa => sa.IsOptedin && sa.EndDate == null))
+                                .SelectMany(sr => sr.TqSpecialismResults
+                                    .Where(sr => sr.IsOptedin && sr.EndDate == null
+                                        && (sr.PrsStatus == PrsStatus.UnderReview  || sr.PrsStatus == PrsStatus.BeingAppealed)))
+                                    .FirstOrDefault()
+                                    .TlLookup.Value,
                 })
                 .ToListAsync();
 
