@@ -5,7 +5,5 @@
         NotSpecified = 0,
         EnglishIncomplete = 1,
         MathsIncomplete = 2,
-        IndustryPlacementIncomplete = 3,
-        AllIncomplete = 4,
     }
 }

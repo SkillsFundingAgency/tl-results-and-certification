@@ -53,7 +53,8 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             if (request.Tlevels != null && request.Tlevels.Any())
                 pathwayQueryable = pathwayQueryable.Where(p => request.Tlevels.Contains(p.TqProvider.TqAwardingOrganisation.TlPathway.Id));
 
-            if (request.Statuses != null && request.Statuses.Any())
+            if (request.Statuses != null && request.Statuses.Any()
+                || request.IndustryPlacementStatus != null && request.IndustryPlacementStatus.Any())
             {
                 var expressions = new List<Expression<Func<TqRegistrationPathway, bool>>>();
 
@@ -67,12 +68,27 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                         case (int)LearnerStatusFilter.MathsIncomplete:
                             expressions.Add(p => p.TqRegistrationProfile.MathsStatus == null);
                             break;
-                        case (int)LearnerStatusFilter.IndustryPlacementIncomplete:
-                            expressions.Add(p => !p.IndustryPlacements.Any());
+                    }
+                }
+
+                foreach (var statusId in request.IndustryPlacementStatus.OrderBy(s => s))
+                {
+                    switch (statusId)
+                    {
+                        case (int)IndustryPlacementSearchFilterStatus.IndustryPlacementCompleted:
+                            expressions.Add(p => p.IndustryPlacements.Any(ip => ip.Status == IndustryPlacementStatus.Completed));
                             break;
-                        case (int)LearnerStatusFilter.AllIncomplete:
-                            expressions.Clear();
-                            expressions.Add(p => p.TqRegistrationProfile.EnglishStatus == null || p.TqRegistrationProfile.MathsStatus == null || !p.IndustryPlacements.Any());
+                        case (int)IndustryPlacementSearchFilterStatus.IndustryPlacementCompletedWithConsideration:
+                            expressions.Add(p => p.IndustryPlacements.Any(ip => ip.Status == IndustryPlacementStatus.CompletedWithSpecialConsideration));
+                            break;
+                        case (int)IndustryPlacementSearchFilterStatus.IndustryPlacementNotCompleted:
+                            expressions.Add(p => p.IndustryPlacements.Any(ip => ip.Status == IndustryPlacementStatus.NotCompleted));
+                            break;
+                        case (int)IndustryPlacementSearchFilterStatus.IndustryPlacementWillNotComplete:
+                            expressions.Add(p => p.IndustryPlacements.Any(ip => ip.Status == IndustryPlacementStatus.WillNotComplete));
+                            break;
+                        case (int)IndustryPlacementSearchFilterStatus.IndustryPlacementNotReported:
+                            expressions.Add(p => !p.IndustryPlacements.Any());
                             break;
                     }
                 }
