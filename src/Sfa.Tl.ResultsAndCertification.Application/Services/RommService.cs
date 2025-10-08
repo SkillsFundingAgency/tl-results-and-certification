@@ -178,8 +178,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
                     // 6. Learner's Active Specialism Assessments
                     activeSpecialismAssessmentEntry = profile.TqRegistrationPathways
-                        .Select(rp => rp.TqRegistrationSpecialisms.WhereActive().FirstOrDefault())
-                        .Select(sa => sa.TqSpecialismAssessments.FirstOrDefault(a => a.AssessmentSeriesId == specialismAssessmentSeries.Id && a.IsOptedin && a.EndDate is null))
+                        .Select(rp => rp.TqRegistrationSpecialisms.Where(rs => rs.IsOptedin && rs.EndDate == null)
+                            .FirstOrDefault(rs => rs.IsOptedin && rs.EndDate is null && rs.TlSpecialism.LarId == rommData.SpecialismCode))
+                        .Select(sa => sa.TqSpecialismAssessments
+                            .FirstOrDefault(a => a.AssessmentSeriesId == specialismAssessmentSeries.Id && a.IsOptedin && a.EndDate is null))
                         .FirstOrDefault();
 
                     // 7. Active Assessment Series matches Assessment to change
@@ -311,8 +313,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     SpecialismCode = rommData.SpecialismCode,
                     SpecialismAssessmentSeriesId = activeSpecialismAssessmentEntry.AssessmentSeriesId
                 });
-            };
-
+            }
             return response;
         }
 

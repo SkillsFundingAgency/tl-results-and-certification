@@ -142,6 +142,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Industry Placement.
+        /// </summary>
+        public static string Filters_Industry_Placements {
+            get {
+                return ResourceManager.GetString("Filters_Industry_Placements", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Selected filters.
         /// </summary>
         public static string Filters_Selected_Filters {

@@ -89,7 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 07 February 2025.
+        ///   Looks up a localized string similar to 01 September 2025.
         /// </summary>
         public static string Assessment_Entries_PublishedDate_Text {
             get {
@@ -224,7 +224,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 07 February 2025.
+        ///   Looks up a localized string similar to 01 September 2025.
         /// </summary>
         public static string Registrations_PublishedDate_Text {
             get {
@@ -260,7 +260,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 07 February 2025.
+        ///   Looks up a localized string similar to 01 September 2025.
         /// </summary>
         public static string Results_PublishedDate_Text {
             get {
@@ -296,7 +296,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 07 February 2025.
+        ///   Looks up a localized string similar to 01 September 2025.
         /// </summary>
         public static string Romms_PublishedDate_Text {
             get {
@@ -458,7 +458,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 07 February 2025.
+        ///   Looks up a localized string similar to 01 September 2025.
         /// </summary>
         public static string Withdrawals_PublishedDate_Text {
             get {

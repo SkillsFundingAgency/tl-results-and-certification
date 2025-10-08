@@ -7,6 +7,9 @@ namespace Sfa.Tl.ResultsAndCertification.Models.DataExport
         [DisplayName(ProviderRegistrationExportHeader.Uln)]
         public long Uln { get; set; }
 
+        [DisplayName(ProviderRegistrationExportHeader.IsPendingWithdrawal)]
+        public string IsPendingWithdrawal { get; set; }
+
         [DisplayName(ProviderRegistrationExportHeader.LastName)]
         public string Lastname { get; set; }
 

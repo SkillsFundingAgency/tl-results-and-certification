@@ -84,6 +84,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.AdminDash
             },
             ["11/9/2025".ToDateTime()] = new List<FilterLookupData>
             {
+               new FilterLookupData { Id = 2020, Name = "2020 to 2021", IsSelected = false },
                new FilterLookupData { Id = 2021, Name = "2021 to 2022", IsSelected = false },
                new FilterLookupData { Id = 2022, Name = "2022 to 2023", IsSelected = false },
                new FilterLookupData { Id = 2023, Name = "2023 to 2024", IsSelected = false },

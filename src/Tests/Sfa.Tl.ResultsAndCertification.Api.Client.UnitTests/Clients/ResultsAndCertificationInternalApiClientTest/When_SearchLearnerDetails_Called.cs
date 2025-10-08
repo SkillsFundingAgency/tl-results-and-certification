@@ -69,13 +69,13 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                         IndustryPlacementStatus = null
                     }
                 },
-                PagerInfo = new Pager(2, 1, 10)      
+                PagerInfo = new Pager(2, 1, 10)
             };
 
             _apiRequest = new SearchLearnerRequest
             {
                 AcademicYear = new List<int> { 2020 },
-                Statuses = new List<int> { (int)LearnerStatusFilter.IndustryPlacementIncomplete },
+                Statuses = new List<int> { (int)LearnerStatusFilter.MathsIncomplete },
                 Tlevels = new List<int> { 1, 2 },
                 SearchKey = "Smith1",
                 PageNumber = 1,

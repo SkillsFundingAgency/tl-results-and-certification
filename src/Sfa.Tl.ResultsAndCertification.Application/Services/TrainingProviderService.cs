@@ -49,11 +49,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             foreach (var status in EnumExtensions.GetEnumDisplayNameAndValue<SearchLearnerFilterStatus>())
                 statusFiltersList.Add(new FilterLookupData { Id = (int)status.Key, Name = status.Value, IsSelected = false });
 
+            var industryPlacementStatusFiltersList = new List<FilterLookupData>();
+            foreach (var status in EnumExtensions.GetEnumDisplayNameAndValue<IndustryPlacementSearchFilterStatus>())
+                industryPlacementStatusFiltersList.Add(new FilterLookupData { Id = (int)status.Key, Name = status.Value, IsSelected = false });
+
             return new SearchLearnerFilters
             {
                 AcademicYears = await _trainingProviderRepository.GetSearchAcademicYearFiltersAsync(DateTime.UtcNow),
                 Tlevels = await _trainingProviderRepository.GetSearchTlevelFiltersAsync(),
-                Status = statusFiltersList
+                Status = statusFiltersList,
+                IndustryPlacementStatus = industryPlacementStatusFiltersList
             };
         }
 

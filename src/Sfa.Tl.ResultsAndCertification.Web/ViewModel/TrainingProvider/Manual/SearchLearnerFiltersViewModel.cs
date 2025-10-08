@@ -8,6 +8,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
     {
         public IList<FilterLookupData> AcademicYears { get; set; }
         public IList<FilterLookupData> Status { get; set; }
+        public IList<FilterLookupData> IndustryPlacementStatus { get; set; }
         public IList<FilterLookupData> Tlevels { get; set; }
         public bool IsApplyFiltersSelected { get; set; }
 
@@ -17,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
             {
                 var selectedFilters = new List<string>();
 
-                if(AcademicYears != null && AcademicYears.Any())
+                if (AcademicYears != null && AcademicYears.Any())
                 {
                     selectedFilters.AddRange(AcademicYears.Where(a => a.IsSelected).Select(a => a.Name));
                 }
@@ -25,6 +26,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
                 if (Status != null && Status.Any())
                 {
                     selectedFilters.AddRange(Status.Where(s => s.IsSelected).Select(s => s.Name));
+                }
+
+                if (IndustryPlacementStatus != null && Status.Any())
+                {
+                    selectedFilters.AddRange(IndustryPlacementStatus.Where(s => s.IsSelected).Select(s => s.Name));
                 }
 
                 if (Tlevels != null && Tlevels.Any())

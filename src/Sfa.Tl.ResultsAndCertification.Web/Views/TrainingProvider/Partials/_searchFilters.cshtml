@@ -71,6 +71,26 @@
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
+                    @SearchLearnerDetails.Filters_Industry_Placements
+                </legend>
+                <div class="govuk-checkboxes" data-module="govuk-checkboxes">
+                    @foreach (var status in Model?.SearchLearnerFilters?.IndustryPlacementStatus?.Select((value, i) => (value, i)))
+                    {
+                        var elementId = (status.i > 0) ? "ipselectedtstatus-" + status.i : "selectediptstatus";
+                        <div class="govuk-checkboxes__item govuk-checkboxes--small">
+                            <input class="govuk-checkboxes__input" id="@elementId" type="checkbox" asp-for="@Model.SearchLearnerFilters.IndustryPlacementStatus[status.i].IsSelected">
+                            <label class="govuk-label govuk-checkboxes__label" for="@elementId">
+                                @status.value.Name
+                            </label>
+                        </div>
+                        <input type="hidden" asp-for="@Model.SearchLearnerFilters.IndustryPlacementStatus[status.i].Id" />
+                    }
+                </div>
+            </fieldset>
+        </div>
+        <div class="govuk-form-group">
+            <fieldset class="govuk-fieldset">
+                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
                     @SearchLearnerDetails.Filters_Tlevel
                 </legend>
                 <div class="govuk-checkboxes" data-module="govuk-checkboxes">
@@ -80,7 +100,7 @@
                         <div class="govuk-checkboxes__item govuk-checkboxes--small">
                             <input class="govuk-checkboxes__input" id="@elementId" type="checkbox" asp-for="@Model.SearchLearnerFilters.Tlevels[tlevel.i].IsSelected">
                             <label class="govuk-label govuk-checkboxes__label" for="@elementId">
-                                @tlevel.value.Name
+                                @tlevel.value.Name (@tlevel.value.CoreCode)
                             </label>
                         </div>
                         <input type="hidden" asp-for="@Model.SearchLearnerFilters.Tlevels[@tlevel.i].Id" />                        
