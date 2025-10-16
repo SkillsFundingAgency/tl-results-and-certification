@@ -218,15 +218,16 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                             .SelectMany(pr => pr.TqPathwayResults
                                 .Where(pr => pr.IsOptedin && pr.EndDate == null &&
                                     (pr.PrsStatus == PrsStatus.UnderReview || pr.PrsStatus == PrsStatus.Reviewed)))
-                                .FirstOrDefault()
-                                .TlLookup.Value,
+                                // If PRS = UnderReview, value should be empty for quick identification - requested by business
+                                .Select(pr => pr.PrsStatus == PrsStatus.UnderReview ? string.Empty : pr.TlLookup.Value)
+                                .FirstOrDefault(),
                     AssessmentSeriesSpecialisms = romm.TqRegistrationSpecialisms
                         .Where(rs => rs.IsOptedin && rs.EndDate == null)
                             .SelectMany(sa => sa.TqSpecialismAssessments
                                 .Where(sa => sa.IsOptedin && sa.EndDate == null))
                                     .SelectMany(sr => sr.TqSpecialismResults
                                         .Where(sr => sr.IsOptedin && sr.EndDate == null
-                                            && (sr.PrsStatus == PrsStatus.UnderReview  || sr.PrsStatus == PrsStatus.Reviewed)))
+                                            && (sr.PrsStatus == PrsStatus.UnderReview || sr.PrsStatus == PrsStatus.Reviewed)))
                                         .FirstOrDefault()
                                         .TqSpecialismAssessment.AssessmentSeries.Name,
                     SpecialismComponentCode = romm.TqRegistrationSpecialisms.First().TlSpecialism.LarId,
@@ -236,16 +237,17 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                 .Any(sa => sa.IsOptedin && sa.EndDate == null
                                     && sa.TqSpecialismResults
                                         .Any(sr => sr.IsOptedin && sr.EndDate == null
-                                            && (sr.PrsStatus == PrsStatus.UnderReview  || sr.PrsStatus == PrsStatus.Reviewed)))),
+                                            && (sr.PrsStatus == PrsStatus.UnderReview || sr.PrsStatus == PrsStatus.Reviewed)))),
                     SpecialismRommOutcome = romm.TqRegistrationSpecialisms
                     .Where(rs => rs.IsOptedin && rs.EndDate == null)
                         .SelectMany(sa => sa.TqSpecialismAssessments
                             .Where(sa => sa.IsOptedin && sa.EndDate == null))
                                 .SelectMany(sr => sr.TqSpecialismResults
                                     .Where(sr => sr.IsOptedin && sr.EndDate == null
-                                        && (sr.PrsStatus == PrsStatus.UnderReview  || sr.PrsStatus == PrsStatus.Reviewed)))
+                                        && (sr.PrsStatus == PrsStatus.UnderReview || sr.PrsStatus == PrsStatus.Reviewed)))
+                                    // If PRS = UnderReview, value should be empty for quick identification - requested by business
+                                    .Select(sr => sr.PrsStatus == PrsStatus.UnderReview ? string.Empty : sr.TlLookup.Value)
                                     .FirstOrDefault()
-                                    .TlLookup.Value,
                 })
                 .ToListAsync();
 
