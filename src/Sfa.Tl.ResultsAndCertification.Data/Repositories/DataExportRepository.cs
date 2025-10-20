@@ -218,7 +218,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                             .SelectMany(pr => pr.TqPathwayResults
                                 .Where(pr => pr.IsOptedin && pr.EndDate == null &&
                                     (pr.PrsStatus == PrsStatus.UnderReview || pr.PrsStatus == PrsStatus.Reviewed)))
-                                // If PRS = UnderReview, value should be empty for quick identification - requested by business
                                 .Select(pr => pr.PrsStatus == PrsStatus.UnderReview ? string.Empty : pr.TlLookup.Value)
                                 .FirstOrDefault(),
                     AssessmentSeriesSpecialisms = romm.TqRegistrationSpecialisms
@@ -245,7 +244,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                 .SelectMany(sr => sr.TqSpecialismResults
                                     .Where(sr => sr.IsOptedin && sr.EndDate == null
                                         && (sr.PrsStatus == PrsStatus.UnderReview || sr.PrsStatus == PrsStatus.Reviewed)))
-                                    // If PRS = UnderReview, value should be empty for quick identification - requested by business
                                     .Select(sr => sr.PrsStatus == PrsStatus.UnderReview ? string.Empty : sr.TlLookup.Value)
                                     .FirstOrDefault()
                 })
