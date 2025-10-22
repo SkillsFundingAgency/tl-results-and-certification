@@ -27,15 +27,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.AwardingOrganisation, opts => opts.MapFrom(s => s.TqProvider.TqAwardingOrganisation.TlAwardingOrganisaton))
                 .ForMember(d => d.OverallCalculationStatus, opts => opts.MapFrom(s => GetOverallCalculationStatus(s.OverallResults)))
                 .ForMember(d => d.OverallResult, opts => opts.MapFrom(s => GetOverallResult(s.OverallResults)))
-                .ForMember(d => d.PrintCertificateId, opts => opts.MapFrom(s => GetPrintCertificateId(s.PrintCertificates)))
-                .ForMember(d => d.PrintCertificateType, opts => opts.MapFrom(s => GetPrintCertificateType(s.PrintCertificates)))
-                .ForMember(d => d.LastPrintCertificateRequestedDate, opts => opts.MapFrom(s => GetLastPrintCertificateRequestedDate(s.PrintCertificates)))
+                .ForMember(d => d.PrintCertificateId, opts => opts.MapFrom(s => GetPrintCertificateId(s)))
+                .ForMember(d => d.PrintCertificateType, opts => opts.MapFrom(s => GetPrintCertificateType(s)))
+                .ForMember(d => d.LastPrintCertificateRequestedDate, opts => opts.MapFrom(s => GetLastPrintCertificateRequestedDate(s)))
                 .ForMember(d => d.ProviderAddress, opts => opts.MapFrom(s => GetProviderAddress(s.TqProvider.TlProvider.TlProviderAddresses)))
-                .ForMember(d => d.BatchId, opts => opts.MapFrom(s => GetBatchId(s.PrintCertificates)))
-                .ForMember(d => d.PrintRequestSubmittedOn, opts => opts.MapFrom(s => GetPrintRequestSubmittedOn(s.PrintCertificates)))
-                .ForMember(d => d.PrintingBatchItemStatus, opts => opts.MapFrom(s => GetPrintingBatchItemStatus(s.PrintCertificates)))
-                .ForMember(d => d.PrintingBatchItemStatusChangedOn, opts => opts.MapFrom(s => GetPrintingBatchItemStatusChangedOn(s.PrintCertificates)))
-                .ForMember(d => d.TrackingId, opts => opts.MapFrom(s => GetTrackingId(s.PrintCertificates)));
+                .ForMember(d => d.BatchId, opts => opts.MapFrom(s => GetBatchId(s)))
+                .ForMember(d => d.PrintRequestSubmittedOn, opts => opts.MapFrom(s => GetPrintRequestSubmittedOn(s)))
+                .ForMember(d => d.PrintingBatchItemStatus, opts => opts.MapFrom(s => GetPrintingBatchItemStatus(s)))
+                .ForMember(d => d.PrintingBatchItemStatusChangedOn, opts => opts.MapFrom(s => GetPrintingBatchItemStatusChangedOn(s)))
+                .ForMember(d => d.TrackingId, opts => opts.MapFrom(s => GetTrackingId(s)));
 
             CreateMap<TlAwardingOrganisation, AwardingOrganisation>()
                 .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
@@ -66,35 +66,39 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
             return overallResult.ResultAwarded;
         }
 
-        private static T GetPrintCertificateProperty<T>(ICollection<PrintCertificate> printCertificates, Func<PrintCertificate, T> getProperty)
+        private static T GetPrintCertificateProperty<T>(TqRegistrationPathway registrationPathway, Func<PrintCertificate, T> getProperty)
         {
-            PrintCertificate printCertificate = printCertificates.OrderByDescending(c => c.Id).FirstOrDefault();
+            var allPrintCertificates = registrationPathway?.TqRegistrationProfile?.TqRegistrationPathways
+                .SelectMany(p => p.PrintCertificates ?? Enumerable.Empty<PrintCertificate>())
+                .OrderByDescending(pc => pc.Id);
+
+            PrintCertificate printCertificate = allPrintCertificates.FirstOrDefault();
             return getProperty(printCertificate);
         }
 
-        private static int? GetPrintCertificateId(ICollection<PrintCertificate> printCertificates)
-            => GetPrintCertificateProperty(printCertificates, p => p?.Id);
+        private static int? GetPrintCertificateId(TqRegistrationPathway registrationPathway)
+            => GetPrintCertificateProperty(registrationPathway, p => p?.Id);
 
-        private static PrintCertificateType? GetPrintCertificateType(ICollection<PrintCertificate> printCertificates)
-            => GetPrintCertificateProperty(printCertificates, p => p?.Type);
+        private static PrintCertificateType? GetPrintCertificateType(TqRegistrationPathway registrationPathway)
+            => GetPrintCertificateProperty(registrationPathway, p => p?.Type);
 
-        private static DateTime? GetLastPrintCertificateRequestedDate(ICollection<PrintCertificate> printCertificates)
-            => GetPrintCertificateProperty(printCertificates, p => p?.LastRequestedOn);
+        private static DateTime? GetLastPrintCertificateRequestedDate(TqRegistrationPathway registrationPathway)
+            => GetPrintCertificateProperty(registrationPathway, p => p?.LastRequestedOn);
 
-        private static DateTime? GetPrintRequestSubmittedOn(ICollection<PrintCertificate> printCertificates)
-            => GetPrintCertificateProperty(printCertificates, p => p?.PrintBatchItem?.Batch?.RunOn);
+        private static DateTime? GetPrintRequestSubmittedOn(TqRegistrationPathway registrationPathway)
+            => GetPrintCertificateProperty(registrationPathway, p => p?.PrintBatchItem?.Batch?.RunOn);
 
-        private static int? GetBatchId(ICollection<PrintCertificate> printCertificates)
-            => GetPrintCertificateProperty(printCertificates, p => p?.PrintBatchItem?.BatchId);
+        private static int? GetBatchId(TqRegistrationPathway registrationPathway)
+            => GetPrintCertificateProperty(registrationPathway, p => p?.PrintBatchItem?.BatchId);
 
-        private static string GetTrackingId(ICollection<PrintCertificate> printCertificates)
-            => GetPrintCertificateProperty(printCertificates, p => p?.PrintBatchItem?.TrackingId);
+        private static string GetTrackingId(TqRegistrationPathway registrationPathway)
+            => GetPrintCertificateProperty(registrationPathway, p => p?.PrintBatchItem?.TrackingId);
 
-        private static PrintingBatchItemStatus? GetPrintingBatchItemStatus(ICollection<PrintCertificate> printCertificates)
-            => GetPrintCertificateProperty(printCertificates, p => p?.PrintBatchItem?.Status);
+        private static PrintingBatchItemStatus? GetPrintingBatchItemStatus(TqRegistrationPathway registrationPathway)
+            => GetPrintCertificateProperty(registrationPathway, p => p?.PrintBatchItem?.Status);
 
-        private static DateTime? GetPrintingBatchItemStatusChangedOn(ICollection<PrintCertificate> printCertificates)
-            => GetPrintCertificateProperty(printCertificates, p => p?.PrintBatchItem?.StatusChangedOn);
+        private static DateTime? GetPrintingBatchItemStatusChangedOn(TqRegistrationPathway registrationPathway)
+            => GetPrintCertificateProperty(registrationPathway, p => p?.PrintBatchItem?.StatusChangedOn);
 
         private static Address GetProviderAddress(ICollection<TlProviderAddress> addresses)
         {
