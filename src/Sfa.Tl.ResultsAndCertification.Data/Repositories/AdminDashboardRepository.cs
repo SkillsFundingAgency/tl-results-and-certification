@@ -49,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     .ThenInclude(x => x.TlLookup)
                 .Include(x => x.TqRegistrationProfile)
                     .ThenInclude(x => x.TqRegistrationPathways)
-                        .ThenInclude(x => x.PrintCertificates)
+                        .ThenInclude(x => x.PrintCertificates.Where(pc => pc.Type == PrintCertificateType.StatementOfAchievement || pc.Type == PrintCertificateType.Certificate))
                             .ThenInclude(x => x.PrintBatchItem)
                                 .ThenInclude(x => x.Batch)
                 .Include(x => x.TqProvider)
@@ -73,9 +73,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                     .ThenInclude(x => x.AssessmentSeries)
             .Include(x => x.IndustryPlacements)
             .Include(x => x.OverallResults.Where(o => o.IsOptedin && (o.TqRegistrationPathway.Status == RegistrationPathwayStatus.Withdrawn) ? o.EndDate != null : o.EndDate == null))
-            .Include(x => x.PrintCertificates.Where(pc => pc.Type == PrintCertificateType.StatementOfAchievement || pc.Type == PrintCertificateType.Certificate))
-                .ThenInclude(x => x.PrintBatchItem)
-                .ThenInclude(x => x.Batch)
             .OrderByDescending(o => o.CreatedOn);
 
             TqRegistrationPathway regPathway = await query.FirstOrDefaultAsync(p => p.Id == registrationPathwayId &&
