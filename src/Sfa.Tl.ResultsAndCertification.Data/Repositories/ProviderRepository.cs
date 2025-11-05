@@ -57,7 +57,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                          join tqprov in _dbContext.TqProvider on new { a = tqao.Id, b = providerId } equals new { a = tqprov.TqAwardingOrganisationId, b = tqprov.TlProviderId } into tlevels
                                          from tlevelsResult in tlevels.DefaultIfEmpty()
                                          join tlao in _dbContext.TlAwardingOrganisation on new { a = tqao.TlAwardingOrganisatonId, b = ukprn } equals new { a = tlao.Id, b = tlao.UkPrn }
-                                         where tlevelsResult == null
+                                         where tlevelsResult == null && tqao.TlPathway.IsActive
                                          select new ProviderTlevel
                                          {
                                              TqAwardingOrganisationId = tqao.Id,
