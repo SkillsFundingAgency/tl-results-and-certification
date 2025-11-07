@@ -6,6 +6,7 @@
         public int TqAwardingOrganisationId { get; set; }
         public int TlProviderId { get; set; }
         public string TlevelTitle { get; set; }
+        public string TlevelCode { get; set; }
         public string CreatedBy { get; set; }
     }
 }

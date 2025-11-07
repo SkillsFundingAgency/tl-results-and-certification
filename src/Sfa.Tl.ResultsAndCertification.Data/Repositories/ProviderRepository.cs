@@ -3,7 +3,6 @@ using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts.Learner;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                              TqAwardingOrganisationId = tqao.Id,
                                              TlProviderId = tlprov.Id,
                                              TlevelTitle = tqao.TlPathway.TlevelTitle,
+                                             TlevelCode = tqao.TlPathway.LarId,
                                              TqProviderId = result.Id
                                          }).OrderBy(o => o.TlevelTitle).ToList()
                           }).FirstOrDefaultAsync();
@@ -57,7 +57,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                          join tqprov in _dbContext.TqProvider on new { a = tqao.Id, b = providerId } equals new { a = tqprov.TqAwardingOrganisationId, b = tqprov.TlProviderId } into tlevels
                                          from tlevelsResult in tlevels.DefaultIfEmpty()
                                          join tlao in _dbContext.TlAwardingOrganisation on new { a = tqao.TlAwardingOrganisatonId, b = ukprn } equals new { a = tlao.Id, b = tlao.UkPrn }
-                                         where tlevelsResult == null
+                                         where tlevelsResult == null && tqao.TlPathway.IsActive
                                          select new ProviderTlevel
                                          {
                                              TqAwardingOrganisationId = tqao.Id,
@@ -66,26 +66,26 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                          }).OrderBy(o => o.TlevelTitle).ToList()
                           }).FirstOrDefaultAsync();
         }
-           
+
         public async Task<IList<ProviderAddressDetails>> GetProviderAddressesForRegistrations(int[] academicYears)
         {
-           return await (from trp in _dbContext.TqRegistrationPathway
-                                               join tqp in _dbContext.TqProvider on trp.TqProviderId equals tqp.Id
-                                               join tlp in _dbContext.TlProvider on tqp.TlProviderId equals tlp.Id
-                                               join tlpa in _dbContext.TlProviderAddress on tlp.Id equals tlpa.TlProviderId into ps
-                                               from tlpa in ps.DefaultIfEmpty()
-                                               where academicYears.Contains(trp.AcademicYear) && tlpa.IsActive
-                                               select new ProviderAddressDetails
-                                               {
-                                                   Name = tlp.Name,
-                                                   UkPrn = tlp.UkPrn,
-                                                   AddressLine1 = tlpa.AddressLine1,
-                                                   AddressLine2 = tlpa.AddressLine2,
-                                                   Postcode = tlpa.Postcode,
-                                                   Town = tlpa.Town,
-                                                   CreatedOn = tlpa.CreatedOn,
-                                                   ModifiedOn = tlpa.ModifiedOn
-                                               }).Distinct().ToListAsync();          
+            return await (from trp in _dbContext.TqRegistrationPathway
+                          join tqp in _dbContext.TqProvider on trp.TqProviderId equals tqp.Id
+                          join tlp in _dbContext.TlProvider on tqp.TlProviderId equals tlp.Id
+                          join tlpa in _dbContext.TlProviderAddress on tlp.Id equals tlpa.TlProviderId into ps
+                          from tlpa in ps.DefaultIfEmpty()
+                          where academicYears.Contains(trp.AcademicYear) && tlpa.IsActive
+                          select new ProviderAddressDetails
+                          {
+                              Name = tlp.Name,
+                              UkPrn = tlp.UkPrn,
+                              AddressLine1 = tlpa.AddressLine1,
+                              AddressLine2 = tlpa.AddressLine2,
+                              Postcode = tlpa.Postcode,
+                              Town = tlpa.Town,
+                              CreatedOn = tlpa.CreatedOn,
+                              ModifiedOn = tlpa.ModifiedOn
+                          }).Distinct().ToListAsync();
         }
     }
 }
