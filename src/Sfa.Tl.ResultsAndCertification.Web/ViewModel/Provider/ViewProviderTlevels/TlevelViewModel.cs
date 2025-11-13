@@ -4,5 +4,6 @@
     {
         public int? TqProviderId { get; set; }
         public string TlevelTitle { get; set; }
+        public string TlevelCode { get; set; }
     }
 }
