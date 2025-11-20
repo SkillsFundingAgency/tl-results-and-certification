@@ -2,7 +2,7 @@
 using Aspose.Pdf.Text;
 using Sfa.Tl.ResultsAndCertification.Models.DownloadOverallResults;
 
-namespace Sfa.Tl.ResultsAndCertification.Application.Models.ResultSlips
+namespace Sfa.Tl.ResultsAndCertification.Application.Services.ResultSlipsBuilder
 {
     public class LearnerTableBuilder : TableBuilderBase
     {
@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Models.ResultSlips
 
         public LearnerTableBuilder BuildTable()
         {
-            this.AddSubSectionHeader(_data.Tlevel, "")
+            AddSubSectionHeader(_data.Tlevel, "")
                 .AddRow(DownloadOverallResultSlipsHeader.LearnerName, _data.LearnerName)
                 .AddRow(DownloadOverallResultSlipsHeader.Uln, _data.Uln.ToString())
                 .AddRow(DownloadOverallResultSlipsHeader.ProviderName, _data.ProviderName)

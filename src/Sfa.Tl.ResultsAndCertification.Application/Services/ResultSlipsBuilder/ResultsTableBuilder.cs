@@ -2,7 +2,7 @@
 using Aspose.Pdf.Text;
 using Sfa.Tl.ResultsAndCertification.Models.DownloadOverallResults;
 
-namespace Sfa.Tl.ResultsAndCertification.Application.Models.ResultSlips
+namespace Sfa.Tl.ResultsAndCertification.Application.Services.ResultSlipsBuilder
 {
     public class ResultsTableBuilder : TableBuilderBase
     {
@@ -26,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Models.ResultSlips
 
         public ResultsTableBuilder BuildTable()
         {
-            this.AddSectionHeader(DownloadOverallResultSlipsHeader.TitleCore, "")
+            AddSectionHeader(DownloadOverallResultSlipsHeader.TitleCore, "")
                 .AddSubSectionHeader($"{_data.CoreComponent} ({_data.CoreCode})", "")
                 .AddRow(DownloadOverallResultSlipsHeader.HighestAttainedGradeSeries, _data.CoreAssessmentSeries)
                 .AddRow(DownloadOverallResultSlipsHeader.CoreGrade, _data.CoreResult)

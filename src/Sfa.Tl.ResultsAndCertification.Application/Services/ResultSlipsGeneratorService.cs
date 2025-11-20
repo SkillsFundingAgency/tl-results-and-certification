@@ -7,7 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Models.DownloadOverallResults;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using static Sfa.Tl.ResultsAndCertification.Application.Models.ResultSlips.ResultSlipsGeneratorService;
+using static Sfa.Tl.ResultsAndCertification.Application.Services.ResultSlipsBuilder.ResultSlipsGeneratorService;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
 {

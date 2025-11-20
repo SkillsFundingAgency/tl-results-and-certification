@@ -4,7 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.System.Interface;
 using Sfa.Tl.ResultsAndCertification.Models.DownloadOverallResults;
 using System.IO;
 
-namespace Sfa.Tl.ResultsAndCertification.Application.Models.ResultSlips
+namespace Sfa.Tl.ResultsAndCertification.Application.Services.ResultSlipsBuilder
 {
     public partial class ResultSlipsGeneratorService
     {
@@ -154,7 +154,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Models.ResultSlips
                     _page.Contents.Add(new Aspose.Pdf.Operators.GSave());
 
                     Rectangle rectangle = new(lowerLeftX, lowerLeftY, upperRightX, upperRightY);
-                    Aspose.Pdf.Matrix matrix = new(new double[] { rectangle.URX - rectangle.LLX, 0, 0, rectangle.URY - rectangle.LLY, rectangle.LLX, rectangle.LLY });
+                    Matrix matrix = new(new double[] { rectangle.URX - rectangle.LLX, 0, 0, rectangle.URY - rectangle.LLY, rectangle.LLX, rectangle.LLY });
 
                     _page.Contents.Add(new Aspose.Pdf.Operators.ConcatenateMatrix(matrix));
                     XImage ximage = _page.Resources.Images[_page.Resources.Images.Count];

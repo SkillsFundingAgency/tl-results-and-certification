@@ -2,7 +2,7 @@
 using Aspose.Pdf.Text;
 using Sfa.Tl.ResultsAndCertification.Models.DownloadOverallResults;
 
-namespace Sfa.Tl.ResultsAndCertification.Application.Models.ResultSlips
+namespace Sfa.Tl.ResultsAndCertification.Application.Services.ResultSlipsBuilder
 {
     public abstract class TableBuilderBase
     {
