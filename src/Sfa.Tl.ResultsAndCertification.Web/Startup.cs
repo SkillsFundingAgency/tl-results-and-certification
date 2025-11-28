@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.CookiePolicy;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -66,6 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
                 options.Secure = CookieSecurePolicy.Always;
+                options.HttpOnly  = HttpOnlyPolicy.Always;
             });
 
             services.AddAntiforgery(options =>
@@ -119,6 +121,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
                 options.IdleTimeout = TimeSpan.FromMinutes(ResultsAndCertificationConfiguration.DfeSignInSettings.Timeout);
                 options.Cookie.HttpOnly = true;
                 options.Cookie.IsEssential = true;
+                options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
             });
 
             services.AddSingleton<TokenValidatedStrategy>();
