@@ -448,7 +448,7 @@
         public const string SubmitAdminIndustryPlacementSpecialConsiderationReasons = "SubmitAdminIndustryPlacementSpecialConsiderationReasons";
         public const string AdminReviewChangesIndustryPlacement = "AdminReviewChangesIndustryPlacement";
         public const string SubmitReviewChangesIndustryPlacement = "SubmitReviewChangesIndustryPlacement";
-       
+
         public const string AdminChangeMathsStatusClear = "AdminChangeMathsStatusClear";
         public const string AdminChangeMathsStatus = "AdminChangeMathsStatus";
         public const string SubmitAdminChangeMathsStatus = "SubmitAdminChangeMathsStatus";
@@ -654,6 +654,15 @@
         public const string SubmitAdminEditNotification = "SubmitAdminEditNotification";
         public const string AdminAddNotification = "AdminAddNotification";
         public const string SubmitAdminAddNotification = "SubmitAdminAddNotification";
+
+        #endregion
+
+        #region Admin assessment series dates
+        public const string AdminAssessmentSeriesDatesClear = "AdminAssessmentSeriesDatesClear";
+        public const string AdminAssessmentSeriesDates = "AdminAssessmentSeriesDates";
+        public const string SubmitAdminAssessmentSeriesDatesApplyFilters = "SubmitAdminAssessmentSeriesDatesApplyFilters";
+        public const string SubmitAdminAssessmentSeriesDatesClearFilters = "SubmitAdminAssessmentSeriesDatesClearFilters";
+        public const string AdminAssessmentSeriesDateDetails = "AdminAssessmentSeriesDateDetails";
 
         #endregion
 

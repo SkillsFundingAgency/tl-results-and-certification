@@ -244,6 +244,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
             services.AddTransient<IProviderRegistrationsLoader, ProviderRegistrationsLoader>();
             services.AddTransient<IDashboardLoader, DashboardLoader>();
             services.AddTransient<IAdminNotificationLoader, AdminNotificationLoader>();
+            services.AddTransient<IAdminAssessmentSeriesDatesLoader, AdminAssessmentSeriesDatesLoader>();
             services.AddTransient<IAdminDownloadLearnerResultsLoader, AdminDownloadLearnerResultsLoader>();
             services.AddTransient<IAdminAwardingOrganisationLoader, AdminAwardingOrganisationLoader>();
         }

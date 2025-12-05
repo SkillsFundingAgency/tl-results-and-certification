@@ -4,6 +4,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminAssessmentSeriesDates;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminChangeLog;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminNotification;
@@ -678,6 +679,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
         public Task<bool> UpdateNotificationAsync(UpdateNotificationRequest request)
             => PutAsync<UpdateNotificationRequest, bool>(ApiConstants.UpdateNotification, request);
+
+        #endregion
+
+        #region Admin Assessment Series Dates
+        public async Task<IEnumerable<GetAssessmentSeriesDatesResponse>> GetAssessmentSeriesDatesAsync()
+            => await GetAsync<IEnumerable<GetAssessmentSeriesDatesResponse>>(ApiConstants.GetAssessmentSeriesDatesUri);
 
         #endregion
 
