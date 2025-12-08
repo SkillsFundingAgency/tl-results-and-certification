@@ -8,10 +8,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
     {
         AdminAssessmentSeriesDatesCriteriaViewModel LoadFilters();
 
-        //Task<List<AdminAssessmentSeriesDateDetailsViewModel>> SearchAssessmentSeriesDatesAsync(AdminAssessmentSeriesDatesCriteriaViewModel criteria);
+        Task<IEnumerable<AdminAssessmentSeriesViewModel>> SearchAssessmentSeriesDatesAsync(AdminAssessmentSeriesDatesCriteriaViewModel criteria);
 
-        Task<List<AdminAssessmentSeriesDateDetailsViewModel>> GetAssessmentSeriesDatesAsync();
-
-        Task<AdminAssessmentSeriesDateDetailsViewModel> GetAssessmentSeriesDatesDetailsViewModel(int assessmentId);
+        Task<AdminAssessmentSeriesDetailsViewModel> GetAssessmentSeriesDateViewModel(int assessmentId);
     }
 }

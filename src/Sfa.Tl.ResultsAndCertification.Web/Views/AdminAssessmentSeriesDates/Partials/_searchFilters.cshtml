@@ -3,7 +3,7 @@
 @using Sfa.Tl.ResultsAndCertification.Common.Helpers
 @using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminAssessmentSeriesDates
 
-<form asp-route="@RouteConstants.SubmitAdminAssessmentSeriesDatesApplyFilters">
+<form asp-route="@RouteConstants.SubmitSearchAssessmentSeriesDatesApplyFilters">
 
     <h2 class="govuk-heading-m govuk-!-padding-top-4">@AdminAssessmentSeriesDates.Heading_Filters </h2>
 
@@ -31,6 +31,6 @@
 
     <div class="govuk-button-group">
         <button id="filterButton" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@AdminAssessmentSeriesDates.Button_Apply_Filters</button>
-        <button id="clearFiltersButton" class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" asp-route="@RouteConstants.SubmitAdminAssessmentSeriesDatesClearFilters">@AdminAssessmentSeriesDates.Button_Clear_Filters</button>
+        <button id="clearFiltersButton" class="govuk-button govuk-button--secondary" role="button" data-module="govuk-button" asp-route="@RouteConstants.SubmitSearchAssessmentSeriesDatesClearFilters">@AdminAssessmentSeriesDates.Button_Clear_Filters</button>
     </div>
 </form>

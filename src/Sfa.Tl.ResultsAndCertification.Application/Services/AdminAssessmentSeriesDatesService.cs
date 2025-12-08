@@ -4,7 +4,9 @@ using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminAssessmentSeriesDates;
+using System;
 using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services
@@ -20,13 +22,29 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             _mapper = mapper;
         }
 
-        public async Task<List<GetAssessmentSeriesDatesResponse>> GetAssessmentSeriesDatesAsync()
+        public async Task<GetAssessmentSeriesDatesDetailsResponse> GetAssessmentSeriesDateAsync(int assessmentId)
         {
-            List<AssessmentSeries> assessmentSeries = await _repository.GetManyAsync().ToListAsync();
-            return _mapper.Map<List<GetAssessmentSeriesDatesResponse>>(assessmentSeries);
+            AssessmentSeries assessmentSeries = await _repository.GetFirstOrDefaultAsync(e => e.Id == assessmentId);
+            return _mapper.Map<GetAssessmentSeriesDatesDetailsResponse>(assessmentSeries);
         }
 
-        //public Task<IEnumerable<GetAssessmentSeriesDatesResponse>> SearchAssessmentSeriesDatesAsync(SearchAssessmentSeriesDatesRequest request)
-        //    => _repository.GetManyAsync(x => x.ComponentType == (int)request.ComponentType);
+        public async Task<IEnumerable<GetAssessmentSeriesDatesDetailsResponse>> SearchAssessmentSeriesDatesAsync(SearchAssessmentSeriesDatesRequest request)
+        {
+            Expression<Func<AssessmentSeries, bool>> predicate = SearchPredicate(request);
+
+            var assessmentSeries = await _repository.GetManyAsync(predicate).ToListAsync();
+
+            return _mapper.Map<List<GetAssessmentSeriesDatesDetailsResponse>>(assessmentSeries);
+        }
+
+        private Expression<Func<AssessmentSeries, bool>> SearchPredicate(SearchAssessmentSeriesDatesRequest request)
+        {
+            if (request.SelectedFilters == null || request.SelectedFilters.Count == 0)
+            {
+                return null;
+            }
+
+            return a => request.SelectedFilters.Contains((int)a.ComponentType);
+        }
     }
 }

@@ -8,11 +8,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
     {
         public AdminAssessmentSeriesDatesMapper()
         {
-            CreateMap<AssessmentSeries, GetAssessmentSeriesDatesResponse>()
+            CreateMap<AssessmentSeries, GetAssessmentSeriesDatesDetailsResponse>()
                 .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
                 .ForMember(d => d.Name, opts => opts.MapFrom(s => s.Name))
                 .ForMember(d => d.ComonentType, opts => opts.MapFrom(s => (int)s.ComponentType))
                 .ForMember(d => d.StartDate, opts => opts.MapFrom(s => s.StartDate))
+                .ForMember(d => d.ResultCalculationYear, opts => opts.MapFrom(s => s.ResultCalculationYear))
                 .ForMember(d => d.EndDate, opts => opts.MapFrom(s => s.EndDate))
                 .ForMember(d => d.RommEndDate, opts => opts.MapFrom(s => s.RommEndDate))
                 .ForMember(d => d.AppealEndDate, opts => opts.MapFrom(s => s.AppealEndDate))

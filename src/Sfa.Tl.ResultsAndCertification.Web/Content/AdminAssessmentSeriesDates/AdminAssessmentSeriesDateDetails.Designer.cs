@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminAssessmentSeriesDates {
+namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminAssessmentSeriesDateDetails {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminAssessmentSeriesDates 
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class AdminAssessmentSeriesDates {
+    public class AdminAssessmentSeriesDateDetails {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal AdminAssessmentSeriesDates() {
+        internal AdminAssessmentSeriesDateDetails() {
         }
         
         /// <summary>
@@ -40,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminAssessmentSeriesDates 
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Sfa.Tl.ResultsAndCertification.Web.Content.AdminAssessmentSeriesDates.AdminAssess" +
-                            "mentSeriesDates", typeof(AdminAssessmentSeriesDates).Assembly);
+                            "mentSeriesDateDetails", typeof(AdminAssessmentSeriesDateDetails).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -62,25 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminAssessmentSeriesDates 
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Apply filters.
-        /// </summary>
-        public static string Button_Apply_Filters {
-            get {
-                return ResourceManager.GetString("Button_Apply_Filters", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Clear filters.
-        /// </summary>
-        public static string Button_Clear_Filters {
-            get {
-                return ResourceManager.GetString("Button_Clear_Filters", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Assessment Series Dates.
+        ///   Looks up a localized string similar to Assessment Series Dates Details.
         /// </summary>
         public static string Heading_Assessment_Series_Dates {
             get {
@@ -89,16 +71,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminAssessmentSeriesDates 
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Filters.
+        ///   Looks up a localized string similar to Appeal End Date.
         /// </summary>
-        public static string Heading_Filters {
+        public static string Label_Appeal_End_Date {
             get {
-                return ResourceManager.GetString("Heading_Filters", resourceCulture);
+                return ResourceManager.GetString("Label_Appeal_End_Date", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Component:.
+        ///   Looks up a localized string similar to Component.
         /// </summary>
         public static string Label_Component {
             get {
@@ -107,7 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminAssessmentSeriesDates 
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to End Date:.
+        ///   Looks up a localized string similar to End Date.
         /// </summary>
         public static string Label_End_Date {
             get {
@@ -116,7 +98,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminAssessmentSeriesDates 
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Name:.
+        ///   Looks up a localized string similar to Name.
         /// </summary>
         public static string Label_Name {
             get {
@@ -125,7 +107,43 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminAssessmentSeriesDates 
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Start Date:.
+        ///   Looks up a localized string similar to Print Available Date.
+        /// </summary>
+        public static string Label_Print_Available_Date {
+            get {
+                return ResourceManager.GetString("Label_Print_Available_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Result Calculation Year.
+        /// </summary>
+        public static string Label_Result_Calculation_Year {
+            get {
+                return ResourceManager.GetString("Label_Result_Calculation_Year", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Result Publish Date.
+        /// </summary>
+        public static string Label_Result_Publish_Date {
+            get {
+                return ResourceManager.GetString("Label_Result_Publish_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Romm End Date.
+        /// </summary>
+        public static string Label_Romm_End_Date {
+            get {
+                return ResourceManager.GetString("Label_Romm_End_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Date.
         /// </summary>
         public static string Label_Start_Date {
             get {
@@ -134,7 +152,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminAssessmentSeriesDates 
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Assessment Series Dates - Admin.
+        ///   Looks up a localized string similar to Assessment Series Date Details - Admin.
         /// </summary>
         public static string Page_Title {
             get {

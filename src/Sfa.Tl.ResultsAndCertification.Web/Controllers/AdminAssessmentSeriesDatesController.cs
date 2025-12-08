@@ -32,16 +32,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("admin/assessment-series-dates-clear", Name = RouteConstants.AdminAssessmentSeriesDatesClear)]
-        public async Task<IActionResult> AdminAssessmentSeriesDatesClearAsync()
+        [Route("admin/assessment-series-dates-clear", Name = RouteConstants.SearchAssessmentSeriesDatesClear)]
+        public async Task<IActionResult> SearchAssessmentSeriesDatesClearAsync()
         {
             await _cacheService.RemoveAsync<AdminAssessmentSeriesDatesViewModel>(CacheKey);
-            return RedirectToRoute(RouteConstants.AdminAssessmentSeriesDates);
+            return RedirectToRoute(RouteConstants.SearchAssessmentSeriesDates);
         }
 
         [HttpGet]
-        [Route("admin/assessment-series-dates", Name = RouteConstants.AdminAssessmentSeriesDates)]
-        public async Task<IActionResult> AdminAssessmentSeriesDatesAsync()
+        [Route("admin/assessment-series-dates", Name = RouteConstants.SearchAssessmentSeriesDates)]
+        public async Task<IActionResult> SearchAssessmentSeriesDatesAsync()
         {
             var viewModel = await _cacheService.GetAsync<AdminAssessmentSeriesDatesViewModel>(CacheKey);
 
@@ -50,61 +50,61 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 AdminAssessmentSeriesDatesCriteriaViewModel criteria = new();
                 criteria = _loader.LoadFilters();
 
-                //viewModel = await _loader.SearchNotificationAsync(criteria);
+                viewModel = new AdminAssessmentSeriesDatesViewModel();
+
+                viewModel.SearchCriteria = criteria;
+                viewModel.Series = await _loader.SearchAssessmentSeriesDatesAsync(criteria);
 
                 await _cacheService.SetAsync(CacheKey, viewModel);
                 return View(viewModel);
             }
 
-            //AdminAssessmentSeriesDatesViewModel viewModel = new();
-
-            viewModel.SearchCriteria = _loader.LoadFilters();
-            viewModel.Series = await _loader.GetAssessmentSeriesDatesAsync();
+            viewModel.Series = await _loader.SearchAssessmentSeriesDatesAsync(viewModel.SearchCriteria);
 
             return View(viewModel);
         }
 
         [HttpPost]
-        [Route("admin/find-assessment-series-dates-apply-filters", Name = RouteConstants.SubmitAdminAssessmentSeriesDatesApplyFilters)]
-        public async Task<IActionResult> AdminAssessmentSeriesDatesApplyFiltersAsync(AdminAssessmentSeriesDatesCriteriaViewModel searchCriteriaViewModel)
+        [Route("admin/search-assessment-series-dates-apply-filters", Name = RouteConstants.SubmitSearchAssessmentSeriesDatesApplyFilters)]
+        public async Task<IActionResult> SearchAssessmentSeriesDatesApplyFiltersAsync(AdminAssessmentSeriesDatesCriteriaViewModel searchCriteriaViewModel)
         {
             var viewModel = await _cacheService.GetAsync<AdminAssessmentSeriesDatesViewModel>(CacheKey);
 
             if (viewModel == null)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No AdminAssessmentSeriesDatesViewModel cache data found. Method: {RouteConstants.SubmitAdminAssessmentSeriesDatesApplyFilters}, User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No AdminAssessmentSeriesDatesViewModel cache data found. Method: {RouteConstants.SubmitSearchAssessmentSeriesDatesApplyFilters}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
             viewModel.SearchCriteria = searchCriteriaViewModel;
 
             await _cacheService.SetAsync(CacheKey, viewModel);
-            return RedirectToRoute(RouteConstants.AdminAssessmentSeriesDates, new { pageNumber = viewModel.SearchCriteria.PageNumber });
+            return RedirectToRoute(RouteConstants.SearchAssessmentSeriesDates, new { pageNumber = viewModel.SearchCriteria.PageNumber });
         }
 
         [HttpPost]
-        [Route("admin/find-assessment-series-dates-clear-filters", Name = RouteConstants.SubmitAdminAssessmentSeriesDatesClearFilters)]
-        public async Task<IActionResult> AdminAssessmentSeriesDatesClearFiltersAsync()
+        [Route("admin/search-assessment-series-dates-clear-filters", Name = RouteConstants.SubmitSearchAssessmentSeriesDatesClearFilters)]
+        public async Task<IActionResult> SearchAssessmentSeriesDatesClearFiltersAsync()
         {
             var viewModel = await _cacheService.GetAsync<AdminAssessmentSeriesDatesViewModel>(CacheKey);
 
             if (viewModel == null)
             {
-                _logger.LogWarning(LogEvent.NoDataFound, $"No AdminAssessmentSeriesDatesViewModel cache data found. Method: {RouteConstants.SubmitAdminAssessmentSeriesDatesClearFilters}, User: {User.GetUserEmail()}");
+                _logger.LogWarning(LogEvent.NoDataFound, $"No AdminAssessmentSeriesDatesViewModel cache data found. Method: {RouteConstants.SubmitSearchAssessmentSeriesDatesClearFilters}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
             viewModel.SearchCriteria = _loader.LoadFilters();
 
             await _cacheService.SetAsync(CacheKey, viewModel);
-            return RedirectToRoute(RouteConstants.AdminAssessmentSeriesDates, new { pageNumber = viewModel.SearchCriteria.PageNumber });
+            return RedirectToRoute(RouteConstants.SearchAssessmentSeriesDates, new { pageNumber = viewModel.SearchCriteria.PageNumber });
         }
 
         [HttpGet]
-        [Route("admin/assessment-series-date-details/{assessmentId}", Name = RouteConstants.AdminAssessmentSeriesDateDetails)]
-        public async Task<IActionResult> AdminAssessmentSeriesDatesDetailsAsync(int assessmentId)
+        [Route("admin/assessment-series-date/{assessmentId}", Name = RouteConstants.AdminAssessmentSeriesDateDetails)]
+        public async Task<IActionResult> AdminAssessmentSeriesDateAsync(int assessmentId)
         {
-            AdminAssessmentSeriesDateDetailsViewModel viewModel = await _loader.GetAssessmentSeriesDatesDetailsViewModel(assessmentId);
+            AdminAssessmentSeriesDetailsViewModel viewModel = await _loader.GetAssessmentSeriesDateViewModel(assessmentId);
 
             if (viewModel == null)
             {

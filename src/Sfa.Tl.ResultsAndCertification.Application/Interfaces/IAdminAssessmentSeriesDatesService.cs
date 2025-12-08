@@ -6,7 +6,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
 {
     public interface IAdminAssessmentSeriesDatesService
     {
-        Task<List<GetAssessmentSeriesDatesResponse>> GetAssessmentSeriesDatesAsync();
-        //Task<IEnumerable<GetAssessmentSeriesDatesResponse>> SearchAssessmentSeriesDatesAsync(SearchAssessmentSeriesDatesRequest request);
+        Task<GetAssessmentSeriesDatesDetailsResponse> GetAssessmentSeriesDateAsync(int assessmentId);
+        Task<IEnumerable<GetAssessmentSeriesDatesDetailsResponse>> SearchAssessmentSeriesDatesAsync(SearchAssessmentSeriesDatesRequest request);
     }
 }

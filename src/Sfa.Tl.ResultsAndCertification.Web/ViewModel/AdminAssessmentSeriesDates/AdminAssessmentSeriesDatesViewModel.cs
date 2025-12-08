@@ -1,6 +1,6 @@
-﻿using Sfa.Tl.ResultsAndCertification.Common.Extensions;
-using Sfa.Tl.ResultsAndCertification.Common.Helpers;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.ChangeRecordLink;
 using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminAssessmentSeriesDates
@@ -9,16 +9,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminAssessmentSeriesDate
     {
         public AdminAssessmentSeriesDatesCriteriaViewModel SearchCriteria { get; set; } = new AdminAssessmentSeriesDatesCriteriaViewModel();
 
-        public List<AdminAssessmentSeriesDateDetailsViewModel> Series { get; set; } = new List<AdminAssessmentSeriesDateDetailsViewModel>();
+        public IEnumerable<AdminAssessmentSeriesViewModel> Series { get; set; } = new List<AdminAssessmentSeriesViewModel>();
 
-        public int TotalRecords { get; set; }
-
-        public bool ContainsResults
-            => !Series.IsNullOrEmpty() && Series.Count > 0;
+        public ChangeRecordModel NotificationDetailsLink { get; set; }
 
         public BackLinkModel BackLink => new()
         {
             RouteName = RouteConstants.AdminHome
         };
+
     }
 }

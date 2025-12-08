@@ -196,7 +196,8 @@
         public const string UpdateNotification = "/api/adminnotification/UpdateNotification";
 
         //Admin assessment series dates
-        public const string GetAssessmentSeriesDatesUri = "/api/adminassessmentseriesdates/GetAssessmentSeriesDates";
+        public const string GetAssessmentSeriesDate = "/api/adminassessmentseriesdates/GetAssessmentSeriesDate/{0}";
+        public const string SearchAssessmentSeriesDates = "/api/adminassessmentseriesdates/SearchAssessmentSeriesDates";
 
         //Awarding organisations
         public const string GetAllAwardingOrganisations = "/api/awardingorganisation/GetAllAwardingOrganisations";

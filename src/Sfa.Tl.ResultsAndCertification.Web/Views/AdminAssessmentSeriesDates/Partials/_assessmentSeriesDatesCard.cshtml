@@ -1,4 +1,5 @@
-﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminAssessmentSeriesDates.AdminAssessmentSeriesDateDetailsViewModel
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminAssessmentSeriesDates.AdminAssessmentSeriesViewModel
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
 @using Sfa.Tl.ResultsAndCertification.Web.Content.AdminAssessmentSeriesDates
 
 <div class="govuk-summary-list__row">
@@ -6,17 +7,15 @@
         <div class="govuk-grid-column-full">
             <dt class="govuk-summary-list__key">
                 <h3 class="govuk-heading-m govuk-!-margin-bottom-0">
-                   @Model.Name
+                    <a id="link" class="govuk-link" asp-route="@RouteConstants.AdminAssessmentSeriesDateDetails" asp-route-assessmentId="@Model.Id">
+                        @Model.Name
+                    </a>
                 </h3>
             </dt>
             <dd class="govuk-summary-list__value govuk-grid-column-full">
                 <p>@($"{AdminAssessmentSeriesDates.Label_Component} {Model.ComponentType.ToString()}")</p>
                 <p>@($"{AdminAssessmentSeriesDates.Label_Start_Date} {Model.StartDate}")</p>
                 <p>@($"{AdminAssessmentSeriesDates.Label_End_Date} {Model.EndDate}")</p>
-                <p>@($"{AdminAssessmentSeriesDates.Label_Romm_End_Date} {Model.RommEndDate}")</p>
-                <p>@($"{AdminAssessmentSeriesDates.Label_Appeal_End_Date} {Model.AppealEndDate}")</p>
-                <p>@($"{AdminAssessmentSeriesDates.Label_Result_Publish_Date} {Model.ResultPublishDate}")</p>
-                <p>@($"{AdminAssessmentSeriesDates.Label_Print_Available_Date} {Model.PrintAvailableDate}")</p>
             </dd>
         </div>
     </div>

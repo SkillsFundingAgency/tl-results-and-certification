@@ -658,10 +658,10 @@
         #endregion
 
         #region Admin assessment series dates
-        public const string AdminAssessmentSeriesDatesClear = "AdminAssessmentSeriesDatesClear";
-        public const string AdminAssessmentSeriesDates = "AdminAssessmentSeriesDates";
-        public const string SubmitAdminAssessmentSeriesDatesApplyFilters = "SubmitAdminAssessmentSeriesDatesApplyFilters";
-        public const string SubmitAdminAssessmentSeriesDatesClearFilters = "SubmitAdminAssessmentSeriesDatesClearFilters";
+        public const string SearchAssessmentSeriesDatesClear = "SearchAssessmentSeriesDatesClear";
+        public const string SearchAssessmentSeriesDates = "SearchAssessmentSeriesDates";
+        public const string SubmitSearchAssessmentSeriesDatesApplyFilters = "SubmitSearchAssessmentSeriesDatesApplyFilters";
+        public const string SubmitSearchAssessmentSeriesDatesClearFilters = "SubmitSearchAssessmentSeriesDatesClearFilters";
         public const string AdminAssessmentSeriesDateDetails = "AdminAssessmentSeriesDateDetails";
 
         #endregion

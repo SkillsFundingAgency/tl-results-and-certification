@@ -118,30 +118,36 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Heading_Assessment_Series_Dates" xml:space="preserve">
-    <value>Assessment Series Dates</value>
+    <value>Assessment Series Dates Details</value>
+  </data>
+  <data name="Label_Appeal_End_Date" xml:space="preserve">
+    <value>Appeal End Date</value>
   </data>
   <data name="Label_Component" xml:space="preserve">
-    <value>Component:</value>
+    <value>Component</value>
   </data>
   <data name="Label_End_Date" xml:space="preserve">
-    <value>End Date:</value>
-  </data>
-  <data name="Heading_Filters" xml:space="preserve">
-    <value>Filters</value>
+    <value>End Date</value>
   </data>
   <data name="Label_Name" xml:space="preserve">
-    <value>Name:</value>
+    <value>Name</value>
   </data>
-  <data name="Page_Title" xml:space="preserve">
-    <value>Assessment Series Dates - Admin</value>
+  <data name="Label_Print_Available_Date" xml:space="preserve">
+    <value>Print Available Date</value>
   </data>
-  <data name="Button_Apply_Filters" xml:space="preserve">
-    <value>Apply filters</value>
+  <data name="Label_Result_Calculation_Year" xml:space="preserve">
+    <value>Result Calculation Year</value>
   </data>
-  <data name="Button_Clear_Filters" xml:space="preserve">
-    <value>Clear filters</value>
+  <data name="Label_Result_Publish_Date" xml:space="preserve">
+    <value>Result Publish Date</value>
+  </data>
+  <data name="Label_Romm_End_Date" xml:space="preserve">
+    <value>Romm End Date</value>
   </data>
   <data name="Label_Start_Date" xml:space="preserve">
-    <value>Start Date:</value>
+    <value>Start Date</value>
+  </data>
+  <data name="Page_Title" xml:space="preserve">
+    <value>Assessment Series Date Details - Admin</value>
   </data>
 </root>

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminAssessmentSeriesDates;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminAssessmentSeriesDates;
@@ -41,26 +42,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 PageNumber = 1
             };
 
-        public async Task<List<AdminAssessmentSeriesDateDetailsViewModel>> GetAssessmentSeriesDatesAsync()
+        public async Task<AdminAssessmentSeriesDetailsViewModel> GetAssessmentSeriesDateViewModel(int assessmentId)
         {
-            var assessments = await _apiClient.GetAssessmentSeriesDatesAsync();
-            return _mapper.Map<List<AdminAssessmentSeriesDateDetailsViewModel>>(assessments);
+            var assessment = await _apiClient.GetAssessmentSeriesDateAsync(assessmentId);
+            return _mapper.Map<AdminAssessmentSeriesDetailsViewModel>(assessment);
         }
 
-        public Task<AdminAssessmentSeriesDateDetailsViewModel> GetAssessmentSeriesDatesDetailsViewModel(int assessmentId)
+        public async Task<IEnumerable<AdminAssessmentSeriesViewModel>> SearchAssessmentSeriesDatesAsync(AdminAssessmentSeriesDatesCriteriaViewModel criteria)
         {
-            throw new System.NotImplementedException();
+            SearchAssessmentSeriesDatesRequest searchRequest = _mapper.Map<SearchAssessmentSeriesDatesRequest>(criteria);
+
+            var assessments = await _apiClient.SearchAssessmentSeriesDatesAsync(searchRequest);
+            return _mapper.Map<IEnumerable<AdminAssessmentSeriesViewModel>>(assessments);
         }
-
-        //public Task<List<AdminAssessmentSeriesDateDetailsViewModel>> SearchAssessmentSeriesDatesAsync(AdminAssessmentSeriesDatesCriteriaViewModel criteria)
-        //{
-        //    SearchAssessmentSeriesDatesRequest searchRequest = _mapper.Map<SearchAssessmentSeriesDatesRequest>(criteria);
-
-        //    PagedResponse<SearchNotificationDetail> assessments = await _apiClient.SearchNotificationsAsync(searchRequest);
-        //    return _mapper.Map<List<AdminAssessmentSeriesDateDetailsViewModel>>(assessments);
-
-        //    result.SearchCriteria = criteria;
-        //    return result;
-        //}
     }
 }

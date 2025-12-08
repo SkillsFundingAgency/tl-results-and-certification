@@ -17,13 +17,13 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpGet]
-        [Route("GetAssessmentSeriesDates")]
-        public async Task<IEnumerable<GetAssessmentSeriesDatesResponse>> GetAssessmentSeriesDatesAsync()
-            => await _adminAssessmentSeriesDatesService.GetAssessmentSeriesDatesAsync();
+        [Route("GetAssessmentSeriesDate/{assessmentId}")]
+        public async Task<GetAssessmentSeriesDatesDetailsResponse> GetAssessmentSeriesDatesAsync(int assessmentId)
+            => await _adminAssessmentSeriesDatesService.GetAssessmentSeriesDateAsync(assessmentId);
 
-        //[HttpGet]
-        //[Route("SearchAssessmentSeriesDates")]
-        //public async Task<IEnumerable<GetAssessmentSeriesDatesResponse>> SearchAssessmentSeriesDatesAsync(SearchAssessmentSeriesDatesRequest request)
-        //    => await _adminAssessmentSeriesDatesService.SearchAssessmentSeriesDatesAsync(request);
+        [HttpPost]
+        [Route("SearchAssessmentSeriesDates")]
+        public async Task<IEnumerable<GetAssessmentSeriesDatesDetailsResponse>> SearchAssessmentSeriesDatesAsync(SearchAssessmentSeriesDatesRequest request)
+            => await _adminAssessmentSeriesDatesService.SearchAssessmentSeriesDatesAsync(request);
     }
 }
