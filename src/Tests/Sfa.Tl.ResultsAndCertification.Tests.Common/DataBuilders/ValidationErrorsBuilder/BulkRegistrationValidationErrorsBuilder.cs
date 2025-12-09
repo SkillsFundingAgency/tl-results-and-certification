@@ -43,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
                 RowNum = "2",
                 Uln = "",
                 ErrorMessage = "Academic year required"
-            },            
+            },
             new BulkProcessValidationError
             {
                 RowNum = "2",
@@ -110,7 +110,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
             {
                 RowNum = "3",
                 Uln = "111111112",
-                ErrorMessage = ValidationMessages.CoreNotRegisteredWithProvider
+                ErrorMessage = ValidationMessages.TLevelIsInActiveOrUnavailable
             },
             new BulkProcessValidationError
             {
