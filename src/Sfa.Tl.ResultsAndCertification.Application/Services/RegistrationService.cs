@@ -64,13 +64,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             foreach (var registrationData in validRegistrationsData)
             {
-                var isTlevelActiveOrAvailableForAO = aoProviderTlevels.Any(t => t.PathwayLarId == registrationData.CoreCode);
-                if (!isTlevelActiveOrAvailableForAO)
-                {
-                    response.Add(AddStage3ValidationError(registrationData.RowNum, registrationData.Uln, ValidationMessages.TLevelIsInActiveOrUnavailable));
-                    continue;
-                }
-
                 var academicYear = academicYears.FirstOrDefault(x => x.Name.Equals(registrationData.AcademicYearName, StringComparison.InvariantCultureIgnoreCase));
                 if (academicYear == null)
                 {
@@ -91,6 +84,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 if (technicalQualification == null)
                 {
                     response.Add(AddStage3ValidationError(registrationData.RowNum, registrationData.Uln, ValidationMessages.CoreNotRegisteredWithProvider));
+                    continue;
+                }
+
+                var isTlevelActiveOrAvailableForAO = aoProviderTlevels.Any(e => e.IsAvailable && e.PathwayLarId == registrationData.CoreCode && e.ProviderUkprn == registrationData.ProviderUkprn);
+                if (!isTlevelActiveOrAvailableForAO)
+                {
+                    response.Add(AddStage3ValidationError(registrationData.RowNum, registrationData.Uln, ValidationMessages.TLevelIsInActiveOrUnavailable));
                     continue;
                 }
 
@@ -938,8 +938,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var result = await _tqProviderRepository.GetManyAsync(p => p.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == ukprn
                                                                     && p.TqAwardingOrganisation.TlAwardingOrganisaton.IsActive
-                                                                    && p.TqAwardingOrganisation.TlPathway.IsActive
-                                                                    && p.TqAwardingOrganisation.TlPathway.IsAvailable,
+                                                                    && p.TqAwardingOrganisation.TlPathway.IsActive,
                p => p.TlProvider, p => p.TqAwardingOrganisation, p => p.TqAwardingOrganisation.TlAwardingOrganisaton,
                p => p.TqAwardingOrganisation.TlPathway, p => p.TqAwardingOrganisation.TlPathway.TlPathwaySpecialismCombinations.Where(p => p.IsActive),
                p => p.TqAwardingOrganisation.TlPathway.TlSpecialisms.Where(p => p.IsActive)).ToListAsync();

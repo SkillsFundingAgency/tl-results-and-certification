@@ -110,7 +110,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
             {
                 RowNum = "3",
                 Uln = "111111112",
-                ErrorMessage = ValidationMessages.TLevelIsInActiveOrUnavailable
+                ErrorMessage = ValidationMessages.CoreNotRegisteredWithProvider
             },
             new BulkProcessValidationError
             {
