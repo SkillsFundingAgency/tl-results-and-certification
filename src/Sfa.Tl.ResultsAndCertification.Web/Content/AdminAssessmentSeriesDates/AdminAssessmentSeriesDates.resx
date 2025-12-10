@@ -118,7 +118,7 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Heading_Assessment_Series_Dates" xml:space="preserve">
-    <value>Assessment Series Dates</value>
+    <value>Assessment series dates</value>
   </data>
   <data name="Label_Component" xml:space="preserve">
     <value>Component:</value>
@@ -143,5 +143,8 @@
   </data>
   <data name="Label_Start_Date" xml:space="preserve">
     <value>Start Date:</value>
+  </data>
+  <data name="Label_Rows_Count_Text" xml:space="preserve">
+    <value>Viewing {0} assessment series</value>
   </data>
 </root>

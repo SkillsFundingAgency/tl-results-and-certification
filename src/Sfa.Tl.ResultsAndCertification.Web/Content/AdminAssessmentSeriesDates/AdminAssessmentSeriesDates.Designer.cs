@@ -80,7 +80,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminAssessmentSeriesDates 
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Assessment Series Dates.
+        ///   Looks up a localized string similar to Assessment series dates.
         /// </summary>
         public static string Heading_Assessment_Series_Dates {
             get {
@@ -121,6 +121,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminAssessmentSeriesDates 
         public static string Label_Name {
             get {
                 return ResourceManager.GetString("Label_Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Viewing {0} assessment series.
+        /// </summary>
+        public static string Label_Rows_Count_Text {
+            get {
+                return ResourceManager.GetString("Label_Rows_Count_Text", resourceCulture);
             }
         }
         

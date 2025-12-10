@@ -1,7 +1,7 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
-using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.ChangeRecordLink;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminAssessmentSeriesDates
 {
@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminAssessmentSeriesDate
 
         public IEnumerable<AdminAssessmentSeriesViewModel> Series { get; set; } = new List<AdminAssessmentSeriesViewModel>();
 
-        public ChangeRecordModel NotificationDetailsLink { get; set; }
+        public string TotalRecords => Series != null ? Series.Count().ToString() : "0";
 
         public BackLinkModel BackLink => new()
         {

@@ -11,9 +11,10 @@
 {
     <vc:back-link model=Model.BackLink></vc:back-link>
 }
-<h1 class="govuk-heading-xl">@AdminAssessmentSeriesDates.Heading_Assessment_Series_Dates</h1>
+
 
 <div class="govuk-grid-row">
+    <h1 class="govuk-heading-xl">@AdminAssessmentSeriesDates.Heading_Assessment_Series_Dates</h1>
 
     <div class="govuk-grid-column-one-third">
 
@@ -24,6 +25,8 @@
     </div>
     <div class="govuk-grid-column-two-thirds">
         <div class="learner-records">
+            <h2 class="govuk-body">@string.Format(AdminAssessmentSeriesDates.Label_Rows_Count_Text, Model.TotalRecords)</h2>
+
             <dl class="govuk-summary-list">
                 @foreach (var series in Model.Series)
                 {

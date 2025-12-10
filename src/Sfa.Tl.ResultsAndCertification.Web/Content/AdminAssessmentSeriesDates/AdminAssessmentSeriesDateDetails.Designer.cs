@@ -62,6 +62,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminAssessmentSeriesDates 
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search.
+        /// </summary>
+        public static string Button_Search {
+            get {
+                return ResourceManager.GetString("Button_Search", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Details.
         /// </summary>
         public static string Heading_Details {
