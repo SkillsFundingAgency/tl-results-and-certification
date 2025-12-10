@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("admin/assessment-series-dates-clear", Name = RouteConstants.SearchAssessmentSeriesDatesClear)]
+        [Route("admin/search-assessment-series-dates-clear", Name = RouteConstants.SearchAssessmentSeriesDatesClear)]
         public async Task<IActionResult> SearchAssessmentSeriesDatesClearAsync()
         {
             await _cacheService.RemoveAsync<AdminAssessmentSeriesDatesViewModel>(CacheKey);
@@ -40,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("admin/assessment-series-dates", Name = RouteConstants.SearchAssessmentSeriesDates)]
+        [Route("admin/search-assessment-series-dates", Name = RouteConstants.SearchAssessmentSeriesDates)]
         public async Task<IActionResult> SearchAssessmentSeriesDatesAsync()
         {
             var viewModel = await _cacheService.GetAsync<AdminAssessmentSeriesDatesViewModel>(CacheKey);

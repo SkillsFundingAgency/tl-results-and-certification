@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminAssessmentSeriesDateDetails {
+namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminAssessmentSeriesDates {
     using System;
     
     
@@ -62,11 +62,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminAssessmentSeriesDateDe
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Assessment Series Dates Details.
+        ///   Looks up a localized string similar to Details.
         /// </summary>
-        public static string Heading_Assessment_Series_Dates {
+        public static string Heading_Details {
             get {
-                return ResourceManager.GetString("Heading_Assessment_Series_Dates", resourceCulture);
+                return ResourceManager.GetString("Heading_Details", resourceCulture);
             }
         }
         
@@ -130,6 +130,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminAssessmentSeriesDateDe
         public static string Label_Result_Publish_Date {
             get {
                 return ResourceManager.GetString("Label_Result_Publish_Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Results Calculation Year.
+        /// </summary>
+        public static string Label_Results_Year {
+            get {
+                return ResourceManager.GetString("Label_Results_Year", resourceCulture);
             }
         }
         

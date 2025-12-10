@@ -1,5 +1,5 @@
 ﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminAssessmentSeriesDates.AdminAssessmentSeriesDetailsViewModel
-@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminAssessmentSeriesDateDetails
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminAssessmentSeriesDates
 @using Sfa.Tl.ResultsAndCertification.Common.Helpers
 @using Sfa.Tl.ResultsAndCertification.Common.Enum
 
@@ -11,16 +11,21 @@
 {
     <vc:back-link model=Model.BackLink></vc:back-link>
 }
-<h1 class="govuk-heading-xl">@AdminAssessmentSeriesDateDetails.Heading_Assessment_Series_Dates</h1>
 
 <div class="govuk-grid-row">
-    <div class="govuk-grid-column-three-quarters">
-        <h1 class="govuk-heading-l">@Model.Name</h1>
+    <div class="govuk-grid-column-full">
+        <div class="record-header">
+            <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
+                @Model.Name
+            </h1>
+        </div>
 
+        <h2 class="govuk-heading-m">@AdminAssessmentSeriesDateDetails.Heading_Details</h2>
         <dl class="govuk-summary-list govuk-!-margin-bottom-9 govuk-summary-list">
             <vc:summary-item model=Model.ComponentType></vc:summary-item>
             <vc:summary-item model=Model.SummaryStartDate></vc:summary-item>
             <vc:summary-item model=Model.SummaryEndDate></vc:summary-item>
+            <vc:summary-item model=Model.SummaryResultsCalculationYear></vc:summary-item>
             <vc:summary-item model=Model.SummaryRommEndDate></vc:summary-item>
             <vc:summary-item model=Model.SummaryAppealEndDate></vc:summary-item>
             <vc:summary-item model=Model.SummaryResultPublishDate></vc:summary-item>

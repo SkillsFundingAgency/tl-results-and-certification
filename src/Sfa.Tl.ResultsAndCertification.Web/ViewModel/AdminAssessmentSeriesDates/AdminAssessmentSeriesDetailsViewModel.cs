@@ -9,8 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminAssessmentSeriesDate
         public int Id { get; set; }
         public string Name { get; set; }
         public SummaryItemModel ComponentType { get; set; }
-        public SummaryItemModel SummaryResultCalculationYear { get; set; }
-        public SummaryItemModel SummaryResultsYear { get; set; }
+        public SummaryItemModel SummaryResultsCalculationYear { get; set; }
         public SummaryItemModel SummaryStartDate { get; set; }
         public SummaryItemModel SummaryEndDate { get; set; }
         public SummaryItemModel SummaryRommEndDate { get; set; }
@@ -20,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminAssessmentSeriesDate
 
         public BackLinkModel BackLink => new()
         {
-            RouteName = RouteConstants.AdminAssessmentSeriesDateDetails
+            RouteName = RouteConstants.SearchAssessmentSeriesDates
         };
     }
 }
