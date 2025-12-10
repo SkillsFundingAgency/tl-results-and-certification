@@ -163,7 +163,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var providerPathways = await _tqProviderRepository.GetManyAsync(x => x.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn
                                                                            && x.TlProvider.UkPrn == providerUkprn
-                                                                           && x.TqAwardingOrganisation.TlPathway.IsActive)
+                                                                           && x.TqAwardingOrganisation.TlPathway.IsActive
+                                                                           && x.TqAwardingOrganisation.TlPathway.IsAvailable)
                                                               .Select(p => p.TqAwardingOrganisation.TlPathway).OrderBy(p => p.Name).ToListAsync();
 
             return _mapper.Map<IList<PathwayDetails>>(providerPathways);
