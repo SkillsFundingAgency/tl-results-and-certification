@@ -1,9 +1,9 @@
-﻿using System.Collections.Generic;
-using Sfa.Tl.ResultsAndCertification.Common.Enum;
+﻿using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Enum;
+using System.Collections.Generic;
 
 namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
 {
@@ -53,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
         }
 
         #endregion
-        
+
         #region TlRoute
 
         public static TlRoute CreateTlRoute(ResultsAndCertificationDbContext _dbContext, EnumAwardingOrganisation awardingOrganisation, bool addToDbContext = true)
@@ -96,10 +96,10 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
 
             if (addToDbContext && tlRoutes != null)
             {
-                foreach(var tlRoute in tlRoutes)
+                foreach (var tlRoute in tlRoutes)
                 {
                     _dbContext.Add(tlRoute);
-                }                
+                }
             }
             return tlRoutes;
         }
@@ -133,14 +133,14 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             return tlPathway;
         }
 
-        public static TlPathway CreateTlPathway(ResultsAndCertificationDbContext _dbContext, EnumAwardingOrganisation awardingOrganisation, TlRoute tlRoute, bool addToDbContext = true)
+        public static TlPathway CreateTlPathway(ResultsAndCertificationDbContext _dbContext, EnumAwardingOrganisation awardingOrganisation, TlRoute tlRoute, bool addToDbContext = true, bool isAvailable = true)
         {
             if (tlRoute == null)
             {
                 tlRoute = new TlRouteBuilder().Build(awardingOrganisation);
             }
 
-            var tlPathway = new TlPathwayBuilder().Build(awardingOrganisation, tlRoute);
+            var tlPathway = new TlPathwayBuilder().Build(awardingOrganisation, tlRoute: tlRoute, isAvailable);
 
             if (addToDbContext)
             {
@@ -269,7 +269,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
 
         public static TqAwardingOrganisation CreateTqAwardingOrganisation(ResultsAndCertificationDbContext _dbContext, TlPathway tlPathway, TlAwardingOrganisation tlAwardingOrganisation, TlevelReviewStatus tLevelReviewStatus = TlevelReviewStatus.AwaitingConfirmation, bool addToDbContext = true)
         {
-            if(tlPathway != null)
+            if (tlPathway != null)
             {
                 var tqAwardingOrganisation = new TqAwardingOrganisation
                 {
@@ -333,7 +333,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataProvider
             if (tlPathway != null)
             {
                 var tlPathwaySpecialismCombination = new TlPathwaySpecialismCombination
-                {                    
+                {
                     TlPathwayId = tlPathway.Id,
                     TlSpecialismId = tlSpecialism.Id,
                     TlPathway = tlPathway,

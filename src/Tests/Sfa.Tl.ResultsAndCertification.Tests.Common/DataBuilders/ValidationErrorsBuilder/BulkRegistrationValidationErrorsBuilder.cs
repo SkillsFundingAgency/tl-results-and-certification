@@ -98,6 +98,16 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
             }
         };
 
+        public IList<BulkProcessValidationError> BuildStage2ValidationErrorsListForUnavailablePathway() => new List<BulkProcessValidationError>
+        {
+            new BulkProcessValidationError
+            {
+                RowNum = "1",
+                Uln = "111111111",
+                ErrorMessage = ValidationMessages.TLevelIsInActiveOrUnavailable
+            }
+        };
+
         public IList<BulkProcessValidationError> BuildStage3ValidationErrorsList() => new List<BulkProcessValidationError>
         {
             new BulkProcessValidationError
