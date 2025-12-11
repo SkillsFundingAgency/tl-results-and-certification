@@ -8,6 +8,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.OverallResults
         public string PathwayName { get; set; }
         public string PathwayLarId { get; set; }
         public string PathwayResult { get; set; }
+        public string PathwayAssessmentSeries { get; set; }
         public List<OverallSpecialismDetail> SpecialismDetails { get; set; }
         public string IndustryPlacementStatus { get; set; }
         public string OverallResult { get; set; }

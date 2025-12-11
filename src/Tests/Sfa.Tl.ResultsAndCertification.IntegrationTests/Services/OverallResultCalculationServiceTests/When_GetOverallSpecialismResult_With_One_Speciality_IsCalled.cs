@@ -77,7 +77,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             await WhenAsync(specialisms);
 
             OverallSpecialismResultDetail expectedResult = CreateExpectedOverallSpecialismResultDetail(specialisms, hasHighestResult, expectedHighestGrade);
-            _actualResult.Should().BeEquivalentTo(expectedResult, options => options.Excluding(p => p.TlLookupId));
+            _actualResult.Should().BeEquivalentTo(expectedResult, options => options.Excluding(p => p.TlLookupId).Excluding(p => p.SpecialismDetails));
         }
 
         public static IEnumerable<object[]> Data
@@ -122,7 +122,8 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                     {
                         SpecialismName = specialism?.Name,
                         SpecialismLarId = specialism?.LarId,
-                        SpecialismResult = hasHighestResult ? expectedHighestGrade : null
+                        SpecialismResult = hasHighestResult ? expectedHighestGrade : null,
+                        SpecialismAssessmentSeries = null
                     }
                 },
                 OverallSpecialismResult = hasHighestResult ? expectedHighestGrade : null

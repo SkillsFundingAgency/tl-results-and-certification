@@ -30,7 +30,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Strategies
             {
                 SpecialismName = registrationSpecialism.TlSpecialism.Name,
                 SpecialismLarId = registrationSpecialism.TlSpecialism.LarId,
-                SpecialismResult = specialismResult?.TlLookup?.Value
+                SpecialismResult = specialismResult?.TlLookup?.Value,
+                SpecialismAssessmentSeries = specialismResult != null ? registrationSpecialism.TqSpecialismAssessments.FirstOrDefault(x => x.TqSpecialismResults.Any(r => r.Id == specialismResult.Id))?.AssessmentSeries.Name : null
             };
         }
 

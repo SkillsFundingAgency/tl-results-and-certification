@@ -77,7 +77,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public async Task<List<OverallResultResponse>> CalculateOverallResultsAsync(DateTime runDate)
         {
             var response = new List<OverallResultResponse>();
-            
+
             var resultCalculationAssessment = await GetResultCalculationAssessmentAsync(runDate);
             var learners = await _overallGradeCalculationRepository.GetLearnersForOverallGradeCalculation(resultCalculationAssessment);
 
@@ -259,6 +259,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     PathwayName = pathway.TqProvider.TqAwardingOrganisation.TlPathway.Name,
                     PathwayLarId = pathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
                     PathwayResult = pathwayResult?.TlLookup?.Value,
+                    PathwayAssessmentSeries = pathwayResult?.TqPathwayAssessment?.AssessmentSeries?.Name,
                     SpecialismDetails = overallSpecialismResult.SpecialismDetails,
                     IndustryPlacementStatus = GetIndustryPlacementStatusDisplayName(ipStatus),
                     OverallResult = overallGrade

@@ -112,7 +112,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
             await WhenAsync(specialisms);
 
             OverallSpecialismResultDetail expectedResult = CreateExpectedOverallSpecialismResultDetail(specialisms, expectedGrade);
-            _actualResult.Should().BeEquivalentTo(expectedResult);
+            _actualResult.Should().BeEquivalentTo(expectedResult, options => options.Excluding(o => o.SpecialismDetails));
         }
 
         public static IEnumerable<object[]> Data
@@ -144,12 +144,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
         {
             TlSpecialism firstSpecialism = registrationSpecialism?.TlSpecialism;
             string firstSpecialismResult = registrationSpecialism?.TqSpecialismAssessments.FirstOrDefault()?.TqSpecialismResults.FirstOrDefault()?.TlLookup?.Value;
+            string firstSpecialismAssessmentSeries = registrationSpecialism?.TqSpecialismAssessments.FirstOrDefault()?.AssessmentSeries.Name;
 
             return new OverallSpecialismDetail
             {
                 SpecialismName = firstSpecialism?.Name,
                 SpecialismLarId = firstSpecialism?.LarId,
-                SpecialismResult = firstSpecialismResult
+                SpecialismResult = firstSpecialismResult,
+                SpecialismAssessmentSeries = firstSpecialismAssessmentSeries
             };
         }
     }

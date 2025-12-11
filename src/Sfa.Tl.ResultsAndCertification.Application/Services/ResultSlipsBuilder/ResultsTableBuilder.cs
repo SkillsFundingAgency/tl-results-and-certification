@@ -1,6 +1,7 @@
 ﻿using Aspose.Pdf;
 using Aspose.Pdf.Text;
 using Sfa.Tl.ResultsAndCertification.Models.DownloadOverallResults;
+using System.Linq;
 
 namespace Sfa.Tl.ResultsAndCertification.Application.Services.ResultSlipsBuilder
 {
@@ -28,12 +29,12 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services.ResultSlipsBuilder
         {
             AddSectionHeader(DownloadOverallResultSlipsHeader.TitleCore, "")
                 .AddSubSectionHeader($"{_data.CoreComponent} ({_data.CoreCode})", "")
-                .AddRow(DownloadOverallResultSlipsHeader.HighestAttainedGradeSeries, _data.CoreAssessmentSeries)
+                .AddRow(DownloadOverallResultSlipsHeader.HighestAttainedGradeSeries, _data.Details?.PathwayAssessmentSeries)
                 .AddRow(DownloadOverallResultSlipsHeader.CoreGrade, _data.CoreResult)
                 .AddSeparator()
                 .AddSectionHeader(DownloadOverallResultSlipsHeader.TitleSpecialism, "")
                 .AddSubSectionHeader($"{_data.SpecialismComponent} ({_data.SpecialismCode})", "")
-                .AddRow(DownloadOverallResultSlipsHeader.HighestAttainedGradeSeries, _data.SpecialismAssessmentSeries)
+                .AddRow(DownloadOverallResultSlipsHeader.HighestAttainedGradeSeries, _data.Details.SpecialismDetails.FirstOrDefault()?.SpecialismAssessmentSeries)
                 .AddRow(DownloadOverallResultSlipsHeader.SpecialismGrade, _data.SpecialismResult)
                 .AddSeparator()
                 .AddSectionHeader(DownloadOverallResultSlipsHeader.IndustryPlacement, _data.IndustryPlacementStatus)
