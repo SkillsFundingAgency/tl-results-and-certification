@@ -48,11 +48,16 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                             .Include(r => r.TqRegistrationPathway.TqRegistrationProfile)
                             .Include(r => r.TqRegistrationPathway.TqPathwayAssessments.Where(a => a.IsOptedin))
                                 .ThenInclude(r => r.AssessmentSeries)
+                            .Include(r => r.TqRegistrationPathway.TqPathwayAssessments.Where(a => a.IsOptedin))
+                                .ThenInclude(r => r.TqPathwayResults.Where(e => e.IsOptedin))
                             .Include(r => r.TqRegistrationPathway.TqProvider)
                                 .ThenInclude(r => r.TlProvider)
                             .Include(r => r.TqRegistrationPathway.TqRegistrationSpecialisms.Where(r => r.IsOptedin))
                                 .ThenInclude(r => r.TqSpecialismAssessments.Where(r => r.IsOptedin))
                                 .ThenInclude(r => r.AssessmentSeries)
+                            .Include(r => r.TqRegistrationPathway.TqRegistrationSpecialisms.Where(r => r.IsOptedin))
+                                .ThenInclude(r => r.TqSpecialismAssessments.Where(r => r.IsOptedin))
+                                .ThenInclude(r => r.TqSpecialismResults.Where(r => r.IsOptedin))
                             .Include(r => r.TqRegistrationPathway.TqRegistrationSpecialisms.Where(p => p.IsOptedin))
                                 .ThenInclude(s => s.TlSpecialism)
                                 .ThenInclude(s => s.TlDualSpecialismToSpecialisms)
@@ -62,6 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                          x.TqRegistrationPathway.TqProvider.TlProvider.UkPrn == providerUkprn &&
                                          x.IsOptedin && !x.EndDate.HasValue && DateTime.Today >= x.PublishDate)
                              .FirstOrDefaultAsync();
+
             return results;
         }
     }
