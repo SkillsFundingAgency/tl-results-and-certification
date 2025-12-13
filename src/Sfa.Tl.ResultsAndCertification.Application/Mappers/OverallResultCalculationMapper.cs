@@ -40,18 +40,28 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.SpecialismResult, opts => opts.MapFrom(s => s.SpecialismResultAwarded));
         }
 
-        
+
         private string GetHighestResultCoreAssessmentSeries(IEnumerable<TqPathwayAssessment> assessments)
-            => assessments.Where(a => a.IsOptedin)
-                .SelectMany(e => e.TqPathwayResults
+        {
+            if (assessments == null || !assessments.Any())
+                return null;
+
+            return assessments?.Where(a => a.IsOptedin)
+                .SelectMany(e => e.TqPathwayResults?
                     .Where(r => r.IsOptedin && r.EndDate == null))
                 .OrderBy(r => r.TlLookupId)
-                    .FirstOrDefault().TqPathwayAssessment.AssessmentSeries.Name;
-        
+                    .FirstOrDefault()?.TqPathwayAssessment?.AssessmentSeries.Name;
+        }
+
         private string GetHighestResultSpecialismSeries(IEnumerable<TqSpecialismAssessment> specialismAssessments)
-            => specialismAssessments.SelectMany(r => r.TqSpecialismResults)
+        {   
+            if (specialismAssessments == null || !specialismAssessments.Any())
+                return null;
+
+            return specialismAssessments?.SelectMany(r => r.TqSpecialismResults)?
                     .Where(r => r.IsOptedin && r.EndDate == null)
                 .OrderBy(r => r.TlLookupId)
-                    .FirstOrDefault().TqSpecialismAssessment.AssessmentSeries.Name;
+                    .FirstOrDefault()?.TqSpecialismAssessment?.AssessmentSeries.Name; 
+        }
     }
 }
