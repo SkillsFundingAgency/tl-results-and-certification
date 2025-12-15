@@ -48,12 +48,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return _mapper.Map<AdminAssessmentSeriesDetailsViewModel>(assessment);
         }
 
-        public async Task<IEnumerable<AdminAssessmentSeriesViewModel>> SearchAssessmentSeriesDatesAsync(AdminAssessmentSeriesDatesCriteriaViewModel criteria)
+        public async Task<AdminAssessmentSeriesDatesViewModel> SearchAssessmentSeriesDatesAsync(AdminAssessmentSeriesDatesCriteriaViewModel criteria)
         {
             SearchAssessmentSeriesDatesRequest searchRequest = _mapper.Map<SearchAssessmentSeriesDatesRequest>(criteria);
 
-            var assessments = await _apiClient.SearchAssessmentSeriesDatesAsync(searchRequest);
-            return _mapper.Map<IEnumerable<AdminAssessmentSeriesViewModel>>(assessments);
+            PagedResponse<GetAssessmentSeriesDatesDetailsResponse> assessments = await _apiClient.SearchAssessmentSeriesDatesAsync(searchRequest);
+
+            AdminAssessmentSeriesDatesViewModel result = _mapper.Map<AdminAssessmentSeriesDatesViewModel>(assessments);
+            result.SearchCriteria = criteria;
+
+            return result;
         }
     }
 }

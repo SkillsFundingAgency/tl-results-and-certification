@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminAssessmentSeriesDates 
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class AdminAssessmentSeriesDateDetails {
@@ -175,6 +175,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminAssessmentSeriesDates 
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Viewing {0} - {1} of {2} notifications.
+        /// </summary>
+        public static string PaginationSummary_Text {
+            get {
+                return ResourceManager.GetString("PaginationSummary_Text", resourceCulture);
             }
         }
     }

@@ -251,7 +251,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         #region Admin assessment series table
 
         public Task<GetAssessmentSeriesDatesDetailsResponse> GetAssessmentSeriesDateAsync(int assessmentId);
-        public Task<IEnumerable<GetAssessmentSeriesDatesDetailsResponse>> SearchAssessmentSeriesDatesAsync(SearchAssessmentSeriesDatesRequest request);
+        public Task<PagedResponse<GetAssessmentSeriesDatesDetailsResponse>> SearchAssessmentSeriesDatesAsync(SearchAssessmentSeriesDatesRequest request);
 
         #endregion
 

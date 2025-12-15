@@ -18,15 +18,14 @@
 
     <div class="govuk-grid-column-one-third">
 
-        <!-- Filters -->
         <div class="filter-border govuk-!-margin-bottom-9">
             <partial name="Partials/_searchFilters.cshtml" model="Model.SearchCriteria" />
         </div>
     </div>
     <div class="govuk-grid-column-two-thirds">
         <div class="learner-records">
-            <h2 class="govuk-body">@string.Format(AdminAssessmentSeriesDates.Label_Rows_Count_Text, Model.TotalRecords)</h2>
-
+            <h2 class="govuk-body">@string.Format(Model.Pagination.PaginationSummary, @Model.PagerInfo.RecordFrom, @Model.PagerInfo.RecordTo, @Model.PagerInfo.TotalItems)</h2>
+            
             <dl class="govuk-summary-list">
                 @foreach (var series in Model.Series)
                 {
@@ -34,5 +33,9 @@
                 }
             </dl>
         </div>
+        @if (Model.ContainsMultiplePages)
+        {
+            <vc:pagination model=@Model.Pagination></vc:pagination>
+        }
     </div>
 </div>

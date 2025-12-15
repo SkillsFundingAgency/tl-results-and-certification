@@ -684,8 +684,8 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
         #region Admin Assessment Series Dates
 
-        public async Task<IEnumerable<GetAssessmentSeriesDatesDetailsResponse>> SearchAssessmentSeriesDatesAsync(SearchAssessmentSeriesDatesRequest request)
-            => await PostAsync<SearchAssessmentSeriesDatesRequest, IEnumerable<GetAssessmentSeriesDatesDetailsResponse>>(ApiConstants.SearchAssessmentSeriesDates, request);
+        public async Task<PagedResponse<GetAssessmentSeriesDatesDetailsResponse>> SearchAssessmentSeriesDatesAsync(SearchAssessmentSeriesDatesRequest request)
+            => await PostAsync<SearchAssessmentSeriesDatesRequest, PagedResponse<GetAssessmentSeriesDatesDetailsResponse>>(ApiConstants.SearchAssessmentSeriesDates, request);
 
         public async Task<GetAssessmentSeriesDatesDetailsResponse> GetAssessmentSeriesDateAsync(int assessmentId)
         {

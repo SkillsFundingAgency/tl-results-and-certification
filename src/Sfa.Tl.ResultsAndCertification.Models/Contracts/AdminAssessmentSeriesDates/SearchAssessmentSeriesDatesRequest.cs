@@ -5,5 +5,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminAssessmentSeriesD
     public class SearchAssessmentSeriesDatesRequest
     {
         public List<int> SelectedFilters { get; set; } = new List<int>();
+
+        public int? PageNumber { get; set; }
     }
 }

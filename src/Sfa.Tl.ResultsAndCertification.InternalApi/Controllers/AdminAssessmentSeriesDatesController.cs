@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminAssessmentSeriesDates;
+using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -23,7 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
 
         [HttpPost]
         [Route("SearchAssessmentSeriesDates")]
-        public async Task<IEnumerable<GetAssessmentSeriesDatesDetailsResponse>> SearchAssessmentSeriesDatesAsync(SearchAssessmentSeriesDatesRequest request)
+        public async Task<PagedResponse<GetAssessmentSeriesDatesDetailsResponse>> SearchAssessmentSeriesDatesAsync(SearchAssessmentSeriesDatesRequest request)
             => await _adminAssessmentSeriesDatesService.SearchAssessmentSeriesDatesAsync(request);
     }
 }

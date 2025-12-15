@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminAssessmentSeriesDates;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminChangeLog;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
@@ -41,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         [HttpGet]
         [Route("admin/search-assessment-series-dates", Name = RouteConstants.SearchAssessmentSeriesDates)]
-        public async Task<IActionResult> SearchAssessmentSeriesDatesAsync()
+        public async Task<IActionResult> SearchAssessmentSeriesDatesAsync(int? pageNumber = default)
         {
             var viewModel = await _cacheService.GetAsync<AdminAssessmentSeriesDatesViewModel>(CacheKey);
 
@@ -53,13 +54,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 viewModel = new AdminAssessmentSeriesDatesViewModel();
 
                 viewModel.SearchCriteria = criteria;
-                viewModel.Series = await _loader.SearchAssessmentSeriesDatesAsync(criteria);
+                viewModel = await _loader.SearchAssessmentSeriesDatesAsync(criteria);
 
                 await _cacheService.SetAsync(CacheKey, viewModel);
                 return View(viewModel);
             }
 
-            viewModel.Series = await _loader.SearchAssessmentSeriesDatesAsync(viewModel.SearchCriteria);
+            AdminAssessmentSeriesDatesCriteriaViewModel searchCriteria = viewModel.SearchCriteria;
+            searchCriteria.PageNumber = pageNumber;
+
+            viewModel = await _loader.SearchAssessmentSeriesDatesAsync(searchCriteria);
 
             return View(viewModel);
         }
