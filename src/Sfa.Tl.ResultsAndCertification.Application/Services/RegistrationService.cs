@@ -64,6 +64,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             foreach (var registrationData in validRegistrationsData)
             {
+                var isExistingLearner = await _tqRegistrationRepository.AnyAsync(e => e.UniqueLearnerNumber == registrationData.Uln);
+
                 var academicYear = academicYears.FirstOrDefault(x => x.Name.Equals(registrationData.AcademicYearName, StringComparison.InvariantCultureIgnoreCase));
                 if (academicYear == null)
                 {
@@ -88,7 +90,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 }
 
                 var isTlevelActiveOrAvailableForAO = aoProviderTlevels.Any(e => e.IsAvailable && e.PathwayLarId == registrationData.CoreCode && e.ProviderUkprn == registrationData.ProviderUkprn);
-                if (!isTlevelActiveOrAvailableForAO)
+
+                if (!isExistingLearner && !isTlevelActiveOrAvailableForAO)
                 {
                     response.Add(AddStage3ValidationError(registrationData.RowNum, registrationData.Uln, ValidationMessages.TLevelIsInActiveOrUnavailable));
                     continue;
