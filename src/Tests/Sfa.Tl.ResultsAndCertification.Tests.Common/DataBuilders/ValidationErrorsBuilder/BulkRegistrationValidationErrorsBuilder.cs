@@ -43,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
                 RowNum = "2",
                 Uln = "",
                 ErrorMessage = "Academic year required"
-            },            
+            },
             new BulkProcessValidationError
             {
                 RowNum = "2",
@@ -95,6 +95,16 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
                 RowNum = "2",
                 Uln = "111111111",
                 ErrorMessage = "Specialism code(s) must have 8 characters only"
+            }
+        };
+
+        public IList<BulkProcessValidationError> BuildStage2ValidationErrorsListForUnavailablePathway() => new List<BulkProcessValidationError>
+        {
+            new BulkProcessValidationError
+            {
+                RowNum = "1",
+                Uln = "111111111",
+                ErrorMessage = ValidationMessages.TLevelIsInActiveOrUnavailable
             }
         };
 
