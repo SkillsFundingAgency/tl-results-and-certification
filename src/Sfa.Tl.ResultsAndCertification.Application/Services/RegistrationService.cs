@@ -134,8 +134,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     TlAwardingOrganisatonId = technicalQualification.TlAwardingOrganisatonId,
                     TlProviderId = technicalQualification.TlProviderId
                 });
-            }
-            ;
+            };
 
             return response;
         }
@@ -286,6 +285,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                     if (existingRegistration != null)
                     {
                         #region Validation_Rules
+
                         // Validation Rule: Registration should not be in Withdrawn Status.
                         var latestRegPathway = existingRegistration.TqRegistrationPathways.OrderByDescending(x => x.CreatedOn).FirstOrDefault();
                         if (latestRegPathway != null && latestRegPathway.Status == RegistrationPathwayStatus.Withdrawn)
@@ -302,7 +302,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                             response.ValidationErrors.Add(GetRegistrationValidationError(amendedRegistration.UniqueLearnerNumber, ValidationMessages.AcademicYearCannotBeChanged));
                             return;
                         }
-                        #endregion 
+                        #endregion Validation_Rules
+
+
 
                         var hasBothPathwayAndSpecialismsRecordsChanged = false;
                         var hasOnlySpecialismsRecordChanged = false;
@@ -474,7 +476,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             var hasActiveAssessmentEntriesForSpecialisms = false;
             var hasActiveAssessmentResults = false;
-
 
             if (tqRegistration.TqPathwayAssessments.Any())
             {
@@ -1146,13 +1147,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                         var specialismAssessmentsToUpdate = specialismToUpdate.TqSpecialismAssessments.Where(s => s.IsOptedin && s.EndDate == null).ToList();
                         foreach (var (splAssessment, index) in specialismAssessmentsToUpdate.Select((value, i) => (value, i)))
                         {
-                            // Update existing Specialism Assessment record 
+                            // Update existing Specialism Assessment record
                             splAssessment.IsOptedin = false;
                             splAssessment.EndDate = now;
                             splAssessment.ModifiedBy = amendedRegistration.CreatedBy;
                             splAssessment.ModifiedOn = now;
 
-                            // Add new Specialism Assessment record 
+                            // Add new Specialism Assessment record
                             var newActiveSpecialismsAssessment = new TqSpecialismAssessment
                             {
                                 Id = index - entityIndex.SpecialismAssessmentStartIndex,
@@ -1185,8 +1186,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                     CreatedBy = amendedRegistration.CreatedBy
                                 };
                                 newActiveSpecialismsAssessment.TqSpecialismResults.Add(newActiveSpecialismResult);
-                            }
-                            ;
+                            };
+
                             entityIndex.SpecialismResultStartIndex -= specialismResultsToUpdate.Count();
 
                             associatedSpecialismsToAdd.TqSpecialismAssessments.Add(newActiveSpecialismsAssessment);
@@ -1249,13 +1250,13 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                                 CreatedBy = amendedRegistration.CreatedBy
                             };
                             newActiveAssessment.TqPathwayResults.Add(newActiveResult);
-                        }
-                        ;
+                        };
+
                         entityIndex.PathwayResultStartIndex -= pathwayResultsToUpdate.Count();
 
                         associatedPathwayToAdd.TqPathwayAssessments.Add(newActiveAssessment);
-                    }
-                    ;
+                    };
+
                     entityIndex.PathwayAssessmentStartIndex -= pathwayAssessmentsToUpdate.Count();
 
                     // Transfer - OverallResult
@@ -1283,7 +1284,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                             CreatedBy = amendedRegistration.CreatedBy
                         };
                         associatedPathwayToAdd.OverallResults.Add(newOverallResult);
-
                     }
                     entityIndex.OverallResultStartIndex -= overallResultsToUpdate.Count();
                 });
@@ -1380,6 +1380,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             return isWithOtherAo;
         }
 
-        #endregion
+        #endregion Private Methods
     }
 }
