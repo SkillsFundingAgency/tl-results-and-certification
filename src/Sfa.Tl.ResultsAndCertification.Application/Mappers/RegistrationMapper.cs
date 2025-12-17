@@ -45,6 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                 .ForMember(d => d.PathwayLarId, opts => opts.MapFrom(s => s.TqAwardingOrganisation.TlPathway.LarId))
                 .ForMember(d => d.TqProviderId, opts => opts.MapFrom(s => s.Id))
                 .ForMember(d => d.TlProviderId, opts => opts.MapFrom(s => s.TlProviderId))
+                .ForMember(d => d.IsAvailable, opts => opts.MapFrom(s => s.TqAwardingOrganisation.TlPathway.IsAvailable))
                 .ForMember(d => d.TqAwardingOrganisationId, opts => opts.MapFrom(s => s.TqAwardingOrganisationId))
                 .ForMember(d => d.TlAwardingOrganisatonId, opts => opts.MapFrom(s => s.TqAwardingOrganisation.TlAwardingOrganisatonId))
                 .ForMember(d => d.TlSpecialismLarIds, opts => opts.MapFrom(s => s.TqAwardingOrganisation.TlPathway.TlSpecialisms.Select(s => new KeyValuePair<int, string>(s.Id, s.LarId))))
