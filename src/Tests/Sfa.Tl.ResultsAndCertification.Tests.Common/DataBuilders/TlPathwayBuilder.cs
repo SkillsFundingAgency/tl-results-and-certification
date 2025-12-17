@@ -7,7 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
 {
     public class TlPathwayBuilder
     {
-        public TlPathway Build(EnumAwardingOrganisation awardingOrganisation, TlRoute tlRoute = null)
+        public TlPathway Build(EnumAwardingOrganisation awardingOrganisation, TlRoute tlRoute = null, bool isAvailable = true)
         {
             if (awardingOrganisation == EnumAwardingOrganisation.Pearson)
             {
@@ -18,6 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                     LarId = "10123456",
                     TlRoute = tlRoute ?? new TlRouteBuilder().Build(awardingOrganisation),
                     StartYear = 2020,
+                    IsAvailable = isAvailable,
                     CreatedBy = Constants.CreatedByUser,
                     CreatedOn = Constants.CreatedOn,
                     ModifiedBy = Constants.ModifiedByUser,
@@ -43,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             {
                 return null;
             }
-        }        
+        }
 
         public IList<TlPathway> BuildList(EnumAwardingOrganisation awardingOrganisation, IList<TlRoute> tlRoutes = null)
         {
@@ -51,9 +52,9 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             var routes = tlRoutes ?? new TlRouteBuilder().BuildList(awardingOrganisation);
             if (awardingOrganisation == EnumAwardingOrganisation.Pearson)
             {
-                foreach(var route in routes)
+                foreach (var route in routes)
                 {
-                    if(route.Name == EnumExtensions.GetDisplayName(EnumTlRoute.Construction))
+                    if (route.Name == EnumExtensions.GetDisplayName(EnumTlRoute.Construction))
                     {
                         results.Add(new TlPathway
                         {
@@ -145,7 +146,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
             else
             {
                 return null;
-            }           
-        }        
+            }
+        }
     }
 }

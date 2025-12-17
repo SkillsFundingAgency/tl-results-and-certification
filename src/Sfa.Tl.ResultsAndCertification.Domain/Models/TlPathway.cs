@@ -7,6 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         public TlPathway()
         {
             IsActive = true;
+            IsAvailable = true;
             TlSpecialisms = new HashSet<TlSpecialism>();
             TlPathwaySpecialismCombinations = new HashSet<TlPathwaySpecialismCombination>();
             TqAwardingOrganisations = new HashSet<TqAwardingOrganisation>();
@@ -19,6 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         public string Name { get; set; }
         public int StartYear { get; set; }
         public bool IsActive { get; set; }
+        public bool IsAvailable { get; set; }
 
         public virtual TlRoute TlRoute { get; set; }
         public virtual ICollection<TlSpecialism> TlSpecialisms { get; set; }

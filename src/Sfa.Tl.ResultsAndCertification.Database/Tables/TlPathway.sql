@@ -7,6 +7,7 @@
     [Name] NVARCHAR(255) NOT NULL,
 	[StartYear] INT NOT NULL DEFAULT 1,
 	[IsActive] BIT NOT NULL DEFAULT(1),
+	[IsAvailable] BIT NOT NULL DEFAULT (1),
 	[CreatedOn] DATETIME2 NOT NULL DEFAULT getutcdate(), 
     [CreatedBy] NVARCHAR(50) NULL, 
     [ModifiedOn] DATETIME2 NULL, 

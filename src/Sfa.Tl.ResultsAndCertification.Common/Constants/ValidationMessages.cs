@@ -29,6 +29,7 @@
         public const string UnexpectedError = "Unexpected error while reading file content.";
 
         // Bulk Registration Stage3 Validation Messages
+        public const string TLevelIsInActiveOrUnavailable = "T Level is inactive or unavailable";
         public const string AcademicYearMustBeCurrentOne = "Academic year must be the current one";
         public const string AcademicYearIsNotValid = "Academic year is not valid";
         public const string ProviderNotRegisteredWithAo = "Provider not registered with awarding organisation";
