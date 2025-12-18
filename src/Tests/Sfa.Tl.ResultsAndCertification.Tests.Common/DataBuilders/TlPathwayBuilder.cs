@@ -7,7 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
 {
     public class TlPathwayBuilder
     {
-        public TlPathway Build(EnumAwardingOrganisation awardingOrganisation, TlRoute tlRoute = null)
+        public TlPathway Build(EnumAwardingOrganisation awardingOrganisation, TlRoute tlRoute = null, bool isAvailable = true)
         {
             if (awardingOrganisation == EnumAwardingOrganisation.Pearson)
             {
@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                     LarId = "10123456",
                     TlRoute = tlRoute ?? new TlRouteBuilder().Build(awardingOrganisation),
                     StartYear = 2020,
-                    IsAvailable = true,
+                    IsAvailable = isAvailable,
                     CreatedBy = Constants.CreatedByUser,
                     CreatedOn = Constants.CreatedOn,
                     ModifiedBy = Constants.ModifiedByUser,

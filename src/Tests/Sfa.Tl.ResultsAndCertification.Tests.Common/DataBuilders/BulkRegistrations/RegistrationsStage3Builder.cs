@@ -48,6 +48,22 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders.BulkRegistrat
             }
         };
 
+        public IList<RegistrationCsvRecordResponse> BuildInvalidListWithUnAvailablePathway() => new List<RegistrationCsvRecordResponse>
+        {
+            new RegistrationCsvRecordResponse
+            {
+                RowNum = 1,
+                Uln = 111111111,
+                FirstName = "First 1",
+                LastName = "Last 1",
+                DateOfBirth = DateTime.Parse("12/01/1985"),
+                ProviderUkprn = 10000536, // invalid provider
+                AcademicYearName = GetAcademicYearName(getValid: true).Name,
+                CoreCode = "10123456", // correct core code
+                SpecialismCodes = new List<string> { { "10123456" }, { "10123457" } }  // correct specialisms
+            }
+        };
+
         public IList<RegistrationCsvRecordResponse> BuildInvalidList() => new List<RegistrationCsvRecordResponse>
         {
             new RegistrationCsvRecordResponse
