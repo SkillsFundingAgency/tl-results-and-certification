@@ -5,7 +5,6 @@ using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.DataExport;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
 
@@ -125,6 +124,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.DataExpor
             TlPathway designSurveyingPathway = new()
             {
                 IsActive = true,
+                IsAvailable = true,
                 LarId = "60358300",
                 TlevelTitle = "T Level in Design, Surveying and Planning for Construction",
                 Name = "Design, Surveying and Planning"

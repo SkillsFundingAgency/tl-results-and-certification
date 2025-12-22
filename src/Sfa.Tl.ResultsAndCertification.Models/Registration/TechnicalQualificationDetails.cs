@@ -17,6 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Registration
         public int TlProviderId { get; set; }
         public int TqAwardingOrganisationId { get; set; }
         public int TlAwardingOrganisatonId { get; set; }
+        public bool IsAvailable { get; set; }
         public IEnumerable<KeyValuePair<int, string>> TlSpecialismLarIds { get; set; }
         public IEnumerable<KeyValuePair<int, string>> TlSpecialismCombinations { get; set; }
     }
