@@ -58,7 +58,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.Industry
         private IEnumerable<AcademicYear> CreateAcademicYears() =>
              new List<AcademicYear>
             {
-                new AcademicYear { Id = 1, Year = 2022 },
+                new AcademicYear { Id = 1, Year = 2021 },
+                new AcademicYear { Id = 2, Year = 2022 },
                 new AcademicYear { Id = 2, Year = 2023 }
             }.AsQueryable();
 
