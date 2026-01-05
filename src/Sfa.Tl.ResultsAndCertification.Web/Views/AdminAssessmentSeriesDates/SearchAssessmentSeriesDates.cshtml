@@ -7,11 +7,9 @@
     ViewData["Title"] = AdminAssessmentSeriesDates.Page_Title;
 }
 
-@section NavigationBar
-{
-    <vc:back-link model=Model.BackLink></vc:back-link>
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
 }
-
 
 <div class="govuk-grid-row">
     <h1 class="govuk-heading-xl">@AdminAssessmentSeriesDates.Heading_Assessment_Series_Dates</h1>

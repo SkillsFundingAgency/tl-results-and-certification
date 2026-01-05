@@ -4,10 +4,11 @@ using Sfa.Tl.ResultsAndCertification.Models.Contracts.Common;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminAssessmentSeriesDates;
 using Sfa.Tl.ResultsAndCertification.Web.Content.Tlevel;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Pagination;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
 using System.Collections.Generic;
-using System.Linq;
+using BreadcrumbContent = Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents.Breadcrumb;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminAssessmentSeriesDates
 {
@@ -34,9 +35,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminAssessmentSeriesDate
             PaginationSummary = AdminAssessmentSeriesDateDetails.PaginationSummary_Text
         };
 
-        public BackLinkModel BackLink => new()
+        public BreadcrumbModel Breadcrumb => new()
         {
-            RouteName = RouteConstants.AdminHome
+            BreadcrumbItems = new List<BreadcrumbItem>
+            {
+                new() { DisplayName = BreadcrumbContent.Home, RouteName = RouteConstants.AdminHome },
+                new() { DisplayName = BreadcrumbContent.Assessment_Series_Dates }
+            }
         };
     }
 }
