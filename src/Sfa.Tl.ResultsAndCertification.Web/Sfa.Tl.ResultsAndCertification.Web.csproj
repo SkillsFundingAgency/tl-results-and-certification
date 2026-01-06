@@ -55,11 +55,6 @@
 		  <AutoGen>True</AutoGen>
 		  <DependentUpon>SelectAwardingOrganisation.resx</DependentUpon>
 		</Compile>
-		<Compile Update="Content\AdminDashboard\AdminChangeEnglishStatus.Designer.cs">
-		  <DesignTime>True</DesignTime>
-		  <AutoGen>True</AutoGen>
-		  <DependentUpon>AdminChangeEnglishStatus.resx</DependentUpon>
-		</Compile>
 		<Compile Update="Content\AdminDashboard\ChangeStartYear.Designer.cs">
 		  <DesignTime>True</DesignTime>
 		  <AutoGen>True</AutoGen>
@@ -1411,13 +1406,6 @@
 		<EmbeddedResource Update="Content\AdminAwardingOrganisation\SelectAwardingOrganisation.resx">
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		  <LastGenOutput>SelectAwardingOrganisation.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
-		<EmbeddedResource Update="Content\AdminDashboard\AdminChangeEnglishStatus.resx">
-		  <Generator>PublicResXFileCodeGenerator</Generator>
-		  <LastGenOutput>AdminChangeEnglishStatus.Designer.cs</LastGenOutput>
-		</EmbeddedResource>
-		<EmbeddedResource Update="Content\AdminDashboard\AdminChangeMathsStatus.resx">
-		  <Generator></Generator>
 		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminDashboard\ChangeStartYear.resx">
 		  <Generator>PublicResXFileCodeGenerator</Generator>

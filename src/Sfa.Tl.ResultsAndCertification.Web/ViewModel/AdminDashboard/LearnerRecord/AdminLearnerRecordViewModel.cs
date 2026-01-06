@@ -28,8 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
         public string TlevelName { get; set; }
         public int AcademicYear { get; set; }
         public string AwardingOrganisationName { get; set; }
-        public SubjectStatus MathsStatus { get; set; }
-        public SubjectStatus EnglishStatus { get; set; }
+        
         public string OverallResult { get; set; }
 
         public bool IsCertificateRerequestEligible { get; set; }
@@ -58,9 +57,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
         /// True when status is Active or Withdrawn
         /// </summary>
         public bool IsLearnerRegistered { get; set; }
-        public bool IsStatusCompleted => IsMathsAdded && IsEnglishAdded && (IsIndustryPlacementAdded && IndustryPlacementStatus != IpStatus.NotCompleted);
-        public bool IsMathsAdded => MathsStatus != SubjectStatus.NotSpecified;
-        public bool IsEnglishAdded => EnglishStatus != SubjectStatus.NotSpecified;
+        public bool IsStatusCompleted => IsIndustryPlacementAdded && IndustryPlacementStatus != IpStatus.NotCompleted;
         public bool IsIndustryPlacementAdded => IndustryPlacementStatus != IpStatus.NotSpecified;
         public bool IsIndustryPlacementStillToBeCompleted => IndustryPlacementStatus == IpStatus.NotSpecified || IndustryPlacementStatus == IpStatus.NotCompleted;
         public RegistrationPathwayStatus RegistrationPathwayStatus { get; set; }
@@ -180,51 +177,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
         };
 
         #endregion
-
-        #region Summary English & Maths
-
-        public SummaryItemModel SummaryMathsStatus => 
-            new()
-            {
-                Id = "mathsstatus",
-                Title = LearnerRecordDetailsContent.Title_Maths_Text,
-                Value = GetSubjectStatus(MathsStatus),
-                ActionText = CanChangeMathsStatus
-                            ? LearnerRecordDetailsContent.Action_Text_Link_Change
-                            : null,
-                RouteName = CanChangeMathsStatus
-                            ? RouteConstants.AdminChangeMathsStatusClear
-                            : null,
-                RouteAttributes = CanChangeMathsStatus
-                            ? new Dictionary<string, string> { { Constants.RegistrationPathwayId, RegistrationPathwayId.ToString() } }
-                            : null,
-                HiddenActionText = CanChangeMathsStatus
-                            ? LearnerRecordDetailsContent.Hidden_Action_Text_Maths
-                            : null
-            };
-
-        public SummaryItemModel SummaryEnglishStatus =>
-            new()
-            {
-                Id = "englishstatus",
-                Title = LearnerRecordDetailsContent.Title_English_Text,
-                Value = GetSubjectStatus(EnglishStatus),
-                ActionText = CanChangeEnglishStatus
-                            ? LearnerRecordDetailsContent.Action_Text_Link_Change
-                            : null,
-                RouteName = CanChangeEnglishStatus
-                            ? RouteConstants.AdminChangeEnglishStatusClear
-                            : null,
-                RouteAttributes = CanChangeEnglishStatus
-                            ? new Dictionary<string, string> { { Constants.RegistrationPathwayId, RegistrationPathwayId.ToString() } }
-                            : null,
-                HiddenActionText = CanChangeEnglishStatus
-                            ? LearnerRecordDetailsContent.Hidden_Action_Text_English
-                            : null
-            };
-
-        #endregion
-
+        
         // Industry Placement
         public SummaryItemModel SummaryIndustryPlacementStatus =>
             new()
@@ -273,13 +226,5 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
 
         private string TLevelStatusValue
             => IsPendingWithdrawal ? LearnerRecordDetailsContent.TLevel_Status_Pending_Withdrawal_Text : RegistrationPathwayStatus.ToString();
-
-        private bool CanChangeMathsStatus
-            => GetSubjectStatus(MathsStatus) == SubjectStatusContent.Not_Achieved_Display_Text
-            || GetSubjectStatus(MathsStatus) == SubjectStatusContent.Not_Achieved_Lrs_Display_Text;
-
-        private bool CanChangeEnglishStatus
-            => GetSubjectStatus(EnglishStatus) == SubjectStatusContent.Not_Achieved_Display_Text
-            || GetSubjectStatus(EnglishStatus) == SubjectStatusContent.Not_Achieved_Lrs_Display_Text;
     }
 }

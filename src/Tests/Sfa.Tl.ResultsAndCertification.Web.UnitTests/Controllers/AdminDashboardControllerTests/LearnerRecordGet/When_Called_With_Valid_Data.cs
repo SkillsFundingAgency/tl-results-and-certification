@@ -35,8 +35,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
                 TlevelName = "Tlevel in Test Pathway Name",
                 AcademicYear = 2021,
                 AwardingOrganisationName = "NCFE",
-                MathsStatus = SubjectStatus.NotSpecified,
-                EnglishStatus = SubjectStatus.NotSpecified,
                 IsLearnerRegistered = true,
                 IndustryPlacementId = 10,
                 IndustryPlacementStatus = IndustryPlacementStatus.Completed,
@@ -76,17 +74,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             model.TlevelName.Should().Be(_loaderResult.TlevelName);
             model.StartYear.Should().Be("2021 to 2022");
             model.AwardingOrganisationName.Should().Be(_loaderResult.AwardingOrganisationName);
-            model.MathsStatus.Should().Be(_loaderResult.MathsStatus);
-            model.EnglishStatus.Should().Be(_loaderResult.EnglishStatus);
             model.IsLearnerRegistered.Should().Be(_loaderResult.IsLearnerRegistered);
 
             model.IndustryPlacementId.Should().Be(_loaderResult.IndustryPlacementId);
             model.IndustryPlacementStatus.Should().Be(_loaderResult.IndustryPlacementStatus);
 
-            model.IsMathsAdded.Should().BeFalse();
-            model.IsEnglishAdded.Should().BeFalse();
             model.IsIndustryPlacementAdded.Should().BeTrue();
-            model.IsStatusCompleted.Should().BeFalse();
+            model.IsStatusCompleted.Should().BeTrue();
 
             // DateofBirth
             model.SummaryDateofBirth.Title.Should().Be(LearnerRecordDetailsContent.Title_DateofBirth_Text);
@@ -116,16 +110,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.AdminDashboar
             model.SummaryIndustryPlacementStatus.Value.Should().Be(IndustryPlacement.Completed_Display_Text);
             model.SummaryIndustryPlacementStatus.HiddenActionText.Should().Be(LearnerRecordDetailsContent.Hidden_Action_Text_Industry_Placement);
             model.SummaryIndustryPlacementStatus.ActionText.Should().Be(LearnerRecordDetailsContent.Action_Text_Link_Change);
-
-            // Summary Maths StatusHidden_Action_Text_Maths
-            model.SummaryMathsStatus.Should().NotBeNull();
-            model.SummaryMathsStatus.Title.Should().Be(LearnerRecordDetailsContent.Title_Maths_Text);
-            model.SummaryMathsStatus.Value.Should().Be(SubjectStatusContent.Not_Yet_Recevied_Display_Text);
-
-            // Summary English Status
-            model.SummaryEnglishStatus.Should().NotBeNull();
-            model.SummaryEnglishStatus.Title.Should().Be(LearnerRecordDetailsContent.Title_English_Text);
-            model.SummaryMathsStatus.Value.Should().Be(SubjectStatusContent.Not_Yet_Recevied_Display_Text);
 
             // Summary Certificate Type
             model.SummaryPrintCertificateType.Should().NotBeNull();
