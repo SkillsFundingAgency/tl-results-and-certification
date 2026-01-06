@@ -11,6 +11,5 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement
         public string CoreGrade { get; set; }
         public IList<OccupationalSpecialismDetails> OccupationalSpecialism { get; set; }
         public string IndustryPlacement { get; set; }
-        public string EnglishAndMaths { get; set; }       
     }
 }

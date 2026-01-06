@@ -214,7 +214,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.StatementOfAc
                         }
                     },
                     IndustryPlacement = industryPlacement.Status == IndustryPlacementStatus.Completed || industryPlacement.Status == IndustryPlacementStatus.CompletedWithSpecialConsideration ? Constants.IndustryPlacementCompleted : Constants.IndustryPlacementNotCompleted,
-                    EnglishAndMaths = profile.IsEnglishAndMathsAchieved == true ? Constants.EnglishAndMathsMet : Constants.EnglishAndMathsNotMet
                 },
                 SoaPrintingDetails = new SoaPrintingDetails
                 {

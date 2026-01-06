@@ -68,18 +68,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return viewModel;
         }
 
-        public async Task<bool> UpdateLearnerSubjectAsync(long providerUkprn, AddMathsStatusViewModel model)
-        {
-            var learnerSubjectRequest = _mapper.Map<UpdateLearnerSubjectRequest>(model, opt => opt.Items["providerUkprn"] = providerUkprn);
-            return await _internalApiClient.UpdateLearnerSubjectAsync(learnerSubjectRequest);
-        }
-
-        public async Task<bool> UpdateLearnerSubjectAsync(long providerUkprn, AddEnglishStatusViewModel model)
-        {
-            var learnerSubjectRequest = _mapper.Map<UpdateLearnerSubjectRequest>(model, opt => opt.Items["providerUkprn"] = providerUkprn);
-            return await _internalApiClient.UpdateLearnerSubjectAsync(learnerSubjectRequest);
-        }
-
         public async Task<bool> UpdateLearnerWithdrawnStatusAsync(long providerUkprn, ChangeWithdrawnStatusHaveYouToldAwardingOrganisationViewModel model)
         {
             var pendingWithdrawlRequest = _mapper.Map<SetRegistrationAsPendingWithdrawalRequest>(model, opt => opt.Items["providerUkprn"] = providerUkprn);

@@ -144,64 +144,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         }
 
         [HttpGet]
-        [Route("manage-learner-maths-level/{profileId}", Name = RouteConstants.AddMathsStatus)]
-        public async Task<IActionResult> AddMathsStatusAsync(int profileId)
-        {
-            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<AddMathsStatusViewModel>(User.GetUkPrn(), profileId);
-
-            if (viewModel == null || !viewModel.IsValid)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        [Route("manage-learner-maths-level/{profileId}", Name = RouteConstants.SubmitAddMathsStatus)]
-        public async Task<IActionResult> AddMathsStatusAsync(AddMathsStatusViewModel model)
-        {
-            if (!ModelState.IsValid)
-                return View(model);
-
-            var isSuccess = await _trainingProviderLoader.UpdateLearnerSubjectAsync(User.GetUkPrn(), model);
-            if (!isSuccess)
-                return RedirectToRoute(RouteConstants.ProblemWithService);
-
-            var notificationBanner = new NotificationBannerModel { HeaderMessage = LearnerDetailsContent.Success_Header_Maths_Status_Added, Message = LearnerDetailsContent.Success_Message_Maths_Status_Added, DisplayMessageBody = true, IsRawHtml = true };
-            await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
-
-            return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
-        }
-
-        [HttpGet]
-        [Route("manage-learner-english-level/{profileId}", Name = RouteConstants.AddEnglishStatus)]
-        public async Task<IActionResult> AddEnglishStatusAsync(int profileId)
-        {
-            var viewModel = await _trainingProviderLoader.GetLearnerRecordDetailsAsync<AddEnglishStatusViewModel>(User.GetUkPrn(), profileId);
-
-            if (viewModel == null || !viewModel.IsValid)
-                return RedirectToRoute(RouteConstants.PageNotFound);
-
-            return View(viewModel);
-        }
-
-        [HttpPost]
-        [Route("manage-learner-english-level/{profileId}", Name = RouteConstants.SubmitAddEnglishStatus)]
-        public async Task<IActionResult> AddEnglishStatusAsync(AddEnglishStatusViewModel model)
-        {
-            if (!ModelState.IsValid)
-                return View(model);
-
-            var isSuccess = await _trainingProviderLoader.UpdateLearnerSubjectAsync(User.GetUkPrn(), model);
-            if (!isSuccess)
-                return RedirectToRoute(RouteConstants.ProblemWithService);
-
-            var notificationBanner = new NotificationBannerModel { HeaderMessage = LearnerDetailsContent.Success_Header_English_Status_Added, Message = LearnerDetailsContent.Success_Message_English_Status_Added, DisplayMessageBody = true, IsRawHtml = true };
-            await _cacheService.SetAsync(CacheKey, notificationBanner, CacheExpiryTime.XSmall);
-
-            return RedirectToRoute(RouteConstants.LearnerRecordDetails, new { profileId = model.ProfileId });
-        }
-
-        [HttpGet]
         [Route("request-replacement-document/{profileId}", Name = RouteConstants.RequestReplacementDocument)]
         public async Task<IActionResult> RequestReplacementDocumentAsync(int profileId)
         {

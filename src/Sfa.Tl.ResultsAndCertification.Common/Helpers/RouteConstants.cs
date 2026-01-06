@@ -259,12 +259,7 @@
 
         public const string ProviderGuidance = "ProviderGuidance";
         public const string ProviderTimeline = "ProviderTimeline";
-
-        public const string AddMathsStatus = "AddMathsStatus";
-        public const string SubmitAddMathsStatus = "SubmitAddMathsStatus";
-        public const string AddEnglishStatus = "AddEnglishStatus";
-        public const string SubmitAddEnglishStatus = "SubmitAddEnglishStatus";
-
+        
         public const string AddWithdrawnStatus = "AddWithdrawnStatus";
         public const string SubmitWithdrawnStatus = "SubmitWithdrawnStatus";
         public const string ChangeWithdrawnStatusHaveYouToldAwardingOrganisation = "ChangeWithdrawnStatusHaveYouToldAwardingOrganisation";
@@ -448,19 +443,7 @@
         public const string SubmitAdminIndustryPlacementSpecialConsiderationReasons = "SubmitAdminIndustryPlacementSpecialConsiderationReasons";
         public const string AdminReviewChangesIndustryPlacement = "AdminReviewChangesIndustryPlacement";
         public const string SubmitReviewChangesIndustryPlacement = "SubmitReviewChangesIndustryPlacement";
-       
-        public const string AdminChangeMathsStatusClear = "AdminChangeMathsStatusClear";
-        public const string AdminChangeMathsStatus = "AdminChangeMathsStatus";
-        public const string SubmitAdminChangeMathsStatus = "SubmitAdminChangeMathsStatus";
-        public const string AdminReviewChangesMathsStatus = "AdminReviewChangesMathsStatus";
-        public const string SubmitReviewChangesMathsStatus = "SubmitReviewChangesMathsStatus";
-
-        public const string AdminChangeEnglishStatusClear = "AdminChangeEnglishStatusClear";
-        public const string AdminChangeEnglishStatus = "AdminChangeEnglishStatus";
-        public const string SubmitAdminChangeEnglishStatus = "SubmitAdminChangeEnglishStatus";
-        public const string AdminReviewChangesEnglishStatus = "AdminReviewChangesEnglishStatus";
-        public const string SubmitReviewChangesEnglishStatus = "SubmitReviewChangesEnglishStatus";
-
+        
         public const string RemoveAssessmentEntryCoreClear = "RemoveAssessmentEntryCoreClear";
         public const string RemoveAssessmentEntryCore = "RemoveAssessmentEntryCore";
         public const string SubmitRemoveAssessmentEntryCore = "SubmitRemoveAssessmentEntryCore";

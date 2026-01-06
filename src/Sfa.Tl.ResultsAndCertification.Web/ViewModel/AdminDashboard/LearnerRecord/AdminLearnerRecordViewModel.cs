@@ -11,7 +11,6 @@ using BatchItemStatus = Sfa.Tl.ResultsAndCertification.Common.Enum.PrintingBatch
 using IndustryPlacementStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.IndustryPlacementStatus;
 using IpStatus = Sfa.Tl.ResultsAndCertification.Common.Enum.IndustryPlacementStatus;
 using LearnerRecordDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard.LearnerRecord;
-using SubjectStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.SubjectStatus;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRecord
 {
@@ -199,19 +198,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
         {
             RouteName = RouteConstants.AdminSearchLearnersRecords
         };
-
-        private static string GetSubjectStatus(SubjectStatus subjectStatus)
-        {
-            return subjectStatus switch
-            {
-                SubjectStatus.Achieved => SubjectStatusContent.Achieved_Display_Text,
-                SubjectStatus.NotAchieved => SubjectStatusContent.Not_Achieved_Display_Text,
-                SubjectStatus.AchievedByLrs => SubjectStatusContent.Achieved_Lrs_Display_Text,
-                SubjectStatus.NotAchievedByLrs => SubjectStatusContent.Not_Achieved_Lrs_Display_Text,
-                _ => SubjectStatusContent.Not_Yet_Recevied_Display_Text,
-            };
-        }
-
+        
         private string GetIndustryPlacementDisplayText => IndustryPlacementStatus switch
         {
             IpStatus.Completed => IndustryPlacementStatusContent.Completed_Display_Text,
