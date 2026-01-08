@@ -1,0 +1,39 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminAssessmentSeriesDates.AdminAssessmentSeriesDatesViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminAssessmentSeriesDates
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Common.Enum
+
+@{
+    ViewData["Title"] = AdminAssessmentSeriesDates.Page_Title;
+}
+
+@section NavigationBar {
+    <vc:breadcrumb model=@Model.Breadcrumb></vc:breadcrumb>
+}
+
+<div class="govuk-grid-row">
+    <h1 class="govuk-heading-xl">@AdminAssessmentSeriesDates.Heading_Assessment_Series_Dates</h1>
+
+    <div class="govuk-grid-column-one-third">
+
+        <div class="filter-border govuk-!-margin-bottom-9">
+            <partial name="Partials/_searchFilters.cshtml" model="Model.SearchCriteria" />
+        </div>
+    </div>
+    <div class="govuk-grid-column-two-thirds">
+        <div class="learner-records">
+            <h2 class="govuk-body">@string.Format(Model.Pagination.PaginationSummary, @Model.PagerInfo.RecordFrom, @Model.PagerInfo.RecordTo, @Model.PagerInfo.TotalItems)</h2>
+            
+            <dl class="govuk-summary-list">
+                @foreach (var series in Model.Series)
+                {
+                    <partial name="Partials/_assessmentSeriesDatesCard.cshtml" model="series" />
+                }
+            </dl>
+        </div>
+        @if (Model.ContainsMultiplePages)
+        {
+            <vc:pagination model=@Model.Pagination></vc:pagination>
+        }
+    </div>
+</div>

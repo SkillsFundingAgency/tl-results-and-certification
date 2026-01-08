@@ -50,14 +50,14 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<IndustryPlacementNotificationResponse> ProcessIndustryPlacementFirstDeadlineReminderAsync()
         {
-            var previousAcademicYear = await GetPreviousAcademicYearAsync();
-
+            var currentAcademicYear = await GetCurrentAcademicYearAsync();
+           
             var activeProviders = _tqRegistrationPathwayRepository.GetManyAsync()
                 .Include(rp => rp.TqProvider)
                     .ThenInclude(p => p.TlProvider)
                     .Where(rp => rp.Status == RegistrationPathwayStatus.Active &&
                                  rp.EndDate == null &&
-                                 rp.AcademicYear == previousAcademicYear)
+                                 rp.AcademicYear == currentAcademicYear)
                     .Select(pr => pr.TqProvider.TlProvider.UkPrn)
                     .Distinct()
                     .ToList();
@@ -92,9 +92,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             IndustryPlacementNotificationResponse response = new();
 
-            var previousAcademicYear = await GetPreviousAcademicYearAsync();
+            var currentAcademicYear = await GetCurrentAcademicYearAsync();
 
-            var pathwaysWithoutPlacements = await GetPathwaysWithoutIndustryPlacementsAsync(previousAcademicYear);
+            var pathwaysWithoutPlacements = await GetPathwaysWithoutIndustryPlacementsAsync(currentAcademicYear);
 
             var ukprnCountDictionary = pathwaysWithoutPlacements
                 .GroupBy(g => g.TqProvider.TlProvider.UkPrn)
@@ -144,9 +144,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             IndustryPlacementNotificationResponse response = new();
 
-            var previousAcademicYear = await GetPreviousAcademicYearAsync();
+            var currentAcademicYear = await GetCurrentAcademicYearAsync();
 
-            var pathwaysWithoutPlacements = await GetPathwaysWithoutIndustryPlacementsAsync(previousAcademicYear);
+            var pathwaysWithoutPlacements = await GetPathwaysWithoutIndustryPlacementsAsync(currentAcademicYear);
 
             var ukprnCountDictionary = pathwaysWithoutPlacements.GroupBy(g => g.TqProvider.TlProvider.UkPrn)
                 .ToDictionary(group => group.Key, group => group.Count());
@@ -195,9 +195,9 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             IndustryPlacementNotificationResponse response = new();
 
-            var previousAcademicYear = await GetPreviousAcademicYearAsync();
+            var currentAcademicYear = await GetCurrentAcademicYearAsync();
 
-            var pathwaysWithoutPlacements = await GetPathwaysWithoutIndustryPlacementsAsync(previousAcademicYear);
+            var pathwaysWithoutPlacements = await GetPathwaysWithoutIndustryPlacementsAsync(currentAcademicYear);
 
             var pathwayWithOnePendingIPStatus = pathwaysWithoutPlacements
                 .Where(rp => !rp.IndustryPlacements.Any())
@@ -271,16 +271,16 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             };
         }
 
-        private async Task<int> GetPreviousAcademicYearAsync()
+        private async Task<int> GetCurrentAcademicYearAsync()
         {
             var currentAcademicYears = await _commonRepository.GetCurrentAcademicYearsAsync();
 
             if (currentAcademicYears == null || !currentAcademicYears.Any())
             {
-                throw new ApplicationException($"Current Academic years are not found. Method: {nameof(GetPreviousAcademicYearAsync)}");
+                throw new ApplicationException($"Current Academic years are not found. Method: {nameof(GetCurrentAcademicYearAsync)}");
             }
 
-            return currentAcademicYears.FirstOrDefault().Year - 1;
+            return currentAcademicYears.FirstOrDefault().Year;
         }
 
         private async Task<IEnumerable<TqRegistrationPathway>> GetPathwaysWithoutIndustryPlacementsAsync(int academicYear)

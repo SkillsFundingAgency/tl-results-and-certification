@@ -70,6 +70,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Assessment Series Dates.
+        /// </summary>
+        public static string Tile_Assessment_Series_Dates {
+            get {
+                return ResourceManager.GetString("Tile_Assessment_Series_Dates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Download AO results and ROMM data.
         /// </summary>
         public static string Tile_Download_AO_Results_And_Romm_Data {
@@ -156,6 +165,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         public static string Tile_Update_Banner_Components {
             get {
                 return ResourceManager.GetString("Tile_Update_Banner_Components", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View assessment series dates.
+        /// </summary>
+        public static string Tile_View_Assessment_Series_Dates {
+            get {
+                return ResourceManager.GetString("Tile_View_Assessment_Series_Dates", resourceCulture);
             }
         }
         

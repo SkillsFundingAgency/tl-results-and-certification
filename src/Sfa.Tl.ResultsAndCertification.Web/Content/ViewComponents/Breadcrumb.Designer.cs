@@ -70,6 +70,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.ViewComponents {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Assessment Series Dates.
+        /// </summary>
+        public static string Assessment_Series_Dates {
+            get {
+                return ResourceManager.GetString("Assessment_Series_Dates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Change log.
         /// </summary>
         public static string Change_Log {
