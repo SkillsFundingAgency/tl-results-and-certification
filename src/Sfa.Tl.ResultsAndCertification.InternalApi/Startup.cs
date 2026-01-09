@@ -253,6 +253,9 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
 
             // Dashboard
             services.AddTransient<IDashboardBannerService, DashboardBannerService>();
+
+            // Admin Assessment Series Table
+            services.AddTransient<IAdminAssessmentSeriesDatesService, AdminAssessmentSeriesDatesService>();
         }
     }
 }

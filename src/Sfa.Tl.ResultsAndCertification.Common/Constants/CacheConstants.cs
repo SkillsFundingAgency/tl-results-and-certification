@@ -24,6 +24,7 @@
         public const string AdminNotificationCacheKey = "AdminNotification";
         public const string AdminNotificationInformationCacheKey = "AdminNotificationInformation";
         public const string AdminAwardingOrganisationCacheKey = "AdminAwardingOrganisationCacheKey";
+        public const string AdminAssessmentSeriesDatesCacheKey = "AdminAssessmentSeriesDates";
 
         public const string SearchRegistrationCacheKey = "SearchRegistration";
     }

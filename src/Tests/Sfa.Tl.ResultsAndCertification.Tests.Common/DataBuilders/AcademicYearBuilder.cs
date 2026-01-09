@@ -86,6 +86,39 @@ namespace Sfa.Tl.ResultsAndCertification.Tests.Common.DataBuilders
                 CreatedOn = Constants.CreatedOn,
                 ModifiedBy = Constants.ModifiedByUser,
                 ModifiedOn = Constants.ModifiedOn
+            },
+            new AcademicYear
+            {
+                Name = "2026/27",
+                Year = 2026,
+                StartDate = "2026/09/01".ToDateTime(),
+                EndDate = "2027/08/31".ToDateTime(),
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new AcademicYear
+            {
+                Name = "2027/28",
+                Year = 2027,
+                StartDate = "2027/09/01".ToDateTime(),
+                EndDate = "2028/08/31".ToDateTime(),
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
+            },
+            new AcademicYear
+            {
+                Name = "2028/29",
+                Year = 2028,
+                StartDate = "2028/09/01".ToDateTime(),
+                EndDate = "2029/08/31".ToDateTime(),
+                CreatedBy = Constants.CreatedByUser,
+                CreatedOn = Constants.CreatedOn,
+                ModifiedBy = Constants.ModifiedByUser,
+                ModifiedOn = Constants.ModifiedOn
             }
         };
     }
