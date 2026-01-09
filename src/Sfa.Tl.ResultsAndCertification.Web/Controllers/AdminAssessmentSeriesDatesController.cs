@@ -48,7 +48,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (viewModel == null)
             {
-                AdminAssessmentSeriesDatesCriteriaViewModel criteria = new();
+                AdminAssessmentSeriesDatesCriteriaViewModel criteria;
+
                 criteria = _loader.LoadFilters();
 
                 viewModel = new AdminAssessmentSeriesDatesViewModel();

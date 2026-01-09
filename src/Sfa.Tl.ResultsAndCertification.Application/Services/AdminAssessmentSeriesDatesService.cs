@@ -40,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             var query = _dbContext.AssessmentSeries.AsQueryable();
 
-            int totalCount = query.Count();
+            int totalCount = await query.CountAsync();
 
             if (request.SelectedFilters.Any())
                 query = query.Where(predicate);
