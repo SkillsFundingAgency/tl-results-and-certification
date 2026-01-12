@@ -45,10 +45,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
         public async Task<SearchLearnerFilters> GetSearchLearnerFiltersAsync(long providerUkprn)
         {
-            var statusFiltersList = new List<FilterLookupData>();
-            foreach (var status in EnumExtensions.GetEnumDisplayNameAndValue<SearchLearnerFilterStatus>())
-                statusFiltersList.Add(new FilterLookupData { Id = (int)status.Key, Name = status.Value, IsSelected = false });
-
             var industryPlacementStatusFiltersList = new List<FilterLookupData>();
             foreach (var status in EnumExtensions.GetEnumDisplayNameAndValue<IndustryPlacementSearchFilterStatus>())
                 industryPlacementStatusFiltersList.Add(new FilterLookupData { Id = (int)status.Key, Name = status.Value, IsSelected = false });
@@ -57,7 +53,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             {
                 AcademicYears = await _trainingProviderRepository.GetSearchAcademicYearFiltersAsync(DateTime.UtcNow),
                 Tlevels = await _trainingProviderRepository.GetSearchTlevelFiltersAsync(),
-                Status = statusFiltersList,
                 IndustryPlacementStatus = industryPlacementStatusFiltersList
             };
         }

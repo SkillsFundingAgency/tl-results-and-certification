@@ -51,8 +51,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                 },
                 Status = new List<FilterLookupData>
                 {
-                    new FilterLookupData { Id = 1, Name = "English level", IsSelected = false },
-                    new FilterLookupData { Id = 2, Name = "Maths level", IsSelected = false },
                     new FilterLookupData { Id = 3, Name = "Industry placement", IsSelected = false },
                     new FilterLookupData { Id = 4, Name = "All incomplete records", IsSelected = false }
                 }

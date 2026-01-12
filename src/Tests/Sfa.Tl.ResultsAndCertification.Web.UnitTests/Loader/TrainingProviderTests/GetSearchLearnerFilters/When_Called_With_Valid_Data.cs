@@ -25,12 +25,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
                     new FilterLookupData { Id = 1, Name = "Design, Survey and Planning", IsSelected = false },
                     new FilterLookupData { Id = 2, Name = "Health", IsSelected = false }
                 },
-                Status = new List<FilterLookupData>
+                IndustryPlacementStatus = new List<FilterLookupData>
                 {
-                    new FilterLookupData { Id = 1, Name = "English level", IsSelected = false },
-                    new FilterLookupData { Id = 2, Name = "Maths level", IsSelected = false },
-                    new FilterLookupData { Id = 3, Name = "Industry placement", IsSelected = false },
-                    new FilterLookupData { Id = 4, Name = "All incomplete records", IsSelected = false }
+                    new FilterLookupData { Id = 1, Name = "Industry placement", IsSelected = false },
+                    new FilterLookupData { Id = 2, Name = "All incomplete records", IsSelected = false }
                 }
             };
 
@@ -50,9 +48,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
             ActualResult.Tlevels.Should().HaveCount(expectedApiResult.Tlevels.Count);
             ActualResult.Tlevels.Should().BeEquivalentTo(expectedApiResult.Tlevels);
 
-            // Status 
-            ActualResult.Status.Should().HaveCount(expectedApiResult.Status.Count);
-            ActualResult.Status.Should().BeEquivalentTo(expectedApiResult.Status);
+            // Industry Placement Status 
+            ActualResult.IndustryPlacementStatus.Should().HaveCount(expectedApiResult.IndustryPlacementStatus.Count);
+            ActualResult.IndustryPlacementStatus.Should().BeEquivalentTo(expectedApiResult.IndustryPlacementStatus);
         }
     }
 }
