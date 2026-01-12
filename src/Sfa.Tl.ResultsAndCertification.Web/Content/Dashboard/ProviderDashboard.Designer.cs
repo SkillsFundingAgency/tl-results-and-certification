@@ -223,15 +223,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to missing English and maths details.
-        /// </summary>
-        public static string Missing_English_And_Maths_Details {
-            get {
-                return ResourceManager.GetString("Missing_English_And_Maths_Details", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Home page.
         /// </summary>
         public static string Page_Title {
