@@ -1401,12 +1401,6 @@
 		  <Generator>PublicResXFileCodeGenerator</Generator>
 		  <LastGenOutput>LearnerRecord.Designer.cs</LastGenOutput>
 		</EmbeddedResource>
-		<EmbeddedResource Update="Content\AdminDashboard\ReviewChangesEnglishStatus.resx">
-		  <Generator></Generator>
-		</EmbeddedResource>
-		<EmbeddedResource Update="Content\AdminDashboard\ReviewChangesMathsStatus.resx">
-		  <Generator></Generator>
-		</EmbeddedResource>
 		<EmbeddedResource Update="Content\AdminDownloadLearnerResults\AdminDownloadLearnerResultsFindProvider.resx">
 		  <LastGenOutput>AdminDownloadLearnerResultsFindProvider.Designer.cs</LastGenOutput>
 		  <Generator>PublicResXFileCodeGenerator</Generator>

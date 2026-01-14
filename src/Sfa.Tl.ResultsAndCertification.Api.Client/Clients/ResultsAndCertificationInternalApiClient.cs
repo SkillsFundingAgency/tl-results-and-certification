@@ -523,17 +523,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
         {
             return await PostAsync<ReviewChangeIndustryPlacementRequest, bool>(ApiConstants.ProcessChangeIPUri, request);
         }
-
-        public Task<bool> ProcessChangeMathsStatusAsync(ReviewChangeMathsStatusRequest request)
-        {
-            return PostAsync<ReviewChangeMathsStatusRequest, bool>(ApiConstants.ProcessChangeMathsStatus, request);
-        }
-
-        public Task<bool> ProcessChangeEnglishStatusAsync(ReviewChangeEnglishStatusRequest request)
-        {
-            return PostAsync<ReviewChangeEnglishStatusRequest, bool>(ApiConstants.ProcessChangeEnglishStatus, request);
-        }
-
+        
         public async Task<bool> ProcessAddCoreAssessmentRequestAsync(ReviewAddCoreAssessmentRequest request)
         {
             return await PostAsync<ReviewAddCoreAssessmentRequest, bool>(ApiConstants.ProcessAddCoreAssessmentUri, request);
