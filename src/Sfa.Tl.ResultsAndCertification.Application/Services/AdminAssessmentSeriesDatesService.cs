@@ -53,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 {
                     Id=e.Id,
                     Name=e.Name,
-                    ComonentType= e.ComponentType,
+                    ComponentType= e.ComponentType,
                     StartDate=e.StartDate,
                     ResultCalculationYear=e.ResultCalculationYear,
                     EndDate=e.EndDate,

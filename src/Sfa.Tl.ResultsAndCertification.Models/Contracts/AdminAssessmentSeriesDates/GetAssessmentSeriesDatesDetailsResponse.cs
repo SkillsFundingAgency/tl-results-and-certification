@@ -7,7 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminAssessmentSeriesD
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public ComponentType ComonentType { get; set; }
+        public ComponentType ComponentType { get; set; }
         public int? ResultCalculationYear { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }

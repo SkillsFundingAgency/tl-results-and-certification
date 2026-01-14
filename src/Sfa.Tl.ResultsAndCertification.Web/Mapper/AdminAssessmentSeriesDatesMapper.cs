@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<GetAssessmentSeriesDatesDetailsResponse, AdminAssessmentSeriesDetailsViewModel>()
               .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
               .ForMember(d => d.Name, opts => opts.MapFrom(s => s.Name))
-              .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => CreateSummary("component", AdminAssessmentSeriesDateDetails.Label_Component, s.ComonentType.ToString())))
+              .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => CreateSummary("component", AdminAssessmentSeriesDateDetails.Label_Component, s.ComponentType.ToString())))
               .ForMember(d => d.SummaryResultsCalculationYear, opts => opts.MapFrom(s => CreateSummary("resultscalculationyear", AdminAssessmentSeriesDateDetails.Label_Result_Calculation_Year, s.ResultCalculationYear.HasValue ? s.ResultCalculationYear.ToString() : ReplaceNullWithNA)))
               .ForMember(d => d.SummaryStartDate, opts => opts.MapFrom(s => CreateSummary("startdate", AdminAssessmentSeriesDateDetails.Label_Start_Date, s.StartDate.ToString())))
               .ForMember(d => d.SummaryEndDate, opts => opts.MapFrom(s => CreateSummary("enddate", AdminAssessmentSeriesDateDetails.Label_End_Date, s.EndDate.ToString())))
@@ -40,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<GetAssessmentSeriesDatesDetailsResponse, AdminAssessmentSeriesViewModel>()
                 .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
                 .ForMember(d => d.Name, opts => opts.MapFrom(s => s.Name))
-                .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => s.ComonentType))
+                .ForMember(d => d.ComponentType, opts => opts.MapFrom(s => s.ComponentType))
                 .ForMember(d => d.StartDate, opts => opts.MapFrom(s => s.StartDate))
                 .ForMember(d => d.EndDate, opts => opts.MapFrom(s => s.EndDate));
 
