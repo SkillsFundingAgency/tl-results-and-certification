@@ -1,0 +1,22 @@
+﻿@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminAssessmentSeriesDates.AdminAssessmentSeriesViewModel
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminAssessmentSeriesDates
+
+<div class="govuk-summary-list__row">
+    <div class="govuk-grid-row govuk-padding-1">
+        <div class="govuk-grid-column-full">
+            <dt class="govuk-summary-list__key">
+                <h3 class="govuk-heading-m govuk-!-margin-bottom-0">
+                    <a id="link" class="govuk-link" asp-route="@RouteConstants.AdminAssessmentSeriesDateDetails" asp-route-assessmentId="@Model.Id">
+                        @Model.Name
+                    </a>
+                </h3>
+            </dt>
+            <dd class="govuk-summary-list__value govuk-grid-column-full">
+                <p>@($"{AdminAssessmentSeriesDates.Label_Component} {Model.ComponentType.ToString()}")</p>
+                <p>@($"{AdminAssessmentSeriesDates.Label_Start_Date} {Model.StartDate}")</p>
+                <p>@($"{AdminAssessmentSeriesDates.Label_End_Date} {Model.EndDate}")</p>
+            </dd>
+        </div>
+    </div>
+</div>

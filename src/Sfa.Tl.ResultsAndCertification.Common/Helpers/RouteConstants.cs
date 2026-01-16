@@ -640,6 +640,15 @@
 
         #endregion
 
+        #region Admin assessment series dates
+        public const string SearchAssessmentSeriesDatesClear = "SearchAssessmentSeriesDatesClear";
+        public const string SearchAssessmentSeriesDates = "SearchAssessmentSeriesDates";
+        public const string SubmitSearchAssessmentSeriesDatesApplyFilters = "SubmitSearchAssessmentSeriesDatesApplyFilters";
+        public const string SubmitSearchAssessmentSeriesDatesClearFilters = "SubmitSearchAssessmentSeriesDatesClearFilters";
+        public const string AdminAssessmentSeriesDateDetails = "AdminAssessmentSeriesDateDetails";
+
+        #endregion
+
         #region Admin download learner results
 
         public const string AdminDownloadLearnerResultsFindProviderClear = "AdminDownloadLearnerResultsFindProviderClear";

@@ -273,4 +273,7 @@
   <data name="Select_Awarding_Organisation" xml:space="preserve">
     <value>Select awarding organisations</value>
   </data>
+  <data name="Assessment_Series_Dates" xml:space="preserve">
+    <value>Assessment Series Dates</value>
+  </data>
 </root>
