@@ -6,7 +6,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement;
-using Sfa.Tl.ResultsAndCertification.Web.Mapper.Converter;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement;
@@ -23,8 +22,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<SoaLearnerRecordDetails, SoaLearnerRecordDetailsViewModel>()
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
-               .ForMember(d => d.MathsStatus, opts => opts.MapFrom(s => s.MathsStatus))
-               .ForMember(d => d.EnglishStatus, opts => opts.MapFrom(s => s.EnglishStatus))
                .ForMember(d => d.LearnerName, opts => opts.MapFrom(s => $"{s.Firstname} {s.Lastname}"))
                .ForMember(d => d.DateofBirth, opts => opts.MapFrom(s => s.DateofBirth))
                .ForMember(d => d.ProviderDisplayName, opts => opts.MapFrom(s => $"{s.ProviderName} ({s.ProviderUkprn})"))
@@ -47,9 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.IsLearnerRegistered, opts => opts.MapFrom(s => s.IsLearnerRegistered))
                .ForMember(d => d.IsNotWithdrawn, opts => opts.MapFrom(s => s.IsNotWithdrawn))
                .ForMember(d => d.IsIndustryPlacementCompleted, opts => opts.MapFrom(s => s.IsIndustryPlacementCompleted))
-               .ForMember(d => d.LastPrintRequestedDate, opts => opts.MapFrom(s => s.LastRequestedOn))
-               .ForMember(d => d.MathsStatusText, opts => opts.ConvertUsing(new SubjectStatusConverter(), s => s.MathsStatus))
-               .ForMember(d => d.EnglishStatusText, opts => opts.ConvertUsing(new SubjectStatusConverter(), s => s.EnglishStatus));
+               .ForMember(d => d.LastPrintRequestedDate, opts => opts.MapFrom(s => s.LastRequestedOn));
 
             CreateMap<Address, AddressViewModel>()
                 .ForMember(d => d.AddressId, opts => opts.MapFrom(s => s.AddressId))
@@ -80,8 +75,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.OccupationalSpecialism, opts => opts.MapFrom(s => s))
                 .ForMember(d => d.IndustryPlacement, opts => opts.MapFrom(s => (s.IndustryPlacementStatus == IndustryPlacementStatus.Completed
                                                                              || s.IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration)
-                                                                             ? Constants.IndustryPlacementCompleted : Constants.IndustryPlacementNotCompleted))
-                .ForMember(d => d.EnglishAndMaths, opts => opts.MapFrom(s => GetEnglishAndMathsText(s.EnglishStatus, s.MathsStatus)));
+                                                                             ? Constants.IndustryPlacementCompleted : Constants.IndustryPlacementNotCompleted));
 
             CreateMap<SoaLearnerRecordDetailsViewModel, IList<OccupationalSpecialismDetails>>()
                 .ConstructUsing((m, context) =>
@@ -114,19 +108,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.RequestedBy, opts => opts.MapFrom(s => s.RequestedBy))
                 .ForMember(d => d.PathwayStatus, opts => opts.MapFrom(s => s.RegistrationPathwayStatus))
                 .ForMember(d => d.SnapshotDetails, opts => opts.MapFrom(s => JsonConvert.DeserializeObject<SoaPrintingDetails>(s.RequestDetails)));
-        }
-
-        private static string GetEnglishAndMathsText(SubjectStatus? englishStatus, SubjectStatus? mathsStatus)
-        {
-            if ((englishStatus == SubjectStatus.Achieved || englishStatus == SubjectStatus.AchievedByLrs) &&
-                (mathsStatus == SubjectStatus.Achieved || mathsStatus == SubjectStatus.AchievedByLrs))
-                return Constants.MathsAndEnglishAchievedText;
-            else if (mathsStatus == SubjectStatus.Achieved || mathsStatus == SubjectStatus.AchievedByLrs)
-                return Constants.MathsAchievedText;
-            else if (englishStatus == SubjectStatus.Achieved || englishStatus == SubjectStatus.AchievedByLrs)
-                return Constants.EnglishAchievedText;
-            else
-                return string.Empty;
         }
     }
 }

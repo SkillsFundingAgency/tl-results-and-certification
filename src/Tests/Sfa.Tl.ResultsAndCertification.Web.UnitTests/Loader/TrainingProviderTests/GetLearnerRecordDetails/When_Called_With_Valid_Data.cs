@@ -90,8 +90,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
             ActualResult.TlevelTitle.Should().Be(_expectedApiResult.TlevelTitle);
             ActualResult.StartYear.Should().Be($"{_expectedApiResult.AcademicYear} to {_expectedApiResult.AcademicYear + 1}");
             ActualResult.AwardingOrganisationName.Should().Be(_expectedApiResult.AwardingOrganisationName);
-            ActualResult.MathsStatus.Should().Be(_expectedApiResult.MathsStatus);
-            ActualResult.EnglishStatus.Should().Be(_expectedApiResult.EnglishStatus);
             ActualResult.IsLearnerRegistered.Should().Be(_expectedApiResult.IsLearnerRegistered);
             ActualResult.IndustryPlacementId.Should().Be(_expectedApiResult.IndustryPlacementId);
             ActualResult.IndustryPlacementStatus.Should().Be(_expectedApiResult.IndustryPlacementStatus);

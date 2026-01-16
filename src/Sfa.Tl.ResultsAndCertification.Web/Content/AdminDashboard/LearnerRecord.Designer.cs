@@ -223,29 +223,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  english status.
-        /// </summary>
-        public static string Hidden_Action_Text_English {
-            get {
-                return ResourceManager.GetString("Hidden_Action_Text_English", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to  industry placement information.
         /// </summary>
         public static string Hidden_Action_Text_Industry_Placement {
             get {
                 return ResourceManager.GetString("Hidden_Action_Text_Industry_Placement", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to  maths status.
-        /// </summary>
-        public static string Hidden_Action_Text_Maths {
-            get {
-                return ResourceManager.GetString("Hidden_Action_Text_Maths", resourceCulture);
             }
         }
         
@@ -336,15 +318,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         public static string Section_Heading_Industry_Placement {
             get {
                 return ResourceManager.GetString("Section_Heading_Industry_Placement", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Level 2 maths and English.
-        /// </summary>
-        public static string Section_Heading_Level2_Maths_English {
-            get {
-                return ResourceManager.GetString("Section_Heading_Level2_Maths_English", resourceCulture);
             }
         }
         
@@ -538,29 +511,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to English.
-        /// </summary>
-        public static string Title_English_Text {
-            get {
-                return ResourceManager.GetString("Title_English_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Status.
         /// </summary>
         public static string Title_IP_Status_Text {
             get {
                 return ResourceManager.GetString("Title_IP_Status_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Maths.
-        /// </summary>
-        public static string Title_Maths_Text {
-            get {
-                return ResourceManager.GetString("Title_Maths_Text", resourceCulture);
             }
         }
         

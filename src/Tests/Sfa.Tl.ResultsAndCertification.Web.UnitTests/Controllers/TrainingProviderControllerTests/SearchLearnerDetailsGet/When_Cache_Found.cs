@@ -28,11 +28,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                     new FilterLookupData { Id = 2020, Name = "2020 to 2021", IsSelected = true },
                     new FilterLookupData { Id = 2021, Name = "2021 to 2022", IsSelected = false }
                 },
-                Status = new List<FilterLookupData>
-                {
-                    new FilterLookupData { Id = 1, Name = "Maths level", IsSelected = true },
-                    new FilterLookupData { Id = 2, Name = "English level", IsSelected = false }
-                },
                 Tlevels = new List<FilterLookupData>
                 {
                     new FilterLookupData { Id = 1, Name = "Education", IsSelected = true },
@@ -53,8 +48,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                         Uln = 1234567890,
                         StartYear = "2020 to 2021",
                         TlevelName = "Design, Surveying and Planning for Construction",
-                        IsEnglishAdded = true,
-                        IsMathsAdded = true,
                         IsIndustryPlacementAdded = true
                     }
                 }
@@ -89,10 +82,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             searchFilters.AcademicYears.Should().HaveCount(_searchFilters.AcademicYears.Count);
             searchFilters.AcademicYears.Should().BeEquivalentTo(_searchFilters.AcademicYears);
 
-            searchFilters.Status.Should().NotBeNull();
-            searchFilters.Status.Should().HaveCount(_searchFilters.Status.Count);
-            searchFilters.Status.Should().BeEquivalentTo(_searchFilters.Status);
-
             searchFilters.Tlevels.Should().NotBeNull();
             searchFilters.Tlevels.Should().HaveCount(_searchFilters.Tlevels.Count);
             searchFilters.Tlevels.Should().BeEquivalentTo(_searchFilters.Tlevels);
@@ -106,8 +95,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             actualLearner.LearnerName.Should().Be(expectedLearner.LearnerName);
             actualLearner.StartYear.Should().Be(expectedLearner.StartYear);
             actualLearner.TlevelName.Should().Be(expectedLearner.TlevelName);
-            actualLearner.IsEnglishAdded.Should().Be(expectedLearner.IsEnglishAdded);
-            actualLearner.IsMathsAdded.Should().Be(expectedLearner.IsMathsAdded);
             actualLearner.IsIndustryPlacementAdded.Should().Be(expectedLearner.IsIndustryPlacementAdded);
             actualLearner.IsStatusCompleted.Should().BeTrue();
 

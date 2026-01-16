@@ -15,7 +15,6 @@ using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result;
-using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.SubjectsStatus;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Common;
 using System.Collections.Generic;
 using System.Linq;
@@ -158,18 +157,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             var reviewIndustryPlacementRequest = _mapper.Map<ReviewChangeIndustryPlacementRequest>(adminChangeIpViewModel);
             return await _internalApiClient.ProcessChangeIndustryPlacementAsync(reviewIndustryPlacementRequest);
-        }
-
-        public async Task<bool> ProcessChangeMathsStatusAsync(AdminReviewChangesMathsStatusViewModel model)
-        {
-            var reviewChangeMathsStatusRequest = _mapper.Map<ReviewChangeMathsStatusRequest>(model);
-            return await _internalApiClient.ProcessChangeMathsStatusAsync(reviewChangeMathsStatusRequest);
-        }
-
-        public async Task<bool> ProcessChangeEnglishStatusAsync(AdminReviewChangesEnglishStatusViewModel model)
-        {
-            var reviewChangeEnglishStatusRequest = _mapper.Map<ReviewChangeEnglishStatusRequest>(model);
-            return await _internalApiClient.ProcessChangeEnglishStatusAsync(reviewChangeEnglishStatusRequest);
         }
 
         #region Remove assessment

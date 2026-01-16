@@ -14,7 +14,5 @@
         public const string Specialism = "Occupational specialism";
         public const string SpecialismCode = "Specialism code";
         public const string IndustryPlacement = "Industry placement";
-        public const string English = "English";
-        public const string Maths = "Maths";
     }
 }

@@ -61,20 +61,6 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         }
 
         [HttpPost]
-        [Route("ProcessChangeMathsStatus")]
-        public async Task<bool> ProcessChangeMathsStatusAsync(ReviewChangeMathsStatusRequest request)
-        {
-            return await _adminDashboardService.ProcessChangeMathsStatusAsync(request);
-        }
-
-        [HttpPost]
-        [Route("ProcessChangeEnglishStatus")]
-        public async Task<bool> ProcessChangeEnglishStatusAsync(ReviewChangeEnglishStatusRequest request)
-        {
-            return await _adminDashboardService.ProcessChangeEnglishStatusAsync(request);
-        }
-
-        [HttpPost]
         [Route("ProcessAddCoreAssessmentRequest")]
         public async Task<bool> ProcessAddCoreAssessmentRequestAsync(ReviewAddCoreAssessmentRequest request)
         {

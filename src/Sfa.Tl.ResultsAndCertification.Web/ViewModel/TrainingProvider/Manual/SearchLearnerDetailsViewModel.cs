@@ -8,9 +8,7 @@
         public string TlevelName { get; set; }
         public string StartYear { get; set; }
 
-        public bool IsStatusCompleted => IsMathsAdded && IsEnglishAdded && IsIndustryPlacementAdded;
+        public bool IsStatusCompleted => IsIndustryPlacementAdded;
         public bool IsIndustryPlacementAdded { get; set; }
-        public bool IsMathsAdded { get; set; }
-        public bool IsEnglishAdded { get; set; }
     }
 }

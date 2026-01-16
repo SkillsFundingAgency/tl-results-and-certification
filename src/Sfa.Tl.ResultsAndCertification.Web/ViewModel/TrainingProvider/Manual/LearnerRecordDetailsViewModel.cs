@@ -13,7 +13,6 @@ using System.Linq;
 using IndustryPlacementStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.IndustryPlacementStatus;
 using IpStatus = Sfa.Tl.ResultsAndCertification.Common.Enum.IndustryPlacementStatus;
 using LearnerRecordDetailsContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.LearnerRecordDetails;
-using SubjectStatusContent = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider.SubjectStatus;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 {
@@ -32,8 +31,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public List<string> Specialisms { get; set; }
         public int AcademicYear { get; set; }
         public string AwardingOrganisationName { get; set; }
-        public SubjectStatus MathsStatus { get; set; }
-        public SubjectStatus EnglishStatus { get; set; }
 
         public int IndustryPlacementId { get; set; }
         public IpStatus IndustryPlacementStatus { get; set; }
@@ -52,9 +49,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         /// True when status is Active or Withdrawn
         /// </summary>
         public bool IsLearnerRegistered { get; set; }
-        public bool IsStatusCompleted => IsMathsAdded && IsEnglishAdded && (IsIndustryPlacementAdded && IndustryPlacementStatus != IpStatus.NotCompleted);
-        public bool IsMathsAdded => MathsStatus != SubjectStatus.NotSpecified;
-        public bool IsEnglishAdded => EnglishStatus != SubjectStatus.NotSpecified;
+        public bool IsStatusCompleted => IsIndustryPlacementAdded && IndustryPlacementStatus != IpStatus.NotCompleted;
+        
         public bool IsIndustryPlacementAdded => IndustryPlacementStatus != IpStatus.NotSpecified;
         public bool IsIndustryPlacementStillToBeCompleted => IndustryPlacementStatus == IpStatus.NotSpecified || IndustryPlacementStatus == IpStatus.NotCompleted;
         public RegistrationPathwayStatus RegistrationPathwayStatus { get; set; }
@@ -133,45 +129,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
 
         #endregion
 
-        # region Summary English & Maths
-        public SummaryItemModel SummaryMathsStatus => IsMathsAdded ?
-            new SummaryItemModel
-            {
-                Id = "mathsstatus",
-                Title = LearnerRecordDetailsContent.Title_Maths_Text,
-                Value = GetSubjectStatus(MathsStatus),
-            }
-            : new SummaryItemModel
-            {
-                Id = "mathsstatus",
-                Title = LearnerRecordDetailsContent.Title_Maths_Text,
-                Value = GetSubjectStatus(MathsStatus),
-                ActionText = LearnerRecordDetailsContent.Action_Text_Link_Add,
-                RouteName = IsMathsAdded ? string.Empty : RouteConstants.AddMathsStatus,
-                RouteAttributes = IsMathsAdded ? null : new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } },
-                HiddenActionText = LearnerRecordDetailsContent.Hidden_Action_Text_Maths
-            };
-
-        public SummaryItemModel SummaryEnglishStatus => IsEnglishAdded ?
-            new SummaryItemModel
-            {
-                Id = "englishstatus",
-                Title = LearnerRecordDetailsContent.Title_English_Text,
-                Value = GetSubjectStatus(EnglishStatus),
-            }
-            : new SummaryItemModel
-            {
-                Id = "englishstatus",
-                Title = LearnerRecordDetailsContent.Title_English_Text,
-                Value = GetSubjectStatus(EnglishStatus),
-                ActionText = LearnerRecordDetailsContent.Action_Text_Link_Add,
-                HiddenActionText = LearnerRecordDetailsContent.Hidden_Action_Text_English,
-                RouteName = IsEnglishAdded ? string.Empty : RouteConstants.AddEnglishStatus,
-                RouteAttributes = IsEnglishAdded ? null : new Dictionary<string, string> { { Constants.ProfileId, ProfileId.ToString() } },
-            };
-
-        #endregion
-
         // Industry Placement
         public SummaryItemModel SummaryIndustryPlacementStatus =>
             new SummaryItemModel
@@ -215,19 +172,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public InformationBannerModel InformationBanner { get; set; }
 
         private bool HasSpecialismInfo => DisplayOverallResults && OverallResultDetails.SpecialismDetails != null && OverallResultDetails.SpecialismDetails.Any();
-
-        private static string GetSubjectStatus(SubjectStatus subjectStatus)
-        {
-            return subjectStatus switch
-            {
-                SubjectStatus.Achieved => SubjectStatusContent.Achieved_Display_Text,
-                SubjectStatus.NotAchieved => SubjectStatusContent.Not_Achieved_Display_Text,
-                SubjectStatus.AchievedByLrs => SubjectStatusContent.Achieved_Lrs_Display_Text,
-                SubjectStatus.NotAchievedByLrs => SubjectStatusContent.Not_Achieved_Lrs_Display_Text,
-                _ => SubjectStatusContent.Not_Yet_Recevied_Display_Text,
-            };
-        }
-
 
         private List<SummaryItemModel> GetSummaryItemModels()
         {

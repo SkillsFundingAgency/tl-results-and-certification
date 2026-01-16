@@ -165,9 +165,6 @@
   <data name="Provider_Administrators_Role" xml:space="preserve">
     <value>Provider administrators </value>
   </data>
-  <data name="Role_Learner_Record_Editor_Manage_English_Maths_Achievements" xml:space="preserve">
-    <value>upload, amend, view, delete and add English and maths achievements</value>
-  </data>
   <data name="Role_Learner_Record_Editor_Manage_Industry_Placement" xml:space="preserve">
     <value>update industry placement completion status</value>
   </data>
@@ -248,9 +245,6 @@
   </data>
   <data name="Service_TellUs_Add_Update_Results" xml:space="preserve">
     <value>add or update core component and occupational specialism results</value>
-  </data>
-  <data name="Service_TellUs_English_And_Maths_Qualification" xml:space="preserve">
-    <value>confirm if a learner has achieved a level 2 qualification in English and maths</value>
   </data>
   <data name="Service_TellUs_IndustryPlacement_Status" xml:space="preserve">
     <value>tell us if a learner has completed their industry placement</value>

@@ -51,26 +51,6 @@
         <div class="govuk-form-group">
             <fieldset class="govuk-fieldset">
                 <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
-                    @SearchLearnerDetails.Filters_Incomplete
-                </legend>
-                <div class="govuk-checkboxes" data-module="govuk-checkboxes">
-                @foreach (var status in Model?.SearchLearnerFilters?.Status?.Select((value, i) => (value, i)))
-                {
-                    var elementId = (status.i > 0) ? "selectedtstatus-" + status.i : "selectedtstatus";
-                    <div class="govuk-checkboxes__item govuk-checkboxes--small">
-                        <input class="govuk-checkboxes__input" id="@elementId" type="checkbox" asp-for="@Model.SearchLearnerFilters.Status[status.i].IsSelected">
-                        <label class="govuk-label govuk-checkboxes__label" for="@elementId">
-                            @status.value.Name
-                        </label>
-                    </div>
-                    <input type="hidden" asp-for="@Model.SearchLearnerFilters.Status[status.i].Id" />                    
-                }
-                </div>
-            </fieldset>
-        </div>
-        <div class="govuk-form-group">
-            <fieldset class="govuk-fieldset">
-                <legend class="govuk-fieldset__legend govuk-fieldset__legend--s">
                     @SearchLearnerDetails.Filters_Industry_Placements
                 </legend>
                 <div class="govuk-checkboxes" data-module="govuk-checkboxes">

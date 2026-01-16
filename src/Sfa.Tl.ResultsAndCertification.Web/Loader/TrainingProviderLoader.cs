@@ -30,7 +30,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
                 PageNumber = searchCriteriaViewModel?.PageNumber,
                 SearchKey = searchCriteriaViewModel?.SearchKey,
                 AcademicYear = new List<int> { searchCriteriaViewModel?.AcademicYear ?? 0 },
-                Statuses = searchCriteriaViewModel?.SearchLearnerFilters?.Status?.Where(a => a.IsSelected)?.Select(a => a.Id)?.ToList() ?? new List<int>(),
                 IndustryPlacementStatus = searchCriteriaViewModel?.SearchLearnerFilters?.IndustryPlacementStatus?.Where(a => a.IsSelected)?.Select(a => a.Id)?.ToList() ?? new List<int>(),
                 Tlevels = searchCriteriaViewModel?.SearchLearnerFilters?.Tlevels?.Where(a => a.IsSelected)?.Select(a => a.Id)?.ToList() ?? new List<int>(),
             };
@@ -66,18 +65,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             });
 
             return viewModel;
-        }
-
-        public async Task<bool> UpdateLearnerSubjectAsync(long providerUkprn, AddMathsStatusViewModel model)
-        {
-            var learnerSubjectRequest = _mapper.Map<UpdateLearnerSubjectRequest>(model, opt => opt.Items["providerUkprn"] = providerUkprn);
-            return await _internalApiClient.UpdateLearnerSubjectAsync(learnerSubjectRequest);
-        }
-
-        public async Task<bool> UpdateLearnerSubjectAsync(long providerUkprn, AddEnglishStatusViewModel model)
-        {
-            var learnerSubjectRequest = _mapper.Map<UpdateLearnerSubjectRequest>(model, opt => opt.Items["providerUkprn"] = providerUkprn);
-            return await _internalApiClient.UpdateLearnerSubjectAsync(learnerSubjectRequest);
         }
 
         public async Task<bool> UpdateLearnerWithdrawnStatusAsync(long providerUkprn, ChangeWithdrawnStatusHaveYouToldAwardingOrganisationViewModel model)

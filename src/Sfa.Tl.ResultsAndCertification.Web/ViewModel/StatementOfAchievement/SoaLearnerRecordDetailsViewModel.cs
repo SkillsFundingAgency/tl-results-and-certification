@@ -40,13 +40,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         public string SpecialismCode { get; set; }
         public string SpecialismGrade { get; set; }
 
-        //Learner's T level component achievements
-        public SubjectStatus MathsStatus { get; set; }
-        public SubjectStatus EnglishStatus { get; set; }
-
-        public string MathsStatusText { get; set; }
-        public string EnglishStatusText { get; set; }
-
         public IpStatus IndustryPlacementStatus { get; set; }
 
         // Provider Organisation's postal address
@@ -108,20 +101,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
             Title = RequestSoaCheckAndSubmitContent.Title_Occupational_Specialism_Text,
             Value = string.Format(RequestSoaCheckAndSubmitContent.Occupational_Specialism_Value, SpecialismDisplayName, SpecialismGrade),
             IsRawHtml = true
-        };
-
-        public SummaryItemModel SummaryMathsStatus => new()
-        {
-            Id = "mathsstatus",
-            Title = RequestSoaCheckAndSubmitContent.Title_Maths_Text,
-            Value = MathsStatusText
-        };
-
-        public SummaryItemModel SummaryEnglishStatus => new()
-        {
-            Id = "englishstatus",
-            Title = RequestSoaCheckAndSubmitContent.Title_English_Text,
-            Value = EnglishStatusText
         };
 
         public SummaryItemModel SummaryIndustryPlacement => new SummaryItemModel
