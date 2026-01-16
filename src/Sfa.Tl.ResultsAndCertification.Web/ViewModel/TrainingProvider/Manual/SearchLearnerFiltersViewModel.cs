@@ -7,7 +7,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
     public class SearchLearnerFiltersViewModel
     {
         public IList<FilterLookupData> AcademicYears { get; set; }
-        //public IList<FilterLookupData> Status { get; set; }
         public IList<FilterLookupData> IndustryPlacementStatus { get; set; }
         public IList<FilterLookupData> Tlevels { get; set; }
         public bool IsApplyFiltersSelected { get; set; }
