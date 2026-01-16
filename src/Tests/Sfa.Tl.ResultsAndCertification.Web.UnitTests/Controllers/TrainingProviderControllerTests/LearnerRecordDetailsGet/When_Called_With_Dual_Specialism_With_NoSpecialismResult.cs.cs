@@ -27,8 +27,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                 TlevelTitle = "Tlevel in Test Pathway Name",
                 AcademicYear = 2020,
                 AwardingOrganisationName = "Pearson",
-                MathsStatus = SubjectStatus.NotSpecified,
-                EnglishStatus = SubjectStatus.NotSpecified,
                 IsLearnerRegistered = true,
                 RegistrationPathwayStatus = RegistrationPathwayStatus.Withdrawn,
                 IsPendingWithdrawal = false,

@@ -20,9 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
                 ProfileId = ProfileId,
                 Uln = 1234567890,
                 LearnerName = "John Smith",
-
-                MathsStatus = SubjectStatus.Achieved,
-                EnglishStatus = SubjectStatus.Achieved,
+                
                 IndustryPlacementStatus = IndustryPlacementStatus.Completed,
 
                 HasPathwayResult = true,

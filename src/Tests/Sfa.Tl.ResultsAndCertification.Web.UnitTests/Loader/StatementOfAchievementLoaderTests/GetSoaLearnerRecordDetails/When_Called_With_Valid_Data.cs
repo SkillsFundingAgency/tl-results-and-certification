@@ -71,8 +71,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
             ActualResult.SpecialismCode.Should().Be(_expectedApiResult.SpecialismCode);
             ActualResult.SpecialismGrade.Should().Be(_expectedApiResult.SpecialismGrade);
 
-            ActualResult.MathsStatus.Should().Be(_expectedApiResult.MathsStatus);
-            ActualResult.EnglishStatus.Should().Be(_expectedApiResult.EnglishStatus);
             ActualResult.IndustryPlacementStatus.Should().Be(_expectedApiResult.IndustryPlacementStatus);
             ActualResult.ProviderAddress.Should().BeEquivalentTo(_address);
 

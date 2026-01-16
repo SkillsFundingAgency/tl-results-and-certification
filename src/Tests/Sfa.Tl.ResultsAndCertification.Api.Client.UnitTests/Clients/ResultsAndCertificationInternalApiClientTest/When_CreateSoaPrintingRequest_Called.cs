@@ -62,7 +62,6 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.UnitTests.Clients.ResultsAnd
                         }
                     },
                     IndustryPlacement = "Not completed",
-                    EnglishAndMaths = "Met"
                 },
                 SoaPrintingDetails = new SoaPrintingDetails
                 {

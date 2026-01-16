@@ -31,8 +31,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                 Specialisms = new List<string> { "Specialism 1" },
                 AcademicYear = 2020,
                 AwardingOrganisationName = "Pearson",
-                MathsStatus = SubjectStatus.NotSpecified,
-                EnglishStatus = SubjectStatus.NotSpecified,
                 IsLearnerRegistered = true,
                 RegistrationPathwayStatus = RegistrationPathwayStatus.Withdrawn,
                 IsPendingWithdrawal = false,

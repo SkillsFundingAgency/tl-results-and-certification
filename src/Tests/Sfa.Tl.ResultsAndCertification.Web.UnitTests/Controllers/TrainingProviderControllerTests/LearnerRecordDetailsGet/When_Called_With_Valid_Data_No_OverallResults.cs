@@ -31,9 +31,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                 ProviderUkprn = 58794528,
                 TlevelTitle = "Tlevel in Test Pathway Name",
                 AcademicYear = 2020,
-                AwardingOrganisationName = "Pearson",
-                MathsStatus = SubjectStatus.NotSpecified,
-                EnglishStatus = SubjectStatus.NotSpecified,
                 IsLearnerRegistered = true,
                 IndustryPlacementId = 10,
                 IndustryPlacementStatus = IndustryPlacementStatus.NotSpecified,
@@ -74,15 +71,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.TlevelTitle.Should().Be(Mockresult.TlevelTitle);
             model.StartYear.Should().Be("2020 to 2021");
             model.AwardingOrganisationName.Should().Be(Mockresult.AwardingOrganisationName);
-            model.MathsStatus.Should().Be(Mockresult.MathsStatus);
-            model.EnglishStatus.Should().Be(Mockresult.EnglishStatus);
             model.IsLearnerRegistered.Should().Be(Mockresult.IsLearnerRegistered);
 
             model.IndustryPlacementId.Should().Be(Mockresult.IndustryPlacementId);
             model.IndustryPlacementStatus.Should().Be(Mockresult.IndustryPlacementStatus);
 
-            model.IsMathsAdded.Should().BeFalse();
-            model.IsEnglishAdded.Should().BeFalse();
             model.IsIndustryPlacementAdded.Should().BeFalse();
             model.IsStatusCompleted.Should().BeFalse();
             model.IsDocumentRerequestEligible.Should().BeTrue();
@@ -120,26 +113,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.SummaryIndustryPlacementStatus.ActionText.Should().Be(LearnerRecordDetailsContent.Action_Text_Link_Add);
             model.SummaryIndustryPlacementStatus.RouteName.Should().Be(RouteConstants.AddIndustryPlacement);
             model.SummaryIndustryPlacementStatus.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
-
-            // Summary Maths StatusHidden_Action_Text_Maths
-            model.SummaryMathsStatus.Should().NotBeNull();
-            model.SummaryMathsStatus.Title.Should().Be(LearnerRecordDetailsContent.Title_Maths_Text);
-            model.SummaryMathsStatus.Value.Should().Be(SubjectStatusContent.Not_Yet_Recevied_Display_Text);
-            model.SummaryMathsStatus.NeedBorderBottomLine.Should().BeTrue();
-            model.SummaryMathsStatus.HiddenActionText.Should().Be(LearnerRecordDetailsContent.Hidden_Action_Text_Maths);
-            model.SummaryMathsStatus.ActionText.Should().Be(LearnerRecordDetailsContent.Action_Text_Link_Add);
-            model.SummaryMathsStatus.RouteName.Should().Be(RouteConstants.AddMathsStatus);
-            model.SummaryMathsStatus.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
-
-            // Summary English Status
-            model.SummaryEnglishStatus.Should().NotBeNull();
-            model.SummaryEnglishStatus.Title.Should().Be(LearnerRecordDetailsContent.Title_English_Text);
-            model.SummaryMathsStatus.Value.Should().Be(SubjectStatusContent.Not_Yet_Recevied_Display_Text);
-            model.SummaryEnglishStatus.NeedBorderBottomLine.Should().BeTrue();
-            model.SummaryEnglishStatus.HiddenActionText.Should().Be(LearnerRecordDetailsContent.Hidden_Action_Text_English);
-            model.SummaryEnglishStatus.ActionText.Should().Be(LearnerRecordDetailsContent.Action_Text_Link_Add);
-            model.SummaryEnglishStatus.RouteName.Should().Be(RouteConstants.AddEnglishStatus);
-            model.SummaryEnglishStatus.RouteAttributes.Should().BeEquivalentTo(_routeAttributes);
 
             model.DisplayOverallResults.Should().BeFalse();
 

@@ -115,29 +115,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to  english status.
-        /// </summary>
-        public static string Hidden_Action_Text_English {
-            get {
-                return ResourceManager.GetString("Hidden_Action_Text_English", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to  industry placement information.
         /// </summary>
         public static string Hidden_Action_Text_Industry_Placement {
             get {
                 return ResourceManager.GetString("Hidden_Action_Text_Industry_Placement", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to  maths status.
-        /// </summary>
-        public static string Hidden_Action_Text_Maths {
-            get {
-                return ResourceManager.GetString("Hidden_Action_Text_Maths", resourceCulture);
             }
         }
         
@@ -160,29 +142,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add English level details.
-        /// </summary>
-        public static string Notification_Link_Add_English {
-            get {
-                return ResourceManager.GetString("Notification_Link_Add_English", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Add industry placement details.
         /// </summary>
         public static string Notification_Link_Add_Ip {
             get {
                 return ResourceManager.GetString("Notification_Link_Add_Ip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Add maths level details.
-        /// </summary>
-        public static string Notification_Link_Add_Maths {
-            get {
-                return ResourceManager.GetString("Notification_Link_Add_Maths", resourceCulture);
             }
         }
         
@@ -277,15 +241,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Level 2 maths and English.
-        /// </summary>
-        public static string Section_Heading_Level2_Maths_English {
-            get {
-                return ResourceManager.GetString("Section_Heading_Level2_Maths_English", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Occupational specialism(s).
         /// </summary>
         public static string Section_Heading_OccupationalSpecialism {
@@ -331,42 +286,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to English status added.
-        /// </summary>
-        public static string Success_Header_English_Status_Added {
-            get {
-                return ResourceManager.GetString("Success_Header_English_Status_Added", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Maths status added.
-        /// </summary>
-        public static string Success_Header_Maths_Status_Added {
-            get {
-                return ResourceManager.GetString("Success_Header_Maths_Status_Added", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;p class=&quot;govuk-body&quot;&gt;&lt;a class=&quot;govuk-notification-banner__link&quot; href=&quot;/contact-us&quot;&gt;Contact us&lt;/a&gt; if the English status is incorrect. We aim to respond within 3 working days.&lt;/p&gt;.
-        /// </summary>
-        public static string Success_Message_English_Status_Added {
-            get {
-                return ResourceManager.GetString("Success_Message_English_Status_Added", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;p class=&quot;govuk-body&quot;&gt;&lt;a class=&quot;govuk-notification-banner__link&quot; href=&quot;/contact-us&quot;&gt;Contact us&lt;/a&gt; if the maths status is incorrect. We aim to respond within 3 working days.&lt;/p&gt;.
-        /// </summary>
-        public static string Success_Message_Maths_Status_Added {
-            get {
-                return ResourceManager.GetString("Success_Message_Maths_Status_Added", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Awarding organisation.
         /// </summary>
         public static string Title_AoName_Text {
@@ -385,29 +304,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to English.
-        /// </summary>
-        public static string Title_English_Text {
-            get {
-                return ResourceManager.GetString("Title_English_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Status.
         /// </summary>
         public static string Title_IP_Status_Text {
             get {
                 return ResourceManager.GetString("Title_IP_Status_Text", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Maths.
-        /// </summary>
-        public static string Title_Maths_Text {
-            get {
-                return ResourceManager.GetString("Title_Maths_Text", resourceCulture);
             }
         }
         

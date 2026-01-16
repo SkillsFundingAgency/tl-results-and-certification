@@ -165,14 +165,8 @@
   <data name="Core_Heading_Text" xml:space="preserve">
     <value>Core component: {0}</value>
   </data>
-  <data name="Hidden_Action_Text_English" xml:space="preserve">
-    <value> english status</value>
-  </data>
   <data name="Hidden_Action_Text_Industry_Placement" xml:space="preserve">
     <value> industry placement information</value>
-  </data>
-  <data name="Hidden_Action_Text_Maths" xml:space="preserve">
-    <value> maths status</value>
   </data>
   <data name="Link_Add_An_Occupational_Specialism" xml:space="preserve">
     <value>Add an occupational specialism to this learner's record</value>
@@ -200,9 +194,6 @@
   </data>
   <data name="Section_Heading_Industry_Placement" xml:space="preserve">
     <value>Industry placement</value>
-  </data>
-  <data name="Section_Heading_Level2_Maths_English" xml:space="preserve">
-    <value>Level 2 maths and English</value>
   </data>
   <data name="Section_Heading_OccupationalSpecialism" xml:space="preserve">
     <value>Occupational specialism(s)</value>
@@ -246,14 +237,8 @@
   <data name="Title_DateofBirth_Text" xml:space="preserve">
     <value>Date of birth</value>
   </data>
-  <data name="Title_English_Text" xml:space="preserve">
-    <value>English</value>
-  </data>
   <data name="Title_IP_Status_Text" xml:space="preserve">
     <value>Status</value>
-  </data>
-  <data name="Title_Maths_Text" xml:space="preserve">
-    <value>Maths</value>
   </data>
   <data name="Title_Provider_Ukprn_Name_Text" xml:space="preserve">
     <value>Provider (UKPRN)</value>

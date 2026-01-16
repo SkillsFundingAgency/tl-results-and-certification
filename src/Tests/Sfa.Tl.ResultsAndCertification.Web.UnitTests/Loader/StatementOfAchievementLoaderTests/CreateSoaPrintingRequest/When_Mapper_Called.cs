@@ -41,8 +41,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
                 SpecialismCode = "ZTLOS003",
                 SpecialismGrade = "None",
 
-                MathsStatus = SubjectStatus.NotSpecified,
-                EnglishStatus = SubjectStatus.NotSpecified,
                 IndustryPlacementStatus = IndustryPlacementStatus.NotCompleted,
 
                 HasPathwayResult = false,
@@ -70,7 +68,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
                     }
                 },
                 IndustryPlacement = SoaLearnerRecordDetailsViewModel.IsIndustryPlacementCompleted ? Constants.IndustryPlacementCompleted : Constants.IndustryPlacementNotCompleted,
-                EnglishAndMaths = string.Empty
             };
 
             _expectedSoaPrintingDetails = new SoaPrintingDetails

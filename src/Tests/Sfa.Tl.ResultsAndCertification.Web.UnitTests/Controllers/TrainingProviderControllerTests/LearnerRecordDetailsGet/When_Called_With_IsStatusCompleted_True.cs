@@ -14,10 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             ProfileId = 10;
             Mockresult = new LearnerRecordDetailsViewModel
             {
-                MathsStatus = SubjectStatus.Achieved,
-                EnglishStatus = SubjectStatus.Achieved,
                 IsLearnerRegistered = true,
-
                 IndustryPlacementStatus = IndustryPlacementStatus.Completed
             };
 
@@ -38,8 +35,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 
             var model = (Result as ViewResult).Model as LearnerRecordDetailsViewModel;
 
-            model.IsMathsAdded.Should().BeTrue();
-            model.IsEnglishAdded.Should().BeTrue();
             model.IsStatusCompleted.Should().BeTrue();
         }
     }

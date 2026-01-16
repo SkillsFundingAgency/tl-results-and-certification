@@ -47,8 +47,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
             _result.TlevelName.Should().Be(_apiResult.Pathway.Name);
             _result.AcademicYear.Should().Be(_apiResult.Pathway.AcademicYear);
             _result.AwardingOrganisationName.Should().Be(_apiResult.AwardingOrganisation.DisplayName);
-            _result.MathsStatus.Should().Be(_apiResult.MathsStatus);
-            _result.EnglishStatus.Should().Be(_apiResult.EnglishStatus);
             _result.RegistrationPathwayStatus.Should().Be(_apiResult.Pathway.Status);
             _result.IsLearnerRegistered.Should().BeTrue();
             _result.IndustryPlacementId.Should().Be(_apiResult.Pathway.IndustryPlacements.Single().Id);

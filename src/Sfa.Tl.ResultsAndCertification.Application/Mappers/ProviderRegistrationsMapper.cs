@@ -26,9 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
                .ForMember(d => d.PathwayLarId, opts => opts.MapFrom(s => s.TqProvider.TqAwardingOrganisation.TlPathway.LarId))
                .ForMember(d => d.SpecialismName, opts => opts.MapFrom(s => GetSpecialismName(s.TqRegistrationSpecialisms)))
                .ForMember(d => d.SpecialismLarId, opts => opts.MapFrom(s => GetSpecialismLarId(s.TqRegistrationSpecialisms)))
-               .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => GetIndustryPlacementStatus(s.IndustryPlacements)))
-               .ForMember(d => d.EnglishStatus, opts => opts.MapFrom(s => GetSubjectStatus(s.TqRegistrationProfile.EnglishStatus)))
-               .ForMember(d => d.MathsStatus, opts => opts.MapFrom(s => GetSubjectStatus(s.TqRegistrationProfile.MathsStatus)));
+               .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => GetIndustryPlacementStatus(s.IndustryPlacements)));
         }
 
         private static string GetSpecialismName(ICollection<TqRegistrationSpecialism> specialisms)
