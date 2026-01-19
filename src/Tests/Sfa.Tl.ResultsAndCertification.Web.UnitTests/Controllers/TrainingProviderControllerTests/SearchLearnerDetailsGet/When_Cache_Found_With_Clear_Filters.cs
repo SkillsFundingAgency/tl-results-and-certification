@@ -43,8 +43,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                         Uln = 1234567890,
                         StartYear = "2020 to 2021",
                         TlevelName = "Design, Surveying and Planning for Construction",
-                        IsEnglishAdded = true,
-                        IsMathsAdded = true,
                         IsIndustryPlacementAdded = true
                     }
                 }
@@ -90,8 +88,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             actualLearner.LearnerName.Should().Be(expectedLearner.LearnerName);
             actualLearner.StartYear.Should().Be(expectedLearner.StartYear);
             actualLearner.TlevelName.Should().Be(expectedLearner.TlevelName);
-            actualLearner.IsEnglishAdded.Should().Be(expectedLearner.IsEnglishAdded);
-            actualLearner.IsMathsAdded.Should().Be(expectedLearner.IsMathsAdded);
             actualLearner.IsIndustryPlacementAdded.Should().Be(expectedLearner.IsIndustryPlacementAdded);
             actualLearner.IsStatusCompleted.Should().BeTrue();
 

@@ -135,29 +135,17 @@
   <data name="Button_Request_Replacement_Document" xml:space="preserve">
     <value>Request replacement document</value>
   </data>
-  <data name="Hidden_Action_Text_English" xml:space="preserve">
-    <value> english status</value>
-  </data>
   <data name="Hidden_Action_Text_Industry_Placement" xml:space="preserve">
     <value> industry placement information</value>
   </data>
   <data name="Hidden_Action_Text_OverallResult" xml:space="preserve">
     <value>overall result</value>
   </data>
-  <data name="Hidden_Action_Text_Maths" xml:space="preserve">
-    <value> maths status</value>
-  </data>
   <data name="Notification_Heading" xml:space="preserve">
     <value>Additional information needed for this learner</value>
   </data>
-  <data name="Notification_Link_Add_English" xml:space="preserve">
-    <value>Add English level details</value>
-  </data>
   <data name="Notification_Link_Add_Ip" xml:space="preserve">
     <value>Add industry placement details</value>
-  </data>
-  <data name="Notification_Link_Add_Maths" xml:space="preserve">
-    <value>Add maths level details</value>
   </data>
   <data name="Notification_Link_Change_Ip" xml:space="preserve">
     <value>Change industry placement details</value>
@@ -189,9 +177,6 @@
   <data name="Section_Heading_Industry_Placement" xml:space="preserve">
     <value>Industry placement</value>
   </data>
-  <data name="Section_Heading_Level2_Maths_English" xml:space="preserve">
-    <value>Level 2 maths and English</value>
-  </data>
   <data name="Section_Heading_OccupationalSpecialism" xml:space="preserve">
     <value>Occupational specialism(s)</value>
   </data>
@@ -207,32 +192,14 @@
   <data name="Status_Tag_Record_Complete" xml:space="preserve">
     <value>Record Complete</value>
   </data>
-  <data name="Success_Header_English_Status_Added" xml:space="preserve">
-    <value>English status added</value>
-  </data>
-  <data name="Success_Header_Maths_Status_Added" xml:space="preserve">
-    <value>Maths status added</value>
-  </data>
-  <data name="Success_Message_English_Status_Added" xml:space="preserve">
-    <value>&lt;p class="govuk-body"&gt;&lt;a class="govuk-notification-banner__link" href="/contact-us"&gt;Contact us&lt;/a&gt; if the English status is incorrect. We aim to respond within 3 working days.&lt;/p&gt;</value>
-  </data>
-  <data name="Success_Message_Maths_Status_Added" xml:space="preserve">
-    <value>&lt;p class="govuk-body"&gt;&lt;a class="govuk-notification-banner__link" href="/contact-us"&gt;Contact us&lt;/a&gt; if the maths status is incorrect. We aim to respond within 3 working days.&lt;/p&gt;</value>
-  </data>
   <data name="Title_AoName_Text" xml:space="preserve">
     <value>Awarding organisation</value>
   </data>
   <data name="Title_DateofBirth_Text" xml:space="preserve">
     <value>Date of birth</value>
   </data>
-  <data name="Title_English_Text" xml:space="preserve">
-    <value>English</value>
-  </data>
   <data name="Title_IP_Status_Text" xml:space="preserve">
     <value>Status</value>
-  </data>
-  <data name="Title_Maths_Text" xml:space="preserve">
-    <value>Maths</value>
   </data>
   <data name="Title_OverallResult_Text" xml:space="preserve">
     <value>Result</value>

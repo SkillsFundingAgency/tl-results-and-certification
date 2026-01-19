@@ -205,15 +205,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to upload, amend, view, delete and add English and maths achievements.
-        /// </summary>
-        public static string Role_Learner_Record_Editor_Manage_English_Maths_Achievements {
-            get {
-                return ResourceManager.GetString("Role_Learner_Record_Editor_Manage_English_Maths_Achievements", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to update industry placement completion status.
         /// </summary>
         public static string Role_Learner_Record_Editor_Manage_Industry_Placement {
@@ -462,15 +453,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Home {
         public static string Service_TellUs_Confirm_Address_Details {
             get {
                 return ResourceManager.GetString("Service_TellUs_Confirm_Address_Details", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to confirm if a learner has achieved a level 2 qualification in English and maths.
-        /// </summary>
-        public static string Service_TellUs_English_And_Maths_Qualification {
-            get {
-                return ResourceManager.GetString("Service_TellUs_English_And_Maths_Qualification", resourceCulture);
             }
         }
         

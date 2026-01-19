@@ -45,12 +45,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             _mockTlevels = new List<FilterLookupData> { new FilterLookupData { Id = 1, Name = "Design, Survey and Planning", IsSelected = false }, new FilterLookupData { Id = 2, Name = "Health", IsSelected = false } };
             TrainingProviderRepository.GetSearchTlevelFiltersAsync().Returns(_mockTlevels);
 
-            _expectedStatusFilters = new List<FilterLookupData>
-            {
-                new FilterLookupData { Id = 1, Name = "English level", IsSelected = false },
-                new FilterLookupData { Id = 2, Name = "Maths level", IsSelected = false },
-            };
-
             _expectedIndustryPlacementStatusFilters = new List<FilterLookupData>
             {
                 new FilterLookupData { Id = 1, Name = "Completed", IsSelected = false },
@@ -82,7 +76,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
             _actualResult.Should().NotBeNull();
             _actualResult.AcademicYears.Should().BeEquivalentTo(_mockAcademicYears);
             _actualResult.Tlevels.Should().BeEquivalentTo(_mockTlevels);
-            _actualResult.Status.Should().BeEquivalentTo(_expectedStatusFilters);
             _actualResult.IndustryPlacementStatus.Should().BeEquivalentTo(_expectedIndustryPlacementStatusFilters);
         }
     }

@@ -40,11 +40,5 @@ namespace Sfa.Tl.ResultsAndCertification.Models.DataExport
 
         [DisplayName(ProviderRegistrationExportHeader.IndustryPlacement)]
         public string IndustryPlacementStatus { get; set; }
-
-        [DisplayName(ProviderRegistrationExportHeader.English)]
-        public string EnglishStatus { get; set; }
-
-        [DisplayName(ProviderRegistrationExportHeader.Maths)]
-        public string MathsStatus { get; set; }
     }
 }

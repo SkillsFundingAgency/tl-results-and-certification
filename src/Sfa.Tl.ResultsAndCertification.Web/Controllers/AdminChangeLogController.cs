@@ -234,23 +234,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             var result = await _loader.GetAdminViewChangeSpecialismAppealOutcomeRecord(changeLogId);
             return View(result);
         }
-
-        [HttpGet]
-        [Route("admin/view-change-record/19/{changeLogId}", Name = RouteConstants.AdminViewChangeMathsStatusRecord)]
-        public async Task<IActionResult> AdminViewChangeRecordMathsStatusAsync(int changeLogId)
-        {
-            var result = await _loader.GetAdminViewChangeMathsStatusRecord(changeLogId);
-            return View(result);
-        }
-
-        [HttpGet]
-        [Route("admin/view-change-record/20/{changeLogId}", Name = RouteConstants.AdminViewChangeEnglishStatusRecord)]
-        public async Task<IActionResult> AdminViewChangeRecordEnglishStatusAsync(int changeLogId)
-        {
-            var result = await _loader.GetAdminViewChangeEnglishStatusRecord(changeLogId);
-            return View(result);
-        }
-
         #endregion View change log
     }
 }

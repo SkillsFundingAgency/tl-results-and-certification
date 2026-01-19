@@ -29,8 +29,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
                 TlevelTitle = "Course name (4561237)",
                 AcademicYear = 2020,
                 AwardingOrganisationName = "Pearson",
-                MathsStatus = Common.Enum.SubjectStatus.Achieved,
-                EnglishStatus = Common.Enum.SubjectStatus.NotSpecified,
                 IsLearnerRegistered = true,
                 IndustryPlacementId = 1,
                 IndustryPlacementStatus = Common.Enum.IndustryPlacementStatus.Completed,

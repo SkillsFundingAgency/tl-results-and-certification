@@ -29,11 +29,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
                         new FilterLookupData { Id = 2020, Name = "2020 to 2021", IsSelected = true },
                         new FilterLookupData { Id = 2021, Name = "2021 to 2022", IsSelected = false }
                     },
-                    Status = new List<FilterLookupData>
-                    {
-                        new FilterLookupData { Id = 1, Name = "English", IsSelected = false },
-                        new FilterLookupData { Id = 2, Name = "Maths", IsSelected = true }
-                    },
                     Tlevels = new List<FilterLookupData>
                     {
                         new FilterLookupData { Id = 1, Name = "Education", IsSelected = true },
@@ -94,17 +89,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
             ActualResult.SearchLearnerDetailsList[0].LearnerName.Should().Be(_expectedApiResult.Records[0].Firstname + " " + _expectedApiResult.Records[0].Lastname);
             ActualResult.SearchLearnerDetailsList[0].StartYear.Should().Be(string.Format(SearchLearnerDetailsContent.Start_Year_Value, _expectedApiResult.Records[0].AcademicYear, _expectedApiResult.Records[0].AcademicYear + 1));
             ActualResult.SearchLearnerDetailsList[0].TlevelName.Should().Be(_expectedApiResult.Records[0].TlevelName);
-            ActualResult.SearchLearnerDetailsList[0].IsEnglishAdded.Should().BeTrue();
-            ActualResult.SearchLearnerDetailsList[0].IsMathsAdded.Should().BeTrue();
             ActualResult.SearchLearnerDetailsList[0].IsIndustryPlacementAdded.Should().BeTrue();
 
             ActualResult.SearchLearnerDetailsList[1].ProfileId.Should().Be(_expectedApiResult.Records[1].ProfileId);
             ActualResult.SearchLearnerDetailsList[1].LearnerName.Should().Be(_expectedApiResult.Records[1].Firstname + " " + _expectedApiResult.Records[1].Lastname);
             ActualResult.SearchLearnerDetailsList[1].StartYear.Should().Be(string.Format(SearchLearnerDetailsContent.Start_Year_Value, _expectedApiResult.Records[1].AcademicYear, _expectedApiResult.Records[1].AcademicYear + 1));
             ActualResult.SearchLearnerDetailsList[1].TlevelName.Should().Be(_expectedApiResult.Records[1].TlevelName);
-            ActualResult.SearchLearnerDetailsList[1].IsEnglishAdded.Should().BeFalse();
-            ActualResult.SearchLearnerDetailsList[1].IsMathsAdded.Should().BeFalse();
-            ActualResult.SearchLearnerDetailsList[1].IsIndustryPlacementAdded.Should().BeFalse();
         }
     }
 }
