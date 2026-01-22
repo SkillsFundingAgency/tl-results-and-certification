@@ -147,9 +147,6 @@
   <data name="Link_Change" xml:space="preserve">
     <value>Change</value>
   </data>
-  <data name="List_Item_English_Maths_Achievements" xml:space="preserve">
-    <value>English and maths achievements</value>
-  </data>
   <data name="List_Item_Grades" xml:space="preserve">
     <value>grades</value>
   </data>
