@@ -123,16 +123,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
                 return ResourceManager.GetString("Heading_Check_Details_Before_Sending", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to English and maths achievements.
-        /// </summary>
-        public static string List_Item_English_Maths_Achievements {
-            get {
-                return ResourceManager.GetString("List_Item_English_Maths_Achievements", resourceCulture);
-            }
-        }
-        
+
         /// <summary>
         ///   Looks up a localized string similar to grades.
         /// </summary>

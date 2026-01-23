@@ -123,9 +123,6 @@
   <data name="Continu_Button" xml:space="preserve">
     <value>Continue</value>
   </data>
-  <data name="English_And_Maths_Achievements" xml:space="preserve">
-    <value>English and maths achievements; and</value>
-  </data>
   <data name="Heading_Request_Soa" xml:space="preserve">
     <value>Request statement of achievement</value>
   </data>
