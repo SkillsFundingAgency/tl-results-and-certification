@@ -80,15 +80,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to English and maths achievements; and.
-        /// </summary>
-        public static string English_And_Maths_Achievements {
-            get {
-                return ResourceManager.GetString("English_And_Maths_Achievements", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Request statement of achievement.
         /// </summary>
         public static string Heading_Request_Soa {
@@ -112,15 +103,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.StatementOfAchievement {
         public static string Page_Title {
             get {
                 return ResourceManager.GetString("Page_Title", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to The statement of achievement will show which T Level components the learner completed before they withdrew. They will not receive a T Level certificate..
-        /// </summary>
-        public static string String1 {
-            get {
-                return ResourceManager.GetString("String1", resourceCulture);
             }
         }
         
