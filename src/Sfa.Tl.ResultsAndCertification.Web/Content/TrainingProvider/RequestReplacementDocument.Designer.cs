@@ -152,15 +152,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to English and maths achievements.
-        /// </summary>
-        public static string List_Item_English_Maths_Achievements {
-            get {
-                return ResourceManager.GetString("List_Item_English_Maths_Achievements", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to grades.
         /// </summary>
         public static string List_Item_Grades {
