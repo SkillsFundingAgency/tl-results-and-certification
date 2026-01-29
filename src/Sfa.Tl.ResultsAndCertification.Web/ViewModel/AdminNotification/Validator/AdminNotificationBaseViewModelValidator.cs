@@ -3,12 +3,14 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Extensions;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminNotification;
 using System;
+using System.Text.RegularExpressions;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminNotification.Validator
 {
     public class AdminNotificationBaseViewModelValidator : AbstractValidator<AdminNotificationBaseViewModel>
     {
         private const int TitleMaxLength = 255;
+        public static string ValidationRegularExpression = @"^[a-zA-Z0-9 \/.,']+$";
 
         public AdminNotificationBaseViewModelValidator()
         {
@@ -25,6 +27,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminNotification.Validat
             RuleFor(r => r.Content)
                 .Required()
                 .WithMessage(AdminNotificationBase.Validation_Content_Blank_Text);
+
+            // Content Validation
+            RuleFor(r => r.Content)
+                .Matches(ValidationRegularExpression)
+                .WithMessage(AdminNotificationBase.Validation_Content_Invalid_Characters);
 
             // Target
             RuleFor(r => r.Target)
