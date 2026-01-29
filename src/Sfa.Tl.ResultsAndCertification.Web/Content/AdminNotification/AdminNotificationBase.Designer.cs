@@ -89,6 +89,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminNotification {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Invalid characters in content.
+        /// </summary>
+        public static string Validation_Content_Invalid_Characters {
+            get {
+                return ResourceManager.GetString("Validation_Content_Invalid_Characters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Enter the end day.
         /// </summary>
         public static string Validation_End_Date_Day_When_Blank {
