@@ -7,7 +7,7 @@ jobs:
 - job: DeploySQLDatabase
   pool:
     name: 'Azure Pipelines'
-    vmImage: 'windows-2022'
+    vmImage: 'windows-latest'
   dependsOn:
     - DeployInfrastructure 
 

@@ -10,7 +10,7 @@
   - job: 'IntegrationTest'
     pool:
       name: 'Azure Pipelines'
-      vmImage: 'windows-2022'
+      vmImage: 'windows-latest'
     workspace:
       clean: all
     dependsOn:
