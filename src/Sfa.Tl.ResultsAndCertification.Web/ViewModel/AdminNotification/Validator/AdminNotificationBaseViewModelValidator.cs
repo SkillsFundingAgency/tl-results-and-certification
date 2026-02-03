@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminNotification.Validat
     public class AdminNotificationBaseViewModelValidator : AbstractValidator<AdminNotificationBaseViewModel>
     {
         private const int TitleMaxLength = 255;
-        public static string ValidationRegularExpression = @"^[a-zA-Z0-9 \/.,']+$";
+        private const string ValidationRegularExpression = @"^[a-zA-Z0-9 \/.,']+$";
 
         public AdminNotificationBaseViewModelValidator()
         {
