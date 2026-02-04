@@ -126,6 +126,9 @@
   <data name="Validation_Content_Blank_Text" xml:space="preserve">
     <value>Enter the content</value>
   </data>
+  <data name="Validation_Content_Invalid_Characters" xml:space="preserve">
+    <value>Invalid characters in content</value>
+  </data>
   <data name="Validation_End_Date_Day_When_Blank" xml:space="preserve">
     <value>Enter the end day</value>
   </data>
