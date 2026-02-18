@@ -115,10 +115,3 @@ stages:
             - GenerateConfigs
             - PublishInternalAPI
           package:  'Sfa.Tl.ResultsAndCertification.Functions.zip'
-      
-      - template: ../jobs/tlevels-post-deployment-job.yml
-        parameters:
-          dependencies:
-            - PublishWebsite
-            - PublishInternalAPI
-            - PublishFunction
