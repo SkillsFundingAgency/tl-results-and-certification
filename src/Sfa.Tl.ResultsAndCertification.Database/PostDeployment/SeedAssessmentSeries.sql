@@ -23,7 +23,10 @@ USING (VALUES
   -- The following rows are provisional dates and will be confirmed in the future
   (15, 1, N'Summer 2026', N'Summer 2026', 2026, N'2026-03-10', N'2026-08-03', N'2026-09-24', N'2026-10-31', 2024, N'2026-08-12', N'2026-11-01'),
   (16, 1, N'Autumn 2026', N'Autumn 2026', 2026, N'2026-08-04', N'2027-03-08', N'2027-04-29', N'2027-05-31', 2024, N'2027-03-18', N'2027-06-01'),
-  (17, 1, N'Summer 2027', N'Summer 2027', 2027, N'2027-03-09', N'2027-08-02', N'2027-09-23', N'2027-10-31', 2025, N'2027-08-11', N'2027-11-01')
+  (17, 1, N'Summer 2027', N'Summer 2027', 2027, N'2027-03-09', N'2027-08-02', N'2027-09-23', N'2027-10-31', 2025, N'2027-08-11', N'2027-11-01'),
+  (18, 2, N'Summer 2026', N'Summer 2026', 2026 , N'05/08/2025', N'03/08/2026', N'24/09/2026', N'31/10/2026', NULL, NULL, NULL),
+  (19, 2, N'Summer 2027', N'Summer 2027', 2027 , N'04/08/2026', N'02/08/2027', N'23/09/2027', N'31/10/2027', NULL, NULL, NULL)
+
   )
   AS Source ([Id], [ComponentType], [Name], [Description], [Year], [StartDate], [EndDate], [RommEndDate], [AppealEndDate], [ResultCalculationYear], [ResultPublishDate], [PrintAvailableDate]) 
 ON Target.[Id] = Source.[Id] 
