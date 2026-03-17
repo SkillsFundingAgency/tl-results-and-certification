@@ -53,23 +53,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             if (request.Tlevels != null && request.Tlevels.Any())
                 pathwayQueryable = pathwayQueryable.Where(p => request.Tlevels.Contains(p.TqProvider.TqAwardingOrganisation.TlPathway.Id));
 
-            if (request.Statuses != null && request.Statuses.Any()
-                || request.IndustryPlacementStatus != null && request.IndustryPlacementStatus.Any())
+            if (request.IndustryPlacementStatus != null && request.IndustryPlacementStatus.Any())
             {
                 var expressions = new List<Expression<Func<TqRegistrationPathway, bool>>>();
-
-                foreach (var statusId in request.Statuses.OrderBy(s => s))
-                {
-                    switch (statusId)
-                    {
-                        case (int)LearnerStatusFilter.EnglishIncomplete:
-                            expressions.Add(p => p.TqRegistrationProfile.EnglishStatus == null);
-                            break;
-                        case (int)LearnerStatusFilter.MathsIncomplete:
-                            expressions.Add(p => p.TqRegistrationProfile.MathsStatus == null);
-                            break;
-                    }
-                }
 
                 foreach (var statusId in request.IndustryPlacementStatus.OrderBy(s => s))
                 {

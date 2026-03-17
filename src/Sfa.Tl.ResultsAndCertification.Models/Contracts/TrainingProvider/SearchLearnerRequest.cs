@@ -5,7 +5,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider
     public class SearchLearnerRequest
     {
         public IList<int> AcademicYear { get; set; }
-        public IList<int> Statuses { get; set; }
         public IList<int> Tlevels { get; set; }
         public IList<int> IndustryPlacementStatus { get; set; }
         public string SearchKey { get; set; }
