@@ -20,6 +20,7 @@
         public const string RemoveTqProviderTlevelAsyncUri = "/api/provider/RemoveProviderTlevel/{0}/{1}";
         public const string HasAnyTlevelSetupForProviderAsyncUri = "/api/provider/HasAnyTlevelSetupForProvider/{0}/{1}";
         public const string GetRegisteredProviderPathwayDetailsAsyncUri = "/api/provider/GetRegisteredProviderPathwayDetails/{0}/{1}";
+        public const string GetChangeProviderPathwayDetailsAsyncUri = "/api/provider/GetChangeProviderPathwayDetails/{0}/{1}";
 
         // Registrations Related Uri's
         public const string ProcessBulkRegistrationsUri = "/api/registration/ProcessBulkRegistrations";

@@ -90,5 +90,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         {
             return await _providerService.GetRegisteredProviderPathwayDetailsAsync(aoUkprn, providerUkprn);
         }
+
+        [HttpGet]
+        [Route("GetChangeProviderPathwayDetails/{aoUkprn}/{providerUkprn}")]
+        public async Task<IList<PathwayDetails>> GetChangeProviderPathwayDetailsAsync(long aoUkprn, long providerUkprn)
+        {
+            return await _providerService.GetChangeProviderPathwayDetailsAsync(aoUkprn, providerUkprn);
+        }
     }
 }

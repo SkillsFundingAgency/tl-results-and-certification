@@ -147,6 +147,12 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return await GetAsync<IList<PathwayDetails>>(requestUri);
         }
 
+        public async Task<IList<PathwayDetails>> GetChangeProviderPathwayDetailsAsync(long aoUkprn, long providerUkprn)
+        {
+            var requestUri = string.Format(ApiConstants.GetChangeProviderPathwayDetailsAsyncUri, aoUkprn, providerUkprn);
+            return await GetAsync<IList<PathwayDetails>>(requestUri);
+        }
+
         public async Task<PathwaySpecialisms> GetPathwaySpecialismsByPathwayLarIdAsync(long aoUkprn, string pathwayLarId)
         {
             var requestUri = string.Format(ApiConstants.GetPathwaySpecialismsByPathwayLarIdAsyncUri, aoUkprn, pathwayLarId);
