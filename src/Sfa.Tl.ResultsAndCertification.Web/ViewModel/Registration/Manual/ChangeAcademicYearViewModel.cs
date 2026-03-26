@@ -23,6 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
         public IList<AcademicYear> AcademicYears { get; set; }
 
         public bool HasActiveAssessmentResults { get; set; }
+        public bool PathwayEligibleForAcademicYearChange { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(ChangeAcademicYear), ErrorMessageResourceName = "Validation_Message")]
         public string AcademicYearChangeTo { get; set; }

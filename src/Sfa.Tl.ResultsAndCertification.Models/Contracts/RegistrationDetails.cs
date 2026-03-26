@@ -27,5 +27,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
         public bool IsActiveWithOtherAo { get; set; }
         public bool HasActiveAssessmentEntriesForSpecialisms { get; set; }
         public bool HasActiveAssessmentResults { get; set; }
+        public bool IsPathwayAvailable { get; set; }
     }
 }

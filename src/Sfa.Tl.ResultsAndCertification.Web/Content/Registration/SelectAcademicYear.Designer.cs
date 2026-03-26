@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class SelectAcademicYear {
@@ -70,6 +70,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Start year cannot be moved. Generation 1 T Level cannot be moved to Generation 2..
+        /// </summary>
+        public static string Change_AcademicYear_Gen1_to_Gen2_Body_Text {
+            get {
+                return ResourceManager.GetString("Change_AcademicYear_Gen1_to_Gen2_Body_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Academic year cannot be changed.
         /// </summary>
         public static string Change_AcademicYear_Heading_Text {
@@ -93,6 +102,24 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         public static string Change_Registration_AcademicYear_Body_Text {
             get {
                 return ResourceManager.GetString("Change_Registration_AcademicYear_Body_Text", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to service support team..
+        /// </summary>
+        public static string Contact_Team_Email_Link_Text_1 {
+            get {
+                return ResourceManager.GetString("Contact_Team_Email_Link_Text_1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please contact the .
+        /// </summary>
+        public static string Contact_Team_Email_Text {
+            get {
+                return ResourceManager.GetString("Contact_Team_Email_Text", resourceCulture);
             }
         }
         

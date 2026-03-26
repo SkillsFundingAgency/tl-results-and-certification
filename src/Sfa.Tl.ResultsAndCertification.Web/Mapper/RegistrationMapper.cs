@@ -93,6 +93,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<RegistrationDetails, ChangeAcademicYearViewModel>()
                 .ForMember(d => d.Name, opts => opts.MapFrom(s => $"{s.Firstname} {s.Lastname}"))
                 .ForMember(d => d.HasActiveAssessmentResults, opts => opts.MapFrom(s => s.HasActiveAssessmentResults))
+                .ForMember(d => d.PathwayEligibleForAcademicYearChange, opts => opts.MapFrom(s => s.IsPathwayAvailable))
                 .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.PathwayLarId})"))
                 .ForMember(d => d.ProviderDisplayName, opts => opts.MapFrom(s => $"{s.ProviderName} ({s.ProviderUkprn})"));
 
@@ -118,7 +119,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<RegistrationDetails, ChangeSpecialismViewModel>()
                 .ForMember(d => d.CoreCode, opts => opts.MapFrom(s => s.PathwayLarId))
                 .ForMember(d => d.SpecialismCodes, opts => opts.MapFrom(s => s.Specialisms.Select(x => x.Code)));
+
             CreateMap<RegistrationDetails, CannotChangeAcademicYearViewModel>();
+            CreateMap<RegistrationDetails, PathwayNotEligibleForAcademicYearChangeViewModel>();
 
             CreateMap<ChangeAcademicYearViewModel, ChangeAcademicYearRequest>()
                .ForMember(d => d.ProfileId, opts => opts.MapFrom(s => s.ProfileId))
