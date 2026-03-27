@@ -113,6 +113,7 @@
         public const string SubmitReviewChangeAcademicYear = "SubmitReviewChangeAcademicYear";
         public const string ChangeAcademicYearConfirmation = "ChangeAcademicYearConfirmation";
         public const string CannotChangeAcademicYear = "CannotChangeAcademicYear";
+        public const string PathwayNotEligibleForAcademicYearChange = "PathwayNotEligibleForAcademicYearChange";
         public const string ChangeRegistrationProviderAndCoreNeedToWithdraw = "ChangeRegistrationProviderAndCoreNeedToWithdraw";
         public const string ChangeRegistrationProviderNotOfferingSameCore = "ChangeRegistrationProviderNotOfferingSameCore";
         public const string AmendActiveRegistration = "AmendActiveRegistration";

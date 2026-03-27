@@ -7,6 +7,7 @@ using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Web.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel;
@@ -22,6 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private readonly IRegistrationLoader _registrationLoader;
         private readonly ICacheService _cacheService;
         private readonly ILogger _logger;
+        private readonly ResultsAndCertificationConfiguration _configuration;
 
         private string CacheKey
         {
@@ -36,11 +38,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         public ManageRegistrationController(
             IRegistrationLoader registrationLoader,
             ICacheService cacheService,
-            ILogger<ManageRegistrationController> logger)
+            ILogger<ManageRegistrationController> logger,
+            ResultsAndCertificationConfiguration configuration)
         {
             _registrationLoader = registrationLoader;
             _cacheService = cacheService;
             _logger = logger;
+            _configuration = configuration;
         }
 
         [HttpGet]
@@ -364,6 +368,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
+            if (!viewModel.PathwayEligibleForAcademicYearChange)
+            {
+                return RedirectToRoute(nameof(RouteConstants.PathwayNotEligibleForAcademicYearChange), new { profileId = profileId });
+            }
+
             if (viewModel.HasActiveAssessmentResults)
             {
                 return RedirectToRoute(nameof(RouteConstants.CannotChangeAcademicYear), new { profileId = profileId });
@@ -440,6 +449,22 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 _logger.LogWarning(LogEvent.ConfirmationPageFailed, $"Unable to read ChangeAcademicYearConfirmationAsync from redis cache in change academic yearconfirmation page. Ukprn: {User.GetUkPrn()}, User: {User.GetUserEmail()}");
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
+            return View(viewModel);
+        }
+
+        [HttpGet]
+        [Route("pathway-not-eligible-for-academic-year-change/{profileId}", Name = RouteConstants.PathwayNotEligibleForAcademicYearChange)]
+        public async Task<IActionResult> PathwayNotEligibleForAcademicYearChangeAsync(int profileId)
+        {
+            var viewModel = await _registrationLoader.GetRegistrationProfileAsync<PathwayNotEligibleForAcademicYearChangeViewModel>(User.GetUkPrn(), profileId);
+            if (viewModel == null)
+            {
+                _logger.LogWarning(LogEvent.NoDataFound, $"No registration details found. Method: CannotChangeAcademicYearAsync({User.GetUkPrn()}, {profileId}), User: {User.GetUserEmail()}");
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            viewModel.TechnicalSupportEmailAddress = _configuration.TechnicalSupportEmailAddress;
+
             return View(viewModel);
         }
 
