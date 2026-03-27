@@ -46,6 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         public void Then_Expected_Methods_AreCalled()
         {
             RegistrationLoader.GetRegistrationProfileAsync<ChangeAcademicYearViewModel>(AoUkprn, ProfileId);
+            RegistrationLoader.Received().GetRegistrationProfileAsync<ChangeAcademicYearViewModel>(AoUkprn, ProfileId);
         }
 
         [Fact]
