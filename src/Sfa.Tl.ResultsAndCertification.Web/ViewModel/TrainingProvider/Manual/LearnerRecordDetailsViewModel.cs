@@ -49,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         /// True when status is Active or Withdrawn
         /// </summary>
         public bool IsLearnerRegistered { get; set; }
-        public bool IsStatusCompleted => IsIndustryPlacementAdded && IndustryPlacementStatus != IpStatus.NotCompleted;
+        public bool IsStatusCompleted => IndustryPlacementStatus != IpStatus.NotSpecified;
         
         public bool IsIndustryPlacementAdded => IndustryPlacementStatus != IpStatus.NotSpecified;
         public bool IsIndustryPlacementStillToBeCompleted => IndustryPlacementStatus == IpStatus.NotSpecified || IndustryPlacementStatus == IpStatus.NotCompleted;
