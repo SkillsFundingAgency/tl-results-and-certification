@@ -23,7 +23,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
                 ProviderDisplayName = "Barnsley College (10000536)",
                 PathwayDisplayName = "Digital Business Services",
                 AcademicYear = 2020,
-                AcademicYearToBe = 2021
+                AcademicYearToBe = 2021,
+                PathwayEligibleForAcademicYearChange = true
             };
 
             RegistrationLoader.GetRegistrationProfileAsync<ChangeAcademicYearViewModel>(AoUkprn, ProfileId).Returns(mockresult);

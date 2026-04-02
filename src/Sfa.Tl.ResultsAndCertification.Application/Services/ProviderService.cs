@@ -169,5 +169,21 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             return _mapper.Map<IList<PathwayDetails>>(providerPathways);
         }
+
+        /// <summary>
+        /// Gets the registered provider pathway details includes gen 1 asynchronous.
+        /// </summary>
+        /// <param name="aoUkprn">The ao ukprn.</param>
+        /// <param name="providerUkprn">The provider ukprn.</param>
+        /// <returns></returns>
+        public async Task<IList<PathwayDetails>> GetChangeProviderPathwayDetailsAsync(long aoUkprn, long providerUkprn)
+        {
+            var providerPathways = await _tqProviderRepository.GetManyAsync(x => x.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == aoUkprn
+                                                                           && x.TlProvider.UkPrn == providerUkprn
+                                                                           && x.TqAwardingOrganisation.TlPathway.IsActive)
+                                                              .Select(p => p.TqAwardingOrganisation.TlPathway).OrderBy(p => p.Name).ToListAsync();
+
+            return _mapper.Map<IList<PathwayDetails>>(providerPathways);
+        }
     }
 }

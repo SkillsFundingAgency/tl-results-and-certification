@@ -4,6 +4,7 @@ using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Common.Services.Cache;
+using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Controllers;
@@ -25,6 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         protected ManageRegistrationController Controller;
         protected IHttpContextAccessor HttpContextAccessor;
         protected AmendWithdrawRegistrationViewModel ViewModel;
+        protected ResultsAndCertificationConfiguration Configuration;
         public IActionResult Result { get; private set; }
 
         public override void Setup()
@@ -33,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
             RegistrationLoader = Substitute.For<IRegistrationLoader>();
             CacheService = Substitute.For<ICacheService>();
             Logger = Substitute.For<ILogger<ManageRegistrationController>>();
-            Controller = new ManageRegistrationController(RegistrationLoader, CacheService, Logger);
+            Controller = new ManageRegistrationController(RegistrationLoader, CacheService, Logger, Configuration);
 
             ProfileId = 1;
             AoUkprn = 1234567890;

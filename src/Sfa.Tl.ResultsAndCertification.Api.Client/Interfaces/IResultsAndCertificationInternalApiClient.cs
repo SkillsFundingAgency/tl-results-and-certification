@@ -46,6 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces
         Task<BulkProcessResponse> ProcessBulkRegistrationsAsync(BulkProcessRequest model);
         Task<BulkProcessResponse> ProcessBulkWithdrawalsAsync(BulkProcessRequest model);
         Task<IList<PathwayDetails>> GetRegisteredProviderPathwayDetailsAsync(long aoUkprn, long providerUkprn);
+        Task<IList<PathwayDetails>> GetChangeProviderPathwayDetailsAsync(long aoUkprn, long providerUkprn);
         Task<bool> AddRegistrationAsync(RegistrationRequest model);
         Task<FindUlnResponse> FindUlnAsync(long aoUkprn, long uln);
         Task<RegistrationDetails> GetRegistrationDetailsAsync(long aoUkprn, int profileId, RegistrationPathwayStatus? status = null);

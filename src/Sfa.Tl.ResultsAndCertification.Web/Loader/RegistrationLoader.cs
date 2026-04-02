@@ -200,7 +200,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             }
             else
             {
-                var providerPathways = await _internalApiClient.GetRegisteredProviderPathwayDetailsAsync(aoUkprn, viewModel.SelectedProviderUkprn.ToLong());
+                var providerPathways = await _internalApiClient.GetChangeProviderPathwayDetailsAsync(aoUkprn, viewModel.SelectedProviderUkprn.ToLong());
                 if (providerPathways != null && providerPathways.Count > 0 && providerPathways.Any(p => p.Code.Equals(reg.PathwayLarId)))
                 {
                     var request = _mapper.Map<ManageRegistration>(reg);
