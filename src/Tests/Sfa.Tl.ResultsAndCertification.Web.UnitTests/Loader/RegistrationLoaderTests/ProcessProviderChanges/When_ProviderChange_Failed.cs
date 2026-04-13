@@ -47,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             Loader = new RegistrationLoader(Mapper, Logger, InternalApiClient, BlobStorageService);
 
             InternalApiClient.GetRegistrationDetailsAsync(AoUkprn, ViewModel.ProfileId, RegistrationPathwayStatus.Active).Returns(mockApiClientResponse);
-            InternalApiClient.GetRegisteredProviderPathwayDetailsAsync(AoUkprn, _providerUkprn).Returns(mockProviderPathwayDetailsApiClientResponse);
+            InternalApiClient.GetChangeProviderPathwayDetailsAsync(AoUkprn, _providerUkprn).Returns(mockProviderPathwayDetailsApiClientResponse);
             InternalApiClient.UpdateRegistrationAsync(Arg.Any<ManageRegistration>()).Returns(ApiClientResponse);
         }
 
@@ -60,7 +60,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
         [Fact]
         public void Then_Recieved_Call_To_GetProviderPathwayDetails()
         {
-            InternalApiClient.Received(1).GetRegisteredProviderPathwayDetailsAsync(AoUkprn, _providerUkprn);
+            InternalApiClient.Received(1).GetChangeProviderPathwayDetailsAsync(AoUkprn, _providerUkprn);
         }
 
         [Fact]

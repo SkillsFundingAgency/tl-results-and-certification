@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 using Xunit;
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.ChangeAcademicYearGet
 {
-    public class When_Called_With_Active_Results : TestSetup
+    public class When_Called_With_Pathway_Is_UnAvailable : TestSetup
     {
         private IActionResult Result;
         private ChangeAcademicYearViewModel mockresult;
@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
                 AcademicYear = 2020,
                 AcademicYearToBe = 2021,
                 HasActiveAssessmentResults = true,
-                PathwayEligibleForAcademicYearChange = true
+                PathwayEligibleForAcademicYearChange = false
             };
 
             RegistrationLoader.GetAcademicYearsAsync().Returns(new List<AcademicYear> {
@@ -46,12 +46,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
         public void Then_Expected_Methods_AreCalled()
         {
             RegistrationLoader.GetRegistrationProfileAsync<ChangeAcademicYearViewModel>(AoUkprn, ProfileId);
+            RegistrationLoader.Received().GetRegistrationProfileAsync<ChangeAcademicYearViewModel>(AoUkprn, ProfileId);
         }
 
         [Fact]
         public void Then_Redirected_To_PageNotFound()
         {
-            Result.ShouldBeRedirectToRouteResult(RouteConstants.CannotChangeAcademicYear, ("profileId", ProfileId));
+            Result.ShouldBeRedirectToRouteResult(RouteConstants.PathwayNotEligibleForAcademicYearChange, ("profileId", ProfileId));
         }
     }
 }

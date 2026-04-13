@@ -120,6 +120,9 @@
   <data name="Back_To_Registration_Details_Button_Text" xml:space="preserve">
     <value>Back to registration details</value>
   </data>
+  <data name="Change_AcademicYear_Gen1_to_Gen2_Body_Text" xml:space="preserve">
+    <value>Start year cannot be moved. Generation 1 T Level cannot be moved to Generation 2.</value>
+  </data>
   <data name="Change_AcademicYear_Heading_Text" xml:space="preserve">
     <value>Academic year cannot be changed</value>
   </data>
@@ -128,6 +131,12 @@
   </data>
   <data name="Change_Registration_AcademicYear_Body_Text" xml:space="preserve">
     <value>The learner has a result recorded for one or more component. The academic year cannot be changed.</value>
+  </data>
+  <data name="Contact_Team_Email_Text" xml:space="preserve">
+    <value>Please contact the </value>
+  </data>
+  <data name="Contact_Team_Email_Link_Text_1" xml:space="preserve">
+    <value>service support team.</value>
   </data>
   <data name="Continue_Button_Text" xml:space="preserve">
     <value>Continue</value>
