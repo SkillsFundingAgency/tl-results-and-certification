@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
                 AcademicYear = 2020,
                 AcademicYearToBe = 2021,
                 HasActiveAssessmentResults = true,
-                PathwayEligibleForAcademicYearChange = true
+                AcademicYearCannotBeChanged = false,
             };
 
             RegistrationLoader.GetAcademicYearsAsync().Returns(new List<AcademicYear> {

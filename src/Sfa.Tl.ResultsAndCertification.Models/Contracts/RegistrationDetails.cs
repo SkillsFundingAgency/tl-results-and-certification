@@ -28,5 +28,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts
         public bool HasActiveAssessmentEntriesForSpecialisms { get; set; }
         public bool HasActiveAssessmentResults { get; set; }
         public bool IsPathwayAvailable { get; set; }
+        public int? EndYear { get; set; }
     }
 }
