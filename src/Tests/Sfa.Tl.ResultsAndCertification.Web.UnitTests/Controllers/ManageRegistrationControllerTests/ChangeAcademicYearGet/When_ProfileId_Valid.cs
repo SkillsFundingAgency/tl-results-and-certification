@@ -24,7 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
                 PathwayDisplayName = "Digital Business Services",
                 AcademicYear = 2020,
                 AcademicYearToBe = 2021,
-                PathwayEligibleForAcademicYearChange = true
+                AcademicYearCannotBeChanged = false
             };
 
             RegistrationLoader.GetRegistrationProfileAsync<ChangeAcademicYearViewModel>(AoUkprn, ProfileId).Returns(mockresult);
