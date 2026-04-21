@@ -27,7 +27,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public DateTime DateofBirth { get; set; }
         public string ProviderName { get; set; }
         public long ProviderUkprn { get; set; }
-        public string TlevelTitle { get; set; }
+        public string TlevelTitle { get; internal set; }
+        public string TlevelCode { get; set; }
         public List<string> Specialisms { get; set; }
         public int AcademicYear { get; set; }
         public string AwardingOrganisationName { get; set; }
@@ -102,7 +103,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         {
             Id = "tleveltitle",
             Title = LearnerRecordDetailsContent.Title_TLevel_Text,
-            Value = TlevelTitle
+            Value = $"{TlevelTitle} ({TlevelCode})"
         };
 
         public SummaryItemModel SummarySpecialisms => new SummaryItemModel
@@ -228,6 +229,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
                 return routeName;
             }
         }
+
+        
 
         private static string ConvertListToRawHtmlString(IEnumerable<string> selectedList)
         {
