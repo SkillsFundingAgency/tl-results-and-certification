@@ -32,7 +32,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.TlProviderId, opts => opts.MapFrom(s => s.TlProviderId))
                .ForMember(d => d.CreatedBy, opts => opts.MapFrom<UserNameResolver<ProviderTlevelViewModel, ProviderTlevel>>());
 
-            CreateMap<ProviderMetadata, ProviderLookupData>();
+            CreateMap<ProviderMetadata, ProviderLookupData>()
+               .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
+               .ForMember(d => d.DisplayName, opts => opts.MapFrom(s => $"{s.DisplayName} ({s.UkPrn})"));
 
             CreateMap<ProviderTlevels, ProviderViewModel>()
                .ForMember(d => d.ProviderId, opts => opts.MapFrom(s => s.Id))

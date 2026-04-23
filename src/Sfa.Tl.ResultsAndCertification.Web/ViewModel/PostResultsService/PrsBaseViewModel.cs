@@ -22,7 +22,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         public string SpecialismName { get; set; }
         public string SpecialismLarId { get; set; }
         public string TlevelTitle { get; set; }
-        
+        public string TlevelCode { get; set; }
+
         public string ExamPeriod { get; set; }
         public string GradeCode { get; set; }
         public string Grade { get; set; }
@@ -91,7 +92,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         {
             Id = "tleveltitle",
             Title = TlevelTitleLabel,
-            Value = TlevelTitle
+            Value = $"{TlevelTitle} ({TlevelCode})"
         };
 
         public SummaryItemModel SummaryComponentDisplayName => new()

@@ -82,7 +82,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
             else if (soaLearnerRecord.IsNotWithdrawn)
             {
-                await _cacheService.SetAsync(CacheKey, new RequestSoaUlnNotWithdrawnViewModel { Uln = soaLearnerRecord.Uln, LearnerName = soaLearnerRecord.LearnerName, DateofBirth = soaLearnerRecord.DateofBirth, ProviderName = soaLearnerRecord.ProviderName, TLevelTitle = soaLearnerRecord.TlevelTitle }, CacheExpiryTime.XSmall);
+                await _cacheService.SetAsync(CacheKey, new RequestSoaUlnNotWithdrawnViewModel { Uln = soaLearnerRecord.Uln, LearnerName = soaLearnerRecord.LearnerName, DateofBirth = soaLearnerRecord.DateofBirth, ProviderName = soaLearnerRecord.ProviderName, TLevelTitle = soaLearnerRecord.TlevelTitle, TLevelCode = soaLearnerRecord.TlevelCode }, CacheExpiryTime.XSmall);
                 return RedirectToRoute(RouteConstants.RequestSoaUlnNotWithdrawn);
             }
             else if (!soaLearnerRecord.IsIndustryPlacementAdded)
