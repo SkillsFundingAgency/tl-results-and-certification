@@ -15,7 +15,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTest
             ActualResult.DisplayName.Should().Be(ApiClientResponse.DisplayName);
             ActualResult.Ukprn.Should().Be(ApiClientResponse.Ukprn);
 
-            ActualResult.TlevelTitle.Should().Be(ApiClientResponse.ProviderTlevel.TlevelTitle);
+            var expectedTlevelResult = ApiClientResponse.ProviderTlevel;
+
+            ActualResult.TlevelTitle.Should().Be($"{expectedTlevelResult.TlevelTitle} ({expectedTlevelResult.TlevelCode})");
         }
     }
 }
