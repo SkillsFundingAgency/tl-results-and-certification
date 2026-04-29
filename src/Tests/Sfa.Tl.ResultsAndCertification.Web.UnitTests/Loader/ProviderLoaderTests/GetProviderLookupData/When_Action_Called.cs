@@ -1,6 +1,8 @@
 ﻿using FluentAssertions;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Provider;
 using System.Collections.Generic;
 using System.Linq;
 using Xunit;
@@ -15,9 +17,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTest
         {
             expectedaApiResult = new List<ProviderMetadata> 
             {
-                new ProviderMetadata { Id = 1, DisplayName = "Test provider 1" },
-                new ProviderMetadata { Id = 2, DisplayName = "Test provider 2" },
-                new ProviderMetadata { Id = 3, DisplayName = "Test provider 3" },
+                new ProviderMetadata { Id = 1, DisplayName = "Test provider 1", UkPrn = "10000001" },
+                new ProviderMetadata { Id = 2, DisplayName = "Test provider 2", UkPrn = "10000002" },
+                new ProviderMetadata { Id = 3, DisplayName = "Test provider 3", UkPrn = "10000003" },
             };
 
             InternalApiClient.FindProviderAsync(ProviderName, IsExactMatch)
@@ -40,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTest
             var expectedFirstResult = expectedaApiResult.First();
 
             expectedFirstResult.Id.Should().Be(actualFirstResult.Id);
-            expectedFirstResult.DisplayName.Should().Be(actualFirstResult.DisplayName);
+            expectedFirstResult.DisplayName.Should().Be(actualFirstResult.DisplayName.ToProviderName());
         }
     }
 }

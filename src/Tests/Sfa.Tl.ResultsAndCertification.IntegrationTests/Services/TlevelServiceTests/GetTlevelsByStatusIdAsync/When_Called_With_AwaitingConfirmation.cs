@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TlevelService
 
             var expectedResult = _result.Single();
             expectedResult.Should().NotBeNull();
-            expectedResult.TlevelTitle.Should().Be(_pathway.TlevelTitle);
+            expectedResult.TlevelTitle.Should().Be($"{_pathway.TlevelTitle} ({_pathway.LarId})");
             expectedResult.StatusId.Should().Be(_tqAwardingOrganisation.ReviewStatus);
         }
 
