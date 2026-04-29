@@ -43,6 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.UnitTests.Repositories.Pathway
             _result.Id.Should().Be(1);
             _result.Name.Should().BeEquivalentTo(_data.Name);
             _result.StartYear.Should().Be(_data.StartYear);
+            _result.EndYear.Should().Be(_data.EndYear);
             _result.CreatedBy.Should().Be(_data.CreatedBy);
             _result.CreatedOn.Should().Be(_data.CreatedOn);
             _result.ModifiedBy.Should().Be(_data.ModifiedBy);

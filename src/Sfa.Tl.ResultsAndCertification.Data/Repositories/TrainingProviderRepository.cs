@@ -184,6 +184,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                             ProviderName = tlProvider.Name,
                                             ProviderUkprn = tlProvider.UkPrn,
                                             TlevelTitle = tlPathway.TlevelTitle,
+                                            TlevelCode = tlPathway.LarId,
                                             Specialisms = specialisms,
                                             AcademicYear = tqPathway.AcademicYear,
                                             AwardingOrganisationName = tqAo.TlAwardingOrganisaton.DisplayName,
