@@ -255,7 +255,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (viewModel.SelectedProviderId == 0)
             {
-                var providerData = await _providerLoader.GetProviderLookupDataAsync(viewModel.Search, isExactMatch: true);
+                var providerData = await _providerLoader.GetProviderLookupDataAsync(viewModel.Search.ToProviderName(), isExactMatch: true);
                 if (providerData == null || providerData.Count() != 1)
                 {
                     _logger.LogInformation(LogEvent.ProviderNotFound,

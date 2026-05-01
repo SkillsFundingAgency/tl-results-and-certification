@@ -49,7 +49,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
                 DateofBirth = DateTime.UtcNow.AddYears(-20),
                 ProviderName = "Barsley College",
                 ProviderUkprn = ProviderUkprn,
-                TlevelTitle = "Course name (4561237)",
+                TlevelTitle = "Course name",
+                TlevelCode = "4561237",
                 AcademicYear = 2020,
                 AwardingOrganisationName = "Pearson",
                 MathsStatus = Common.Enum.SubjectStatus.Achieved,
@@ -88,6 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
             ActualResult.ProviderName.Should().Be(_expectedApiResult.ProviderName);
             ActualResult.ProviderUkprn.Should().Be(_expectedApiResult.ProviderUkprn);
             ActualResult.TlevelTitle.Should().Be(_expectedApiResult.TlevelTitle);
+            ActualResult.TlevelCode.Should().Be(_expectedApiResult.TlevelCode);
             ActualResult.StartYear.Should().Be($"{_expectedApiResult.AcademicYear} to {_expectedApiResult.AcademicYear + 1}");
             ActualResult.AwardingOrganisationName.Should().Be(_expectedApiResult.AwardingOrganisationName);
             ActualResult.IsLearnerRegistered.Should().Be(_expectedApiResult.IsLearnerRegistered);

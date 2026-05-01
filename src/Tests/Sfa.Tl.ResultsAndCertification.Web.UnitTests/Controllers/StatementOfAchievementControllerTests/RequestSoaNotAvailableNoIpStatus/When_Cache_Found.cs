@@ -58,7 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.StatementOfAc
 
             // TLevelTitle
             model.SummaryTlevelTitle.Title.Should().Be(RequestSoaNotAvailableNoIpStatusContent.Title_TLevel_Text);
-            model.SummaryTlevelTitle.Value.Should().Be(_mockCache.TLevelTitle);
+            model.SummaryTlevelTitle.Value.Should().Be($"{_mockCache.TLevelTitle} ({_mockCache.TLevelCode})");
 
             // Breadcrumb
             model.Breadcrumb.Should().NotBeNull();

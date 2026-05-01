@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
 {
@@ -118,5 +119,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Extensions
             => $"\"\"\"{value}\"\"\"";
 
         public static bool ConvertYesNoToBool(this string value) => value.Equals("Yes", StringComparison.InvariantCultureIgnoreCase) ? true : false;
+
+        public static string ToProviderName(this string value) => Regex.Replace(value, @"\(\d+\)$", string.Empty).Trim();
     }
 }
