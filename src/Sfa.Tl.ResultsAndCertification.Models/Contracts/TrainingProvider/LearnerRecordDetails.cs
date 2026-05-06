@@ -16,6 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider
         public string ProviderName { get; set; }
         public long ProviderUkprn { get; set; }
         public string TlevelTitle { get; set; }
+        public string TlevelCode { get; set; }
         public ICollection<string> Specialisms { get; set; }
         public int AcademicYear { get; set; }
         public string AwardingOrganisationName { get; set; }

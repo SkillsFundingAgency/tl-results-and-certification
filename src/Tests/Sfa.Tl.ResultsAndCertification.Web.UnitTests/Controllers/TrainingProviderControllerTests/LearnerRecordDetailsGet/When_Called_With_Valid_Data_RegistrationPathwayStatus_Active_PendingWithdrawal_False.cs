@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                 DateofBirth = DateTime.UtcNow.AddYears(-20),
                 ProviderName = "Barsley College",
                 ProviderUkprn = 58794528,
-                TlevelTitle = "Tlevel in Test Pathway Name",
+                TlevelCode = "Tlevel in Test Pathway Name",
                 AcademicYear = 2020,
                 AwardingOrganisationName = "Pearson",
                 IsLearnerRegistered = true,
@@ -84,7 +84,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
             model.DateofBirth.Should().Be(Mockresult.DateofBirth);
             model.ProviderName.Should().Be(Mockresult.ProviderName);
             model.ProviderUkprn.Should().Be(Mockresult.ProviderUkprn);
-            model.TlevelTitle.Should().Be(Mockresult.TlevelTitle);
+            model.TlevelCode.Should().Be(Mockresult.TlevelCode);
             model.StartYear.Should().Be("2020 to 2021");
             model.AwardingOrganisationName.Should().Be(Mockresult.AwardingOrganisationName);
             model.IsLearnerRegistered.Should().Be(Mockresult.IsLearnerRegistered);
@@ -118,7 +118,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 
             // TLevelTitle
             model.SummaryTlevelTitle.Title.Should().Be(LearnerRecordDetailsContent.Title_TLevel_Text);
-            model.SummaryTlevelTitle.Value.Should().Be(Mockresult.TlevelTitle);
+            model.SummaryTlevelTitle.Value.Should().Be($"{Mockresult.TlevelTitle} ({Mockresult.TlevelCode})");
 
             // Start Year
             model.SummaryStartYear.Title.Should().Be(LearnerRecordDetailsContent.Title_StartYear_Text);

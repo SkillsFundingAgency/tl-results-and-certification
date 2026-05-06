@@ -11,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Mappers
         {
             CreateMap<TqAwardingOrganisation, AwardingOrganisationPathwayStatus>()
                 .ForMember(d => d.PathwayId, opts => opts.MapFrom(s => s.TlPathway.Id))
-                .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TlPathway.TlevelTitle))
+                .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => $"{s.TlPathway.TlevelTitle} ({s.TlPathway.LarId})"))
                 .ForMember(d => d.StatusId, opts => opts.MapFrom(s => s.ReviewStatus));
 
             CreateMap<VerifyTlevelDetails, TqAwardingOrganisation>()

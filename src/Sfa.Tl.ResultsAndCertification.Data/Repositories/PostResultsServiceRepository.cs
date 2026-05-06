@@ -40,6 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                ProviderName = tlProvider.Name,
                                ProviderUkprn = tlProvider.UkPrn,
                                TlevelTitle = tlPathway.TlevelTitle,
+                               TlevelCode = tlPathway.LarId,
                                Status = tqPathway.Status,
                                PathwayAssessments = tqPathway.TqPathwayAssessments.Where(a => a.TqRegistrationPathwayId == tqPathway.Id && a.IsOptedin && a.EndDate == null)
                                                     .OrderByDescending(o => o.AssessmentSeriesId)

@@ -13,6 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         public DateTime DateofBirth { get; set; }
         public string ProviderName { get; set; }
         public string TLevelTitle { get; set; }
+        public string TLevelCode { get; set; }
 
         protected string UlnLabel { get; set; }
         protected string LearnerNameLabel { get; set; }
@@ -52,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.StatementOfAchievement
         {
             Id = "tleveltitle",
             Title = TlevelTitleLabel,
-            Value = TLevelTitle
+            Value = $"{TLevelTitle} ({TLevelCode})"
         };        
 
         public virtual BackLinkModel BackLink => new BackLinkModel

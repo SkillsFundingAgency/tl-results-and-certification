@@ -39,6 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                                               DateofBirth = tqProfile.DateofBirth,
                                               ProviderName = tlProvider.Name + " (" + tlProvider.UkPrn + ")",
                                               TlevelTitle = tlPathway.TlevelTitle,
+                                              TlevelCode = tlPathway.LarId,
                                               Status = tqPathway.Status,
                                               IsIndustryPlacementAdded = tqPathway.IndustryPlacements.Any(),
                                               IndustryPlacementStatus = tqPathway.IndustryPlacements.Any() ? tqPathway.IndustryPlacements.FirstOrDefault().Status : IndustryPlacementStatus.NotSpecified,

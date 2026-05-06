@@ -95,7 +95,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
             // TLevelTitle
             model.SummaryTlevelTitle.Title.Should().Be(PrsLearnerDetailsContent.Title_TLevel_Text);
-            model.SummaryTlevelTitle.Value.Should().Be(_mockResult.TlevelTitle);
+            model.SummaryTlevelTitle.Value.Should().Be($"{_mockResult.TlevelTitle} ({_mockResult.TlevelCode})");
 
             model.HasCoreResults.Should().BeTrue();
             model.CoreComponentDisplayName.Should().Be(_mockResult.CoreComponentDisplayName);

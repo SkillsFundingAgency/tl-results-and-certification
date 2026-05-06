@@ -24,7 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<ProviderTlevel, ProviderTlevelViewModel>()
                .ForMember(d => d.TqAwardingOrganisationId, opts => opts.MapFrom(s => s.TqAwardingOrganisationId))
                .ForMember(d => d.TlProviderId, opts => opts.MapFrom(s => s.TlProviderId))
-               .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.TlevelTitle))
+               .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => $"{s.TlevelTitle} ({s.TlevelCode})"))
                .ForMember(d => d.IsSelected, opts => opts.Ignore());
 
             CreateMap<ProviderTlevelViewModel, ProviderTlevel>()
@@ -32,7 +32,9 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.TlProviderId, opts => opts.MapFrom(s => s.TlProviderId))
                .ForMember(d => d.CreatedBy, opts => opts.MapFrom<UserNameResolver<ProviderTlevelViewModel, ProviderTlevel>>());
 
-            CreateMap<ProviderMetadata, ProviderLookupData>();
+            CreateMap<ProviderMetadata, ProviderLookupData>()
+               .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
+               .ForMember(d => d.DisplayName, opts => opts.MapFrom(s => $"{s.DisplayName} ({s.UkPrn})"));
 
             CreateMap<ProviderTlevels, ProviderViewModel>()
                .ForMember(d => d.ProviderId, opts => opts.MapFrom(s => s.Id))
@@ -57,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                .ForMember(d => d.Id, opts => opts.MapFrom(s => s.Id))
                .ForMember(d => d.DisplayName, opts => opts.MapFrom(s => s.DisplayName))
                .ForMember(d => d.Ukprn, opts => opts.MapFrom(s => s.Ukprn))
-               .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => s.ProviderTlevel.TlevelTitle))
+               .ForMember(d => d.TlevelTitle, opts => opts.MapFrom(s => $"{s.ProviderTlevel.TlevelTitle} ({s.ProviderTlevel.TlevelCode})"))
                .ForMember(d => d.TlProviderId, opts => opts.MapFrom(s => s.ProviderTlevel.TlProviderId));
 
             CreateMap<ProviderDetails, SelectListItem>()

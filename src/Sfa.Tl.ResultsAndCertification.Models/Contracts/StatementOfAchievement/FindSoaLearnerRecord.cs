@@ -11,6 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement
         public DateTime DateofBirth { get; set; }
         public string ProviderName { get; set; }
         public string TlevelTitle { get; set; }
+        public string TlevelCode { get; set; }
         public RegistrationPathwayStatus Status { get; set; }
         public bool IsIndustryPlacementAdded { get; set; }
         public bool? HasPathwayResult { get; set; }
@@ -19,5 +20,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.StatementOfAchievement
         public bool IsLearnerRegistered => Status == RegistrationPathwayStatus.Active || Status == RegistrationPathwayStatus.Withdrawn;
         public bool IsNotWithdrawn => Status == RegistrationPathwayStatus.Active;
         public bool IsIndustryPlacementCompleted => IndustryPlacementStatus == IndustryPlacementStatus.Completed || IndustryPlacementStatus == IndustryPlacementStatus.CompletedWithSpecialConsideration;
+
     }
 }

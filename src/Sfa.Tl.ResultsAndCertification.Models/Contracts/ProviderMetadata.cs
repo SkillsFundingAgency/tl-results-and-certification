@@ -3,5 +3,6 @@
     public class ProviderMetadata : BaseModel
     {
         public string DisplayName { get; set; }
+        public string UkPrn { get; set; }
     }
 }

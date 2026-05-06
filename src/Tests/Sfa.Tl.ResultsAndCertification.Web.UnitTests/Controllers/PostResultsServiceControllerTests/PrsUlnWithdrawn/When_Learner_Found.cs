@@ -66,7 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
             // TLevelTitle
             model.SummaryTlevelTitle.Title.Should().Be(PrsUlnWithdrawnContent.Title_TLevel_Text);
-            model.SummaryTlevelTitle.Value.Should().Be(_mockCache.TlevelTitle);
+            model.SummaryTlevelTitle.Value.Should().Be($"{_mockCache.TlevelTitle} ({_mockCache.TlevelCode})");
 
             model.BackLink.Should().NotBeNull();
             model.BackLink.RouteName.Should().Be(RouteConstants.SearchRegistration);

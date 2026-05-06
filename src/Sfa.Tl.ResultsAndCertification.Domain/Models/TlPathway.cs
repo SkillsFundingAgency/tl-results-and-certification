@@ -19,6 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Domain.Models
         public string TlevelTitle { get; set; }
         public string Name { get; set; }
         public int StartYear { get; set; }
+        public int? EndYear { get; set; }   
         public bool IsActive { get; set; }
         public bool IsAvailable { get; set; }
 

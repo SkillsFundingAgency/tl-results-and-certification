@@ -21,6 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService
         public long ProviderUkprn { get; set; }
         public string ProviderName { get; set; }
         public string TlevelTitle { get; set; }
+        public string TlevelCode { get; set; }
         public RegistrationPathwayStatus Status { get; set; }
         public IEnumerable<PrsAssessment> PathwayAssessments { get; set; }
         public IEnumerable<PrsAssessment> SpecialismAssessments { get; set; }
@@ -28,5 +29,6 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Contracts.PostResultsService
         public bool IsWithdrawn => Status == RegistrationPathwayStatus.Withdrawn;
 
         public bool HasResults => PathwayAssessments.Any(pa => pa.HasResult) || SpecialismAssessments.Any(sa => sa.HasResult);
+
     }
 }

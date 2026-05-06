@@ -24,7 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
                 DateofBirth = DateTime.UtcNow.AddYears(-20),
                 ProviderName = "Barsley College",
                 ProviderUkprn = 58794528,
-                TlevelTitle = "Tlevel in Test Pathway Name",
+                TlevelCode = "Tlevel in Test Pathway Name",
                 Specialisms = new List<string>
                 {
                     "Specialism 1", "Specialism 2"

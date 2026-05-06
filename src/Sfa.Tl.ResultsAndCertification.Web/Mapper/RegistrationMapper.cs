@@ -93,7 +93,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
             CreateMap<RegistrationDetails, ChangeAcademicYearViewModel>()
                 .ForMember(d => d.Name, opts => opts.MapFrom(s => $"{s.Firstname} {s.Lastname}"))
                 .ForMember(d => d.HasActiveAssessmentResults, opts => opts.MapFrom(s => s.HasActiveAssessmentResults))
-                .ForMember(d => d.PathwayEligibleForAcademicYearChange, opts => opts.MapFrom(s => s.IsPathwayAvailable))
+                .ForMember(d => d.AcademicYearCannotBeChanged, opts => opts.MapFrom(s => !s.IsPathwayAvailable && s.EndYear.HasValue && s.AcademicYear >= s.EndYear.Value))
                 .ForMember(d => d.PathwayDisplayName, opts => opts.MapFrom(s => $"{s.PathwayName} ({s.PathwayLarId})"))
                 .ForMember(d => d.ProviderDisplayName, opts => opts.MapFrom(s => $"{s.ProviderName} ({s.ProviderUkprn})"));
 

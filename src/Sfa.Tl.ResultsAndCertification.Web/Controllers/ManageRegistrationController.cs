@@ -368,7 +368,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            if (!viewModel.PathwayEligibleForAcademicYearChange)
+            if (viewModel.AcademicYearCannotBeChanged)
             {
                 return RedirectToRoute(nameof(RouteConstants.PathwayNotEligibleForAcademicYearChange), new { profileId = profileId });
             }
