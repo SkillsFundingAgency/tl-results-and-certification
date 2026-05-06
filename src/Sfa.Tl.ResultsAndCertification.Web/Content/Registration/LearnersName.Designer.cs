@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class LearnersName {
@@ -142,6 +142,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Learner names cannot contain integers or special characters.
+        /// </summary>
+        public static string Validation_Firstname_Cannot_Contain_Integers_Or_Special_Characters {
+            get {
+                return ResourceManager.GetString("Validation_Firstname_Cannot_Contain_Integers_Or_Special_Characters", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to First name must be 100 characters or fewer.
         /// </summary>
         public static string Validation_Firstname_Max_Length {
@@ -156,6 +165,15 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         public static string Validation_Firstname_Required {
             get {
                 return ResourceManager.GetString("Validation_Firstname_Required", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Learner names cannot contain integers or special characters.
+        /// </summary>
+        public static string Validation_Lastname_Cannot_Contain_Integers_Or_Special_Characters {
+            get {
+                return ResourceManager.GetString("Validation_Lastname_Cannot_Contain_Integers_Or_Special_Characters", resourceCulture);
             }
         }
         
