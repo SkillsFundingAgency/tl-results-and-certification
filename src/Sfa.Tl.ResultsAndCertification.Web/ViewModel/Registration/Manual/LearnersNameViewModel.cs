@@ -9,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual
     {
         [Required(ErrorMessageResourceType = typeof(ErrorResource.LearnersName), ErrorMessageResourceName = "Validation_Firstname_Required")]
         [MaxLength(100, ErrorMessageResourceType = typeof(ErrorResource.LearnersName), ErrorMessageResourceName = "Validation_Firstname_Max_Length")]
-        [RegularExpression(@"^[\p{L}\p{M}' \-’]+$", ErrorMessageResourceType = typeof(ErrorResource.LearnersName), ErrorMessageResourceName = "Validation_Firstname_Cannot_Contain_Integers_Or_Special_Characters")]
+        [RegularExpression(@"^[\p{L}\p{M}' \-]+$", ErrorMessageResourceType = typeof(ErrorResource.LearnersName), ErrorMessageResourceName = "Validation_Firstname_Cannot_Contain_Integers_Or_Special_Characters")]
         public string Firstname { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(ErrorResource.LearnersName), ErrorMessageResourceName = "Validation_Lastname_Required")]

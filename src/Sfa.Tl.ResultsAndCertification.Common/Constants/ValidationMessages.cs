@@ -15,7 +15,7 @@
         public const string CannotHaveValue = "{0} cannot have a value";
         public const string MustBeYesOrNo = "{0} must be a Yes or No";
         public const string MustBeInFormat = "{0} must be in the format {1}";
-        public const string LearnerNameCannotContainIntegersOrSpecialCharacters = "Learner names cannot contain integers or special characters";
+        public const string LearnerNameCannotContainIntegersOrSpecialCharacters = "Names can only contain letters (including accented characters), hyphens, and straight apostrophes (')";
 
         // File based validation messages
         public const string FileHeaderNotFound = "File header is not valid";

@@ -151,10 +151,10 @@
     <value>Enter first name</value>
   </data>
   <data name="Validation_Firstname_Cannot_Contain_Integers_Or_Special_Characters" xml:space="preserve">
-    <value>Learner names cannot contain integers or special characters</value>
+    <value>Names can only contain letters (including accented characters), hyphens, and straight apostrophes (')</value>
   </data>
   <data name="Validation_Lastname_Cannot_Contain_Integers_Or_Special_Characters" xml:space="preserve">
-    <value>Learner names cannot contain integers or special characters</value>
+    <value>Names can only contain letters (including accented characters), hyphens, and straight apostrophes (')</value>
   </data>
   <data name="Validation_Lastname_Max_Length" xml:space="preserve">
     <value>Last name must be 100 characters or fewer</value>

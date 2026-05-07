@@ -142,7 +142,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learner names cannot contain integers or special characters.
+        ///   Looks up a localized string similar to Names can only contain letters (including accented characters), hyphens, and straight apostrophes (&apos;).
         /// </summary>
         public static string Validation_Firstname_Cannot_Contain_Integers_Or_Special_Characters {
             get {
@@ -169,7 +169,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Registration {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Learner names cannot contain integers or special characters.
+        ///   Looks up a localized string similar to Names can only contain letters (including accented characters), hyphens, and straight apostrophes (&apos;).
         /// </summary>
         public static string Validation_Lastname_Cannot_Contain_Integers_Or_Special_Characters {
             get {
