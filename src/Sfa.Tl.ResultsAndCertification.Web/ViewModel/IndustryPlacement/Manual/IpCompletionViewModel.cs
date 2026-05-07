@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.IndustryPlacement.Manual
 
         private static bool IsPeriodActive(DateTime date)
         {
-            var startDate = new DateTime(date.Year, 05, 10);
+            var startDate = new DateTime(date.Year, 05, 01);
             var endDate = new DateTime(date.Year, 07, 31);
 
             return (date >= startDate && date <= endDate);
