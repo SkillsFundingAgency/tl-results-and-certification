@@ -143,6 +143,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
         private async Task<int?> GetFilterProviderId(string providerName)
         {
+
+            providerName = providerName.ToProviderName();
             if (string.IsNullOrWhiteSpace(providerName))
             {
                 return null;

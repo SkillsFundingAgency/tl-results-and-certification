@@ -62,7 +62,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(viewModel);
             }
 
-            (bool found, int providerId) = await GetProviderId(viewModel.Search.ToProviderName());
+            (bool found, int providerId) = await GetProviderId(viewModel.Search);
             if (!found)
             {
                 ModelState.AddModelError("Search", AdminFindProvider.ProviderName_NotValid_Validation_Message);
@@ -142,6 +142,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         private async Task<(bool found, int providerId)> GetProviderId(string providerName)
         {
             var notFoundResult = (false, 0);
+
+            providerName = providerName.ToProviderName();
 
             if (string.IsNullOrWhiteSpace(providerName))
             {
