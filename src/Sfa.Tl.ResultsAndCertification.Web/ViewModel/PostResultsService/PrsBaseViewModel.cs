@@ -92,7 +92,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.PostResultsService
         {
             Id = "tleveltitle",
             Title = TlevelTitleLabel,
-            Value = $"{TlevelTitle} ({TlevelCode})"
+            Value = TlevelTitle
         };
 
         public SummaryItemModel SummaryComponentDisplayName => new()

@@ -99,7 +99,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.PostResultsSe
 
             // T Level title
             model.SummaryTlevelTitle.Title.Should().Be(GradeChangeContent.Title_TLevel_Text);
-            model.SummaryTlevelTitle.Value.Should().Be($"{_mockGradeChangeRequestViewModel.TlevelTitle} ({_mockGradeChangeRequestViewModel.TlevelCode})");
+            model.SummaryTlevelTitle.Value.Should().Be(_mockGradeChangeRequestViewModel.TlevelTitle);
 
             // Pathway name
             model.SummaryCore.Title.Should().Be(GradeChangeContent.Title_Core_Text);

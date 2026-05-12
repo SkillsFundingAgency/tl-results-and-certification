@@ -66,7 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return View(viewModel);
             }
 
-            (bool found, int providerId) = await GetProviderId(viewModel.Search.ToProviderName());
+            (bool found, int providerId) = await GetProviderId(viewModel.Search);
             if (!found)
             {
                 ModelState.AddModelError("Search", AdminDownloadLearnerResultsFindProvider.ProviderName_NotValid_Validation_Message);
@@ -131,7 +131,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return notFoundResult;
             }
 
-            IEnumerable<ProviderLookupData> providerData = await _providerLoader.GetProviderLookupDataAsync(providerName, isExactMatch: true);
+            IEnumerable<ProviderLookupData> providerData = await _providerLoader.GetProviderLookupDataAsync(providerName.ToProviderName(), isExactMatch: true);
             if (!providerData.IsNullOrEmpty() && providerData.Count() == 1)
             {
                 return (true, providerData.Single().Id);
