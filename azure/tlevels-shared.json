@@ -52,6 +52,10 @@
         "keyVaultFullAccessObjectIds": {
             "type": "array"
         },
+        "keyVaultRbacRoleAssignments": {
+            "type": "array",
+            "defaultValue": []
+        },
         "redisCacheSku": {
             "type": "object",
             "defaultValue": {
@@ -82,7 +86,7 @@
         }
     },
     "variables": {
-        "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/tl-platform-building-blocks/master/ArmTemplates/",
+        "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/tl-platform-building-blocks/feature-TLD-693-kv-rbac-role-assignment/ArmTemplates/",
         "resourceNamePrefix": "[toLower(parameters('environmentNameAbbreviation'))]",
         "sqlServerName": "[concat(variables('resourceNamePrefix'), '-shared-sql')]",
         "sqlServerReplicaName": "[concat(variables('resourceNamePrefix'), '-shared-sql-replica')]",
@@ -435,7 +439,37 @@
                 }
             }
         },
-
+        {
+            "apiVersion": "2022-09-01",
+            "name": "[concat('key-vault-rbac-role-assignment-', parameters('environmentNameAbbreviation'), '-', copyIndex())]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'), 'role-assignment-key-vault.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "resourceName": {
+                        "value": "[variables('keyVaultName')]"
+                    },
+                    "assignmentType": {
+                        "value": "[parameters('keyVaultRbacRoleAssignments')[copyIndex()].assignmentType]"
+                    },
+                    "principalId": {
+                        "value": "[parameters('keyVaultRbacRoleAssignments')[copyIndex()].principalId]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[concat('key-vault','-', parameters('environmentNameAbbreviation'))]"
+            ],
+            "copy": {
+                "count": "[length(parameters('keyVaultRbacRoleAssignments'))]",
+                "name": "keyVaultRbacRoleAssignmentCopy",
+                "mode": "Serial"
+            }
+        },
         {
             "type": "Microsoft.Cache/Redis",
             "name": "[variables('redisCacheName')]",
