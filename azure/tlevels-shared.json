@@ -454,10 +454,10 @@
                         "value": "[variables('keyVaultName')]"
                     },
                     "assignmentType": {
-                        "value": "[parameters('keyVaultRbacRoleAssignments')[copyIndex()].assignmentType]"
+                        "value": "Key Vault Administrator"
                     },
                     "principalId": {
-                        "value": "[parameters('keyVaultRbacRoleAssignments')[copyIndex()].principalId]"
+                        "value": "[parameters('microsoftAppServicePrincipalId')]"
                     }
                 }
             },
