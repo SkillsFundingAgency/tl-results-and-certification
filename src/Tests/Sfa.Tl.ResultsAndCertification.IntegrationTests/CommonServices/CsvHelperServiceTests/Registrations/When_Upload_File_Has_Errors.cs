@@ -35,9 +35,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.CommonServices.CsvHelp
         {
             await WhenAsync();
             ReadAndParseFileResponse.Should().NotBeNull();
-            ReadAndParseFileResponse.Rows.Count.Should().Be(1);
+            ReadAndParseFileResponse.Rows.Count.Should().Be(3);
 
-            var actualValidationErrors = ReadAndParseFileResponse.Rows.First().ValidationErrors;
+            var actualValidationErrors = ReadAndParseFileResponse.Rows
+                .SelectMany(x => x.ValidationErrors)
+                .ToList();
+
             actualValidationErrors.Count.Should().Be(_expectedValidationErrors.Count);
             actualValidationErrors.Should().BeEquivalentTo(_expectedValidationErrors);
         }

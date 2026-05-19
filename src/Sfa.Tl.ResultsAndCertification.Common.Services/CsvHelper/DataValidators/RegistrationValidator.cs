@@ -22,13 +22,15 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
             RuleFor(r => r.FirstName)
                 .Cascade(CascadeMode.Stop)
                 .Required()
-                .MaxStringLength(100);
+                .MaxStringLength(100)
+                .ValidName();
 
             // Lastname
             RuleFor(r => r.LastName)
                 .Cascade(CascadeMode.Stop)
                 .Required()
-                .MaxStringLength(100);
+                .MaxStringLength(100)
+                .ValidName();
 
             // DateofBirth
             RuleFor(r => r.DateOfBirth)
