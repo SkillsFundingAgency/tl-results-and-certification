@@ -127,7 +127,7 @@
     <value>This learner is now registered for the {0} {1} assessment</value>
   </data>
   <data name="Heading_Is_This_Learner_Entering_Assessment" xml:space="preserve">
-    <value>Is this learner entering an assessment for their core component in {0}?</value>
+    <value>Is this learner entering an assessment for {0} in {1}?</value>
   </data>
   <data name="Page_Heading" xml:space="preserve">
     <value>Add core component assessment entry to {0}</value>
