@@ -148,7 +148,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return null;
             }
 
-            IEnumerable<ProviderLookupData> providerData = await _providerLoader.GetProviderLookupDataAsync(providerName, isExactMatch: true);
+            IEnumerable<ProviderLookupData> providerData = await _providerLoader.GetProviderLookupDataAsync(providerName.ToProviderName(), isExactMatch: true);
             if (!providerData.IsNullOrEmpty() && providerData.Count() == 1)
             {
                 return providerData.Single().Id;

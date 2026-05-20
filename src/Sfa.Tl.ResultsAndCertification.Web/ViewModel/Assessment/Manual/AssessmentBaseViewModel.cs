@@ -18,6 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Assessment.Manual
         public string ProviderName { get; set; }
         public long ProviderUkprn { get; set; }
         public string TlevelTitle { get; set; }
+        public string TlevelCode { get; set; }
 
         protected string UlnLabel { get; set; }
         protected string LearnerNameLabel { get; set; }
