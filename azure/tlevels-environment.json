@@ -666,6 +666,10 @@
               {
                 "name": "WEBSITE_SWAP_WARMUP_PING_STATUSES",
                 "value": "200"
+              },
+              {
+                "name": "WEBSITE_RUN_FROM_PACKAGE",
+                "value": "1"
               }
             ]
           },
