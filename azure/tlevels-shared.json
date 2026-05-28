@@ -450,7 +450,7 @@
         },
         {
             "apiVersion": "2022-09-01",
-            "name": "[concat('key-vault-rbac-role-assignment-', parameters('environmentNameAbbreviation'), '-microsoft-app-service-principal')]",
+            "name": "[concat('kv-rbac-', parameters('environmentNameAbbreviation'), '-appsvc')]",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
@@ -476,7 +476,7 @@
         },
         {
             "apiVersion": "2022-09-01",
-            "name": "[concat('key-vault-rbac-role-assignment-', parameters('environmentNameAbbreviation'), '-pipeline-deployment-identity')]",
+            "name": "[concat('kv-rbac-', parameters('environmentNameAbbreviation'), '-pipeline')]",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
@@ -502,7 +502,7 @@
         },
         {
             "apiVersion": "2022-09-01",
-            "name": "[concat('key-vault-rbac-role-assignment-', parameters('environmentNameAbbreviation'), '-function-app-managed-identity')]",
+            "name": "[concat('kv-rbac', parameters('environmentNameAbbreviation'), '-funcmi')]",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                  "mode": "Incremental",
