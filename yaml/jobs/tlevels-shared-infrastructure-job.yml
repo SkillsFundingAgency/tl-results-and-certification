@@ -43,7 +43,10 @@ jobs:
                   -sqlFirewallIpAddressesPredefined $(sqlFirewallIpAddresses)
                   -enableReplica $(enableReplica)
                   -isStorageSecondaryKeyInUse "$(isStorageSecondaryKeyInUse)"
-                  -environmentPrefix "$(environmentPrefix)"'
+                  -environmentPrefix "$(environmentPrefix)"
+                  -microsoftAppServicePrincipalId "$(microsoftAppServicePrincipalId)"
+                  -pipelineDeploymentPrincipalId "$(pipelineDeploymentPrincipalId)"
+                  -resacFunctionAppManagedIdentityPrincipalId "$(resacFunctionAppManagedIdentityPrincipalId)"'
                 tags: $(Tags)
                 processOutputs: true
             - pwsh: Write-Host "##vso[task.setvariable variable=SharedResourceGroup;isOutput=true]$(SharedResourceGroup)"

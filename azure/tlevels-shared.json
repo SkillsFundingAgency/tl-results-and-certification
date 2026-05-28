@@ -46,6 +46,15 @@
         "azureWebsitesRPObjectId": {
             "type": "string"
         },
+        "microsoftAppServicePrincipalId": {
+            "type": "string"
+        },
+        "pipelineDeploymentPrincipalId": {
+            "type": "string"
+        },
+        "resacFunctionAppManagedIdentityPrincipalId": {
+            "type": "string"
+        },
         "keyVaultReadWriteObjectIds": {
             "type": "array"
         },
@@ -441,7 +450,7 @@
         },
         {
             "apiVersion": "2022-09-01",
-            "name": "[concat('key-vault-rbac-role-assignment-', parameters('environmentNameAbbreviation'), '-', copyIndex())]",
+            "name": "[concat('key-vault-rbac-role-assignment-', parameters('environmentNameAbbreviation'), '-microsoft-app-service-principal')]",
             "type": "Microsoft.Resources/deployments",
             "properties": {
                 "mode": "Incremental",
@@ -458,6 +467,58 @@
                     },
                     "principalId": {
                         "value": "[parameters('microsoftAppServicePrincipalId')]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[concat('key-vault','-', parameters('environmentNameAbbreviation'))]"
+            ]
+        },
+        {
+            "apiVersion": "2022-09-01",
+            "name": "[concat('key-vault-rbac-role-assignment-', parameters('environmentNameAbbreviation'), '-pipeline-deployment-identity')]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'), 'role-assignment-key-vault.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "resourceName": {
+                        "value": "[variables('keyVaultName')]"
+                    },
+                    "assignmentType": {
+                        "value": "Key Vault Administrator"
+                    },
+                    "principalId": {
+                        "value": "[parameters('pipelineDeploymentPrincipalId')]"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[concat('key-vault','-', parameters('environmentNameAbbreviation'))]"
+            ]
+        },
+        {
+            "apiVersion": "2022-09-01",
+            "name": "[concat('key-vault-rbac-role-assignment-', parameters('environmentNameAbbreviation'), '-function-app-managed-identity')]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                 "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'), 'role-assignment-key-vault.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "resourceName": {
+                        "value": "[variables('keyVaultName')]"
+                    },
+                    "assignmentType": {
+                        "value": "Key Vault Reader"
+                    },
+                    "principalId": {
+                        "value": "[parameters('resacFunctionAppManagedIdentityPrincipalId')]"
                     }
                 }
             },
