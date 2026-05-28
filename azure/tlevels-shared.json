@@ -455,7 +455,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(variables('deploymentUrlBase'), 'role-assignment-key-vault.json')]",
+                    "uri": "[concat(variables('deploymentUrlBase'), 'role-assignments/role-assignment-key-vault.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -481,7 +481,7 @@
             "properties": {
                 "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(variables('deploymentUrlBase'), 'role-assignment-key-vault.json')]",
+                    "uri": "[concat(variables('deploymentUrlBase'), 'role-assignments/role-assignment-key-vault.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
@@ -507,7 +507,7 @@
             "properties": {
                  "mode": "Incremental",
                 "templateLink": {
-                    "uri": "[concat(variables('deploymentUrlBase'), 'role-assignment-key-vault.json')]",
+                    "uri": "[concat(variables('deploymentUrlBase'), 'role-assignments/role-assignment-key-vault.json')]",
                     "contentVersion": "1.0.0.0"
                 },
                 "parameters": {
