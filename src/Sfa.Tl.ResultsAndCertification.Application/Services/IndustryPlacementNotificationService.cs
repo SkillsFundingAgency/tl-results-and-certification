@@ -69,7 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             var providerUsers = await _dfeSignInApiClient.GetDfeUsersAllProviders(activeProviders);
 
-            if (providerUsers == null)
+            if (providerUsers == null || !providerUsers.Any())
             {
                 var message = $"No provider users are found. Method: {nameof(ProcessIndustryPlacementFirstDeadlineReminderAsync)}()";
                 _logger.LogWarning(LogEvent.NoDataFound, message);
@@ -109,7 +109,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             var providerUsers = await _dfeSignInApiClient.GetDfeUsersAllProviders(ukprnCountDictionary.Keys.ToList());
 
-            if (providerUsers == null)
+            if (providerUsers == null || !providerUsers.Any())
             {
                 var message = $"No provider users are found. Method: {nameof(ProcessIndustryPlacementMissedDeadlineReminderAsync)}()";
                 _logger.LogWarning(LogEvent.NoDataFound, message);
@@ -160,7 +160,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             var providerUsers = await _dfeSignInApiClient.GetDfeUsersAllProviders(ukprnCountDictionary.Keys.ToList());
 
-            if (providerUsers == null)
+            if (providerUsers == null || !providerUsers.Any())
             {
                 var message = $"No provider users are found. Method: {nameof(ProcessIndustryPlacementChaseBigGapsReminderAsync)}()";
                 _logger.LogWarning(LogEvent.NoDataFound, message);
@@ -215,7 +215,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             var providerUsers = await _dfeSignInApiClient.GetDfeUsersAllProviders(pathwayWithOnePendingIPStatus.Select(x => x.TqProvider.TlProvider.UkPrn).ToList());
 
-            if (providerUsers == null)
+            if (providerUsers == null || !providerUsers.Any())
             {
                 var message = $"No provider users are found. Method: {nameof(ProcessIndustryPlacementOneOutstandingUlnReminderAsync)}()";
                 _logger.LogWarning(LogEvent.NoDataFound, message);
@@ -280,7 +280,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 throw new ApplicationException($"Current Academic years are not found. Method: {nameof(GetCurrentAcademicYearAsync)}");
             }
 
-            return currentAcademicYears.FirstOrDefault().Year;
+            return currentAcademicYears.FirstOrDefault().Year -1;
         }
 
         private async Task<IEnumerable<TqRegistrationPathway>> GetPathwaysWithoutIndustryPlacementsAsync(int academicYear)
