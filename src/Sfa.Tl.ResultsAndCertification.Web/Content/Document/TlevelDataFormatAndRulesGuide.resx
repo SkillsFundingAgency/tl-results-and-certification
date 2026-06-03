@@ -121,13 +121,13 @@
     <value>Assessment entries data format and rules ({0}, {1})</value>
   </data>
   <data name="Assessment_Entries_FileSize_Text" xml:space="preserve">
-    <value>292KB</value>
+    <value>160KB</value>
   </data>
   <data name="Assessment_Entries_Heading_Text" xml:space="preserve">
     <value>Assessment entries</value>
   </data>
   <data name="Assessment_Entries_PublishedDate_Text" xml:space="preserve">
-    <value>01 September 2025</value>
+    <value>18 May 2026</value>
   </data>
   <data name="Awarding_Organisations_Heading" xml:space="preserve">
     <value>Awarding organisations</value>
@@ -163,25 +163,25 @@
     <value>Published</value>
   </data>
   <data name="Registrations_FileSize_Text" xml:space="preserve">
-    <value>296KB</value>
+    <value>125KB</value>
   </data>
   <data name="Registrations_Heading_Text" xml:space="preserve">
     <value>Registrations</value>
   </data>
   <data name="Registrations_PublishedDate_Text" xml:space="preserve">
-    <value>01 September 2025</value>
+    <value>18 May 2026</value>
   </data>
   <data name="Registration_DataFormat_And_Rules" xml:space="preserve">
     <value>Registrations data format and rules ({0}, {1})</value>
   </data>
   <data name="Results_FileSize_Text" xml:space="preserve">
-    <value>292KB</value>
+    <value>150KB</value>
   </data>
   <data name="Results_Heading_Text" xml:space="preserve">
     <value>Results</value>
   </data>
   <data name="Results_PublishedDate_Text" xml:space="preserve">
-    <value>01 September 2025</value>
+    <value>18 May 2026</value>
   </data>
   <data name="Results_DataFormat_And_Rules" xml:space="preserve">
     <value>Results data format and rules ({0}, {1})</value>
@@ -229,7 +229,7 @@
     <value>tlevels-romm-data-format-and-rules.xlsx</value>
   </data>
   <data name="Romms_FileSize_Text" xml:space="preserve">
-    <value>290KB</value>
+    <value>66KB</value>
   </data>
   <data name="Romms_DataFormat_And_Rules" xml:space="preserve">
     <value>ROMMs data format and rules ({0}, {1})</value>
@@ -238,10 +238,10 @@
     <value>ROMMs</value>
   </data>
   <data name="Romms_PublishedDate_Text" xml:space="preserve">
-    <value>01 September 2025</value>
+    <value>18 May 2026</value>
   </data>
   <data name="Widthdrawals_FileSize_Text" xml:space="preserve">
-    <value>296KB</value>
+    <value>42KB</value>
   </data>
   <data name="Withdrawals_DataFormat_And_Rules" xml:space="preserve">
     <value>Withdrawals data format and rules ({0}, {1})</value>
@@ -250,7 +250,7 @@
     <value>Withdrawals</value>
   </data>
   <data name="Withdrawals_PublishedDate_Text" xml:space="preserve">
-    <value>01 September 2025</value>
+    <value>18 May 2026</value>
   </data>
   <data name="XlsxFileType" xml:space="preserve">
     <value>XLSX</value>
