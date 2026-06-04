@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class TlevelDataFormatAndRulesGuide {
@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 292KB.
+        ///   Looks up a localized string similar to 160KB.
         /// </summary>
         public static string Assessment_Entries_FileSize_Text {
             get {
@@ -89,7 +89,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 01 September 2025.
+        ///   Looks up a localized string similar to 18 May 2026.
         /// </summary>
         public static string Assessment_Entries_PublishedDate_Text {
             get {
@@ -206,7 +206,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 296KB.
+        ///   Looks up a localized string similar to 125KB.
         /// </summary>
         public static string Registrations_FileSize_Text {
             get {
@@ -224,7 +224,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 01 September 2025.
+        ///   Looks up a localized string similar to 18 May 2026.
         /// </summary>
         public static string Registrations_PublishedDate_Text {
             get {
@@ -242,7 +242,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 292KB.
+        ///   Looks up a localized string similar to 150KB.
         /// </summary>
         public static string Results_FileSize_Text {
             get {
@@ -260,7 +260,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 01 September 2025.
+        ///   Looks up a localized string similar to 18 May 2026.
         /// </summary>
         public static string Results_PublishedDate_Text {
             get {
@@ -278,7 +278,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 290KB.
+        ///   Looks up a localized string similar to 66KB.
         /// </summary>
         public static string Romms_FileSize_Text {
             get {
@@ -296,7 +296,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 01 September 2025.
+        ///   Looks up a localized string similar to 18 May 2026.
         /// </summary>
         public static string Romms_PublishedDate_Text {
             get {
@@ -431,7 +431,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 296KB.
+        ///   Looks up a localized string similar to 42KB.
         /// </summary>
         public static string Widthdrawals_FileSize_Text {
             get {
@@ -458,7 +458,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 01 September 2025.
+        ///   Looks up a localized string similar to 18 May 2026.
         /// </summary>
         public static string Withdrawals_PublishedDate_Text {
             get {
