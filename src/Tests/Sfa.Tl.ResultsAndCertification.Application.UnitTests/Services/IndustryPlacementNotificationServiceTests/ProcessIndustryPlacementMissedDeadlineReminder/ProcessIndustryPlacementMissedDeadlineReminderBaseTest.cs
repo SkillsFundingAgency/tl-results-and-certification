@@ -60,7 +60,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.Industry
             {
                 new AcademicYear { Id = 1, Year = 2021 },
                 new AcademicYear { Id = 2, Year = 2022 },
-                new AcademicYear { Id = 2, Year = 2023 }
+                new AcademicYear { Id = 3, Year = 2023 }
             }.AsQueryable();
 
         private IEnumerable<TqRegistrationPathway> CreateRegistrationPathways() =>
@@ -71,7 +71,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.Industry
                     Id = 1,
                     TqRegistrationProfileId = 1,
                     TqProviderId = 1,
-                    AcademicYear = 2021,
+                    AcademicYear = 2020,
                     StartDate = new DateTime(2022, 9, 1),
                     EndDate = null,
                     Status = RegistrationPathwayStatus.Active,
