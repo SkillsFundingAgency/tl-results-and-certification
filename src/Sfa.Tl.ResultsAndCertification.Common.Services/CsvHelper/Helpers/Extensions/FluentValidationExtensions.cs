@@ -12,6 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Exten
     {
         private static readonly string academicYearPattern = "^[0-9]{4}/[0-9]{2}/?$";
         private static readonly string assessmentEntryFormat = "^[a-z]{1,20} [0-9]{4}$";
+        private static readonly string validNamePattern = @"^(?:(?:\p{L}[\p{L}\p{M}]*)(?:['’-](?:\p{L}[\p{L}\p{M}]*))*)(?:\s+(?:\p{L}[\p{L}\p{M}]*)(?:['’-](?:\p{L}[\p{L}\p{M}]*))*)*$";
 
         public static IRuleBuilderOptions<T, string> Required<T>(this IRuleBuilder<T, string> ruleBuilder)
         {
@@ -66,6 +67,13 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Exten
             return ruleBuilder
                 .Must(y => Regex.IsMatch(y, academicYearPattern))
                 .WithMessage(string.Format(ValidationMessages.MustBeInFormat, "{PropertyName}", "YYYY/YY"));
+        }
+
+        public static IRuleBuilderOptions<T, string> ValidName<T>(this IRuleBuilder<T, string> ruleBuilder)
+        {
+            return ruleBuilder
+                .Must(y => Regex.IsMatch(y, validNamePattern))
+                .WithMessage(ValidationMessages.LearnerNameCannotContainIntegersOrSpecialCharacters);
         }
 
         public static IRuleBuilderOptions<T, string> MusBeValidAssessmentSeries<T>(this IRuleBuilder<T, string> ruleBuilder)

@@ -25,7 +25,6 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
             IQueryable<int> availableStartYearsQuery = _dbContext.AcademicYear
                 .Where(x => today >= x.EndDate || (today >= x.StartDate && today <= x.EndDate))
                 .OrderByDescending(x => x.Year)
-                .Take(5)
                 .OrderBy(x => x.Year)
                 .Select(x => x.Year);
 

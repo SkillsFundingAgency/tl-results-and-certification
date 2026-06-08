@@ -172,6 +172,7 @@
         public const string CommaSeparator = ",";
         public const string NotReceived = "NR";
         public const string NotSpecified = "NotSpecified";
+        public const string LearnersNameRegex = @"^(?:(?:\p{L}[\p{L}\p{M}]*)(?:['’-](?:\p{L}[\p{L}\p{M}]*))*)(?:\s+(?:\p{L}[\p{L}\p{M}]*)(?:['’-](?:\p{L}[\p{L}\p{M}]*))*)*$";
 
         // Function Name Constants
         public const string FetchLearnerGender = "FetchLearnerGender";

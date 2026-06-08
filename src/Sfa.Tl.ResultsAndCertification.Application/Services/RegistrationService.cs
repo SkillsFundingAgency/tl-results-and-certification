@@ -942,7 +942,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var result = await _tqProviderRepository.GetManyAsync(p => p.TqAwardingOrganisation.TlAwardingOrganisaton.UkPrn == ukprn
                                                                     && p.TqAwardingOrganisation.TlAwardingOrganisaton.IsActive
-                                                                    && p.TqAwardingOrganisation.TlPathway.IsActive,
+                                                                    && p.TqAwardingOrganisation.TlPathway.IsActive
+                                                                    && p.TlProvider.IsActive,
                p => p.TlProvider, p => p.TqAwardingOrganisation, p => p.TqAwardingOrganisation.TlAwardingOrganisaton,
                p => p.TqAwardingOrganisation.TlPathway, p => p.TqAwardingOrganisation.TlPathway.TlPathwaySpecialismCombinations.Where(p => p.IsActive),
                p => p.TqAwardingOrganisation.TlPathway.TlSpecialisms.Where(p => p.IsActive)).ToListAsync();
