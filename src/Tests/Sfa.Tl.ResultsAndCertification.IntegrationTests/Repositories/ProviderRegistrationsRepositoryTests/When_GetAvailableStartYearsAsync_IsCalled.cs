@@ -56,7 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.ProviderR
             ["05/02/2023".ToDateTime()] = new List<int> { 2022, 2021, 2020 },
             ["05/02/2024".ToDateTime()] = new List<int> { 2023, 2022, 2021, 2020 },
             ["10/09/2024".ToDateTime()] = new List<int> { 2024, 2023, 2022, 2021, 2020 },
-            ["11/09/2025".ToDateTime()] = new List<int> { 2025, 2024, 2023, 2022, 2021 }
+            ["11/09/2025".ToDateTime()] = new List<int> { 2025, 2024, 2023, 2022, 2021 , 2020 }
         };
 
         public static IEnumerable<object[]> Data
