@@ -63,6 +63,17 @@
             <vc:summary-item model=Model.SummaryAoName></vc:summary-item>
         </dl>
 
+        <details class="govuk-details govuk-!-margin-bottom-9" data-module="govuk-details">
+            <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">@LearnerRecordDetails.Incorrect_Learner_Registration_Details</span>
+            </summary>
+            <div class="govuk-details__text">
+                @LearnerRecordDetails.Learner_Details_Section_If_Learner_Details_Are_Wrong see (<a class="govuk-link" href="https://support.tlevels.gov.uk/hc/en-gb/articles/6131556604562-Key-Awarding-Organisation-contacts" target="_blank">Key Awarding Organisation contacts</a>).
+                <br><br>
+                @LearnerRecordDetails.Learner_Details_Section_Mark_Learners_As_Pending_Withdrawal_Status
+            </div>
+        </details>
+
         <h2 class="govuk-heading-m">@LearnerRecordDetails.Section_Heading_Industry_Placement</h2>
         <dl class="govuk-summary-list govuk-!-margin-bottom-9">
             <vc:summary-item model=Model.SummaryIndustryPlacementStatus></vc:summary-item>

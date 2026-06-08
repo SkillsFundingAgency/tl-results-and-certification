@@ -141,6 +141,15 @@
   <data name="Hidden_Action_Text_OverallResult" xml:space="preserve">
     <value>overall result</value>
   </data>
+  <data name="Incorrect_Learner_Registration_Details" xml:space="preserve">
+    <value>Incorrect learner registration details?</value>
+  </data>
+  <data name="Learner_Details_Section_If_Learner_Details_Are_Wrong" xml:space="preserve">
+    <value>If any of the learner’s registration details are wrong, you must tell the relevant awarding organisation for them to action the change.</value>
+  </data>
+  <data name="Learner_Details_Section_Mark_Learners_As_Pending_Withdrawal_Status" xml:space="preserve">
+    <value>In addition to reporting withdrawals directly to the awarding organisation, we recommend that you also mark learners as ‘Pending Withdrawal’ status within the service.</value>
+  </data>
   <data name="Notification_Heading" xml:space="preserve">
     <value>Additional information needed for this learner</value>
   </data>
