@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "18.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class LearnerRecordDetails {
@@ -129,6 +129,33 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         public static string Hidden_Action_Text_OverallResult {
             get {
                 return ResourceManager.GetString("Hidden_Action_Text_OverallResult", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Incorrect learner registration details?.
+        /// </summary>
+        public static string Incorrect_Learner_Registration_Details {
+            get {
+                return ResourceManager.GetString("Incorrect_Learner_Registration_Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to If any of the learner’s registration details are wrong, you must tell the relevant awarding organisation for them to action the change..
+        /// </summary>
+        public static string Learner_Details_Section_If_Learner_Details_Are_Wrong {
+            get {
+                return ResourceManager.GetString("Learner_Details_Section_If_Learner_Details_Are_Wrong", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to In addition to reporting withdrawals directly to the awarding organisation, we recommend that you also mark learners as ‘Pending Withdrawal’ status within the service..
+        /// </summary>
+        public static string Learner_Details_Section_Mark_Learners_As_Pending_Withdrawal_Status {
+            get {
+                return ResourceManager.GetString("Learner_Details_Section_Mark_Learners_As_Pending_Withdrawal_Status", resourceCulture);
             }
         }
         
