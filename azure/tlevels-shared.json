@@ -478,6 +478,35 @@
             ]
         },
         {
+            "apiVersion": "2022-09-01",
+            "name": "[concat('kv-rbac-', parameters('environmentNameAbbreviation'), '-pipeline')]",
+            "type": "Microsoft.Resources/deployments",
+            "properties": {
+                "mode": "Incremental",
+                "templateLink": {
+                    "uri": "[concat(variables('deploymentUrlBase'), 'role-assignments/role-assignment-key-vault.json')]",
+                    "contentVersion": "1.0.0.0"
+                },
+                "parameters": {
+                    "resourceName": {
+                        "value": "[variables('keyVaultName')]"
+                    },
+                    "assignmentType": {
+                        "value": "Key Vault Administrator"
+                    },
+                    "principalId": {
+                        "value": "[parameters('pipelineDeploymentPrincipalId')]"
+                    },
+                     "principalType":{
+                        "value": "ServicePrincipal"
+                    }
+                }
+            },
+            "dependsOn": [
+                "[concat('key-vault','-', parameters('environmentNameAbbreviation'))]"
+            ]
+        },
+        {
             "type": "Microsoft.Cache/Redis",
             "name": "[variables('redisCacheName')]",
             "apiVersion": "2019-07-01",
