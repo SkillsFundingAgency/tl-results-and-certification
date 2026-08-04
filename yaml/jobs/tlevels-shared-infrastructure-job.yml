@@ -40,7 +40,7 @@ jobs:
                   -azureWebsitesRPObjectId "$(AzureWebsitesRPObjectId)"
                   -keyVaultReadWriteObjectIds "$(KeyVaultReadWriteObjectIds)"
                   -keyVaultFullAccessObjectIds "$(keyVaultFullAccessObjectIds)"
-                  -sqlFirewallIpAddressesMicrosoft "$(sqlFirewallIpAddressesMicrosoft)"
+                  -sqlFirewallIpAddressesMicrosoft $(sqlFirewallIpAddressesMicrosoft)
                   -sqlFirewallIpAddressesPredefined $(sqlFirewallIpAddresses)
                   -enableReplica $(enableReplica)
                   -isStorageSecondaryKeyInUse "$(isStorageSecondaryKeyInUse)"
