@@ -95,6 +95,7 @@ stages:
       sharedEnvironmentId: p01
       serviceConnection: $(prodServiceConnection)
       applicationName: resac
+      sqlFirewallIpAddressesMicrosoft: $(sqlFirewallIpAddressesMicrosoft)
     
   - template: tlevels-stage.yml
     parameters:

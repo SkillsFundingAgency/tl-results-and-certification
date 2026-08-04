@@ -9,6 +9,9 @@ parameters:
     type: string
   - name: globalSignServiceAccountPassword
     type: string
+  - name: sqlFirewallIpAddressesMicrosoft
+    type: string
+    default: '[]'
 jobs:
 
   - deployment: DeploySharedInfrastructure_${{parameters.sharedEnvironmentId}}
@@ -40,7 +43,7 @@ jobs:
                   -azureWebsitesRPObjectId "$(AzureWebsitesRPObjectId)"
                   -keyVaultReadWriteObjectIds "$(KeyVaultReadWriteObjectIds)"
                   -keyVaultFullAccessObjectIds "$(keyVaultFullAccessObjectIds)"
-                  -sqlFirewallIpAddressesMicrosoft $(sqlFirewallIpAddressesMicrosoft)
+                  -sqlFirewallIpAddressesMicrosoft ${{ parameters.sqlFirewallIpAddressesMicrosoft }}
                   -sqlFirewallIpAddressesPredefined $(sqlFirewallIpAddresses)
                   -enableReplica $(enableReplica)
                   -isStorageSecondaryKeyInUse "$(isStorageSecondaryKeyInUse)"
