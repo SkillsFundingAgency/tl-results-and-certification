@@ -63,6 +63,9 @@
                 "description": ""
             }
         },
+        "sqlFirewallIpAddressesMicrosoft": {
+            "type": "array"
+        },
         "sqlFirewallIpAddressesPredefined": {
             "type": "array"
         },
@@ -459,7 +462,7 @@
                 },
                 "parameters": {
                     "sqlFirewallIpAddressesPredefined": {
-                        "value": "[parameters('sqlFirewallIpAddressesPredefined')]"
+                        "value": "[union(parameters('sqlFirewallIpAddressesPredefined'), parameters('sqlFirewallIpAddressesMicrosoft'))]"
                     },
                     "serverName": {
                         "value": "[variables('sqlServerNames')[copyIndex()]]"
