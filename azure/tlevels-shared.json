@@ -64,7 +64,8 @@
             }
         },
         "sqlFirewallIpAddressesMicrosoft": {
-            "type": "array"
+            "type": "array",
+            "defaultValue": []
         },
         "sqlFirewallIpAddressesPredefined": {
             "type": "array"
