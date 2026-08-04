@@ -8,6 +8,7 @@ resources:
       type: github
       endpoint: DfE-Digital
       name: DFE-Digital/operations-devops-pipeline-templates
+      ref: refs/heads/feature/TLD-723-sql-firewall-rules
     - repository: devopsTools
       type: github
       endpoint: DfE-Digital
