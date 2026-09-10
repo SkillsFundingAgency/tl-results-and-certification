@@ -187,7 +187,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update achievements and industry placement statuses, order replacement certificates, or notify us of pending withdrawals..
+        ///   Looks up a localized string similar to Update industry placement statuses, order replacement certificates, or notify us of pending withdrawals..
         /// </summary>
         public static string Manage_Learner_TLevel_Records_Description_Text {
             get {
@@ -385,7 +385,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Dashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Download results for active learners in their final year of their T Level..
+        ///   Looks up a localized string similar to Download results and results slips for active learners, by start year, who have reached the end of the second year of their T Level..
         /// </summary>
         public static string Tile_Para_Download_Results_For_Active_Learners {
             get {
