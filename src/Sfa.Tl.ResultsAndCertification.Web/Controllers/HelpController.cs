@@ -51,12 +51,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewmodel);
         }
 
-        [HttpGet]
-        [Route("privacy-policy", Name = RouteConstants.PrivacyPolicy)]
-        public IActionResult Privacy()
-        {
-            return View();
-        }
 
         [HttpGet]
         [Route("terms-and-conditions", Name = RouteConstants.TermsAndConditions)]

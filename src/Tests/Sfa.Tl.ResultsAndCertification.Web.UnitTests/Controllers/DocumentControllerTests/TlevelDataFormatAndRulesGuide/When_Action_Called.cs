@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.DocumentContr
             viewResultModel.Withdrawals.Should().NotBeNull();
             viewResultModel.Withdrawals.Heading.Should().Be(DocumentResource.Withdrawals_Heading_Text);
             viewResultModel.Withdrawals.DownloadLink.Should().Be(RouteConstants.DownloadWithdrawalsDataFormatAndRulesGuide);
-            viewResultModel.Withdrawals.DownloadLinkText.Should().Be(string.Format(DocumentResource.Withdrawals_DataFormat_And_Rules, DocumentResource.XlsxFileType, DocumentResource.Widthdrawals_FileSize_Text));
+            viewResultModel.Withdrawals.DownloadLinkText.Should().Be(string.Format(DocumentResource.Withdrawals_DataFormat_And_Rules, DocumentResource.XlsxFileType, DocumentResource.Withdrawals_FileSize_Text));
             viewResultModel.Withdrawals.PublishedOn.Should().Be($"{DocumentResource.Published_Text} {DocumentResource.Withdrawals_PublishedDate_Text}");
 
             viewResultModel.Results.Should().NotBeNull();

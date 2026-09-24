@@ -17,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.Document
         {
             Heading = TlevelDataFormatAndRulesGuide.Withdrawals_Heading_Text,
             DownloadLink = RouteConstants.DownloadWithdrawalsDataFormatAndRulesGuide,
-            DownloadLinkText = string.Format(TlevelDataFormatAndRulesGuide.Withdrawals_DataFormat_And_Rules, TlevelDataFormatAndRulesGuide.XlsxFileType, TlevelDataFormatAndRulesGuide.Widthdrawals_FileSize_Text),
+            DownloadLinkText = string.Format(TlevelDataFormatAndRulesGuide.Withdrawals_DataFormat_And_Rules, TlevelDataFormatAndRulesGuide.XlsxFileType, TlevelDataFormatAndRulesGuide.Withdrawals_FileSize_Text),
             PublishedOn = $"{TlevelDataFormatAndRulesGuide.Published_Text} {TlevelDataFormatAndRulesGuide.Withdrawals_PublishedDate_Text}"
         };
 
