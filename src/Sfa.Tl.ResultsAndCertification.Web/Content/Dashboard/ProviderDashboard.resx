@@ -160,7 +160,7 @@
     <value>View news and updates (opens in a new tab)</value>
   </data>
   <data name="Manage_Learner_TLevel_Records_Description_Text" xml:space="preserve">
-    <value>Update achievements and industry placement statuses, order replacement certificates, or notify us of pending withdrawals.</value>
+    <value>Update industry placement statuses, order replacement certificates, or notify us of pending withdrawals.</value>
   </data>
   <data name="Manage_Learner_TLevel_Records_Text" xml:space="preserve">
     <value>Manage learner records</value>
@@ -226,7 +226,7 @@
     <value>Download a CSV file of your learners’ registration data, including industry placement status, by start year.</value>
   </data>
   <data name="Tile_Para_Download_Results_For_Active_Learners" xml:space="preserve">
-    <value>Download results for active learners in their final year of their T Level.</value>
+    <value>Download results and results slips for active learners, by start year, who have reached the end of the second year of their T Level.</value>
   </data>
   <data name="Tlevels_Description_Text" xml:space="preserve">
     <value>Review T Level details and tell us if they are correct</value>

@@ -80,8 +80,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
             var profile = new TqRegistrationProfileBuilder().BuildListWithoutLrsData().FirstOrDefault(p => p.UniqueLearnerNumber == uln);
             var tqRegistrationProfile = RegistrationsDataProvider.CreateTqRegistrationProfile(DbContext, profile);
             var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, tqProvider ?? TqProviders.First());
-            var currentPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, 1, DateTime.Now.AddYears(-2), RegistrationPathwayStatus.Active, true);
+            var currentPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, 1, DateTime.Now, RegistrationPathwayStatus.Active, true);
 
+            currentPathway.AcademicYear = AcademicYears
+                .First(x => DateTime.Today >= x.StartDate && DateTime.Today <= x.EndDate)
+                .Year - 1;
             if (status == RegistrationPathwayStatus.Withdrawn || status == RegistrationPathwayStatus.Transferred)
             {
                 tqRegistrationPathway.Status = status;
