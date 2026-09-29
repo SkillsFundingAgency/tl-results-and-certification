@@ -1,4 +1,4 @@
-using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
@@ -21,17 +21,17 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             _commonService = commonService;
             _personalLearningRecordService = personalLearningRecordService;
         }
-        
-        [FunctionName(Constants.VerifyLearnerAndFetchLearningEvents)]
-        public async Task VerifyLearnerAndFetchLearningEventsAsync([TimerTrigger("%LearnerVerificationAndLearningEventsTrigger%")]TimerInfo timer, ExecutionContext context, ILogger logger)
+
+        [Function(Constants.VerifyLearnerAndFetchLearningEvents)]
+        public async Task VerifyLearnerAndFetchLearningEventsAsync([TimerTrigger("%LearnerVerificationAndLearningEventsTrigger%")] TimerInfo timer, FunctionContext context, ILogger logger)
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
-            var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.LearnerVerificationAndLearningEvents);
+            var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionDefinition.Name, FunctionType.LearnerVerificationAndLearningEvents);
 
             try
             {
-                logger.LogInformation($"Function {context.FunctionName} started");
+                logger.LogInformation($"Function {context.FunctionDefinition.Name} started");
 
                 var stopwatch = Stopwatch.StartNew();
 
@@ -39,12 +39,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 var response = await _personalLearningRecordService.ProcessLearnerVerificationAndLearningEventsAsync();
 
-                var message = $"Function {context.FunctionName} completed processing.\n" +
+                var message = $"Function {context.FunctionDefinition.Name} completed processing.\n" +
                                       $"\tStatus: {(response.IsSuccess ? FunctionStatus.Processed.ToString() : FunctionStatus.Failed.ToString())}\n" +
                                       $"\tTotal learners to process: {response.TotalCount}\n" +
                                       $"\tLearners retrieved from lrs: {response.LrsCount}\n" +
                                       $"\tModified learners to process: {response.ModifiedCount}\n" +
-                                      $"\tRows saved: {response.SavedCount}\n" +                                      
+                                      $"\tRows saved: {response.SavedCount}\n" +
                                       $"\tAdditional message: {response.Message}";
 
                 CommonHelper.UpdateFunctionLogRequest(functionLogDetails, response.IsSuccess ? FunctionStatus.Processed : FunctionStatus.Failed, message);
@@ -53,18 +53,18 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 stopwatch.Stop();
 
-                logger.LogInformation($"Function {context.FunctionName} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
+                logger.LogInformation($"Function {context.FunctionDefinition.Name} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                var errorMessage = $"Function {context.FunctionName} failed to process with the following exception = {ex}";
+                var errorMessage = $"Function {context.FunctionDefinition.Name} failed to process with the following exception = {ex}";
                 logger.LogError(errorMessage);
 
                 CommonHelper.UpdateFunctionLogRequest(functionLogDetails, FunctionStatus.Failed, errorMessage);
 
                 _ = (functionLogDetails.Id > 0) ? await _commonService.UpdateFunctionLog(functionLogDetails) : await _commonService.CreateFunctionLog(functionLogDetails);
 
-                await _commonService.SendFunctionJobFailedNotification(context.FunctionName, errorMessage);
+                await _commonService.SendFunctionJobFailedNotification(context.FunctionDefinition.Name, errorMessage);
             }
         }
     }

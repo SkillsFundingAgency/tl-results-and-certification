@@ -23,6 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
 
         // Data Seed variables
         protected TlAwardingOrganisation TlAwardingOrganisation;
+
         protected TlRoute Route;
         protected TlPathway Pathway;
         protected TlSpecialism Specialism;
@@ -46,6 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
 
         // Dependencies
         protected ILogger<GenericRepository<TqRegistrationPathway>> RegistrationPathwayRepositoryLogger;
+
         protected ILogger<IndustryPlacementNotificationService> IndustryPlacementNotificationServiceLogger;
 
         protected INotificationService NotificationService = Substitute.For<INotificationService>();
@@ -64,6 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
 
             DbContext.SaveChanges();
         }
+
         public List<TqRegistrationProfile> SeedRegistrationsData(Dictionary<long, RegistrationPathwayStatus> ulns, TqProvider tqProvider = null)
         {
             var profiles = new List<TqRegistrationProfile>();
@@ -80,7 +83,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
             var profile = new TqRegistrationProfileBuilder().BuildListWithoutLrsData().FirstOrDefault(p => p.UniqueLearnerNumber == uln);
             var tqRegistrationProfile = RegistrationsDataProvider.CreateTqRegistrationProfile(DbContext, profile);
             var tqRegistrationPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, tqProvider ?? TqProviders.First());
-            var currentPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, 1, DateTime.Now.AddYears(-2), RegistrationPathwayStatus.Active, true);
+            var currentPathway = RegistrationsDataProvider.CreateTqRegistrationPathway(DbContext, tqRegistrationProfile, 1, DateTime.Now.AddYears(-1), RegistrationPathwayStatus.Active, true);
 
             if (status == RegistrationPathwayStatus.Withdrawn || status == RegistrationPathwayStatus.Transferred)
             {

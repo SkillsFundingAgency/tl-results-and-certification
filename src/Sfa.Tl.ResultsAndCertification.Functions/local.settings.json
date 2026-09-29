@@ -1,17 +1,20 @@
 {
   "IsEncrypted": false,
   "Values": {
-    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
+    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
+    "AzureWebJobsDashboard": "UseDevelopmentStorage=true",
+    "BlobStorageConnectionString": "UseDevelopmentStorage=true;",
     "LearnerVerificationAndLearningEventsTrigger": "0 23 15 1-12 *",
     "LearnerGenderTrigger": "0 21 15 1-12 *",
     "CertificatePrintingBatchesCreateTrigger": "0 * * * * *",
     "CertificatePrintingRequestTrigger": "0 0 19 * * *",
-    "CertificatePrintingBatchSummaryTrigger": "0 30 19 * * *",
+    "CertificatePrintingBatchSummaryTrigger": "* * * * * *",
     "CertificatePrintingTrackBatchTrigger": "0 0 20 * * *",
     "UcasTransferEntriesTrigger": "0 10 20 3 7 *",
     "UcasTransferResultsTrigger": "0 30 21 15 8 *",
     "UcasTransferAmendmentsTrigger": "0 45 21 * 8-10 *",
-    "OverallResultCalculationTrigger": "30 20 * * *",
+    "OverallResultCalculationTrigger": "* * * * *",
     "IndustryPlacementExtractTrigger": "0 30 8 * * *",
     "IndustryPlacementProviderFirstDeadlineReminderTrigger": "0 */5 * * * *",
     "IndustryPlacementMissedDeadlineReminderTrigger": "0 */5 * * * *",
@@ -22,11 +25,9 @@
     "CoreRommExtractTrigger": "0 0 8 * * *",
     "SpecialismRommExtractTrigger": "0 45 7 * * *",
     "CertificateTrackingExtractTrigger": "0 15 8 * * *",
-    "AzureWebJobsStorage": "UseDevelopmentStorage=true",
-    "BlobStorageConnectionString": "UseDevelopmentStorage=true;",
     "ConfigurationStorageConnectionString": "UseDevelopmentStorage=true;",
     "EnvironmentName": "LOCAL",
     "ServiceName": "Sfa.Tl.ResultsAndCertification",
-    "ServiceVersion": "1.0" // Need ServiceVersion rather than Version in local with .Net 6
+    "ServiceVersion": "1.0", // Need ServiceVersion rather than Version in local with .Net 6
   }
 }

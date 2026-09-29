@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "Sfa.Tl.ResultsAndCertification.Functions": {
+      "commandName": "Project",
+      "commandLineArgs": "--port 7001",
+      "launchBrowser": false
+    }
+  }
+}

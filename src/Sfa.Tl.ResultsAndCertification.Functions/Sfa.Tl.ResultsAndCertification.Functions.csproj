@@ -2,11 +2,35 @@
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <AzureFunctionsVersion>v4</AzureFunctionsVersion>
+	<OutputType>Exe</OutputType>
+	<ImplicitUsings>enable</ImplicitUsings>
+	<Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.Azure.Functions.Extensions" Version="1.1.0" />
-    <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
-    <PackageReference Include="Microsoft.NET.Sdk.Functions" Version="4.6.0" />
+    <Compile Remove="Startup.cs" />
+  </ItemGroup>
+  <ItemGroup>
+	<!--<FrameworkReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.3.12" />
+	<PackageReference Include="Microsoft.Extensions.Http" Version="10.0.11" />
+    <PackageReference Include="Microsoft.Azure.Functions.Worker" Version="2.52.0" />
+    <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Timer" Version="4.3.1" />
+    <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="2.1.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.11" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="10.0.11" />
+    <PackageReference Include="Microsoft.Extensions.Logging" Version="10.0.11" />-->
+
+	  <FrameworkReference Include="Microsoft.AspNetCore.App" />
+
+	  <None Include="Properties\serviceDependencies.local.json.user" />
+	  <PackageReference Include="Microsoft.Azure.Functions.Worker" Version="2.52.0" />
+	  <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Timer" Version="4.3.1" />
+	  <PackageReference Include="Microsoft.Azure.Functions.Worker.OpenTelemetry" Version="1.2.0" />
+	  <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.15.3" />
+	  <PackageReference Include="Azure.Monitor.OpenTelemetry.Exporter" Version="1.7.0" />
+	  <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Http.AspNetCore" Version="2.1.0" />
+	  <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="2.0.7" />
+
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Sfa.Tl.ResultsAndCertification.Api.Client\Sfa.Tl.ResultsAndCertification.Api.Client.csproj" />
@@ -19,6 +43,10 @@
     </None>
     <None Update="local.settings.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+	  <CopyToPublishDirectory>Never</CopyToPublishDirectory>
     </None>
   </ItemGroup>
+<ItemGroup>
+	<Using Include="System.Threading.ExecutionContext" Alias="ExecutionContext" />
+</ItemGroup>
 </Project>

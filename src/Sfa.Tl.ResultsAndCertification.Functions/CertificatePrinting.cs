@@ -1,4 +1,4 @@
-﻿using Microsoft.Azure.WebJobs;
+﻿using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
@@ -27,26 +27,26 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             _commonService = commonService;
             _certificatePrintingService = certificatePrintingService;
         }
-        
-        [FunctionName(Constants.GenerateCertificatePrintingBatches)]
-        public async Task GenerateCertificatePrintingBatchesAsync([TimerTrigger("%CertificatePrintingBatchesCreateTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
+
+        [Function(Constants.GenerateCertificatePrintingBatches)]
+        public async Task GenerateCertificatePrintingBatchesAsync([TimerTrigger("%CertificatePrintingBatchesCreateTrigger%")] TimerInfo timer, FunctionContext context, ILogger logger)
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
             if (DateTime.UtcNow >= _configuration.CertificatePrintingBatchesCreateStartDate)
             {
-                var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.CertificatePrintingBatchesCreate);
+                var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionDefinition.Name, FunctionType.CertificatePrintingBatchesCreate);
 
                 try
                 {
-                    logger.LogInformation($"Function {context.FunctionName} started");
+                    logger.LogInformation($"Function {context.FunctionDefinition.Name} started");
 
                     var stopwatch = Stopwatch.StartNew();
                     await _commonService.CreateFunctionLog(functionLogDetails);
 
                     var responses = await _certificatePrintingService.ProcessCertificatesForPrintingAsync();
 
-                    var message = new StringBuilder($"Function {context.FunctionName} completed processing.").AppendLine();
+                    var message = new StringBuilder($"Function {context.FunctionDefinition.Name} completed processing.").AppendLine();
                     foreach (var (response, index) in responses.Select((value, i) => (value, i)))
                     {
                         message.Append($"Batch {index + 1}: {JsonConvert.SerializeObject(response)}").AppendLine();
@@ -60,36 +60,39 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                     // Send Email notification if status is Failed or PartiallyProcessed
                     if (status == FunctionStatus.Failed || status == FunctionStatus.PartiallyProcessed)
-                        await _commonService.SendFunctionJobFailedNotification(context.FunctionName, $"Function Status: {status}, Message: {message}");
+                        await _commonService.SendFunctionJobFailedNotification(context.FunctionDefinition.Name, $"Function Status: {status}, Message: {message}");
 
                     stopwatch.Stop();
 
-                    logger.LogInformation($"Function {context.FunctionName} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
+                    logger.LogInformation($"Function {context.FunctionDefinition.Name} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
                 }
                 catch (Exception ex)
                 {
-                    var errorMessage = $"Function {context.FunctionName} failed to process with the following exception = {ex}";
+                    var errorMessage = $"Function {context.FunctionDefinition.Name} failed to process with the following exception = {ex}";
                     logger.LogError(errorMessage);
 
                     CommonHelper.UpdateFunctionLogRequest(functionLogDetails, FunctionStatus.Failed, errorMessage);
 
                     _ = functionLogDetails.Id > 0 ? await _commonService.UpdateFunctionLog(functionLogDetails) : await _commonService.CreateFunctionLog(functionLogDetails);
 
-                    await _commonService.SendFunctionJobFailedNotification(context.FunctionName, errorMessage);
+                    await _commonService.SendFunctionJobFailedNotification(context.FunctionDefinition.Name, errorMessage);
                 }
             }
         }
-        
-        [FunctionName(Constants.FetchCertificatePrintingBatchSummary)]
-        public async Task FetchCertificatePrintingBatchSummaryAsync([TimerTrigger("%CertificatePrintingBatchSummaryTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
+
+        [Function(Constants.FetchCertificatePrintingBatchSummary)]
+        public async Task FetchCertificatePrintingBatchSummaryAsync(
+            [TimerTrigger("%CertificatePrintingBatchSummaryTrigger%")] TimerInfo timer,
+            FunctionContext context,
+            ILogger logger)
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
-            var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.CertificatePrintingBatchSummary);
+            var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionDefinition.Name, FunctionType.CertificatePrintingBatchSummary);
 
             try
             {
-                logger.LogInformation($"Function {context.FunctionName} started");
+                logger.LogInformation($"Function {context.FunctionDefinition.Name} started");
 
                 var stopwatch = Stopwatch.StartNew();
 
@@ -97,7 +100,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 var response = await _certificatePrintingService.ProcessBatchSummaryAsync();
 
-                var message = $"Function {context.FunctionName} completed processing.\n" +
+                var message = $"Function {context.FunctionDefinition.Name} completed processing.\n" +
                                       $"\tStatus: {(response.IsSuccess ? FunctionStatus.Processed.ToString() : FunctionStatus.Failed.ToString())}\n" +
                                       $"\tTotal batches to process: {response.TotalCount}\n" +
                                       $"\tProcessed printing requests: {response.PrintingProcessedCount}\n" +
@@ -111,31 +114,31 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 stopwatch.Stop();
 
-                logger.LogInformation($"Function {context.FunctionName} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
+                logger.LogInformation($"Function {context.FunctionDefinition.Name} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
             }
             catch (Exception ex)
             {
-                var errorMessage = $"Function {context.FunctionName} failed to process with the following exception = {ex}";
+                var errorMessage = $"Function {context.FunctionDefinition.Name} failed to process with the following exception = {ex}";
                 logger.LogError(errorMessage);
 
                 CommonHelper.UpdateFunctionLogRequest(functionLogDetails, FunctionStatus.Failed, errorMessage);
 
                 _ = (functionLogDetails.Id > 0) ? await _commonService.UpdateFunctionLog(functionLogDetails) : await _commonService.CreateFunctionLog(functionLogDetails);
 
-                await _commonService.SendFunctionJobFailedNotification(context.FunctionName, errorMessage);
+                await _commonService.SendFunctionJobFailedNotification(context.FunctionDefinition.Name, errorMessage);
             }
         }
-                
-        [FunctionName(Constants.SubmitCertificatePrintingRequest)]
-        public async Task SubmitCertificatePrintingRequestAsync([TimerTrigger("%CertificatePrintingRequestTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
+
+        [Function(Constants.SubmitCertificatePrintingRequest)]
+        public async Task SubmitCertificatePrintingRequestAsync([TimerTrigger("%CertificatePrintingRequestTrigger%")] TimerInfo timer, FunctionContext context, ILogger logger)
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
-            var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.CertificatePrintingRequest);
+            var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionDefinition.Name, FunctionType.CertificatePrintingRequest);
 
             try
             {
-                logger.LogInformation($"Function {context.FunctionName} started");
+                logger.LogInformation($"Function {context.FunctionDefinition.Name} started");
 
                 var stopwatch = Stopwatch.StartNew();
 
@@ -143,7 +146,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 var response = await _certificatePrintingService.ProcessPrintingRequestAsync();
 
-                var message = $"Function {context.FunctionName} completed processing.\n" +
+                var message = $"Function {context.FunctionDefinition.Name} completed processing.\n" +
                                       $"\tStatus: {(response.IsSuccess ? FunctionStatus.Processed.ToString() : FunctionStatus.Failed.ToString())}\n" +
                                       $"\tTotal batches to process: {response.TotalCount}\n" +
                                       $"\tProcessed printing requests: {response.PrintingProcessedCount}\n" +
@@ -157,31 +160,31 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 stopwatch.Stop();
 
-                logger.LogInformation($"Function {context.FunctionName} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
+                logger.LogInformation($"Function {context.FunctionDefinition.Name} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
             }
             catch (Exception ex)
             {
-                var errorMessage = $"Function {context.FunctionName} failed to process with the following exception = {ex}";
+                var errorMessage = $"Function {context.FunctionDefinition.Name} failed to process with the following exception = {ex}";
                 logger.LogError(errorMessage);
 
                 CommonHelper.UpdateFunctionLogRequest(functionLogDetails, FunctionStatus.Failed, errorMessage);
 
                 _ = (functionLogDetails.Id > 0) ? await _commonService.UpdateFunctionLog(functionLogDetails) : await _commonService.CreateFunctionLog(functionLogDetails);
 
-                await _commonService.SendFunctionJobFailedNotification(context.FunctionName, errorMessage);
+                await _commonService.SendFunctionJobFailedNotification(context.FunctionDefinition.Name, errorMessage);
             }
         }
-        
-        [FunctionName(Constants.FetchCertificatePrintingTrackBatch)]
-        public async Task FetchCertificatePrintingTrackBatchAsync([TimerTrigger("%CertificatePrintingTrackBatchTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
+
+        [Function(Constants.FetchCertificatePrintingTrackBatch)]
+        public async Task FetchCertificatePrintingTrackBatchAsync([TimerTrigger("%CertificatePrintingTrackBatchTrigger%")] TimerInfo timer, FunctionContext context, ILogger logger)
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
-            var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.CertificatePrintingTrackBatch);
+            var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionDefinition.Name, FunctionType.CertificatePrintingTrackBatch);
 
             try
             {
-                logger.LogInformation($"Function {context.FunctionName} started");
+                logger.LogInformation($"Function {context.FunctionDefinition.Name} started");
 
                 var stopwatch = Stopwatch.StartNew();
 
@@ -189,7 +192,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 var response = await _certificatePrintingService.ProcessTrackBatchAsync();
 
-                var message = $"Function {context.FunctionName} completed processing.\n" +
+                var message = $"Function {context.FunctionDefinition.Name} completed processing.\n" +
                                       $"\tStatus: {(response.IsSuccess ? FunctionStatus.Processed.ToString() : FunctionStatus.Failed.ToString())}\n" +
                                       $"\tTotal batches to process: {response.TotalCount}\n" +
                                       $"\tProcessed printing requests: {response.PrintingProcessedCount}\n" +
@@ -203,18 +206,18 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 stopwatch.Stop();
 
-                logger.LogInformation($"Function {context.FunctionName} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
+                logger.LogInformation($"Function {context.FunctionDefinition.Name} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
             }
             catch (Exception ex)
             {
-                var errorMessage = $"Function {context.FunctionName} failed to process with the following exception = {ex}";
+                var errorMessage = $"Function {context.FunctionDefinition.Name} failed to process with the following exception = {ex}";
                 logger.LogError(errorMessage);
 
                 CommonHelper.UpdateFunctionLogRequest(functionLogDetails, FunctionStatus.Failed, errorMessage);
 
                 _ = (functionLogDetails.Id > 0) ? await _commonService.UpdateFunctionLog(functionLogDetails) : await _commonService.CreateFunctionLog(functionLogDetails);
 
-                await _commonService.SendFunctionJobFailedNotification(context.FunctionName, errorMessage);
+                await _commonService.SendFunctionJobFailedNotification(context.FunctionDefinition.Name, errorMessage);
             }
         }
     }

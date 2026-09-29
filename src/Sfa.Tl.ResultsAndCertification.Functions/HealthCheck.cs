@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Logging;
@@ -21,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             _database = dbContext.Database;
         }
 
-        [FunctionName(Constants.HealthCheck)]
+        [Function(Constants.HealthCheck)]
         public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req, ILogger logger)
         {
             try

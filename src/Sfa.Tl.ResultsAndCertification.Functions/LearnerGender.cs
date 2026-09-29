@@ -1,4 +1,4 @@
-using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
@@ -21,18 +21,17 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             _commonService = commonService;
             _learnerService = learnerService;
         }
-        
 
-        [FunctionName(Constants.FetchLearnerGender)]
-        public async Task FetchLearnerGenderAsync([TimerTrigger("%LearnerGenderTrigger%")]TimerInfo timer, ExecutionContext context, ILogger logger)
+        [Function(Constants.FetchLearnerGender)]
+        public async Task FetchLearnerGenderAsync([TimerTrigger("%LearnerGenderTrigger%")] TimerInfo timer, FunctionContext context, ILogger logger)
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
-            var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.LearnerGender);
+            var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionDefinition.Name, FunctionType.LearnerGender);
 
             try
             {
-                logger.LogInformation($"Function {context.FunctionName} started");
+                logger.LogInformation($"Function {context.FunctionDefinition.Name} started");
 
                 var stopwatch = Stopwatch.StartNew();
 
@@ -40,7 +39,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 var response = await _learnerService.FetchLearnerGenderAsync();
 
-                var message = $"Function {context.FunctionName} completed processing.\n" +
+                var message = $"Function {context.FunctionDefinition.Name} completed processing.\n" +
                                       $"\tStatus: {(response.IsSuccess ? FunctionStatus.Processed.ToString() : FunctionStatus.Failed.ToString())}\n" +
                                       $"\tTotal learners to process: {response.TotalCount}\n" +
                                       $"\tLearners retrieved from lrs: {response.LrsCount}\n" +
@@ -54,18 +53,18 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 stopwatch.Stop();
 
-                logger.LogInformation($"Function {context.FunctionName} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
+                logger.LogInformation($"Function {context.FunctionDefinition.Name} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
             }
             catch (Exception ex)
             {
-                var errorMessage = $"Function {context.FunctionName} failed to process with the following exception = {ex}";
+                var errorMessage = $"Function {context.FunctionDefinition.Name} failed to process with the following exception = {ex}";
                 logger.LogError(errorMessage);
 
                 CommonHelper.UpdateFunctionLogRequest(functionLogDetails, FunctionStatus.Failed, errorMessage);
 
                 _ = (functionLogDetails.Id > 0) ? await _commonService.UpdateFunctionLog(functionLogDetails) : await _commonService.CreateFunctionLog(functionLogDetails);
 
-                await _commonService.SendFunctionJobFailedNotification(context.FunctionName, errorMessage);
+                await _commonService.SendFunctionJobFailedNotification(context.FunctionDefinition.Name, errorMessage);
             }
         }
     }

@@ -1,14 +1,12 @@
-using System;
-using System.Diagnostics;
-using System.Threading.Tasks;
-using Microsoft.Azure.WebJobs;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Helpers;
-using Sfa.Tl.ResultsAndCertification.Models.Contracts;
-
+using System;
+using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions
 {
@@ -23,28 +21,26 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             _industryPlacementService = industryPlacementService;
             _commonService = commonService;
         }
-        
-        [FunctionName(Constants.IndustryPlacementExtract)]
-        public async Task IndustryPlacementExtractAsync([TimerTrigger("%IndustryPlacementExtractTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
+
+        [Function(Constants.IndustryPlacementExtract)]
+        public async Task IndustryPlacementExtractAsync([TimerTrigger("%IndustryPlacementExtractTrigger%")] TimerInfo timer, FunctionContext context, ILogger logger)
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
             if (_commonService.IsIndustryPlacementTriggerDateValid())
             {
-                var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionName, FunctionType.IndustryPlacementExtract);
-
+                var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionDefinition.Name, FunctionType.IndustryPlacementExtract);
 
                 try
                 {
-
-                    logger.LogInformation($"Function {context.FunctionName} started");
+                    logger.LogInformation($"Function {context.FunctionDefinition.Name} started");
 
                     var stopwatch = Stopwatch.StartNew();
 
                     await _commonService.CreateFunctionLog(functionLogDetails);
 
                     var response = await _industryPlacementService.ProcessIndustryPlacementExtractionsAsync();
-                    var message = $"Function {context.FunctionName} completed processing.\n" +
+                    var message = $"Function {context.FunctionDefinition.Name} completed processing.\n" +
                                          $"\tStatus: {(response.IsSuccess ? FunctionStatus.Processed.ToString() : FunctionStatus.Failed.ToString())}";
 
                     CommonHelper.UpdateFunctionLogRequest(functionLogDetails, response.IsSuccess ? FunctionStatus.Processed : FunctionStatus.Failed, message);
@@ -53,21 +49,20 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                     stopwatch.Stop();
 
-                    logger.LogInformation($"Function {context.FunctionName} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
+                    logger.LogInformation($"Function {context.FunctionDefinition.Name} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
                 }
                 catch (Exception ex)
                 {
-                    var errorMessage = $"Function {context.FunctionName} failed to process with the following exception = {ex}";
+                    var errorMessage = $"Function {context.FunctionDefinition.Name} failed to process with the following exception = {ex}";
                     logger.LogError(errorMessage);
 
                     CommonHelper.UpdateFunctionLogRequest(functionLogDetails, FunctionStatus.Failed, errorMessage);
 
                     _ = functionLogDetails.Id > 0 ? await _commonService.UpdateFunctionLog(functionLogDetails) : await _commonService.CreateFunctionLog(functionLogDetails);
 
-                    await _commonService.SendFunctionJobFailedNotification(context.FunctionName, errorMessage);
+                    await _commonService.SendFunctionJobFailedNotification(context.FunctionDefinition.Name, errorMessage);
                 }
             }
-
         }
     }
 }
