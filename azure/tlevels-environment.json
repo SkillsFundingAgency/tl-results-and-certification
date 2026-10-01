@@ -120,6 +120,9 @@
     "providerAddressExtractTrigger": {
       "type": "string"
     },
+    "providerAddressMissingReminderTrigger": {
+      "type": "string"
+    },
     "certificateTrackingExtractTrigger": {
       "type": "string"
     },
@@ -646,6 +649,10 @@
               {
                 "name": "ProviderAddressExtractTrigger",
                 "value": "[parameters('ProviderAddressExtractTrigger')]"
+              },
+              {
+                "name": "ProviderAddressMissingReminderTrigger",
+                "value": "[parameters('ProviderAddressMissingReminderTrigger')]"
               },
               {
                 "name": "CertificateTrackingExtractTrigger",
