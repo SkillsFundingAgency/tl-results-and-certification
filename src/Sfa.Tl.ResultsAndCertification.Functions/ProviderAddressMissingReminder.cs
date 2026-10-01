@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
         }
 
         [FunctionName(Constants.ProviderAddressMissingReminder)]
-        public async Task IndustryPlacementFirstDeadlineReminderAsync([TimerTrigger("%ProviderAddressMissingReminderTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
+        public async Task ProviderAddressMissingReminderAsync([TimerTrigger("%ProviderAddressMissingReminderTrigger%")] TimerInfo timer, ExecutionContext context, ILogger logger)
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
