@@ -324,6 +324,12 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// </value>
         public ServiceFreezePeriods ServiceFreezePeriodsSettings { get; set; }
 
-
+        /// <summary>
+        /// Gets or sets missing provider address settings.
+        /// </summary>
+        /// <value>
+        /// The missing provider address settings.
+        /// </value>
+        public ProviderAddressMissingReminderSettings ProviderAddressMissingReminderSettings { get; set; }
     }
 }

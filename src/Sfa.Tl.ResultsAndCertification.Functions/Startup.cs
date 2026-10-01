@@ -30,6 +30,7 @@ using System.Linq;
 using System.Reflection;
 
 [assembly: FunctionsStartup(typeof(Startup))]
+
 namespace Sfa.Tl.ResultsAndCertification.Functions
 {
     public class Startup : FunctionsStartup
@@ -94,6 +95,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             services.AddTransient<IBlobStorageService, BlobStorageService>();
             services.AddTransient<IProviderAddressExtractionService, ProviderAddressExtractionService>();
             services.AddTransient<ICertificateTrackingExtractionService, CertificateTrackingExtractionService>();
+            services.AddTransient<IProviderAddressNotificationService, ProviderAddressNotificationService>();
 
             // Overall result calculation
             services.AddTransient<IOverallResultCalculationFunctionService, OverallResultCalculationFunctionService>();

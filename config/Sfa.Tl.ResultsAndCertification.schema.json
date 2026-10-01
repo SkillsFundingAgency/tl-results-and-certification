@@ -549,6 +549,17 @@
       "required": [],
       "type": "object"
     },
+    "ProviderAddressMissingReminderSettings": {
+      "properties": {
+        "ValidDateRanges": {
+          "type": "array",
+          "environmentVariable": "ProviderAddressMissingReminderDateRanges"
+        }
+      },
+      "additionalProperties": false,
+      "required": [],
+      "type": "object"
+    },
     "ServiceFreezePeriodsSettings": {
       "properties": {
         "TrainingProvider": {
@@ -625,6 +636,7 @@
     "IPMissedDeadlineReminderSettings",
     "IPChaseBigGapsReminderSettings",
     "IPOneOutstandingUlnReminderSettings",
+    "ProviderAddressMissingReminderSettings",
     "ServiceFreezePeriodsSettings"
   ],
   "type": "object"

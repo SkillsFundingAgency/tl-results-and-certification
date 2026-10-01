@@ -22,6 +22,7 @@
         IndustryPlacementFirstDeadlineReminder = 17,
         IndustryPlacementMissedDeadlineReminder = 18,
         IndustryPlacementChaseBigGapsReminder = 19,
-        IndustryPlacementOneOutstandingUlnReminder = 20
+        IndustryPlacementOneOutstandingUlnReminder = 20,
+        ProviderAddressMissingReminder = 21,
     }
 }

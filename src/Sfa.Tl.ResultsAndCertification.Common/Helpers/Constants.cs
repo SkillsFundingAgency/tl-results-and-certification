@@ -4,6 +4,7 @@
     {
         // Environment Constants
         public const string EnvironmentNameConfigKey = "EnvironmentName";
+
         public const string ConfigurationStorageConnectionStringConfigKey = "ConfigurationStorageConnectionString";
         public const string VersionConfigKey = "Version";
         public const string ServiceVersionConfigKey = "ServiceVersion";
@@ -11,6 +12,7 @@
 
         // LearnerRecordService(LRS) Constants
         public const string LearnerLearningEventsUserType = "LNR";
+
         public const string LearnerLearningEventsGetType = "FULL";
         public const string LearnerLearningEventsNotVerifiedResponseCode = "WSEC0208";
         public const string LrsLanguage = "ENG";
@@ -25,14 +27,16 @@
 
         // Controller Names
         public const string HomeController = "Home";
+
         public const string AccountController = "Account";
         public const string DashboardController = "Dashboard";
         public const string HelpController = "Help";
         public const string ErrorController = "Error";
         public const string TlevelController = "Tlevel";
 
-        // TempData Key Constants        
+        // TempData Key Constants
         public const string IsRedirect = "IsRedirect";
+
         public const string IsBackToVerifyPage = "IsBackToVerifyPage";
         public const string TlevelConfirmation = "TlevelConfirmation";
         public const string FindProviderSearchCriteria = "FindProviderSearchCriteria";
@@ -74,11 +78,13 @@
 
         // Registration Data Index Constants
         public const int RegistrationProfileStartIndex = 100000;
+
         public const int RegistrationPathwayStartIndex = 200000;
         public const int RegistrationSpecialismsStartIndex = 300000;
 
         // Assessment Data Index Constants
         public const int PathwayAssessmentsStartIndex = 100000;
+
         public const int SpecialismAssessmentsStartIndex = 300000;
 
         // Results Data Index Constants
@@ -94,6 +100,7 @@
 
         // Route Attributes
         public const string IsChangeMode = "isChangeMode";
+
         public const string ProfileId = "profileId";
         public const string IsBack = "isBack";
         public const string ChangeStatusId = "changeStatusId";
@@ -123,6 +130,7 @@
 
         // Assessments
         public const int AssessmentEndInYears = 4;
+
         public const int CoreAssessmentStartInYears = 0;
         public const int SpecialismAssessmentStartInYears = 1;
         public const string SpecialismAssessmentIds = "specialismAssessmentIds";
@@ -132,19 +140,21 @@
 
         // ChangeLog
         public const string PathwayResultId = "PathwayResultId";
+
         public const string PathwayAssessmentId = "PathwayAssessmentId";
         public const string SpecialismResultId = "SpecialismResultId";
-
 
         public const int MaxFileSizeInMb = 5;
 
         // Industry placements
         public const string MultipleEmployer = "Multiple employer";
+
         public const string EmployerLedActivities = "Employer led activities/projects";
         public const string BlendedPlacements = "Blended placements";
 
         // Printing Constants
         public const string Completed = "Completed";
+
         public const string NotCompleted = "Not completed";
         public const string IndustryPlacementCompleted = "Completed";
         public const string IndustryPlacementNotCompleted = "Not completed";
@@ -159,6 +169,7 @@
 
         // Other constants
         public const string NoBorderBottomCssClassName = "tl-no-border-bottom";
+
         public const string BlueTagClassName = "govuk-tag--blue";
         public const string PurpleTagClassName = "govuk-tag--purple";
         public const string RedTagClassName = "govuk-tag--red";
@@ -176,6 +187,7 @@
 
         // Function Name Constants
         public const string FetchLearnerGender = "FetchLearnerGender";
+
         public const string VerifyLearnerAndFetchLearningEvents = "VerifyLearnerAndFetchLearningEvents";
         public const string SubmitCertificatePrintingRequest = "SubmitCertificatePrintingRequest";
         public const string GenerateCertificatePrintingBatches = "GenerateCertificatePrintingBatches";
@@ -204,6 +216,7 @@
         public const string CoreRommFolder = "extracts";
         public const string ProviderAddressExtract = "ProviderAddressExtract";
         public const string CertificateTrackingExtractsFolder = "extracts";
+        public const string ProviderAddressMissingReminder = "ProviderAddressMissingReminder";
 
         // File Extensions
         public const string FileExtensionTxt = "txt";
@@ -229,6 +242,7 @@
 
         // Content types
         public const string TextCsv = "text/csv";
+
         public const string TextXlsx = "text/xlsx";
 
         // Mapper keys

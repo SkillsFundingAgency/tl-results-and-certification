@@ -16,7 +16,9 @@ USING (VALUES
 (N'3773ec6d-079c-4809-b432-45366de569ef', N'IndustryPlacementFirstDeadlineReminder'),
 (N'507098d4-ce1c-4c92-86ab-eb71fd7ed8a4', N'IndustryPlacementMissedDeadlineReminder'),
 (N'37c1c0cd-4b35-4a2a-ac40-4a1d0f646f29', N'IndustryPlacementChaseBigGapsReminder'),
-(N'0d8977d1-454b-4fbf-945c-7400033fb471', N'IndustryPlacementOneOutstandingUlnReminder')
+(N'0d8977d1-454b-4fbf-945c-7400033fb471', N'IndustryPlacementOneOutstandingUlnReminder'),
+(N'2342ee29-119c-400c-a4ad-52f00ae69180', N'ProviderAddressMissingReminder'),
+(N'7798395b-1b8c-459a-881d-eeb493b33209', N'ProviderAddressValidateReminder')
 )
   AS Source ([TemplateId], [TemplateName]) 
 ON Target.[TemplateName] = Source.[TemplateName] 

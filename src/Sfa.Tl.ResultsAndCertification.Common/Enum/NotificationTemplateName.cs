@@ -6,6 +6,7 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Enum
     {
         [Description("Tlevel Details Queried")]
         TlevelDetailsQueriedUserNotification,
+
         TlevelDetailsQueriedTechnicalTeamNotification,
         FunctionJobFailedNotification,
         PrintingJobFailedNotification,
@@ -17,6 +18,8 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Enum
         IndustryPlacementFirstDeadlineReminder,
         IndustryPlacementMissedDeadlineReminder,
         IndustryPlacementChaseBigGapsReminder,
-        IndustryPlacementOneOutstandingUlnReminder
+        IndustryPlacementOneOutstandingUlnReminder,
+        ProviderAddressMissingReminder,
+        ProviderAddressValidateReminder
     }
 }
