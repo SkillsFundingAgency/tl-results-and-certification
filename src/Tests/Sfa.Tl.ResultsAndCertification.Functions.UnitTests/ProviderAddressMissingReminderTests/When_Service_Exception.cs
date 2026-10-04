@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.ProviderAddressMiss
             CommonService.CurrentDate.Returns(todayDate);
 
             CommonService.CreateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
-            ProviderAddressNotificationService.ProcessProviderAddressMissingReminderAsync().Returns(x => Task.FromException(new Exception()));
+            ProviderAddressNotificationService.ProcessProviderAddressMissingReminderAsync(Arg.Any<int>()).Returns(x => Task.FromException(new Exception()));
             CommonService.UpdateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
         }
 
@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.ProviderAddressMiss
         public void Then_Expected_Methods_Are_Called()
         {
             CommonService.Received(2).CreateFunctionLog(Arg.Any<FunctionLogDetails>());
-            ProviderAddressNotificationService.Received(1).ProcessProviderAddressMissingReminderAsync();
+            ProviderAddressNotificationService.Received(1).ProcessProviderAddressMissingReminderAsync(Arg.Any<int>());
             CommonService.DidNotReceive().UpdateFunctionLog(Arg.Any<FunctionLogDetails>());
             CommonService.Received(1).SendFunctionJobFailedNotification(Arg.Any<string>(), Arg.Any<string>());
         }

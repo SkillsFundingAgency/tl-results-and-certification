@@ -15,7 +15,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.ProviderAddressMiss
 
             CommonService.CreateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
             CommonService.IsIndustryPlacementTriggerDateValid().Returns(true);
-            ProviderAddressNotificationService.ProcessProviderAddressMissingReminderAsync().Returns(new ProviderAddressNotificationResponse { IsSuccess = true });
+            ProviderAddressNotificationService.ProcessProviderAddressMissingReminderAsync(Arg.Any<int>()).Returns(new ProviderAddressNotificationResponse { IsSuccess = true });
             CommonService.UpdateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
         }
 
@@ -23,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.ProviderAddressMiss
         public void Then_Expected_Methods_Are_Called()
         {
             CommonService.Received(1).CreateFunctionLog(Arg.Any<FunctionLogDetails>());
-            ProviderAddressNotificationService.Received(1).ProcessProviderAddressMissingReminderAsync();
+            ProviderAddressNotificationService.Received(1).ProcessProviderAddressMissingReminderAsync(Arg.Any<int>());
             CommonService.Received(1).UpdateFunctionLog(Arg.Any<FunctionLogDetails>());
         }
     }

@@ -10,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.ProviderAddressMiss
         public override void Given()
         {
             CommonService.CreateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
-            ProviderAddressNotificationService.ProcessProviderAddressMissingReminderAsync().Returns(new ProviderAddressNotificationResponse { IsSuccess = false });
+            ProviderAddressNotificationService.ProcessProviderAddressMissingReminderAsync(Arg.Any<int>()).Returns(new ProviderAddressNotificationResponse { IsSuccess = false });
             CommonService.UpdateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
         }
 
@@ -18,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.ProviderAddressMiss
         public void Then_Expected_Methods_Are_Called()
         {
             CommonService.Received(1).CreateFunctionLog(Arg.Any<FunctionLogDetails>());
-            ProviderAddressNotificationService.Received(1).ProcessProviderAddressMissingReminderAsync();
+            ProviderAddressNotificationService.Received(1).ProcessProviderAddressMissingReminderAsync(Arg.Any<int>());
             CommonService.Received(1).UpdateFunctionLog(Arg.Any<FunctionLogDetails>());
             CommonService.Received(1).SendFunctionJobFailedNotification(Arg.Any<string>(), Arg.Any<string>());
         }

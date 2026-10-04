@@ -14,5 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// </value>
         [JsonConverter(typeof(StringToDateTimeRangeArrayJsonConverter))]
         public DateTimeRange[] ValidDateRanges { get; set; }
+
+        public int AcademicYearToProcess { get; set; }
     }
 }

@@ -55,14 +55,15 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             throw new NotImplementedException();
         }
 
-        public async Task<ProviderAddressNotificationResponse> ProcessProviderAddressMissingReminderAsync()
+        public async Task<ProviderAddressNotificationResponse> ProcessProviderAddressMissingReminderAsync(int academicYearToProcess)
         {
-            var currentAcademicYear = await GetCurrentAcademicYearAsync();
-
-            currentAcademicYear = 2024;
+            if (academicYearToProcess <= 0)
+            {
+                throw new ApplicationException($"Academic year to process cannot be 0. {nameof(ProcessProviderAddressMissingReminderAsync)}");
+            }
 
             var currentAcademicYearProviders = await _tqRegistrationPathwayRepository
-                .GetManyAsync(rp => rp.AcademicYear == currentAcademicYear && rp.Status == RegistrationPathwayStatus.Active)
+                .GetManyAsync(rp => rp.AcademicYear == academicYearToProcess && rp.Status == RegistrationPathwayStatus.Active)
                 .Where(p => p.TqProvider.TlProvider.IsActive && !p.TqProvider.TlProvider.TlProviderAddresses.Any())
                 .Select(p => p.TqProvider.TlProvider)
                 .ToListAsync();
@@ -123,18 +124,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
                 EmailSentCount = emailSentCount,
                 IsSuccess = hasEmailSent
             };
-        }
-
-        private async Task<int> GetCurrentAcademicYearAsync()
-        {
-            var currentAcademicYears = await _commonRepository.GetCurrentAcademicYearsAsync();
-
-            if (currentAcademicYears == null || !currentAcademicYears.Any())
-            {
-                throw new ApplicationException($"Current Academic years are not found. Method: {nameof(GetCurrentAcademicYearAsync)}");
-            }
-
-            return currentAcademicYears.FirstOrDefault().Year -1;
         }
     }
 }

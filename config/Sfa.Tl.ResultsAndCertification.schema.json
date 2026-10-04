@@ -554,6 +554,10 @@
         "ValidDateRanges": {
           "type": "array",
           "environmentVariable": "ProviderAddressMissingReminderDateRanges"
+        },
+        "AcademicYearToProcess": {
+          "type": "integer",
+          "environmentVariable": "ProviderAddressMissingAcademicYearToProcess"
         }
       },
       "additionalProperties": false,
