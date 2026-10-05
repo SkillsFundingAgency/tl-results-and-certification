@@ -9,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.ProviderAddressMiss
     {
         public override async Task When()
         {
-            await ProviderAddressMissingReminderFunction.ProviderAddressMissingReminderAsync(new TimerInfo(TimerSchedule, new ScheduleStatus()), new ExecutionContext(), new NullLogger<IndustryPlacementFirstDeadlineReminder>());
+            await ProviderAddressMissingReminderFunction.ProviderAddressMissingReminderAsync(new TimerInfo(TimerSchedule, new ScheduleStatus()), new ExecutionContext(), new NullLogger<ProviderAddressMissingReminder>());
         }
     }
 }

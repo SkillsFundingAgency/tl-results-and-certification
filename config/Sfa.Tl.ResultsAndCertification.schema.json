@@ -564,6 +564,21 @@
       "required": [],
       "type": "object"
     },
+    "ProviderAddressValidationReminderSettings": {
+      "properties": {
+        "ValidDateRanges": {
+          "type": "array",
+          "environmentVariable": "ProviderAddressValidationReminderDateRanges"
+        },
+        "AcademicYearToProcess": {
+          "type": "integer",
+          "environmentVariable": "ProviderAddressValidationAcademicYearToProcess"
+        }
+      },
+      "additionalProperties": false,
+      "required": [],
+      "type": "object"
+    },
     "ServiceFreezePeriodsSettings": {
       "properties": {
         "TrainingProvider": {
@@ -641,6 +656,7 @@
     "IPChaseBigGapsReminderSettings",
     "IPOneOutstandingUlnReminderSettings",
     "ProviderAddressMissingReminderSettings",
+    "ProviderAddressValidationReminderSettings",
     "ServiceFreezePeriodsSettings"
   ],
   "type": "object"

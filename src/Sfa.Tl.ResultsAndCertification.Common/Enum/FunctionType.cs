@@ -24,5 +24,6 @@
         IndustryPlacementChaseBigGapsReminder = 19,
         IndustryPlacementOneOutstandingUlnReminder = 20,
         ProviderAddressMissingReminder = 21,
+        ProviderAddressValidationReminder = 22
     }
 }
