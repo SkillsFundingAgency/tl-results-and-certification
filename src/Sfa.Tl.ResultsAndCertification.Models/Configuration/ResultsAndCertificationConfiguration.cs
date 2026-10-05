@@ -331,5 +331,13 @@ namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
         /// The missing provider address settings.
         /// </value>
         public ProviderAddressMissingReminderSettings ProviderAddressMissingReminderSettings { get; set; }
+
+        /// <summary>
+        /// Gets or sets provider address settings.
+        /// </summary>
+        /// <value>
+        /// Validation for provider address settings.
+        /// </value>
+        public ProviderAddressValidationReminderSettings ProviderAddressValidationReminderSettings { get; set; }
     }
 }
