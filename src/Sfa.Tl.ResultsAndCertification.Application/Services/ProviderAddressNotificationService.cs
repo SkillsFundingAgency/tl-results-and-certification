@@ -127,8 +127,6 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         {
             var users = serviceUsers.SelectMany(u => u.Users).ToList();
 
-            users = new List<ServiceUser>() { new ServiceUser() { Email = "sajid.malik@education.gov.uk" } };
-
             int emailSentCount = 0;
             var hasEmailSent = false;
 
