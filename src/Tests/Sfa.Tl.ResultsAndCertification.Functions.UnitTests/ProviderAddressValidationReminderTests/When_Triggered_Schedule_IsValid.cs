@@ -14,7 +14,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.ProviderAddressVali
             CommonService.CurrentDate.Returns(todayDate);
 
             CommonService.CreateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
-            CommonService.IsIndustryPlacementTriggerDateValid().Returns(true);
             ProviderAddressNotificationService.ProcessProviderAddressValidationReminderAsync(Arg.Any<int>()).Returns(new ProviderAddressNotificationResponse { IsSuccess = true });
             CommonService.UpdateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
         }

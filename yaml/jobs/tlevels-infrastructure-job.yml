@@ -85,7 +85,8 @@ jobs:
             -specialismRommExtractTrigger "$(specialismRommExtractTrigger)"
             -providerAddressExtractTrigger "$(providerAddressExtractTrigger)"
             -certificateTrackingExtractTrigger "$(CertificateTrackingExtractTrigger)"
-            -ProviderAddressMissingReminderTrigger "$(ProviderAddressMissingReminderTrigger)"
+            -providerAddressMissingReminderTrigger "$(ProviderAddressMissingReminderTrigger)"
+            -providerAddressValidationReminderTrigger "$(ProviderAddressValidationReminderTrigger)"
             -enableReplica $(enableReplica)
             -enableIntTestDb $(enableIntTestDb)
             -containerLifecyclePolicyRules $(containerLifecyclePolicyRules)

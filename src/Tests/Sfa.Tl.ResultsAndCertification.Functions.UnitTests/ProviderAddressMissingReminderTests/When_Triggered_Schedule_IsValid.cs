@@ -14,7 +14,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.ProviderAddressMiss
             CommonService.CurrentDate.Returns(todayDate);
 
             CommonService.CreateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
-            CommonService.IsIndustryPlacementTriggerDateValid().Returns(true);
             ProviderAddressNotificationService.ProcessProviderAddressMissingReminderAsync(Arg.Any<int>()).Returns(new ProviderAddressNotificationResponse { IsSuccess = true });
             CommonService.UpdateFunctionLog(Arg.Any<FunctionLogDetails>()).Returns(true);
         }

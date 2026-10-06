@@ -123,7 +123,7 @@
     "providerAddressMissingReminderTrigger": {
       "type": "string"
     },
-     "providerAddressValidationReminderTrigger": {
+    "providerAddressValidationReminderTrigger": {
       "type": "string"
     },
     "certificateTrackingExtractTrigger": {
