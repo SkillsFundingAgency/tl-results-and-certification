@@ -5,7 +5,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
 {
     public interface IProviderAddressNotificationService
     {
-        Task<ProviderAddressNotificationResponse> ProcessProviderAddressMissingReminderAsync(int acadamicYearToProcess);
+        Task<ProviderAddressNotificationResponse> ProcessProviderAddressMissingReminderAsync(int academicYearToProcess);
 
         Task<ProviderAddressNotificationResponse> ProcessProviderAddressValidationReminderAsync(int academicYearToProcess);
     }
