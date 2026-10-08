@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
 
             var currentAcademicYearProviders = await _tqRegistrationPathwayRepository
                 .GetManyAsync(rp => rp.AcademicYear == academicYearToProcess && rp.Status == RegistrationPathwayStatus.Active)
-                .Where(p => p.TqProvider.TlProvider.IsActive && p.TqProvider.TlProvider.TlProviderAddresses.Any(pa => pa.IsActive))
+                .Where(p => p.TqProvider.TlProvider.IsActive)
                 .Select(p => p.TqProvider.TlProvider)
                 .ToListAsync();
 
