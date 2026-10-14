@@ -1,4 +1,5 @@
-﻿using FluentValidation;
+﻿using System;
+using FluentValidation;
 using Sfa.Tl.ResultsAndCertification.Common.Constants;
 using Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.Helpers.Extensions;
 using Sfa.Tl.ResultsAndCertification.Models.PostResultsService.BulkProcess;
@@ -50,7 +51,8 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
             // Core Assessment Series
             RuleFor(r => r.AssessmentSeriesCore)
                 .Cascade(CascadeMode.Stop)
-                .Required();
+                .Required()
+                .When(r => r.CoreRommOpen.Equals("Yes", StringComparison.OrdinalIgnoreCase));
 
             // Core Component Code
             RuleFor(r => r.Core)
@@ -80,8 +82,6 @@ namespace Sfa.Tl.ResultsAndCertification.Common.Services.CsvHelper.DataValidator
                 .Cascade(CascadeMode.Stop)
                 .Required()
                 .MustBeYesOrNoValidation();
-
-
         }
     }
 }
