@@ -15,15 +15,17 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
     {
         private readonly ILrsLearnerService _learnerService;
         private readonly ICommonService _commonService;
+        private readonly ILogger _logger;
 
-        public LearnerGender(ICommonService commonService, ILrsLearnerService learnerService)
+        public LearnerGender(ICommonService commonService, ILrsLearnerService learnerService, ILogger logger)
         {
             _commonService = commonService;
             _learnerService = learnerService;
+            _logger = logger;
         }
 
         [Function(Constants.FetchLearnerGender)]
-        public async Task FetchLearnerGenderAsync([TimerTrigger("%LearnerGenderTrigger%")] TimerInfo timer, FunctionContext context, ILogger logger)
+        public async Task FetchLearnerGenderAsync([TimerTrigger("%LearnerGenderTrigger%")] TimerInfo timer, FunctionContext context)
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
@@ -31,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
             try
             {
-                logger.LogInformation($"Function {context.FunctionDefinition.Name} started");
+                _logger.LogInformation($"Function {context.FunctionDefinition.Name} started");
 
                 var stopwatch = Stopwatch.StartNew();
 
@@ -53,12 +55,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 stopwatch.Stop();
 
-                logger.LogInformation($"Function {context.FunctionDefinition.Name} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
+                _logger.LogInformation($"Function {context.FunctionDefinition.Name} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
             }
             catch (Exception ex)
             {
                 var errorMessage = $"Function {context.FunctionDefinition.Name} failed to process with the following exception = {ex}";
-                logger.LogError(errorMessage);
+                _logger.LogError(errorMessage);
 
                 CommonHelper.UpdateFunctionLogRequest(functionLogDetails, FunctionStatus.Failed, errorMessage);
 

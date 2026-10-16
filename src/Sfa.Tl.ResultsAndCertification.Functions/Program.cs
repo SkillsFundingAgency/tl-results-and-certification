@@ -31,135 +31,111 @@ using System.Linq;
 using System.Reflection;
 using LearningRecordServiceCertificate = Sfa.Tl.ResultsAndCertification.Common.Services.Certificates;
 using Microsoft.Azure.Functions.Worker.OpenTelemetry;
-using Azure.Monitor.OpenTelemetry.Exporter;
+//using Azure.Monitor.OpenTelemetry.Exporter;
 using System.Diagnostics;
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Extensions.Logging;
 
-//var builder = FunctionsApplication
-//        .CreateBuilder(args);
-
-//builder.ConfigureFunctionsWebApplication();
-
-//if (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("APPLICATIONINSIGHTS_CONNECTION_STRING")))
-//{
-//    builder.Services.AddOpenTelemetry()
-//        .UseFunctionsWorkerDefaults()
-//        .UseAzureMonitorExporter();
-//}
-
-//builder.Build().Run();
-
-namespace Sfa.Tl.ResultsAndCertification.Functions;
-
-internal class Program
+namespace Sfa.Tl.ResultsAndCertification.Functions
 {
-    private static async Task Main(string[] args)
+    class Program
     {
-        Debugger.Launch();
-
-        var host = new HostBuilder()
-        .ConfigureFunctionsWebApplication()
-        .ConfigureServices(services =>
+        static async Task Main(string[] args)
         {
-            ResultsAndCertificationConfiguration _configuration;
 
-            _configuration = ConfigurationLoader.Load(
-              Environment.GetEnvironmentVariable(Constants.EnvironmentNameConfigKey),
-              Environment.GetEnvironmentVariable(Constants.ConfigurationStorageConnectionStringConfigKey),
-              Environment.GetEnvironmentVariable(Constants.VersionConfigKey)
-              ?? Environment.GetEnvironmentVariable(Constants.ServiceVersionConfigKey), // Need ServiceVersion rather than Version in local with .Net 6
-              Environment.GetEnvironmentVariable(Constants.ServiceNameConfigKey));
+#if DEBUG
+            Debugger.Launch();
+#endif
 
-            //Inject DbContext
-            services.AddDbContext<ResultsAndCertificationDbContext>(options =>
-                options.UseSqlServer(_configuration.SqlConnectionString,
-                    builder => builder.UseNetTopologySuite()
-                                      .EnableRetryOnFailure()), ServiceLifetime.Transient);
+            var host = new HostBuilder()
+                 //.ConfigureFunctionsWorkerDefaults()
+                .ConfigureFunctionsWebApplication()
+                .ConfigureServices(services =>
+                {
+                    ResultsAndCertificationConfiguration _configuration;
 
-            services.AddSingleton(_configuration);
-            Assembly[] assemblies = new Assembly[] { typeof(Program).Assembly, typeof(Program).Assembly.GetReferencedAssemblies().Where(a => a.FullName.Contains("Sfa.Tl.ResultsAndCertification.Application")).Select(Assembly.Load).FirstOrDefault() };
-            services.AddAutoMapper(cfg => { }, assemblies);
-            services.AddHttpContextAccessor();
+                    _configuration = ConfigurationLoader.Load(
+                      Environment.GetEnvironmentVariable(Constants.EnvironmentNameConfigKey),
+                      Environment.GetEnvironmentVariable(Constants.ConfigurationStorageConnectionStringConfigKey),
+                      Environment.GetEnvironmentVariable(Constants.VersionConfigKey)
+                      ?? Environment.GetEnvironmentVariable(Constants.ServiceVersionConfigKey), // Need ServiceVersion rather than Version in local with .Net 6
+                      Environment.GetEnvironmentVariable(Constants.ServiceNameConfigKey));
 
-            //
-            services.AddHttpClient<IDfeSignInApiClient, DfeSignInApiClient>();
-            services.AddTransient<ITokenServiceClient, TokenServiceClient>();
-            services.AddTransient<IRegistrationRepository, RegistrationRepository>();
-            services.AddTransient<IAssessmentRepository, AssessmentRepository>();
-            services.AddTransient<IResultRepository, ResultRepository>();
-            services.AddTransient<IPrintingRepository, PrintingRepository>();
-            services.AddTransient(typeof(IRepository<>), typeof(GenericRepository<>));
-            services.AddTransient<IDateTimeProvider, DateTimeProvider>();
-            services.AddTransient<ICommonRepository, CommonRepository>();
-            services.AddTransient<IUcasRepository, UcasRepository>();
-            services.AddTransient<IProviderRepository, ProviderRepository>();
+                    //Inject DbContext
+                    services.AddDbContext<ResultsAndCertificationDbContext>(options =>
+                        options.UseSqlServer(_configuration.SqlConnectionString,
+                            builder => builder.UseNetTopologySuite()
+                                              .EnableRetryOnFailure()), ServiceLifetime.Transient);
 
-            services.AddTransient<ICommonService, CommonService>();
-            services.AddTransient<ILrsLearnerService, LrsLearnerService>();
-            services.AddTransient<ILrsPersonalLearningRecordService, LrsPersonalLearningRecordService>();
-            services.AddTransient<ILrsService, LrsService>();
-            services.AddTransient<IPrintingService, PrintingService>();
-            services.AddTransient<ICertificatePrintingService, CertificatePrintingService>();
-            services.AddTransient<IUcasDataService, UcasDataService>();
-            services.AddTransient<IUcasDataTransferService, UcasDataTransferService>();
-            services.AddTransient<INotificationService, NotificationService>();
-            services.AddTransient<IAsyncNotificationClient, NotificationClient>(provider => new NotificationClient(_configuration.GovUkNotifyApiKey));
-            services.AddTransient<IIndustryPlacementService, IndustryPlacementService>();
-            services.AddTransient<IIndustryPlacementNotificationService, IndustryPlacementNotificationService>();
-            services.AddTransient<IBlobStorageService, BlobStorageService>();
-            services.AddTransient<IProviderAddressExtractionService, ProviderAddressExtractionService>();
-            services.AddTransient<ICertificateTrackingExtractionService, CertificateTrackingExtractionService>();
+                    services.AddHttpContextAccessor();
 
-            // Overall result calculation
-            services.AddTransient<IOverallResultCalculationFunctionService, OverallResultCalculationFunctionService>();
-            services.AddTransient<ISpecialismResultStrategyFactory, SpecialismResultStrategyFactory>();
-            services.AddTransient<IOverallGradeStrategyFactory, OverallGradeStrategyFactory>();
-            services.AddTransient<IOverallResultCalculationService, OverallResultCalculationService>();
-            services.AddTransient<IOverallResultCalculationRepository, OverallResultCalculationRepository>();
-            services.AddTransient<IOverallResultRepository, OverallResultRepository>();
-            services.AddTransient<IPathwayResultConverter, PathwayResultConverter>();
-            services.AddTransient<IIndustryPlacementStatusConverter, IndustryPlacementStatusConverter>();
+                    services.AddSingleton(_configuration);
+                    Assembly[] assemblies = new Assembly[] { typeof(Program).Assembly, typeof(Program).Assembly.GetReferencedAssemblies().Where(a => a.FullName.Contains("Sfa.Tl.ResultsAndCertification.Application")).Select(Assembly.Load).FirstOrDefault() };
+                    services.AddAutoMapper(cfg => { }, assemblies);
+                    services.AddHttpContextAccessor();
 
-            // Certificate
-            services.AddTransient<ICertificateService, CertificateService>();
-            services.AddTransient<ICertificateRepository, CertificateRepository>();
+                    //
+                    services.AddHttpClient<IDfeSignInApiClient, DfeSignInApiClient>();
+                    services.AddTransient<ITokenServiceClient, TokenServiceClient>();
+                    services.AddTransient<IRegistrationRepository, RegistrationRepository>();
+                    services.AddTransient<IAssessmentRepository, AssessmentRepository>();
+                    services.AddTransient<IResultRepository, ResultRepository>();
+                    services.AddTransient<IPrintingRepository, PrintingRepository>();
+                    services.AddTransient(typeof(IRepository<>), typeof(GenericRepository<>));
+                    services.AddTransient<IDateTimeProvider, DateTimeProvider>();
+                    services.AddTransient<ICommonRepository, CommonRepository>();
+                    services.AddTransient<IUcasRepository, UcasRepository>();
+                    services.AddTransient<IProviderRepository, ProviderRepository>();
 
-            // Analyst Result
-            services.AddTransient<IAnalystOverallResultExtractionService, AnalystOverallResultExtractionService>();
-            services.AddTransient<IAnalystCoreResultExtractionService, AnalystCoreResultExtractionService>();
+                    services.AddTransient<ICommonService, CommonService>();
+                    services.AddTransient<ILrsLearnerService, LrsLearnerService>();
+                    services.AddTransient<ILrsPersonalLearningRecordService, LrsPersonalLearningRecordService>();
+                    services.AddTransient<ILrsService, LrsService>();
+                    services.AddTransient<IPrintingService, PrintingService>();
+                    services.AddTransient<ICertificatePrintingService, CertificatePrintingService>();
+                    services.AddTransient<IUcasDataService, UcasDataService>();
+                    services.AddTransient<IUcasDataTransferService, UcasDataTransferService>();
+                    services.AddTransient<INotificationService, NotificationService>();
+                    services.AddTransient<IAsyncNotificationClient, NotificationClient>(provider => new NotificationClient(_configuration.GovUkNotifyApiKey));
+                    services.AddTransient<IIndustryPlacementService, IndustryPlacementService>();
+                    services.AddTransient<IIndustryPlacementNotificationService, IndustryPlacementNotificationService>();
+                    services.AddTransient<IBlobStorageService, BlobStorageService>();
+                    services.AddTransient<IProviderAddressExtractionService, ProviderAddressExtractionService>();
+                    services.AddTransient<ICertificateTrackingExtractionService, CertificateTrackingExtractionService>();
 
-            // ROMM Extract
-            services.AddTransient<ICoreRommExtractService, CoreRommExtractService>();
-            services.AddTransient<ISpecialismRommExtractionService, SpecialismRommExtractionService>();
+                    // Overall result calculation
+                    services.AddTransient<IOverallResultCalculationFunctionService, OverallResultCalculationFunctionService>();
+                    services.AddTransient<ISpecialismResultStrategyFactory, SpecialismResultStrategyFactory>();
+                    services.AddTransient<IOverallGradeStrategyFactory, OverallGradeStrategyFactory>();
+                    services.AddTransient<IOverallResultCalculationService, OverallResultCalculationService>();
+                    services.AddTransient<IOverallResultCalculationRepository, OverallResultCalculationRepository>();
+                    services.AddTransient<IOverallResultRepository, OverallResultRepository>();
+                    services.AddTransient<IPathwayResultConverter, PathwayResultConverter>();
+                    services.AddTransient<IIndustryPlacementStatusConverter, IndustryPlacementStatusConverter>();
 
-            services.AddTransient<SpecialismCodeConverter>();
+                    // Certificate
+                    services.AddTransient<ICertificateService, CertificateService>();
+                    services.AddTransient<ICertificateRepository, CertificateRepository>();
 
-            var lrsCertificate = LearningRecordServiceCertificate.CertificateService.GetLearningRecordServiceCertificate(_configuration).GetAwaiter().GetResult();
+                    // Analyst Result
+                    services.AddTransient<IAnalystOverallResultExtractionService, AnalystOverallResultExtractionService>();
+                    services.AddTransient<IAnalystCoreResultExtractionService, AnalystCoreResultExtractionService>();
 
-            services.AddTransient<ILearnerServiceR9Client>(learnerClient =>
-            {
-                var client = new LearnerServiceR9Client();
-                client.Endpoint.Address = CommonHelper.GetLrsEndpointAddress(_configuration.LearningRecordServiceSettings.BaseUri, ApiConstants.PlrServiceUri);
-                client.ClientCredentials.ClientCertificate.Certificate = lrsCertificate;
-                return client;
-            });
-            services.AddTransient<ILrsPersonalLearningRecordServiceApiClient, LrsPersonalLearningRecordServiceApiClient>();
+                    // ROMM Extract
+                    services.AddTransient<ICoreRommExtractService, CoreRommExtractService>();
+                    services.AddTransient<ISpecialismRommExtractionService, SpecialismRommExtractionService>();
 
-            services.AddTransient<ILearnerPortTypeClient>(learnerClient =>
-            {
-                var client = new LearnerPortTypeClient();
-                client.Endpoint.Address = CommonHelper.GetLrsEndpointAddress(_configuration.LearningRecordServiceSettings.BaseUri, ApiConstants.LearnerServiceUri);
-                client.ClientCredentials.ClientCertificate.Certificate = lrsCertificate;
-                return client;
-            });
+                    services.AddTransient<SpecialismCodeConverter>();
 
-            services.AddTransient<ILrsLearnerServiceApiClient, LrsLearnerServiceApiClient>();
-            services.AddHttpClient<IPrintingApiClient, PrintingApiClient>();
-            services.AddHttpClient<IUcasApiClient, UcasApiClient>();
-            services.AddTransient<IUcasRecordSegment<UcasRecordEntriesSegment>, UcasRecordEntriesSegment>();
-            services.AddTransient<IUcasRecordSegment<UcasRecordResultsSegment>, UcasRecordResultsSegment>();
-        })
-        .Build();
+                    services.AddTransient<ILrsLearnerServiceApiClient, LrsLearnerServiceApiClient>();
+                    services.AddHttpClient<IPrintingApiClient, PrintingApiClient>();
+                    services.AddHttpClient<IUcasApiClient, UcasApiClient>();
+                    services.AddTransient<IUcasRecordSegment<UcasRecordEntriesSegment>, UcasRecordEntriesSegment>();
+                    services.AddTransient<IUcasRecordSegment<UcasRecordResultsSegment>, UcasRecordResultsSegment>();
+                })
+                .Build();
 
-        await host.RunAsync();
+            await host.RunAsync();
+        }
     }
 }

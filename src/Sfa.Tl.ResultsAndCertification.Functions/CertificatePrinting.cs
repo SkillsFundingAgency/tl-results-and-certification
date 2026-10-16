@@ -20,16 +20,18 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
         private readonly ResultsAndCertificationConfiguration _configuration;
         private readonly ICertificatePrintingService _certificatePrintingService;
         private readonly ICommonService _commonService;
+        private readonly ILogger _logger;
 
-        public CertificatePrinting(ResultsAndCertificationConfiguration configuration, ICommonService commonService, ICertificatePrintingService certificatePrintingService)
+        public CertificatePrinting(ResultsAndCertificationConfiguration configuration, ICommonService commonService, ICertificatePrintingService certificatePrintingService, ILogger logger)
         {
             _configuration = configuration;
             _commonService = commonService;
             _certificatePrintingService = certificatePrintingService;
+            _logger = logger;
         }
 
         [Function(Constants.GenerateCertificatePrintingBatches)]
-        public async Task GenerateCertificatePrintingBatchesAsync([TimerTrigger("%CertificatePrintingBatchesCreateTrigger%")] TimerInfo timer, FunctionContext context, ILogger logger)
+        public async Task GenerateCertificatePrintingBatchesAsync([TimerTrigger("%CertificatePrintingBatchesCreateTrigger%")] TimerInfo timer, FunctionContext context)
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
@@ -39,7 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 try
                 {
-                    logger.LogInformation($"Function {context.FunctionDefinition.Name} started");
+                    _logger.LogInformation($"Function {context.FunctionDefinition.Name} started");
 
                     var stopwatch = Stopwatch.StartNew();
                     await _commonService.CreateFunctionLog(functionLogDetails);
@@ -64,12 +66,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                     stopwatch.Stop();
 
-                    logger.LogInformation($"Function {context.FunctionDefinition.Name} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
+                    _logger.LogInformation($"Function {context.FunctionDefinition.Name} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
                 }
                 catch (Exception ex)
                 {
                     var errorMessage = $"Function {context.FunctionDefinition.Name} failed to process with the following exception = {ex}";
-                    logger.LogError(errorMessage);
+                    _logger.LogError(errorMessage);
 
                     CommonHelper.UpdateFunctionLogRequest(functionLogDetails, FunctionStatus.Failed, errorMessage);
 
@@ -83,8 +85,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
         [Function(Constants.FetchCertificatePrintingBatchSummary)]
         public async Task FetchCertificatePrintingBatchSummaryAsync(
             [TimerTrigger("%CertificatePrintingBatchSummaryTrigger%")] TimerInfo timer,
-            FunctionContext context,
-            ILogger logger)
+            FunctionContext context)
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
@@ -92,7 +93,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
             try
             {
-                logger.LogInformation($"Function {context.FunctionDefinition.Name} started");
+                _logger.LogInformation($"Function {context.FunctionDefinition.Name} started");
 
                 var stopwatch = Stopwatch.StartNew();
 
@@ -114,12 +115,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 stopwatch.Stop();
 
-                logger.LogInformation($"Function {context.FunctionDefinition.Name} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
+                _logger.LogInformation($"Function {context.FunctionDefinition.Name} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
             }
             catch (Exception ex)
             {
                 var errorMessage = $"Function {context.FunctionDefinition.Name} failed to process with the following exception = {ex}";
-                logger.LogError(errorMessage);
+                _logger.LogError(errorMessage);
 
                 CommonHelper.UpdateFunctionLogRequest(functionLogDetails, FunctionStatus.Failed, errorMessage);
 
@@ -176,7 +177,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
         }
 
         [Function(Constants.FetchCertificatePrintingTrackBatch)]
-        public async Task FetchCertificatePrintingTrackBatchAsync([TimerTrigger("%CertificatePrintingTrackBatchTrigger%")] TimerInfo timer, FunctionContext context, ILogger logger)
+        public async Task FetchCertificatePrintingTrackBatchAsync([TimerTrigger("%CertificatePrintingTrackBatchTrigger%")] TimerInfo timer, FunctionContext context)
         {
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
@@ -184,7 +185,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
             try
             {
-                logger.LogInformation($"Function {context.FunctionDefinition.Name} started");
+                _logger.LogInformation($"Function {context.FunctionDefinition.Name} started");
 
                 var stopwatch = Stopwatch.StartNew();
 
@@ -206,12 +207,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 stopwatch.Stop();
 
-                logger.LogInformation($"Function {context.FunctionDefinition.Name} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
+                _logger.LogInformation($"Function {context.FunctionDefinition.Name} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
             }
             catch (Exception ex)
             {
                 var errorMessage = $"Function {context.FunctionDefinition.Name} failed to process with the following exception = {ex}";
-                logger.LogError(errorMessage);
+                _logger.LogError(errorMessage);
 
                 CommonHelper.UpdateFunctionLogRequest(functionLogDetails, FunctionStatus.Failed, errorMessage);
 

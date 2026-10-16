@@ -29,5 +29,27 @@
     "EnvironmentName": "LOCAL",
     "ServiceName": "Sfa.Tl.ResultsAndCertification",
     "ServiceVersion": "1.0", // Need ServiceVersion rather than Version in local with .Net 6
+
+    "AzureWebJobs.AnalystOverallResultExtract.Disabled": "true",
+    "AzureWebJobs.CertificateTrackingExtract.Disabled": "true",
+    "AzureWebJobs.CoreRommExtract.Disabled": "true",
+    "AzureWebJobs.FetchCertificatePrintingBatchSummary.Disabled": "true",
+    "AzureWebJobs.FetchCertificatePrintingTrackBatch.Disabled": "true",
+    "AzureWebJobs.FetchLearnerGender.Disabled": "true",
+    "AzureWebJobs.GenerateCertificatePrintingBatches.Disabled": "true",
+    "AzureWebJobs.HealthCheck.Disabled": "true",
+    "AzureWebJobs.IndustryPlacementChaseBigGapsReminder.Disabled": "true",
+    "AzureWebJobs.IndustryPlacementExtract.Disabled": "true",
+    "AzureWebJobs.IndustryPlacementFirstDeadlineReminder.Disabled": "true",
+    "AzureWebJobs.IndustryPlacementMissedDeadlineReminder.Disabled": "true",
+    "AzureWebJobs.IndustryPlacementOneOutstandingUlnReminder.Disabled": "true",
+    //"AzureWebJobs.OverallResultCalculation.Disabled": "true",
+    "AzureWebJobs.ProviderAddressExtract.Disabled": "true",
+    "AzureWebJobs.SpecialismRommExtract.Disabled": "true",
+    "AzureWebJobs.SubmitCertificatePrintingRequest.Disabled": "true",
+    "AzureWebJobs.UcasTransferAmendments.Disabled": "true",
+    "AzureWebJobs.UcasTransferEntries.Disabled": "true",
+    "AzureWebJobs.UcasTransferResults.Disabled": "true",
+    "AzureWebJobs.VerifyLearnerAndFetchLearningEvents.Disabled": "true"
   }
 }

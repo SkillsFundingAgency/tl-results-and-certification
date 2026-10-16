@@ -39,6 +39,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
             {
                 var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionDefinition.Name, FunctionType.OverallResultCalculation);
 
+                //ILogger logger = context.GetLogger<OverallResultCalculation>();
+
                 try
                 {
                     _logger.LogInformation($"Function {context.FunctionDefinition.Name} started");
