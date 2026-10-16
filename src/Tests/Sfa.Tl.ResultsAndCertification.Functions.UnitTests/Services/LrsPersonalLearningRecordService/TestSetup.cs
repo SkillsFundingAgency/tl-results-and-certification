@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.LrsPersona
             LoggerFactory = Substitute.For<ILoggerFactory>();
             LrsPersonalLearningRecordApiClient = Substitute.For<ILrsPersonalLearningRecordServiceApiClient>();
 
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(Startup).Assembly), LoggerFactory);
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(Program).Assembly), LoggerFactory);
             Mapper = new AutoMapper.Mapper(mapperConfig);
 
             Service = new Functions.Services.LrsPersonalLearningRecordService(Mapper, Logger, LrsPersonalLearningRecordApiClient, LrsService);

@@ -1,8 +1,12 @@
-﻿using Microsoft.Azure.WebJobs.Extensions.Timers;
+﻿using Microsoft.Azure.Functions.Extensions;
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Utils.Ranges;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Functions.Services;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using System;
@@ -11,7 +15,8 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.UcasDataTransferTes
 {
     public abstract class UcasDataTransferTestBase : BaseTest<UcasDataTransfer>
     {
-        protected TimerSchedule TimerSchedule;
+        protected ILogger<UcasDataTransferService> Logger = Substitute.For<ILogger<UcasDataTransferService>>();
+        protected FunctionContext FunctionContext = Substitute.For<FunctionContext>();
 
         // Dependencies
         protected IUcasDataTransferService UcasDataTransferService;
@@ -24,11 +29,10 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.UcasDataTransferTes
 
         public override void Setup()
         {
-            TimerSchedule = Substitute.For<TimerSchedule>();
             UcasDataTransferService = Substitute.For<IUcasDataTransferService>();
             CommonService = Substitute.For<ICommonService>();
 
-            UcasDataTransferFunction = new UcasDataTransfer(UcasDataTransferService, CommonService, new ResultsAndCertificationConfiguration());
+            UcasDataTransferFunction = new UcasDataTransfer(UcasDataTransferService, CommonService, new ResultsAndCertificationConfiguration(), Logger);
         }
 
         public void Setup(DateTimeRange dateTimeRange)
@@ -41,10 +45,10 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.UcasDataTransferTes
                 }
             };
 
-            TimerSchedule = Substitute.For<TimerSchedule>();
+            
             UcasDataTransferService = Substitute.For<IUcasDataTransferService>();
             CommonService = Substitute.For<ICommonService>();
-            UcasDataTransferFunction = new UcasDataTransfer(UcasDataTransferService, CommonService, config);
+            UcasDataTransferFunction = new UcasDataTransfer(UcasDataTransferService, CommonService, config, Logger);
         }
     }
 }

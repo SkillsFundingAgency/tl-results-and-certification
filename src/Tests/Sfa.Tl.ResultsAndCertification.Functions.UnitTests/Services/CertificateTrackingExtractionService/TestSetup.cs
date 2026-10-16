@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
@@ -22,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.Certificat
             Repository = Substitute.For<ICertificateRepository>();
             BlobStorageService = Substitute.For<IBlobStorageService>();
             LoggerFactory = Substitute.For<ILoggerFactory>();
-            Mapper = new AutoMapper.Mapper(new MapperConfiguration(c => c.AddMaps(typeof(Startup).Assembly), LoggerFactory));
+            Mapper = new AutoMapper.Mapper(new MapperConfiguration(c => c.AddMaps(typeof(Program).Assembly), LoggerFactory));
             Logger = Substitute.For<ILogger<ICertificateTrackingExtractionService>>();
 
             Service = new Functions.Services.CertificateTrackingExtractionService(Repository, BlobStorageService, Mapper, Logger);

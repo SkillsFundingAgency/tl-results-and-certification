@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.Certificat
             LoggerFactory = Substitute.For<ILoggerFactory>();
             CertificateService = Substitute.For<ICertificateService>();
 
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(Startup).Assembly), LoggerFactory);
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(Program).Assembly), LoggerFactory);
             Mapper = new AutoMapper.Mapper(mapperConfig);
 
             Service = new Functions.Services.CertificatePrintingService(Mapper, Logger, PrintingApiClient, PrintingService, CertificateService);

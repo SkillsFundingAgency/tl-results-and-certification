@@ -1,5 +1,7 @@
-﻿using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Timers;
+﻿using Microsoft.Azure.Functions.Extensions;
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Azure.WebJobs;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
@@ -12,11 +14,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.CertificateTracking
 {
     public abstract class TestSetup : BaseTest<CertificateTrackingExtraction>
     {
-        private readonly TimerSchedule _timerSchedule = Substitute.For<TimerSchedule>();
+        protected ILogger<CertificateTrackingExtraction> Logger = Substitute.For<ILogger<CertificateTrackingExtraction>>();
         protected CertificateTrackingExtraction CertificateTrackingExtraction;
 
         protected ICertificateTrackingExtractionService Service = Substitute.For<ICertificateTrackingExtractionService>();
         protected ICommonService CommonService = Substitute.For<ICommonService>();
+        protected FunctionContext FunctionContext = Substitute.For<FunctionContext>();
 
         private ResultsAndCertificationConfiguration _configuration = new()
         {
@@ -28,12 +31,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.CertificateTracking
 
         public override void Setup()
         {
-            CertificateTrackingExtraction = new CertificateTrackingExtraction(Service, CommonService, _configuration);
+            CertificateTrackingExtraction = new CertificateTrackingExtraction(Service, CommonService, _configuration, Logger);
         }
 
         public override Task When()
         {
-            return CertificateTrackingExtraction.CertificateTrackingExtractAsync(new TimerInfo(_timerSchedule, new ScheduleStatus()), new ExecutionContext(), new NullLogger<CertificateTrackingExtraction>());
+            return CertificateTrackingExtraction.CertificateTrackingExtractAsync(new TimerInfo(), FunctionContext);
         }
     }
 }

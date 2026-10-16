@@ -1,5 +1,6 @@
-﻿using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Timers;
+﻿using Microsoft.Azure.Functions.Extensions;
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
@@ -14,11 +15,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.CoreRommExtractTest
 {
     public abstract class TestSetup : BaseTest<CoreRommExtract>
     {
-        private readonly TimerSchedule _timerSchedule = Substitute.For<TimerSchedule>();
         protected CoreRommExtract CoreRommExtract;
 
+        protected ILogger<CoreRommExtract> Logger = Substitute.For<ILogger<CoreRommExtract>>();
         protected ICoreRommExtractService CoreRommExtractService = Substitute.For<ICoreRommExtractService>();
         protected ICommonService CommonService = Substitute.For<ICommonService>();
+        protected FunctionContext FunctionContext = Substitute.For<FunctionContext>();
 
         protected string[] AssessmentSeriesYearsToProcess = new[] { "Summer 2023" };
 
@@ -42,12 +44,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.CoreRommExtractTest
                 }
             };
 
-            CoreRommExtract = new CoreRommExtract(config, CoreRommExtractService, CommonService);
+            CoreRommExtract = new CoreRommExtract(config, CoreRommExtractService, CommonService, Logger);
         }
 
         public override Task When()
         {
-            return CoreRommExtract.CoreRommExtractAsync(new TimerInfo(_timerSchedule, new ScheduleStatus()), new ExecutionContext(), new NullLogger<AnalystOverallResultExtraction>());
+            return CoreRommExtract.CoreRommExtractAsync(new TimerInfo(), FunctionContext);
         }
     }
 }

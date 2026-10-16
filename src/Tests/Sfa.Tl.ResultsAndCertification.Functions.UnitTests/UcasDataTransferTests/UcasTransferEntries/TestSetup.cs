@@ -1,5 +1,6 @@
 ﻿using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Timers;
+using Microsoft.Azure.Functions.Extensions;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging.Abstractions;
 using System.Threading.Tasks;
 
@@ -9,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.UcasDataTransferTes
     {
         public async override Task When()
         {
-            await UcasDataTransferFunction.UcasTransferEntriesAsync(new TimerInfo(TimerSchedule, new ScheduleStatus()), new ExecutionContext(), new NullLogger<UcasDataTransfer>());
+            await UcasDataTransferFunction.UcasTransferEntriesAsync(new TimerInfo(), FunctionContext);
         }
     }
 }

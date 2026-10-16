@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystOverallResul
                 }
             };
 
-            AnalystDataExtraction = new AnalystOverallResultExtraction(config, AnalystResultExtractionService, CommonService);
+            AnalystDataExtraction = new AnalystOverallResultExtraction(config, AnalystResultExtractionService, CommonService, Logger);
         }
 
         public override void Given()

@@ -1,6 +1,9 @@
-﻿using Microsoft.Azure.WebJobs.Extensions.Timers;
+﻿using Microsoft.Azure.Functions.Extensions;
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Utils.Ranges;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
@@ -12,17 +15,19 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementFi
     public abstract class IndustryPlacementFirstDeadlineReminderTestBase : BaseTest<IndustryPlacementFirstDeadlineReminder>
     {
         // Depedencies
-        protected TimerSchedule TimerSchedule;
         protected IIndustryPlacementNotificationService IndustryPlacementNotificationService;
         protected ResultsAndCertificationConfiguration Configuration;
         protected ICommonService CommonService;
+        protected ILogger<IndustryPlacementNotificationService> Logger;
+        protected FunctionContext FunctionContext;
 
         // Actual function instance
         protected IndustryPlacementFirstDeadlineReminder IndustryPlacementFirstDeadlineReminderFunction;
 
         public override void Setup()
         {
-            TimerSchedule = Substitute.For<TimerSchedule>();
+            Logger = Substitute.For<ILogger<IndustryPlacementNotificationService>>();
+            FunctionContext = Substitute.For<FunctionContext>();
             IndustryPlacementNotificationService = Substitute.For<IIndustryPlacementNotificationService>();
             CommonService = Substitute.For<ICommonService>();
             DateTime today = DateTime.UtcNow.Date;
@@ -43,7 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementFi
             };
 
 
-            IndustryPlacementFirstDeadlineReminderFunction = new IndustryPlacementFirstDeadlineReminder(IndustryPlacementNotificationService, CommonService, Configuration);
+            IndustryPlacementFirstDeadlineReminderFunction = new IndustryPlacementFirstDeadlineReminder(IndustryPlacementNotificationService, CommonService, Configuration, Logger);
         }
 
     }

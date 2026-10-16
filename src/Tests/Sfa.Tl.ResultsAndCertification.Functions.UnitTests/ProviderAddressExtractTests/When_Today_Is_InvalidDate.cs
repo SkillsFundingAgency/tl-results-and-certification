@@ -30,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.ProviderAddressExtr
                 }
             };
 
-            ProviderAddressExtraction = new ProviderAddressExtraction(config, ProviderAddressExtractionService, CommonService);
+            ProviderAddressExtraction = new ProviderAddressExtraction(config, ProviderAddressExtractionService, CommonService, Logger);
         }
 
         public override void Given()

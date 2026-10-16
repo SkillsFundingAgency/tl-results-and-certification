@@ -1,5 +1,6 @@
-﻿using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Timers;
+﻿using Microsoft.Azure.Functions.Extensions;
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
@@ -14,11 +15,11 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystOverallResul
 {
     public abstract class TestSetup : BaseTest<AnalystOverallResultExtraction>
     {
-        private readonly TimerSchedule _timerSchedule = Substitute.For<TimerSchedule>();
         protected AnalystOverallResultExtraction AnalystDataExtraction;
-
         protected IAnalystOverallResultExtractionService AnalystResultExtractionService = Substitute.For<IAnalystOverallResultExtractionService>();
         protected ICommonService CommonService = Substitute.For<ICommonService>();
+        protected ILogger<IAnalystOverallResultExtractionService> Logger = Substitute.For<ILogger<IAnalystOverallResultExtractionService>>();
+        protected FunctionContext FunctionContext = Substitute.For<FunctionContext>();
 
         public override void Setup()
         {
@@ -39,12 +40,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystOverallResul
                 }
             };
 
-            AnalystDataExtraction = new AnalystOverallResultExtraction(config, AnalystResultExtractionService, CommonService);
+            AnalystDataExtraction = new AnalystOverallResultExtraction(config, AnalystResultExtractionService, CommonService, Logger);
         }
 
         public override Task When()
         {
-            return AnalystDataExtraction.AnalystOverallResultExtractAsync(new TimerInfo(_timerSchedule, new ScheduleStatus()), new ExecutionContext(), new NullLogger<AnalystOverallResultExtraction>());
+            return AnalystDataExtraction.AnalystOverallResultExtractAsync(new TimerInfo(), FunctionContext);
         }
     }
 }

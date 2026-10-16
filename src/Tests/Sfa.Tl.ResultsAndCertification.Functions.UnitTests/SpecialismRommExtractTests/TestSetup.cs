@@ -1,8 +1,11 @@
-﻿using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Timers;
+﻿using Microsoft.Azure.Functions.Extensions;
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Azure.WebJobs;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Utils.Ranges;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
@@ -14,8 +17,10 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.SpecialismRommExtra
 {
     public abstract class TestSetup : BaseTest<SpecialismRommExtract>
     {
-        private readonly TimerSchedule _timerSchedule = Substitute.For<TimerSchedule>();
         protected SpecialismRommExtract SpecialismRommExtract;
+
+        protected ILogger<SpecialismRommExtract> Logger = Substitute.For<ILogger<SpecialismRommExtract>>();
+        protected FunctionContext FunctionContext = Substitute.For<FunctionContext>();
 
         protected ISpecialismRommExtractionService SpecialismRommExtractService = Substitute.For<ISpecialismRommExtractionService>();
         protected ICommonService CommonService = Substitute.For<ICommonService>();
@@ -42,12 +47,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.SpecialismRommExtra
                 }
             };
 
-            SpecialismRommExtract = new SpecialismRommExtract(config, SpecialismRommExtractService, CommonService);
+            SpecialismRommExtract = new SpecialismRommExtract(config, SpecialismRommExtractService, CommonService, Logger);
         }
 
         public override Task When()
         {
-            return SpecialismRommExtract.SpecialismRommExtractAsync(new TimerInfo(_timerSchedule, new ScheduleStatus()), new ExecutionContext(), new NullLogger<AnalystOverallResultExtraction>());
+            return SpecialismRommExtract.SpecialismRommExtractAsync(new TimerInfo(), FunctionContext);
         }
     }
 }
