@@ -38,7 +38,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions
 {
-    class Program
+    public class Program
     {
         static async Task Main(string[] args)
         {
