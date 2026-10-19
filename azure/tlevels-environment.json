@@ -152,7 +152,7 @@
     }
   },
   "variables": {
-    "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/tl-platform-building-blocks/master/ArmTemplates/",
+    "deploymentUrlBase": "https://raw.githubusercontent.com/SkillsFundingAgency/tl-platform-building-blocks/feature/1240-dotnet10-function-app-config/ArmTemplates/",
     "uiAppName": "[concat(parameters('resourceNamePrefix'), '-web')]",
     "internalApiAppName": "[concat(parameters('resourceNamePrefix'), '-internal-api')]",
     "appInsightName": "[concat(parameters('resourceNamePrefix'), '-ai')]",
@@ -529,6 +529,9 @@
           "appServicePlanResourceGroup": {
             "value": "[parameters('sharedEnvResourceGroup')]"
           },
+          "netFrameworkVersion": {
+             "value": "v10.0"
+          },
           "functionAppAppSettings": {
             "value": [
               {
@@ -570,6 +573,10 @@
               {
                 "name": "FUNCTIONS_EXTENSION_VERSION",
                 "value": "~4"
+              },
+              {
+                "name": "FUNCTIONS_WORKER_RUNTIME",
+                "value": "dotnet-isolated"
               },
               {
                 "name": "LearnerVerificationAndLearningEventsTrigger",
