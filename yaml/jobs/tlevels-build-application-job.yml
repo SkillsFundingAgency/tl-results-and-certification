@@ -32,10 +32,10 @@ jobs:
         targets: default
     
     - task: UseDotNet@2 
-      displayName: "Install .NET 6 SDK"
+      displayName: "Install .NET 10 SDK"
       inputs:
         packageType: 'sdk'
-        version: '6.x'
+        version: '10.x'
 
     - task: gitversion/setup@3.1.1
       displayName: Install GitVersion
