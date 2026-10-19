@@ -1,8 +1,8 @@
-﻿<Project Sdk="Azure.Functions.Sdk/1.0.0">
+﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <AzureFunctionsVersion>v4</AzureFunctionsVersion>
-	<!--<OutputType>Exe</OutputType>-->
+	<OutputType>Exe</OutputType>
 	<ImplicitUsings>enable</ImplicitUsings>
 	<Nullable>enable</Nullable>
   </PropertyGroup>
@@ -14,7 +14,7 @@
 	  <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Timer" Version="4.3.1" />
 	  <PackageReference Include="Microsoft.Azure.Functions.Worker.OpenTelemetry" Version="1.2.0" />
 	  <PackageReference Include="Microsoft.Azure.Functions.Worker.Extensions.Http.AspNetCore" Version="2.1.1" />
-	  <!--<PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="2.1.0" />-->
+	  <PackageReference Include="Microsoft.Azure.Functions.Worker.Sdk" Version="2.1.0" />
 	  <PackageReference Include="OpenTelemetry.Api" Version="1.19.1" />
 	  <PackageReference Include="System.Security.Cryptography.Pkcs" Version="10.0.13" />
   </ItemGroup>
