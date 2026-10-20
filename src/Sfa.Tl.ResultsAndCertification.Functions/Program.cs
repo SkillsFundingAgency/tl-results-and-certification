@@ -31,7 +31,6 @@ using System.Linq;
 using System.Reflection;
 using LearningRecordServiceCertificate = Sfa.Tl.ResultsAndCertification.Common.Services.Certificates;
 using Microsoft.Azure.Functions.Worker.OpenTelemetry;
-//using Azure.Monitor.OpenTelemetry.Exporter;
 using System.Diagnostics;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
@@ -88,9 +87,9 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                     services.AddTransient<IProviderRepository, ProviderRepository>();
 
                     services.AddTransient<ICommonService, CommonService>();
-                    //services.AddTransient<ILrsLearnerService, LrsLearnerService>();
-                    //services.AddTransient<ILrsPersonalLearningRecordService, LrsPersonalLearningRecordService>();
-                    //services.AddTransient<ILrsService, LrsService>();
+                    services.AddTransient<ILrsLearnerService, LrsLearnerService>();
+                    services.AddTransient<ILrsPersonalLearningRecordService, LrsPersonalLearningRecordService>();
+                    services.AddTransient<ILrsService, LrsService>();
                     services.AddTransient<IPrintingService, PrintingService>();
                     services.AddTransient<ICertificatePrintingService, CertificatePrintingService>();
                     services.AddTransient<IUcasDataService, UcasDataService>();
@@ -127,11 +126,39 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                     services.AddTransient<SpecialismCodeConverter>();
 
-                    //services.AddTransient<ILrsLearnerServiceApiClient, LrsLearnerServiceApiClient>();
+                    services.AddTransient<ILrsLearnerServiceApiClient, LrsLearnerServiceApiClient>();
                     services.AddHttpClient<IPrintingApiClient, PrintingApiClient>();
                     services.AddHttpClient<IUcasApiClient, UcasApiClient>();
                     services.AddTransient<IUcasRecordSegment<UcasRecordEntriesSegment>, UcasRecordEntriesSegment>();
                     services.AddTransient<IUcasRecordSegment<UcasRecordResultsSegment>, UcasRecordResultsSegment>();
+
+
+                    // Register Api Clients
+                    var lrsCertificate = Common.Services.Certificates.CertificateService.GetLearningRecordServiceCertificate(_configuration).GetAwaiter().GetResult();
+
+                    services.AddTransient<ILearnerServiceR9Client>(learnerClient =>
+                    {
+                        var client = new LearnerServiceR9Client();
+                        client.Endpoint.Address = CommonHelper.GetLrsEndpointAddress(_configuration.LearningRecordServiceSettings.BaseUri, ApiConstants.PlrServiceUri);
+                        client.ClientCredentials.ClientCertificate.Certificate = lrsCertificate;
+                        return client;
+                    });
+                    services.AddTransient<ILrsPersonalLearningRecordServiceApiClient, LrsPersonalLearningRecordServiceApiClient>();
+
+                    services.AddTransient<ILearnerPortTypeClient>(learnerClient =>
+                    {
+                        var client = new LearnerPortTypeClient();
+                        client.Endpoint.Address = CommonHelper.GetLrsEndpointAddress(_configuration.LearningRecordServiceSettings.BaseUri, ApiConstants.LearnerServiceUri);
+                        client.ClientCredentials.ClientCertificate.Certificate = lrsCertificate;
+                        return client;
+                    });
+
+                    services.AddTransient<ILrsLearnerServiceApiClient, LrsLearnerServiceApiClient>();
+                    services.AddHttpClient<IPrintingApiClient, PrintingApiClient>();
+                    services.AddHttpClient<IUcasApiClient, UcasApiClient>();
+                    services.AddTransient<IUcasRecordSegment<UcasRecordEntriesSegment>, UcasRecordEntriesSegment>();
+                    services.AddTransient<IUcasRecordSegment<UcasRecordResultsSegment>, UcasRecordResultsSegment>();
+                
                 })
                 .Build();
 
