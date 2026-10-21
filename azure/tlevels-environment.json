@@ -523,14 +523,14 @@
           "functionAppName": {
             "value": "[variables('functionAppName')]"
           },
+          "netFrameworkVersion": {
+                "value": "v10.0"
+              },
           "appServicePlanName": {
             "value": "[parameters('sharedASPName')]"
           },
           "appServicePlanResourceGroup": {
             "value": "[parameters('sharedEnvResourceGroup')]"
-          },
-          "netFrameworkVersion": {
-             "value": "v10.0"
           },
           "functionAppAppSettings": {
             "value": [
@@ -573,10 +573,6 @@
               {
                 "name": "FUNCTIONS_EXTENSION_VERSION",
                 "value": "~4"
-              },
-              {
-                "name": "FUNCTIONS_WORKER_RUNTIME",
-                "value": "dotnet-isolated"
               },
               {
                 "name": "LearnerVerificationAndLearningEventsTrigger",
@@ -677,6 +673,10 @@
               {
                 "name": "WEBSITE_RUN_FROM_PACKAGE",
                 "value": "1"
+              },
+              {
+                "name": "FUNCTIONS_WORKER_RUNTIME",
+                "value": "dotnet-isolated"
               },
               {
                 "name": "WEBSITE_USE_PLACEHOLDER_DOTNETISOLATED",
