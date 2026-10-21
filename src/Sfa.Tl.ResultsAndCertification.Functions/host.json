@@ -7,6 +7,9 @@
         "isEnabled": true,
         "maxTelemetryItemsPerSecond": 20
       }
+    },
+    "logLevel": {
+      "default": "Information"
     }
   },
   "functionTimeout": "02:00:00"

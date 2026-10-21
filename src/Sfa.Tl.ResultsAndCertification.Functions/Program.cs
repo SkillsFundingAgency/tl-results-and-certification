@@ -1,9 +1,14 @@
 ﻿using Lrs.LearnerService.Api.Client;
 using Lrs.PersonalLearningRecordService.Api.Client;
+using Microsoft.Azure.Functions.Extensions.DependencyInjection;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Builder;
+using Microsoft.Azure.Functions.Worker.OpenTelemetry;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Notify.Client;
 using Notify.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Clients;
@@ -26,45 +31,41 @@ using Sfa.Tl.ResultsAndCertification.Functions.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Functions.Services;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
-using System;
-using System.Linq;
 using System.Reflection;
 using LearningRecordServiceCertificate = Sfa.Tl.ResultsAndCertification.Common.Services.Certificates;
-using Microsoft.Azure.Functions.Worker.OpenTelemetry;
-using System.Diagnostics;
-using Microsoft.Azure.Functions.Worker;
-using Microsoft.Extensions.Logging;
 
-namespace Sfa.Tl.ResultsAndCertification.Functions
+namespace Sfa.Tl.ResultsAndCertification.Functions;
+
+public class Program
 {
-    public class Program
+    static async Task Main(string[] args)
     {
-        static async Task Main(string[] args)
-        {
-
-#if DEBUG
-            Debugger.Launch();
-#endif
-
-            var host = new HostBuilder()
-                 //.ConfigureFunctionsWorkerDefaults()
-                .ConfigureFunctionsWebApplication()
-                .ConfigureServices(services =>
+        var hostBuilder = new HostBuilder()
+            .ConfigureFunctionsWorkerDefaults()
+             .ConfigureAppConfiguration(c =>
+             {
+                 c.AddCommandLine(args)
+                     .AddJsonFile("local.settings.json", optional: true, reloadOnChange: false)
+                     .AddJsonFile("local.settings.development.json", optional: true, reloadOnChange: false)
+                     .AddEnvironmentVariables();
+             }
+            )
+            .ConfigureServices(services =>
                 {
                     ResultsAndCertificationConfiguration _configuration;
 
                     _configuration = ConfigurationLoader.Load(
-                      Environment.GetEnvironmentVariable(Constants.EnvironmentNameConfigKey),
-                      Environment.GetEnvironmentVariable(Constants.ConfigurationStorageConnectionStringConfigKey),
-                      Environment.GetEnvironmentVariable(Constants.VersionConfigKey)
-                      ?? Environment.GetEnvironmentVariable(Constants.ServiceVersionConfigKey), // Need ServiceVersion rather than Version in local with .Net 6
-                      Environment.GetEnvironmentVariable(Constants.ServiceNameConfigKey));
+                        Environment.GetEnvironmentVariable(Constants.EnvironmentNameConfigKey),
+                        Environment.GetEnvironmentVariable(Constants.ConfigurationStorageConnectionStringConfigKey),
+                        Environment.GetEnvironmentVariable(Constants.VersionConfigKey)
+                        ?? Environment.GetEnvironmentVariable(Constants.ServiceVersionConfigKey), // Need ServiceVersion rather than Version in local with .Net 6
+                        Environment.GetEnvironmentVariable(Constants.ServiceNameConfigKey));
 
                     //Inject DbContext
                     services.AddDbContext<ResultsAndCertificationDbContext>(options =>
                         options.UseSqlServer(_configuration.SqlConnectionString,
                             builder => builder.UseNetTopologySuite()
-                                              .EnableRetryOnFailure()), ServiceLifetime.Transient);
+                                                .EnableRetryOnFailure()), ServiceLifetime.Transient);
 
                     services.AddHttpContextAccessor();
 
@@ -72,7 +73,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                     Assembly[] assemblies = new Assembly[] { typeof(Program).Assembly, typeof(Program).Assembly.GetReferencedAssemblies().Where(a => a.FullName.Contains("Sfa.Tl.ResultsAndCertification.Application")).Select(Assembly.Load).FirstOrDefault() };
                     services.AddAutoMapper(cfg => { }, assemblies);
                     services.AddHttpContextAccessor();
-
                     //
                     services.AddHttpClient<IDfeSignInApiClient, DfeSignInApiClient>();
                     services.AddTransient<ITokenServiceClient, TokenServiceClient>();
@@ -134,7 +134,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
 
                     // Register Api Clients
-                    var lrsCertificate = Common.Services.Certificates.CertificateService.GetLearningRecordServiceCertificate(_configuration).GetAwaiter().GetResult();
+                    var lrsCertificate = LearningRecordServiceCertificate.CertificateService.GetLearningRecordServiceCertificate(_configuration).GetAwaiter().GetResult();
 
                     services.AddTransient<ILearnerServiceR9Client>(learnerClient =>
                     {
@@ -158,11 +158,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                     services.AddHttpClient<IUcasApiClient, UcasApiClient>();
                     services.AddTransient<IUcasRecordSegment<UcasRecordEntriesSegment>, UcasRecordEntriesSegment>();
                     services.AddTransient<IUcasRecordSegment<UcasRecordResultsSegment>, UcasRecordResultsSegment>();
-                
-                })
-                .Build();
 
-            await host.RunAsync();
-        }
+                });
+
+        var host = hostBuilder.Build();
+
+        await host.RunAsync();
+
     }
 }
