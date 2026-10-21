@@ -36,7 +36,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.OverallResultCalcul
 
         public async override Task When()
         {
-            await OverallResultCalculationFunction.OverallResultCalculationAsync(new TimerInfo(), FunctionContext);
+            await OverallResultCalculationFunction.Run(new TimerInfo(), FunctionContext);
         }
     }
 }
