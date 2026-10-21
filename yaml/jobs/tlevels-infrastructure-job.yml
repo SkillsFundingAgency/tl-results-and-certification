@@ -100,9 +100,17 @@ jobs:
           scriptType: 'pscore'
           scriptLocation: 'inlineScript'
           inlineScript: |
-            $functionAppObjectId = az functionapp identity show -n $(armOutputs.armOutput.functionAppName) -g $(ResourceGroupName) --query "principalId"
-            Write-Host $functionAppObjectId
-            az keyvault set-policy --name $(SharedKeyVaultName) --object-id $functionAppObjectId --secret-permissions "get" --key-permissions "get" --certificate-permissions "get"
+            # Grant production Function App access
+            $functionAppObjectId = az functionapp identity show -n $(armOutputs.armOutput.functionAppName) -g $(ResourceGroupName) --query "principalId" -o tsv
+
+            az keyvault set-policy --name $(SharedKeyVaultName) --object-id $functionAppObjectId --secret-permissions get --key-permissions get --certificate-permissions get
+
+            # Grant staging slot access
+            $stagingObjectId = az webapp identity show -n $(armOutputs.armOutput.functionAppName) -g $(ResourceGroupName) --slot staging --query "principalId" -o tsv
+
+            if ([string]::IsNullOrWhiteSpace($stagingObjectId)) { throw "Failed to retrieve the staging slot managed identity. Cannot grant Key Vault access."}
+
+            az keyvault set-policy --name $(SharedKeyVaultName) --object-id $stagingObjectId --secret-permissions get --key-permissions get --certificate-permissions get
 
       - task: AzureCLI@2
         displayName: 'Create Internal Api SQL Users and Permissions'
