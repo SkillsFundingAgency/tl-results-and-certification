@@ -296,7 +296,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.Document {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 1 Sep 2026.
+        ///   Looks up a localized string similar to 20 October 2026.
         /// </summary>
         public static string Romms_PublishedDate_Text {
             get {
