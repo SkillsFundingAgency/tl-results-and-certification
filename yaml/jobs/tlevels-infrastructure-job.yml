@@ -103,6 +103,9 @@ jobs:
             $functionAppObjectId = az functionapp identity show -n $(armOutputs.armOutput.functionAppName) -g $(ResourceGroupName) --query "principalId"
             Write-Host $functionAppObjectId
             az keyvault set-policy --name $(SharedKeyVaultName) --object-id $functionAppObjectId --secret-permissions "get" --key-permissions "get" --certificate-permissions "get"
+            $functionAppStagingObjectId = az functionapp identity show -n $(armOutputs.armOutput.functionAppName) -g $(ResourceGroupName) --slot staging --query "principalId"
+            Write-Host $functionAppStagingObjectId
+            az keyvault set-policy --name $(SharedKeyVaultName) --object-id $functionAppStagingObjectId --secret-permissions "get" --key-permissions "get" --certificate-permissions "get"
 
       - task: AzureCLI@2
         displayName: 'Create Internal Api SQL Users and Permissions'
