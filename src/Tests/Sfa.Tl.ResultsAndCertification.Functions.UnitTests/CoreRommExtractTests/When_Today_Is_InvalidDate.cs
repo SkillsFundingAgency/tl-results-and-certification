@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.CoreRommExtractTest
                 }
             };
 
-            CoreRommExtract = new CoreRommExtract(config, CoreRommExtractService, CommonService, Logger);
+            CoreRommExtract = new CoreRommExtract(config, CoreRommExtractService, CommonService);
         }
 
         public override void Given()

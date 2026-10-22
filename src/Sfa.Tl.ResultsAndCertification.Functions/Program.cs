@@ -88,9 +88,9 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                     services.AddTransient<IProviderRepository, ProviderRepository>();
 
                     services.AddTransient<ICommonService, CommonService>();
-                    //services.AddTransient<ILrsLearnerService, LrsLearnerService>();
-                    //services.AddTransient<ILrsPersonalLearningRecordService, LrsPersonalLearningRecordService>();
-                    //services.AddTransient<ILrsService, LrsService>();
+                    services.AddTransient<ILrsLearnerService, LrsLearnerService>();
+                    services.AddTransient<ILrsPersonalLearningRecordService, LrsPersonalLearningRecordService>();
+                    services.AddTransient<ILrsService, LrsService>();
                     services.AddTransient<IPrintingService, PrintingService>();
                     services.AddTransient<ICertificatePrintingService, CertificatePrintingService>();
                     services.AddTransient<IUcasDataService, UcasDataService>();
@@ -127,7 +127,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                     services.AddTransient<SpecialismCodeConverter>();
 
-                    //services.AddTransient<ILrsLearnerServiceApiClient, LrsLearnerServiceApiClient>();
+                    services.AddTransient<ILrsLearnerServiceApiClient, LrsLearnerServiceApiClient>();
                     services.AddHttpClient<IPrintingApiClient, PrintingApiClient>();
                     services.AddHttpClient<IUcasApiClient, UcasApiClient>();
                     services.AddTransient<IUcasRecordSegment<UcasRecordEntriesSegment>, UcasRecordEntriesSegment>();

@@ -5,6 +5,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using System;
@@ -19,11 +20,11 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.OverallResultCalcul
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
         protected IOverallResultCalculationFunctionService OverallResultCalculationFunctionService;
         protected Functions.OverallResultCalculation OverallResultCalculationFunction;
-        protected FunctionContext FunctionContext;
+
 
         public override void Setup()
         {
-            FunctionContext = Substitute.For<FunctionContext>();
+            
             CommonService = Substitute.For<ICommonService>();
             Logger = Substitute.For<ILogger<Functions.OverallResultCalculation>>();
             OverallResultCalculationFunctionService = Substitute.For<IOverallResultCalculationFunctionService>();
@@ -31,12 +32,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.OverallResultCalcul
             {
                 OverallResultsCalculationDate = DateTime.UtcNow
             };
-            OverallResultCalculationFunction = new Functions.OverallResultCalculation(ResultsAndCertificationConfiguration, OverallResultCalculationFunctionService, CommonService, Logger);
+            OverallResultCalculationFunction = new Functions.OverallResultCalculation(ResultsAndCertificationConfiguration, OverallResultCalculationFunctionService, CommonService);
         }
 
         public async override Task When()
         {
-            await OverallResultCalculationFunction.OverallResultCalculationAsync(new TimerInfo(), FunctionContext);
+            await OverallResultCalculationFunction.OverallResultCalculationAsync(new TimerInfo(), FunctionContextFactory.Create());
         }
     }
 }

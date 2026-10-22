@@ -4,6 +4,7 @@ using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging.Abstractions;
 using Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlacementTests;
 using System.Threading.Tasks;
+using Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Helpers;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementExtractTests
 {
@@ -11,7 +12,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementEx
     {
         public async override Task When()
         {
-            await IndustryPlacementExtractFunction.IndustryPlacementExtractAsync(new TimerInfo(), FunctionContext);
+            await IndustryPlacementExtractFunction.IndustryPlacementExtractAsync(new TimerInfo(), FunctionContextFactory.Create());
         }
     }
 }

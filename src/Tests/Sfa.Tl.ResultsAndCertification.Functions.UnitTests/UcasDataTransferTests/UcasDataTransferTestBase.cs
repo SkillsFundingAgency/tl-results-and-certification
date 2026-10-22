@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.UcasDataTransferTes
     public abstract class UcasDataTransferTestBase : BaseTest<UcasDataTransfer>
     {
         protected ILogger<UcasDataTransferService> Logger = Substitute.For<ILogger<UcasDataTransferService>>();
-        protected FunctionContext FunctionContext = Substitute.For<FunctionContext>();
+        
 
         // Dependencies
         protected IUcasDataTransferService UcasDataTransferService;
@@ -32,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.UcasDataTransferTes
             UcasDataTransferService = Substitute.For<IUcasDataTransferService>();
             CommonService = Substitute.For<ICommonService>();
 
-            UcasDataTransferFunction = new UcasDataTransfer(UcasDataTransferService, CommonService, new ResultsAndCertificationConfiguration(), Logger);
+            UcasDataTransferFunction = new UcasDataTransfer(UcasDataTransferService, CommonService, new ResultsAndCertificationConfiguration());
         }
 
         public void Setup(DateTimeRange dateTimeRange)
@@ -48,7 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.UcasDataTransferTes
             
             UcasDataTransferService = Substitute.For<IUcasDataTransferService>();
             CommonService = Substitute.For<ICommonService>();
-            UcasDataTransferFunction = new UcasDataTransfer(UcasDataTransferService, CommonService, config, Logger);
+            UcasDataTransferFunction = new UcasDataTransfer(UcasDataTransferService, CommonService, config);
         }
     }
 }

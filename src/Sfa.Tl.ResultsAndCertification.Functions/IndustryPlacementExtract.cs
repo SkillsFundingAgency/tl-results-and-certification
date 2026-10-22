@@ -15,18 +15,17 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
         private readonly IIndustryPlacementService _industryPlacementService;
 
         private readonly ICommonService _commonService;
-        private readonly ILogger _logger;
 
-        public IndustryPlacementExtract(IIndustryPlacementService industryPlacementService, ICommonService commonService, ILogger logger)
+        public IndustryPlacementExtract(IIndustryPlacementService industryPlacementService, ICommonService commonService)
         {
             _industryPlacementService = industryPlacementService;
             _commonService = commonService;
-            _logger = logger;
         }
 
         [Function(Constants.IndustryPlacementExtract)]
         public async Task IndustryPlacementExtractAsync([TimerTrigger("%IndustryPlacementExtractTrigger%")] TimerInfo timer, FunctionContext context)
         {
+            var logger = context.GetLogger(context.FunctionDefinition.Name);
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
             if (_commonService.IsIndustryPlacementTriggerDateValid())
@@ -35,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 try
                 {
-                    _logger.LogInformation($"Function {context.FunctionDefinition.Name} started");
+                    logger.LogInformation($"Function {context.FunctionDefinition.Name} started");
 
                     var stopwatch = Stopwatch.StartNew();
 
@@ -51,12 +50,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                     stopwatch.Stop();
 
-                    _logger.LogInformation($"Function {context.FunctionDefinition.Name} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
+                    logger.LogInformation($"Function {context.FunctionDefinition.Name} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
                 }
                 catch (Exception ex)
                 {
                     var errorMessage = $"Function {context.FunctionDefinition.Name} failed to process with the following exception = {ex}";
-                    _logger.LogError(errorMessage);
+                    logger.LogError(errorMessage);
 
                     CommonHelper.UpdateFunctionLogRequest(functionLogDetails, FunctionStatus.Failed, errorMessage);
 

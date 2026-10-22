@@ -16,21 +16,20 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
     {
         private readonly IIndustryPlacementNotificationService _industryPlacementNotificationService;
         private readonly IPOneOutstandingUlnReminderSettings _configuration;
-        private readonly ILogger _logger;
 
         private readonly ICommonService _commonService;
 
-        public IndustryPlacementOneOutstandingUlnReminder(IIndustryPlacementNotificationService industryPlacementNotificationService, ICommonService commonService, ResultsAndCertificationConfiguration configuration, ILogger logger)
+        public IndustryPlacementOneOutstandingUlnReminder(IIndustryPlacementNotificationService industryPlacementNotificationService, ICommonService commonService, ResultsAndCertificationConfiguration configuration)
         {
             _industryPlacementNotificationService = industryPlacementNotificationService;
             _commonService = commonService;
             _configuration = configuration.IPOneOutstandingUlnReminderSettings;
-            _logger = logger;
         }
 
         [Function(Constants.IndustryPlacementOneOutstandingUlnReminder)]
         public async Task IndustryPlacementOneOutstandingUlnReminderAsync([TimerTrigger("%IndustryPlacementOneOutstandingUlnReminderTrigger%")] TimerInfo timer, FunctionContext context)
         {
+            var logger = context.GetLogger(context.FunctionDefinition.Name);
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
             var today = DateTime.UtcNow.Date;
@@ -46,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
             try
             {
-                _logger.LogInformation($"Function {context.FunctionDefinition.Name} started");
+                logger.LogInformation($"Function {context.FunctionDefinition.Name} started");
 
                 var stopwatch = Stopwatch.StartNew();
 
@@ -69,12 +68,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 stopwatch.Stop();
 
-                _logger.LogInformation($"Function {context.FunctionDefinition.Name} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
+                logger.LogInformation($"Function {context.FunctionDefinition.Name} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
             }
             catch (Exception ex)
             {
                 var errorMessage = $"Function {context.FunctionDefinition.Name} failed to process with the following exception = {ex}";
-                _logger.LogError(errorMessage);
+                logger.LogError(errorMessage);
 
                 CommonHelper.UpdateFunctionLogRequest(functionLogDetails, FunctionStatus.Failed, errorMessage);
 

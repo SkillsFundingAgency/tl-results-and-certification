@@ -6,6 +6,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Utils.Ranges;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using System;
@@ -20,7 +21,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.CoreRommExtractTest
         protected ILogger<CoreRommExtract> Logger = Substitute.For<ILogger<CoreRommExtract>>();
         protected ICoreRommExtractService CoreRommExtractService = Substitute.For<ICoreRommExtractService>();
         protected ICommonService CommonService = Substitute.For<ICommonService>();
-        protected FunctionContext FunctionContext = Substitute.For<FunctionContext>();
 
         protected string[] AssessmentSeriesYearsToProcess = new[] { "Summer 2023" };
 
@@ -44,12 +44,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.CoreRommExtractTest
                 }
             };
 
-            CoreRommExtract = new CoreRommExtract(config, CoreRommExtractService, CommonService, Logger);
+            CoreRommExtract = new CoreRommExtract(config, CoreRommExtractService, CommonService);
         }
 
         public override Task When()
         {
-            return CoreRommExtract.CoreRommExtractAsync(new TimerInfo(), FunctionContext);
+            return CoreRommExtract.CoreRommExtractAsync(new TimerInfo(), FunctionContextFactory.Create());
         }
     }
 }

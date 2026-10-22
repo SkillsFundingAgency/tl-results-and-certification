@@ -13,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementEx
     {
         // Depedencies
         protected ILogger<IndustryPlacementNotificationService> Logger;
-        protected FunctionContext FunctionContext;
+
         protected IIndustryPlacementService IndustryPlacementService;
         protected ICommonService CommonService;
 
@@ -23,11 +23,11 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementEx
         public override void Setup()
         {
             Logger = Substitute.For<ILogger<IndustryPlacementNotificationService>>();
-            FunctionContext = Substitute.For<FunctionContext>();
+            
             IndustryPlacementService = Substitute.For<IIndustryPlacementService>();
             CommonService = Substitute.For<ICommonService>();
 
-            IndustryPlacementExtractFunction = new IndustryPlacementExtract(IndustryPlacementService, CommonService, Logger);
+            IndustryPlacementExtractFunction = new IndustryPlacementExtract(IndustryPlacementService, CommonService);
         }
 
     }

@@ -3,6 +3,7 @@ using Microsoft.Azure.Functions.Extensions;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging.Abstractions;
 using System.Threading.Tasks;
+using Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Helpers;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementChaseBigGapsReminderTests
 {
@@ -10,7 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementCh
     {
         public async override Task When()
         {
-            await IndustryPlacementChaseBigGapsReminderFunction.IndustryPlacementChaseBigGapsReminderAsync(new TimerInfo(), FunctionContext);
+            await IndustryPlacementChaseBigGapsReminderFunction.IndustryPlacementChaseBigGapsReminderAsync(new TimerInfo(), FunctionContextFactory.Create());
         }
     }
 }

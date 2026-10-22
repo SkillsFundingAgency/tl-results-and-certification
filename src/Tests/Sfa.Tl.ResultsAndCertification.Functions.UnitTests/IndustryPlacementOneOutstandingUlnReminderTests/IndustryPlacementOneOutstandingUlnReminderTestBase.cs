@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementOn
     {
         // Depedencies
         protected ILogger<IndustryPlacementNotificationService> Logger;
-        protected FunctionContext FunctionContext;
+
         protected IIndustryPlacementNotificationService IndustryPlacementNotificationService;
         protected ICommonService CommonService;
         protected ResultsAndCertificationConfiguration Configuration;
@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementOn
         public override void Setup()
         {
             Logger = Substitute.For<ILogger<IndustryPlacementNotificationService>>();
-            FunctionContext = Substitute.For<FunctionContext>();
+            
             IndustryPlacementNotificationService = Substitute.For<IIndustryPlacementNotificationService>();
             CommonService = Substitute.For<ICommonService>();
             DateTime today = DateTime.UtcNow.Date;
@@ -49,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementOn
 
 
 
-            IndustryPlacementOneOutstandingUlnReminderFunction = new IndustryPlacementOneOutstandingUlnReminder(IndustryPlacementNotificationService, CommonService, Configuration, Logger);
+            IndustryPlacementOneOutstandingUlnReminderFunction = new IndustryPlacementOneOutstandingUlnReminder(IndustryPlacementNotificationService, CommonService, Configuration);
         }
 
     }

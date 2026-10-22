@@ -1,6 +1,7 @@
 ﻿using Microsoft.Azure.Functions.Extensions;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging.Abstractions;
+using Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Helpers;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementFirstDeadlineReminderTests
@@ -9,7 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementFi
     {
         public async override Task When()
         {
-            await IndustryPlacementFirstDeadlineReminderFunction.IndustryPlacementFirstDeadlineReminderAsync(new TimerInfo(), FunctionContext);
+            await IndustryPlacementFirstDeadlineReminderFunction.IndustryPlacementFirstDeadlineReminderAsync(new TimerInfo(), FunctionContextFactory.Create());
         }
     }
 }

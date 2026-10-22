@@ -19,7 +19,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementCh
         protected ICommonService CommonService;
         protected ResultsAndCertificationConfiguration Configuration;
         protected ILogger<IndustryPlacementNotificationService> Logger;
-        protected FunctionContext FunctionContext;
+
 
 
         // Actual function instance
@@ -28,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementCh
         public override void Setup()
         {
             Logger = Substitute.For<ILogger<IndustryPlacementNotificationService>>();
-            FunctionContext = Substitute.For<FunctionContext>();
+            
             IndustryPlacementNotificationService = Substitute.For<IIndustryPlacementNotificationService>();
             CommonService = Substitute.For<ICommonService>();
             DateTime today = DateTime.UtcNow.Date;
@@ -48,7 +48,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementCh
                 }
             };
 
-            IndustryPlacementChaseBigGapsReminderFunction = new IndustryPlacementChaseBigGapsReminder(IndustryPlacementNotificationService, CommonService, Configuration, Logger);
+            IndustryPlacementChaseBigGapsReminderFunction = new IndustryPlacementChaseBigGapsReminder(IndustryPlacementNotificationService, CommonService, Configuration);
         }
 
     }

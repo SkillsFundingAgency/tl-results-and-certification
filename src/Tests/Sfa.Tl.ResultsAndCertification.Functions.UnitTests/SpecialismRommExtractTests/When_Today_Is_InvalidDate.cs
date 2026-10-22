@@ -29,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.SpecialismRommExtra
                 }
             };
 
-            SpecialismRommExtract = new SpecialismRommExtract(config, SpecialismRommExtractService, CommonService, Logger);
+            SpecialismRommExtract = new SpecialismRommExtract(config, SpecialismRommExtractService, CommonService);
         }
 
         public override void Given()

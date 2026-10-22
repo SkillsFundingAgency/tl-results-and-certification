@@ -16,7 +16,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementMi
     {
         // Depedencies
         protected ILogger<IndustryPlacementNotificationService> Logger;
-        protected FunctionContext FunctionContext;
+
         protected IIndustryPlacementNotificationService IndustryPlacementNotificationService;
         protected ResultsAndCertificationConfiguration Configuration;
         protected ICommonService CommonService;
@@ -27,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementMi
         public override void Setup()
         {
             Logger = Substitute.For<ILogger<IndustryPlacementNotificationService>>();
-            FunctionContext = Substitute.For<FunctionContext>();
+            
             IndustryPlacementNotificationService = Substitute.For<IIndustryPlacementNotificationService>();
             CommonService = Substitute.For<ICommonService>();
             DateTime today = DateTime.UtcNow.Date;
@@ -47,7 +47,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementMi
                 }
             };
 
-            IndustryPlacementMissedDeadlineReminderFunction = new IndustryPlacementMissedDeadlineReminder(IndustryPlacementNotificationService, CommonService, Configuration, Logger);
+            IndustryPlacementMissedDeadlineReminderFunction = new IndustryPlacementMissedDeadlineReminder(IndustryPlacementNotificationService, CommonService, Configuration);
         }
 
     }
