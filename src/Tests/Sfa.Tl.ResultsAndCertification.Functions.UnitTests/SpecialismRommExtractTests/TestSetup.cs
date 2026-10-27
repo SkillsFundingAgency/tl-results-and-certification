@@ -8,6 +8,7 @@ using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Utils.Ranges;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using System;
@@ -20,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.SpecialismRommExtra
         protected SpecialismRommExtract SpecialismRommExtract;
 
         protected ILogger<SpecialismRommExtract> Logger = Substitute.For<ILogger<SpecialismRommExtract>>();
-        protected FunctionContext FunctionContext = Substitute.For<FunctionContext>();
+        
 
         protected ISpecialismRommExtractionService SpecialismRommExtractService = Substitute.For<ISpecialismRommExtractionService>();
         protected ICommonService CommonService = Substitute.For<ICommonService>();
@@ -47,12 +48,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.SpecialismRommExtra
                 }
             };
 
-            SpecialismRommExtract = new SpecialismRommExtract(config, SpecialismRommExtractService, CommonService, Logger);
+            SpecialismRommExtract = new SpecialismRommExtract(config, SpecialismRommExtractService, CommonService);
         }
 
         public override Task When()
         {
-            return SpecialismRommExtract.SpecialismRommExtractAsync(new TimerInfo(), FunctionContext);
+            return SpecialismRommExtract.SpecialismRommExtractAsync(new TimerInfo(), FunctionContextFactory.Create());
         }
     }
 }

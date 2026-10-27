@@ -18,31 +18,29 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
         private readonly IUcasDataTransferService _ucasDataTransferService;
         private readonly ICommonService _commonService;
         private readonly UcasTransferAmendmentsSettings _configuration;
-        private readonly ILogger _logger;
 
         public UcasDataTransfer(
             IUcasDataTransferService ucasDataTransferService,
             ICommonService commonService,
-            ResultsAndCertificationConfiguration configuration, 
-            ILogger logger)
+            ResultsAndCertificationConfiguration configuration)
         {
             _ucasDataTransferService = ucasDataTransferService;
             _commonService = commonService;
             _configuration = configuration.UcasTransferAmendmentsSettings;
-            _logger = logger;
 
         }
 
         [Function(Constants.UcasTransferEntries)]
         public async Task UcasTransferEntriesAsync([TimerTrigger("%UcasTransferEntriesTrigger%")] TimerInfo timer, FunctionContext context)
         {
+            var logger = context.GetLogger(context.FunctionDefinition.Name);
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
             var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionDefinition.Name, FunctionType.UcasTransferEntries);
 
             try
             {
-                _logger.LogInformation($"Function {context.FunctionDefinition.Name} started");
+                logger.LogInformation($"Function {context.FunctionDefinition.Name} started");
 
                 var stopwatch = Stopwatch.StartNew();
 
@@ -59,12 +57,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 stopwatch.Stop();
 
-                _logger.LogInformation($"Function {context.FunctionDefinition.Name} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
+                logger.LogInformation($"Function {context.FunctionDefinition.Name} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
             }
             catch (Exception ex)
             {
                 var errorMessage = $"Function {context.FunctionDefinition.Name} failed to process with the following exception = {ex}";
-                _logger.LogError(errorMessage);
+                logger.LogError(errorMessage);
 
                 CommonHelper.UpdateFunctionLogRequest(functionLogDetails, FunctionStatus.Failed, errorMessage);
 
@@ -77,13 +75,14 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
         [Function(Constants.UcasTransferResults)]
         public async Task UcasTransferResultsAsync([TimerTrigger("%UcasTransferResultsTrigger%")] TimerInfo timer, FunctionContext context)
         {
+            var logger = context.GetLogger(context.FunctionDefinition.Name);
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
             var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionDefinition.Name, FunctionType.UcasTransferResults);
 
             try
             {
-                _logger.LogInformation($"Function {context.FunctionDefinition.Name} started");
+                logger.LogInformation($"Function {context.FunctionDefinition.Name} started");
 
                 var stopwatch = Stopwatch.StartNew();
                 await _commonService.CreateFunctionLog(functionLogDetails);
@@ -99,12 +98,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 stopwatch.Stop();
 
-                _logger.LogInformation($"Function {context.FunctionDefinition.Name} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
+                logger.LogInformation($"Function {context.FunctionDefinition.Name} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
             }
             catch (Exception ex)
             {
                 var errorMessage = $"Function {context.FunctionDefinition.Name} failed to process with the following exception = {ex}";
-                _logger.LogError(errorMessage);
+                logger.LogError(errorMessage);
 
                 CommonHelper.UpdateFunctionLogRequest(functionLogDetails, FunctionStatus.Failed, errorMessage);
 
@@ -117,6 +116,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
         [Function(Constants.UcasTransferAmendments)]
         public async Task UcasTransferAmendmentsAsync([TimerTrigger("%UcasTransferAmendmentsTrigger%")] TimerInfo timer, FunctionContext context)
         {
+            var logger = context.GetLogger(context.FunctionDefinition.Name);
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
             bool shouldFunctionRunToday = _configuration.ValidDateRanges.Any(r => r.Contains(_commonService.CurrentDate));
@@ -131,7 +131,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
             try
             {
-                _logger.LogInformation($"Function {context.FunctionDefinition.Name} started");
+                logger.LogInformation($"Function {context.FunctionDefinition.Name} started");
 
                 var stopwatch = Stopwatch.StartNew();
                 await _commonService.CreateFunctionLog(functionLogDetails);
@@ -147,12 +147,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 stopwatch.Stop();
 
-                _logger.LogInformation($"Function {context.FunctionDefinition.Name} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
+                logger.LogInformation($"Function {context.FunctionDefinition.Name} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
             }
             catch (Exception ex)
             {
                 var errorMessage = $"Function {context.FunctionDefinition.Name} failed to process with the following exception = {ex}";
-                _logger.LogError(errorMessage);
+                logger.LogError(errorMessage);
 
                 CommonHelper.UpdateFunctionLogRequest(functionLogDetails, FunctionStatus.Failed, errorMessage);
 

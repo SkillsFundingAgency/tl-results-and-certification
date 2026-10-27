@@ -1,7 +1,7 @@
-﻿using Microsoft.Azure.Functions.Worker;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.Functions.Extensions;
+﻿using Microsoft.Azure.Functions.Extensions;
 using Microsoft.Azure.Functions.Worker;
+using Microsoft.Azure.Functions.Worker;
+using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute;
@@ -9,6 +9,7 @@ using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Common.Utils.Ranges;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using System;
@@ -19,7 +20,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.ProviderAddressExtr
     public abstract class TestSetup : BaseTest<ProviderAddressExtraction>
     {
         protected ILogger<ProviderAddressExtraction> Logger;
-        protected FunctionContext FunctionContext;
+
         protected ProviderAddressExtraction ProviderAddressExtraction;
 
         protected IProviderAddressExtractionService ProviderAddressExtractionService = Substitute.For<IProviderAddressExtractionService>();
@@ -30,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.ProviderAddressExtr
         public override void Setup()
         {
             Logger = Substitute.For<ILogger<ProviderAddressExtraction>>();
-            FunctionContext = Substitute.For<FunctionContext>();
+            
             DateTime today = DateTime.UtcNow.Date;
 
             var config = new ResultsAndCertificationConfiguration
@@ -49,12 +50,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.ProviderAddressExtr
                 }
             };
 
-            ProviderAddressExtraction = new ProviderAddressExtraction(config, ProviderAddressExtractionService, CommonService, Logger);
+            ProviderAddressExtraction = new ProviderAddressExtraction(config, ProviderAddressExtractionService, CommonService);
         }
 
         public override Task When()
         {
-            return ProviderAddressExtraction.ProviderAddressExtractAsync(new TimerInfo(), FunctionContext);
+            return ProviderAddressExtraction.ProviderAddressExtractAsync(new TimerInfo(), FunctionContextFactory.Create());
         }
     }
 }

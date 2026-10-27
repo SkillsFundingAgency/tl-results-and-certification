@@ -3,6 +3,7 @@ using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.WebJobs;
 using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute;
+using Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
 using Sfa.Tl.ResultsAndCertification.Models.Functions;
 using System.Threading.Tasks;
@@ -21,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.CertificatePrinting
 
         public async override Task When()
         {
-            await CertificatePrintingFunction.FetchCertificatePrintingBatchSummaryAsync(new TimerInfo(), FunctionContext);
+            await CertificatePrintingFunction.FetchCertificatePrintingBatchSummaryAsync(new TimerInfo(), FunctionContextFactory.Create());
         }
 
         [Fact]

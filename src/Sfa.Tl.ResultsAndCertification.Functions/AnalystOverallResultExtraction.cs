@@ -19,23 +19,21 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
         private readonly AnalystOverallResultExtractSettings _configuration;
         private readonly IAnalystOverallResultExtractionService _analystResultExtractionService;
         private readonly ICommonService _commonService;
-        private readonly ILogger _logger;
 
         public AnalystOverallResultExtraction(
             ResultsAndCertificationConfiguration configuration,
             IAnalystOverallResultExtractionService analystResultExtractionService,
-            ICommonService commonService, 
-            ILogger logger)
+            ICommonService commonService)
         {
             _configuration = configuration.AnalystOverallResultExtractSettings;
             _analystResultExtractionService = analystResultExtractionService;
             _commonService = commonService;
-            _logger = logger;
         }
 
         [Function(Constants.AnalystOverallResultExtract)]
         public async Task AnalystOverallResultExtractAsync([TimerTrigger("%AnalystOverallResultExtractTrigger%")] TimerInfo timer, FunctionContext context)
         {
+            var logger = context.GetLogger(context.FunctionDefinition.Name);
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
             var today = DateTime.UtcNow.Date;
@@ -51,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
             try
             {
-                _logger.LogInformation($"Function {context.FunctionDefinition.Name} started");
+                logger.LogInformation($"Function {context.FunctionDefinition.Name} started");
 
                 var stopwatch = Stopwatch.StartNew();
                 await _commonService.CreateFunctionLog(functionLogDetails);
@@ -66,13 +64,13 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 stopwatch.Stop();
 
-                _logger.LogInformation($"Function {context.FunctionDefinition.Name} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
+                logger.LogInformation($"Function {context.FunctionDefinition.Name} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
             }
             catch (Exception ex)
             {
                 var errorMessage = $"Function {context.FunctionDefinition.Name} failed to process with the following exception = {ex}";
 
-                _logger.LogError(errorMessage);
+                logger.LogError(errorMessage);
                 CommonHelper.UpdateFunctionLogRequest(functionLogDetails, FunctionStatus.Failed, errorMessage);
 
                 _ = functionLogDetails.Id > 0 ? await _commonService.UpdateFunctionLog(functionLogDetails) : await _commonService.CreateFunctionLog(functionLogDetails);

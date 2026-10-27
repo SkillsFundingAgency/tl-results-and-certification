@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using System.Threading.Tasks;
@@ -19,7 +20,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.CertificateTracking
 
         protected ICertificateTrackingExtractionService Service = Substitute.For<ICertificateTrackingExtractionService>();
         protected ICommonService CommonService = Substitute.For<ICommonService>();
-        protected FunctionContext FunctionContext = Substitute.For<FunctionContext>();
 
         private ResultsAndCertificationConfiguration _configuration = new()
         {
@@ -31,12 +31,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.CertificateTracking
 
         public override void Setup()
         {
-            CertificateTrackingExtraction = new CertificateTrackingExtraction(Service, CommonService, _configuration, Logger);
+            CertificateTrackingExtraction = new CertificateTrackingExtraction(Service, CommonService, _configuration);
         }
 
         public override Task When()
         {
-            return CertificateTrackingExtraction.CertificateTrackingExtractAsync(new TimerInfo(), FunctionContext);
+            return CertificateTrackingExtraction.CertificateTrackingExtractAsync(new TimerInfo(), FunctionContextFactory.Create());
         }
     }
 }

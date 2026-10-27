@@ -15,25 +15,24 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
     {
         private readonly ILrsPersonalLearningRecordService _personalLearningRecordService;
         private readonly ICommonService _commonService;
-        private readonly ILogger _logger;
 
-        public LearnerVerificationAndLearningEvents(ICommonService commonService, ILrsPersonalLearningRecordService personalLearningRecordService, ILogger logger)
+        public LearnerVerificationAndLearningEvents(ICommonService commonService, ILrsPersonalLearningRecordService personalLearningRecordService)
         {
             _commonService = commonService;
             _personalLearningRecordService = personalLearningRecordService;
-            _logger = logger;
         }
 
         [Function(Constants.VerifyLearnerAndFetchLearningEvents)]
         public async Task VerifyLearnerAndFetchLearningEventsAsync([TimerTrigger("%LearnerVerificationAndLearningEventsTrigger%")] TimerInfo timer, FunctionContext context)
         {
+            var logger = context.GetLogger(context.FunctionDefinition.Name);
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
             var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionDefinition.Name, FunctionType.LearnerVerificationAndLearningEvents);
 
             try
             {
-                _logger.LogInformation($"Function {context.FunctionDefinition.Name} started");
+                logger.LogInformation($"Function {context.FunctionDefinition.Name} started");
 
                 var stopwatch = Stopwatch.StartNew();
 
@@ -55,12 +54,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                 stopwatch.Stop();
 
-                _logger.LogInformation($"Function {context.FunctionDefinition.Name} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
+                logger.LogInformation($"Function {context.FunctionDefinition.Name} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
             }
             catch (Exception ex)
             {
                 var errorMessage = $"Function {context.FunctionDefinition.Name} failed to process with the following exception = {ex}";
-                _logger.LogError(errorMessage);
+                logger.LogError(errorMessage);
 
                 CommonHelper.UpdateFunctionLogRequest(functionLogDetails, FunctionStatus.Failed, errorMessage);
 

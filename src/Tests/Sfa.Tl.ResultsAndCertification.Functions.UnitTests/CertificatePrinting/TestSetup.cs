@@ -21,7 +21,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.CertificatePrinting
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
         protected ICertificatePrintingService CertificatePrintingService;
         protected Functions.CertificatePrinting CertificatePrintingFunction;
-        protected FunctionContext FunctionContext;
 
         public override void Setup()
         {
@@ -29,7 +28,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.CertificatePrinting
             Logger = Substitute.For<ILogger<ICertificatePrintingService>>();
             CertificatePrintingService = Substitute.For<ICertificatePrintingService>();
             LoggerFactory = Substitute.For<ILoggerFactory>();
-            FunctionContext = Substitute.For<FunctionContext>();
             ResultsAndCertificationConfiguration = new ResultsAndCertificationConfiguration
             {
                 CertificatePrintingBatchesCreateStartDate = DateTime.UtcNow
@@ -37,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.CertificatePrinting
 
             var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(Program).Assembly), LoggerFactory);
             Mapper = new AutoMapper.Mapper(mapperConfig);
-            CertificatePrintingFunction = new Functions.CertificatePrinting(ResultsAndCertificationConfiguration, CommonService, CertificatePrintingService,Logger);
+            CertificatePrintingFunction = new Functions.CertificatePrinting(ResultsAndCertificationConfiguration, CommonService, CertificatePrintingService);
         }
     }
 }

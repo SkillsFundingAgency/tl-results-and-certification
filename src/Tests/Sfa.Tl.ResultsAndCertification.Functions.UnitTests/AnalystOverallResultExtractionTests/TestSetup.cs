@@ -6,6 +6,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Utils.Ranges;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Helpers;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using System;
@@ -19,7 +20,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystOverallResul
         protected IAnalystOverallResultExtractionService AnalystResultExtractionService = Substitute.For<IAnalystOverallResultExtractionService>();
         protected ICommonService CommonService = Substitute.For<ICommonService>();
         protected ILogger<IAnalystOverallResultExtractionService> Logger = Substitute.For<ILogger<IAnalystOverallResultExtractionService>>();
-        protected FunctionContext FunctionContext = Substitute.For<FunctionContext>();
 
         public override void Setup()
         {
@@ -40,12 +40,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystOverallResul
                 }
             };
 
-            AnalystDataExtraction = new AnalystOverallResultExtraction(config, AnalystResultExtractionService, CommonService, Logger);
+            AnalystDataExtraction = new AnalystOverallResultExtraction(config, AnalystResultExtractionService, CommonService);
         }
 
         public override Task When()
         {
-            return AnalystDataExtraction.AnalystOverallResultExtractAsync(new TimerInfo(), FunctionContext);
+            return AnalystDataExtraction.AnalystOverallResultExtractAsync(new TimerInfo(), FunctionContextFactory.Create());
         }
     }
 }

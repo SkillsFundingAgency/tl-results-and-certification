@@ -8,6 +8,7 @@ using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
+using Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Helpers;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
 using System.Threading.Tasks;
 
@@ -17,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.LearnerVerification
     {
         protected IMapper Mapper;
         protected ILogger<ILrsPersonalLearningRecordService> Logger;
-        protected FunctionContext FunctionContext;
+
         protected ICommonService CommonService;
         protected ILrsPersonalLearningRecordService LrsPersonalLearningRecordService;
         protected Functions.LearnerVerificationAndLearningEvents LearningEventsFunction;
@@ -25,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.LearnerVerification
 
         public override void Setup()
         {
-            FunctionContext = Substitute.For<FunctionContext>();
+            
             CommonService = Substitute.For<ICommonService>();
             Logger = Substitute.For<ILogger<ILrsPersonalLearningRecordService>>();
             LoggerFactory = Substitute.For<ILoggerFactory>();
@@ -33,12 +34,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.LearnerVerification
 
             var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(Program).Assembly), LoggerFactory);
             Mapper = new AutoMapper.Mapper(mapperConfig);
-            LearningEventsFunction = new Functions.LearnerVerificationAndLearningEvents(CommonService, LrsPersonalLearningRecordService, Logger);
+            LearningEventsFunction = new Functions.LearnerVerificationAndLearningEvents(CommonService, LrsPersonalLearningRecordService);
         }
 
         public override async Task When()
         {
-            await LearningEventsFunction.VerifyLearnerAndFetchLearningEventsAsync(new TimerInfo(), FunctionContext);
+            await LearningEventsFunction.VerifyLearnerAndFetchLearningEventsAsync(new TimerInfo(), FunctionContextFactory.Create());
         }
     }
 }

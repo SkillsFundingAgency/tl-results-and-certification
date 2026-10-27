@@ -20,30 +20,27 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
         private readonly ResultsAndCertificationConfiguration _configuration;
         private readonly IOverallResultCalculationFunctionService _overallResultCalculationService;
         private readonly ICommonService _commonService;
-        private readonly ILogger<OverallResultCalculation> _logger;
 
-        public OverallResultCalculation(ResultsAndCertificationConfiguration configuration, IOverallResultCalculationFunctionService overallResultCalculationService, ICommonService commonService, ILogger<OverallResultCalculation> logger)
+        public OverallResultCalculation(ResultsAndCertificationConfiguration configuration, IOverallResultCalculationFunctionService overallResultCalculationService, ICommonService commonService)
         {
             _configuration = configuration;
             _overallResultCalculationService = overallResultCalculationService;
             _commonService = commonService;
-            _logger = logger;
         }
 
         [Function(Constants.OverallResultCalculation)]
         public async Task OverallResultCalculationAsync([TimerTrigger("%OverallResultCalculationTrigger%")] TimerInfo timer, FunctionContext context)
         {
+            var logger = context.GetLogger(context.FunctionDefinition.Name);
             if (timer == null) throw new ArgumentNullException(nameof(timer));
 
             if (DateTime.UtcNow >= _configuration.OverallResultsCalculationDate)
             {
                 var functionLogDetails = CommonHelper.CreateFunctionLogRequest(context.FunctionDefinition.Name, FunctionType.OverallResultCalculation);
 
-                //ILogger logger = context.GetLogger<OverallResultCalculation>();
-
                 try
                 {
-                    _logger.LogInformation($"Function {context.FunctionDefinition.Name} started");
+                    logger.LogInformation($"Function {context.FunctionDefinition.Name} started");
 
                     var stopwatch = Stopwatch.StartNew();
                     await _commonService.CreateFunctionLog(functionLogDetails);
@@ -69,12 +66,12 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
                     stopwatch.Stop();
 
-                    _logger.LogInformation($"Function {context.FunctionDefinition.Name} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
+                    logger.LogInformation($"Function {context.FunctionDefinition.Name} completed processing. Time taken: {stopwatch.ElapsedMilliseconds: #,###}ms");
                 }
                 catch (Exception ex)
                 {
                     var errorMessage = $"Function {context.FunctionDefinition.Name} failed to process with the following exception = {ex}";
-                    _logger.LogError(errorMessage);
+                    logger.LogError(errorMessage);
 
                     CommonHelper.UpdateFunctionLogRequest(functionLogDetails, FunctionStatus.Failed, errorMessage);
 
