@@ -127,6 +127,18 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.SelectedAcademicYears, opts => opts.MapFrom(s => GetSelectedAcademicYearIds(s)))
                 .ForMember(d => d.SelectedAwardingOrganisations, opts => opts.MapFrom(s => GetSelectedAwardingOrganisationIds(s)));
 
+            CreateMap<AdminLearnerRecord, AdminChangeUlnViewModel>()
+                .ForMember(d => d.UlnTo, opts => opts.Ignore());
+
+            CreateMap<AdminLearnerRecord, ReviewChangeUlnViewModel>()
+                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
+                .ForMember(d => d.FirstName, opts => opts.MapFrom(s => s.Firstname))
+                .ForMember(d => d.LastName, opts => opts.MapFrom(s => s.Lastname))
+                .ForMember(d => d.Uln, opts => opts.MapFrom(s => s.Uln))
+                .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.Pathway.Provider.Name))
+                .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.Pathway.Provider.Ukprn))
+                .ForMember(d => d.TlevelName, opts => opts.MapFrom(s => s.Pathway.Name));
+
             CreateMap<AdminLearnerRecord, ReviewChangeStartYearViewModel>()
                 .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))
                 .ForMember(d => d.FirstName, opts => opts.MapFrom(s => s.Firstname))
@@ -148,6 +160,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.StartYear, opts => opts.MapFrom(s => GetDisplayAcademicYear(s.Pathway.AcademicYear)))
                 .ForMember(d => d.IndustryPlacementStatus, opts => opts.MapFrom(s => GetIndustryPlacementStatus(s)))
                 .ForMember(d => d.IndustryPlacementStatusTo, opts => opts.MapFrom(s => GetIndustryPlacementStatus(s)));
+
+            CreateMap<ReviewChangeUlnViewModel, ReviewChangeUlnRequest>()
+                .ForMember(d => d.ChangeUlnDetails, opts => opts.MapFrom(s => s))
+                .ForMember(d => d.CreatedBy, opts => opts.MapFrom<UserNameResolver<ReviewChangeUlnViewModel, ReviewChangeUlnRequest>>());
+
+            CreateMap<ReviewChangeUlnViewModel, ChangeUlnDetails>()
+                .ForMember(d => d.UlnFrom, opts => opts.MapFrom(s => s.Uln))
+                .ForMember(d => d.UlnTo, opts => opts.MapFrom(s => s.UlnTo));
 
             CreateMap<ReviewChangeStartYearViewModel, ReviewChangeRequest>()
                .ForMember(d => d.RegistrationPathwayId, opts => opts.MapFrom(s => s.RegistrationPathwayId))

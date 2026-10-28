@@ -8,6 +8,11 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
     {
         Task<AdminSearchLearnerFilters> GetAdminSearchLearnerFiltersAsync();
         Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int registrationPathwayId);
+        
+        Task<bool> IsAdminUlnAvailableAsync(long uln);
+
+        Task<bool> ProcessChangeUlnAsync(ReviewChangeUlnRequest request);
+
         Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearRequest request);
 
         Task<bool> ProcessChangeIndustryPlacementAsync(ReviewChangeIndustryPlacementRequest request);

@@ -1,4 +1,5 @@
-﻿using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
+﻿using Sfa.Tl.ResultsAndCertification.Models.Contracts.AdminDashboard;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Assessment;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.IndustryPlacement;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.Result;
@@ -19,6 +20,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
         public Task<AdminOccupationalSpecialismViewModel> GetAdminLearnerRecordWithOccupationalSpecialism(int registrationPathwayId, int specialismsId);
 
         Task<AdminChangeStartYearViewModel> GetAdminLearnerRecordChangeYearAsync(int registrationPathwayId);
+
+        Task<bool> IsAdminUlnAvailableAsync(long uln);
+
+        Task<bool> ProcessChangeUlnAsync(ReviewChangeUlnViewModel model);
 
         Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearViewModel reviewChangeStartYearViewModel);
 

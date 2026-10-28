@@ -1,0 +1,18 @@
+@model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.AdminChangeUlnViewModel
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
+@using Sfa.Tl.ResultsAndCertification.Common.Helpers
+@{ ViewData["Title"] = ChangeUln.Page_Title; }
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <partial name="_ValidationSummary" />
+        <form asp-route="@RouteConstants.SubmitChangeUln" asp-route-registrationPathwayId="@Model.RegistrationPathwayId" method="post">
+            <span class="govuk-caption-xl">@ChangeUln.Caption_Text</span>
+            <div class="govuk-form-group">
+                <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--xl" for="ulnto">@ChangeUln.Heading_ULN</label></h1>
+                <div id="uln-hint" class="govuk-hint">@ChangeUln.Hint_ULN</div>
+                <input class="govuk-input govuk-input--width-10" id="ulnto" asp-for="UlnTo" inputmode="numeric" aria-describedby="uln-hint" />
+            </div>
+            <button class="govuk-button" data-module="govuk-button">@ChangeUln.Button_Continue</button>
+        </form>
+    </div>
+</div>

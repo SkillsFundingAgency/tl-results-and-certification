@@ -43,6 +43,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
 
         }
 
+        public async Task<AdminViewChangeRecordViewModel> GetAdminViewChangeUlnRecord(int changeLogId)
+        {
+            var changeLogRecord = await _internalApiClient.GetAdminChangeLogRecordAsync(changeLogId);
+            return _mapper.Map<AdminViewChangeRecordUlnViewModel>(changeLogRecord);
+        }
+
         public async Task<AdminViewChangeRecordViewModel> GetAdminViewChangeStartYearRecord(int changeLogId)
         {
             var changeLogRecord = await _internalApiClient.GetAdminChangeLogRecordAsync(changeLogId);

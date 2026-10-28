@@ -61,6 +61,40 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public Task<IList<int>> GetAllowedChangeAcademicYearsAsync(int learnerAcademicYear, int pathwayStartYear)
             => _adminDashboardRepository.GetAllowedChangeAcademicYearsAsync(() => DateTime.Today, learnerAcademicYear, pathwayStartYear);
 
+        public async Task<bool> IsAdminUlnAvailableAsync(long uln)
+            => !await _repositoryFactory.GetRepository<TqRegistrationProfile>().AnyAsync(p => p.UniqueLearnerNumber == uln);
+
+        public async Task<bool> ProcessChangeUlnAsync(ReviewChangeUlnRequest request)
+        {
+            var details = request.ChangeUlnDetails;
+            var pathwayRepository = _repositoryFactory.GetRepository<TqRegistrationPathway>();
+            var pathway = await pathwayRepository.GetFirstOrDefaultAsync(p => p.Id == request.RegistrationPathwayId);
+            if (pathway == null) return false;
+
+            var profileRepository = _repositoryFactory.GetRepository<TqRegistrationProfile>();
+            var profile = await profileRepository.GetFirstOrDefaultAsync(p => p.Id == pathway.TqRegistrationProfileId);
+            if (profile == null || profile.UniqueLearnerNumber != details.UlnFrom) return false;
+            if (details.UlnFrom == details.UlnTo) return true;
+            if (!await IsAdminUlnAvailableAsync(details.UlnTo)) return false;
+
+            profile.UniqueLearnerNumber = details.UlnTo;
+            profile.ModifiedBy = request.CreatedBy;
+            profile.ModifiedOn = _systemProvider.UtcNow;
+
+            bool updated = await profileRepository.UpdateWithSpecifedColumnsOnlyAsync(profile,
+                p => p.UniqueLearnerNumber, p => p.ModifiedBy, p => p.ModifiedOn) > 0;
+
+            if (updated)
+            {
+                var changeLogRepository = _repositoryFactory.GetRepository<ChangeLog>();
+                var changeLog = CreateChangeLog(request, details);
+
+                return await changeLogRepository.CreateAsync(changeLog) > 0;
+            }
+
+            return false;
+        }
+
         public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearRequest request)
         {
             var tqRegistrationPathwayRepository = _repositoryFactory.GetRepository<TqRegistrationPathway>();
