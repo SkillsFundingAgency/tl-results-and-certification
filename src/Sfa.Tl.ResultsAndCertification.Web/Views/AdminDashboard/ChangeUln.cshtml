@@ -1,18 +1,58 @@
 @model Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.AdminChangeUlnViewModel
-@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
 @using Sfa.Tl.ResultsAndCertification.Common.Helpers
-@{ ViewData["Title"] = ChangeUln.Page_Title; }
+@using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard
+
+@{
+    ViewData["Title"] = ChangeUln.Page_Title;
+}
+
+@section NavigationBar
+{
+    <vc:back-link model=Model.BackLink></vc:back-link>
+}
+
 <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-        <partial name="_ValidationSummary" />
+    <div class="govuk-grid-column-two-thirds-from-desktop">
+
         <form asp-route="@RouteConstants.SubmitChangeUln" asp-route-registrationPathwayId="@Model.RegistrationPathwayId" method="post">
-            <span class="govuk-caption-xl">@ChangeUln.Caption_Text</span>
-            <div class="govuk-form-group">
-                <h1 class="govuk-label-wrapper"><label class="govuk-label govuk-label--xl" for="ulnto">@ChangeUln.Heading_ULN</label></h1>
+            <input type="hidden" asp-for="RegistrationPathwayId" />
+            <input type="hidden" asp-for="Uln" />
+            <input type="hidden" asp-for="FirstName" />
+            <input type="hidden" asp-for="LastName" />
+            <input type="hidden" asp-for="ProviderName" />
+            <input type="hidden" asp-for="ProviderUkprn" />
+            <input type="hidden" asp-for="TlevelName" />
+            <input type="hidden" asp-for="AcademicYear" />
+            <input type="hidden" asp-for="DisplayAcademicYear" />
+
+            <partial name="_ValidationSummary" />
+
+            <div class="record-header">
+                <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">@ChangeUln.Heading_ULN</h1>
+            </div>
+
+            <h2 class="govuk-heading-m">@ChangeUln.Heading_Personal_Details</h2>
+            <dl class="govuk-summary-list govuk-!-margin-bottom-4">
+                <vc:summary-item model=Model.SummaryLearner></vc:summary-item>
+                <vc:summary-item model=Model.SummaryULN></vc:summary-item>
+                <vc:summary-item model=Model.SummaryProvider></vc:summary-item>
+                <vc:summary-item model=Model.SummaryTlevel></vc:summary-item>
+                <vc:summary-item model=Model.SummaryAcademicYear></vc:summary-item>
+            </dl>
+
+            <div class="govuk-form-group govuk-!-margin-top-8">
+                <span class="govuk-caption-xl">@ChangeUln.Caption_Text</span>
+                <h2 class="govuk-label-wrapper">
+                    <label class="govuk-label govuk-label--xl" for="ulnto">@ChangeUln.Label_ULN</label>
+                </h2>
                 <div id="uln-hint" class="govuk-hint">@ChangeUln.Hint_ULN</div>
                 <input class="govuk-input govuk-input--width-10" id="ulnto" asp-for="UlnTo" inputmode="numeric" aria-describedby="uln-hint" />
             </div>
-            <button class="govuk-button" data-module="govuk-button">@ChangeUln.Button_Continue</button>
+
+            <div class="govuk-button-group">
+                <button id="continueButton" type="submit" class="govuk-button" data-module="govuk-button" data-prevent-double-click="true">@ChangeUln.Button_Continue</button>
+                <a id="returnButton" class="govuk-button gov-body govuk-button--secondary" data-module="govuk-button" data-prevent-double-click="true" asp-route="@RouteConstants.AdminLearnerRecord" asp-route-pathwayid="@Model.RegistrationPathwayId">@ChangeUln.Button_Cancel</a>
+            </div>
         </form>
     </div>
 </div>

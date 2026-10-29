@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
         public Task<IList<int>> GetAllowedChangeAcademicYearsAsync(int learnerAcademicYear, int pathwayStartYear)
             => _adminDashboardRepository.GetAllowedChangeAcademicYearsAsync(() => DateTime.Today, learnerAcademicYear, pathwayStartYear);
 
-        public async Task<bool> IsAdminUlnAvailableAsync(long uln)
+        public async Task<bool> IsLearnerUlnAvailableAsync(long uln)
             => !await _repositoryFactory.GetRepository<TqRegistrationProfile>().AnyAsync(p => p.UniqueLearnerNumber == uln);
 
         public async Task<bool> ProcessChangeUlnAsync(ReviewChangeUlnRequest request)
@@ -74,8 +74,8 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Services
             var profileRepository = _repositoryFactory.GetRepository<TqRegistrationProfile>();
             var profile = await profileRepository.GetFirstOrDefaultAsync(p => p.Id == pathway.TqRegistrationProfileId);
             if (profile == null || profile.UniqueLearnerNumber != details.UlnFrom) return false;
-            if (details.UlnFrom == details.UlnTo) return true;
-            if (!await IsAdminUlnAvailableAsync(details.UlnTo)) return false;
+            if (details.UlnFrom == details.UlnTo) return false;
+            if (!await IsLearnerUlnAvailableAsync(details.UlnTo)) return false;
 
             profile.UniqueLearnerNumber = details.UlnTo;
             profile.ModifiedBy = request.CreatedBy;

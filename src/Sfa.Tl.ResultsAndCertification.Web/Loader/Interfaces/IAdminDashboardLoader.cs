@@ -21,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
 
         Task<AdminChangeStartYearViewModel> GetAdminLearnerRecordChangeYearAsync(int registrationPathwayId);
 
-        Task<bool> IsAdminUlnAvailableAsync(long uln);
+        Task<bool> IsLearnerUlnAvailableAsync(long uln);
 
         Task<bool> ProcessChangeUlnAsync(ReviewChangeUlnViewModel model);
 

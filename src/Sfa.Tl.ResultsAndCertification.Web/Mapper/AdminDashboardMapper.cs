@@ -128,6 +128,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.SelectedAwardingOrganisations, opts => opts.MapFrom(s => GetSelectedAwardingOrganisationIds(s)));
 
             CreateMap<AdminLearnerRecord, AdminChangeUlnViewModel>()
+                .ForMember(d => d.FirstName, opts => opts.MapFrom(s => s.Firstname))
+                .ForMember(d => d.LastName, opts => opts.MapFrom(s => s.Lastname))
+                .ForMember(d => d.ProviderName, opts => opts.MapFrom(s => s.Pathway.Provider.Name))
+                .ForMember(d => d.ProviderUkprn, opts => opts.MapFrom(s => s.Pathway.Provider.Ukprn))
+                .ForMember(d => d.TlevelName, opts => opts.MapFrom(s => s.Pathway.Name))
+                .ForMember(d => d.AcademicYear, opts => opts.MapFrom(s => s.Pathway.AcademicYear))
+                .ForMember(d => d.DisplayAcademicYear, opts => opts.MapFrom(s => GetDisplayAcademicYear(s.Pathway.AcademicYear)))
                 .ForMember(d => d.UlnTo, opts => opts.Ignore());
 
             CreateMap<AdminLearnerRecord, ReviewChangeUlnViewModel>()

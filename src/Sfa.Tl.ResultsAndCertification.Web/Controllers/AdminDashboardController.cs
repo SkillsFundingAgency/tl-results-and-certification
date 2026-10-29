@@ -223,14 +223,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.PageNotFound);
             }
 
-            model.Uln = learner.Uln;
+            learner.UlnTo = model.UlnTo;
+            model = learner;
             long ulnTo = long.Parse(model.UlnTo);
             if (ulnTo == model.Uln)
             {
-                return RedirectToRoute(RouteConstants.AdminLearnerRecord, new { pathwayId = registrationPathwayId });
+                ModelState.AddModelError(nameof(model.UlnTo), ChangeUln.Validation_Uln_Must_Be_Different);
+                return View(model);
             }
 
-            if (!await _loader.IsAdminUlnAvailableAsync(ulnTo))
+            if (!await _loader.IsLearnerUlnAvailableAsync(ulnTo))
             {
                 ModelState.AddModelError(nameof(model.UlnTo), ChangeUln.Validation_Uln_Already_Registered);
                 return View(model);
@@ -285,7 +287,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
 
             if (!success)
             {
-                if (!await _loader.IsAdminUlnAvailableAsync(long.Parse(model.UlnTo)))
+                if (!await _loader.IsLearnerUlnAvailableAsync(long.Parse(model.UlnTo)))
                 {
                     ModelState.AddModelError(nameof(model.UlnTo), ChangeUln.Validation_Uln_Already_Registered);
                     return View("ChangeUln", cachedModel);

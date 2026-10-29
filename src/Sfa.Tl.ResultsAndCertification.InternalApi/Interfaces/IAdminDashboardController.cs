@@ -9,7 +9,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Interfaces
         Task<AdminSearchLearnerFilters> GetAdminSearchLearnerFiltersAsync();
         Task<AdminLearnerRecord> GetAdminLearnerRecordAsync(int registrationPathwayId);
         
-        Task<bool> IsAdminUlnAvailableAsync(long uln);
+        Task<bool> IsLearnerUlnAvailableAsync(long uln);
 
         Task<bool> ProcessChangeUlnAsync(ReviewChangeUlnRequest request);
 

@@ -149,7 +149,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             return response;
         }
 
-        public Task<bool> IsAdminUlnAvailableAsync(long uln) => _internalApiClient.IsAdminUlnAvailableAsync(uln);
+        public Task<bool> IsLearnerUlnAvailableAsync(long uln) => _internalApiClient.IsLearnerUlnAvailableAsync(uln);
 
         public async Task<bool> ProcessChangeUlnAsync(ReviewChangeUlnViewModel model)
         {
