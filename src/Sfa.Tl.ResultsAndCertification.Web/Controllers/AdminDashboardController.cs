@@ -176,6 +176,132 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return View(viewModel);
         }
 
+        #region Change ULN
+
+        [HttpGet]
+        [Route("admin/change-uln-clear/{registrationPathwayId}", Name = RouteConstants.AdminChangeUlnClear)]
+        public async Task<IActionResult> ChangeUlnClearAsync(int registrationPathwayId)
+        {
+            await _cacheService.RemoveAsync<AdminChangeUlnViewModel>(CacheKey);
+            return RedirectToRoute(RouteConstants.AdminChangeUln, new { registrationPathwayId });
+        }
+
+        [HttpGet]
+        [Route("admin/change-uln/{registrationPathwayId}", Name = RouteConstants.AdminChangeUln)]
+        public async Task<IActionResult> ChangeUlnAsync(int registrationPathwayId)
+        {
+            AdminChangeUlnViewModel cachedModel = await _cacheService.GetAsync<AdminChangeUlnViewModel>(CacheKey);
+
+            if (cachedModel != null)
+            {
+                return View(cachedModel);
+            }
+
+            AdminChangeUlnViewModel viewModel = await _loader.GetAdminLearnerRecordAsync<AdminChangeUlnViewModel>(registrationPathwayId);
+
+            if (viewModel == null)
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/change-uln/{registrationPathwayId}", Name = RouteConstants.SubmitChangeUln)]
+        public async Task<IActionResult> ChangeUlnAsync([FromRoute] int registrationPathwayId, AdminChangeUlnViewModel model)
+        {
+            model.RegistrationPathwayId = registrationPathwayId;
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var learner = await _loader.GetAdminLearnerRecordAsync<AdminChangeUlnViewModel>(registrationPathwayId);
+            if (learner == null)
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            learner.UlnTo = model.UlnTo;
+            model = learner;
+            long ulnTo = long.Parse(model.UlnTo);
+            if (ulnTo == model.Uln)
+            {
+                ModelState.AddModelError(nameof(model.UlnTo), ChangeUln.Validation_Uln_Must_Be_Different);
+                return View(model);
+            }
+
+            if (!await _loader.IsLearnerUlnAvailableAsync(ulnTo))
+            {
+                ModelState.AddModelError(nameof(model.UlnTo), ChangeUln.Validation_Uln_Already_Registered);
+                return View(model);
+            }
+
+            await _cacheService.SetAsync(CacheKey, model);
+            return RedirectToRoute(RouteConstants.AdminReviewChangeUln, new { registrationPathwayId });
+        }
+
+        [HttpGet]
+        [Route("admin/review-change-uln/{registrationPathwayId}", Name = RouteConstants.AdminReviewChangeUln)]
+        public async Task<IActionResult> ReviewChangeUlnAsync(int registrationPathwayId)
+        {
+            var viewModel = await _loader.GetAdminLearnerRecordAsync<ReviewChangeUlnViewModel>(registrationPathwayId);
+
+            if (viewModel == null)
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            var cachedModel = await _cacheService.GetAsync<AdminChangeUlnViewModel>(CacheKey);
+            if (cachedModel == null)
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            viewModel.Uln = cachedModel.Uln;
+            viewModel.UlnTo = cachedModel.UlnTo;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        [Route("admin/review-change-uln/{registrationPathwayId}", Name = RouteConstants.SubmitReviewChangeUln)]
+        public async Task<IActionResult> ReviewChangeUlnAsync([FromRoute] int registrationPathwayId, ReviewChangeUlnViewModel model)
+        {
+            model.RegistrationPathwayId = registrationPathwayId;
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var cachedModel = await _cacheService.GetAsync<AdminChangeUlnViewModel>(CacheKey);
+            if (cachedModel == null)
+            {
+                return RedirectToRoute(RouteConstants.PageNotFound);
+            }
+
+            model.Uln = cachedModel.Uln;
+            model.UlnTo = cachedModel.UlnTo;
+
+            var success = await _loader.ProcessChangeUlnAsync(model);
+
+            if (!success)
+            {
+                if (!await _loader.IsLearnerUlnAvailableAsync(long.Parse(model.UlnTo)))
+                {
+                    ModelState.AddModelError(nameof(model.UlnTo), ChangeUln.Validation_Uln_Already_Registered);
+                    return View("ChangeUln", cachedModel);
+                }
+
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+            }
+
+            await _cacheService.SetAsync(CacheKey, new AdminNotificationBannerModel("Unique learner number (ULN) updated"), CacheExpiryTime.XSmall);
+            return RedirectToRoute(RouteConstants.AdminLearnerRecord, new { pathwayId = registrationPathwayId });
+        }
+
+        #endregion
+
         #region Change Start Year
 
         [HttpGet]

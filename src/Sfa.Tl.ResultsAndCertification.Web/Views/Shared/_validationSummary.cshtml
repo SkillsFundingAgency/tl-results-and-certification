@@ -9,7 +9,7 @@
 
                 @foreach (var property in properties)
                 {
-                    var stateItem = ViewContext.ViewData.ModelState.FirstOrDefault(s => s.Key.Equals(property.Name));
+                    var stateItem = ViewContext.ViewData.ModelState.FirstOrDefault(s => s.Key.Equals(property.Name, StringComparison.InvariantCultureIgnoreCase));
 
                     if (stateItem.Equals(default(KeyValuePair<string, Microsoft.AspNetCore.Mvc.ModelBinding.ModelStateEntry>)))
                         continue;

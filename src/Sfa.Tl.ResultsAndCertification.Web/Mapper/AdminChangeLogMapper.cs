@@ -53,6 +53,13 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
                 .ForMember(d => d.ReasonForChange, opts => opts.MapFrom(s => s.ReasonForChange))
                 .ForMember(d => d.ZendeskTicketID, opts => opts.MapFrom(s => s.ZendeskTicketID));
 
+            CreateMap<AdminChangeLogRecord, AdminViewChangeRecordUlnViewModel>()
+                .ForMember(d => d.Uln, opts => opts.MapFrom(s => GetDetails<ChangeUlnDetails>(s.ChangeDetails).UlnFrom))
+                .ForMember(d => d.Learner, opts => opts.MapFrom(s => $"{s.FirstName} {s.LastName}"))
+                .ForMember(d => d.DateAndTimeOfChange, opts => opts.MapFrom(s => FormatDateTime2(s.DateAndTimeOfChange)))
+                .ForMember(d => d.ChangeDateOfRequest, opts => opts.MapFrom(s => s.ChangeDateOfRequest.ToDobFormat()))
+                .ForMember(d => d.ChangeUlnDetails, opts => opts.MapFrom(s => GetDetails<ChangeUlnDetails>(s.ChangeDetails)));
+
             CreateMap<AdminChangeLogRecord, AdminViewChangeRecordStartYearViewModel>()
                 .ForMember(d => d.Learner, opts => opts.MapFrom(s => $"{s.FirstName} {s.LastName}"))
                 .ForMember(d => d.DateAndTimeOfChange, opts => opts.MapFrom(s => FormatDateTime2(s.DateAndTimeOfChange)))
@@ -275,6 +282,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Mapper
 
         private string GetRoute(ChangeType changeType) => changeType switch
         {
+            ChangeType.Uln => RouteConstants.AdminViewChangeUlnRecord,
             ChangeType.StartYear => RouteConstants.AdminViewChangeStartYearRecord,
             ChangeType.IndustryPlacement => RouteConstants.AdminViewChangeIPRecord,
             ChangeType.AddPathwayAssessment => RouteConstants.AdminViewChangeCoreAssessmentRecord,

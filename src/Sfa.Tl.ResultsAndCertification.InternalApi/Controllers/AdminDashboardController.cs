@@ -46,6 +46,12 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi.Controllers
         public Task<IList<int>> GetAllowedChangeAcademicYearsAsync(int learnerAcademicYear, int pathwayStartYear)
             => _adminDashboardService.GetAllowedChangeAcademicYearsAsync(learnerAcademicYear, pathwayStartYear);
 
+        [HttpGet("IsLearnerUlnAvailable/{uln:long}")]
+        public Task<bool> IsLearnerUlnAvailableAsync(long uln) => _adminDashboardService.IsLearnerUlnAvailableAsync(uln);
+
+        [HttpPost("ProcessChangeUln")]
+        public Task<bool> ProcessChangeUlnAsync(ReviewChangeUlnRequest request) => _adminDashboardService.ProcessChangeUlnAsync(request);
+
         [HttpPost]
         [Route("ProcessChangeStartYear")]
         public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearRequest request)

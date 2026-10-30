@@ -56,6 +56,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
         {
             AdminLearnerRecord learnerRecord = await _internalApiClient.GetAdminLearnerRecordAsync(registrationPathwayId);
 
+            if (learnerRecord == null) return default;
+
             TLearnerRecordViewModel response = _mapper.Map<TLearnerRecordViewModel>(learnerRecord, opt =>
             {
                 opt.Items[Constants.RegistrationPathwayId] = learnerRecord.RegistrationPathwayId;
@@ -145,6 +147,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader
             response.AcademicStartYearsToBe = await _internalApiClient.GetAllowedChangeAcademicYearsAsync(response.AcademicYear, response.TlevelStartYear);
 
             return response;
+        }
+
+        public Task<bool> IsLearnerUlnAvailableAsync(long uln) => _internalApiClient.IsLearnerUlnAvailableAsync(uln);
+
+        public async Task<bool> ProcessChangeUlnAsync(ReviewChangeUlnViewModel model)
+        {
+            var reviewChangeRequest = _mapper.Map<ReviewChangeUlnRequest>(model);
+            return await _internalApiClient.ProcessChangeUlnAsync(reviewChangeRequest);
         }
 
         public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearViewModel reviewChangeStartYearViewModel)
