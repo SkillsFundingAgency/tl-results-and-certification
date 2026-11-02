@@ -21,6 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
         public string DisplayAcademicYear { get; set; }
         public string Learner => $"{FirstName} {LastName}";
 
+        [Microsoft.AspNetCore.Mvc.ModelBinding.BindNever]
         public NotificationBannerModel SuccessBanner { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(ChangeUln), ErrorMessageResourceName = "Validation_Uln_Must_Be_Digits")]
