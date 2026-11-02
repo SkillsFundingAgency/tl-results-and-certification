@@ -1,6 +1,7 @@
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.BackLink;
+using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.NotificationBanner;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Summary.SummaryItem;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -19,6 +20,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
         public int AcademicYear { get; set; }
         public string DisplayAcademicYear { get; set; }
         public string Learner => $"{FirstName} {LastName}";
+
+        public NotificationBannerModel SuccessBanner { get; set; }
 
         [Required(ErrorMessageResourceType = typeof(ChangeUln), ErrorMessageResourceName = "Validation_Uln_Must_Be_Digits")]
         [RegularExpression("^((?!(0))[0-9]{10})$", ErrorMessageResourceType = typeof(ChangeUln), ErrorMessageResourceName = "Validation_Uln_Must_Be_Digits")]
