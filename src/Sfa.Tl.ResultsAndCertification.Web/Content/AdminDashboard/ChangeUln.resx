@@ -166,6 +166,6 @@
     <value>Enter a ULN that is different from the current ULN</value>
   </data>
   <data name="Message_Notification_Success" xml:space="preserve">
-    <value>Unique learner number (ULN) updated</value>
+    <value>&lt;b&gt;Unique learner number (ULN) updated&lt;/b&gt;</value>
   </data>
 </root>

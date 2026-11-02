@@ -124,7 +124,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unique learner number (ULN) updated.
+        ///   Looks up a localized string similar to &lt;b&gt;Unique learner number (ULN) updated&lt;/b&gt;.
         /// </summary>
         public static string Message_Notification_Success {
             get {
