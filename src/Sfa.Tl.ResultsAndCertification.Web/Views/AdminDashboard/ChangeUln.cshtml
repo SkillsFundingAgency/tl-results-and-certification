@@ -12,6 +12,12 @@
 }
 
 <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <vc:notification-banner model="@Model.SuccessBanner"></vc:notification-banner>
+    </div>
+</div>
+
+<div class="govuk-grid-row">
     <div class="govuk-grid-column-two-thirds-from-desktop">
 
         <form asp-route="@RouteConstants.SubmitChangeUln" asp-route-registrationPathwayId="@Model.RegistrationPathwayId" method="post">
@@ -41,12 +47,19 @@
             </dl>
 
             <div class="govuk-form-group govuk-!-margin-top-8">
-                <span class="govuk-caption-xl">@ChangeUln.Caption_Text</span>
-                <h2 class="govuk-label-wrapper">
-                    <label class="govuk-label govuk-label--xl" for="ulnto">@ChangeUln.Label_ULN</label>
-                </h2>
-                <div id="uln-hint" class="govuk-hint">@ChangeUln.Hint_ULN</div>
-                <input class="govuk-input govuk-input--width-10" id="ulnto" asp-for="UlnTo" inputmode="numeric" aria-describedby="uln-hint" />
+                <fieldset class="govuk-fieldset">
+                    <legend class="govuk-fieldset__legend govuk-fieldset__legend--l">
+                        <h2 class="govuk-fieldset__heading govuk-!-margin-bottom-3">
+                            @ChangeUln.Label_ULN
+                        </h2>
+                    </legend>
+
+                    <div id="uln-hint" class="govuk-hint">
+                        @ChangeUln.Hint_ULN 
+                    </div>
+                    <input class="govuk-input govuk-input--width-10" id="ulnto" asp-for="UlnTo" inputmode="numeric" aria-describedby="uln-hint" />
+
+                </fieldset>
             </div>
 
             <div class="govuk-button-group">

@@ -296,7 +296,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.ProblemWithService);
             }
 
-            await _cacheService.SetAsync(CacheKey, new AdminNotificationBannerModel("Unique learner number (ULN) updated"), CacheExpiryTime.XSmall);
+            if (success)
+            {
+                await _cacheService.SetAsync(CacheKey, new NotificationBannerModel
+                {
+                    DisplayMessageBody = true,
+                    Message = ChangeUln.Message_Notification_Success,
+                    IsRawHtml = true,
+                },
+                CacheExpiryTime.XSmall);
+            }
             return RedirectToRoute(RouteConstants.AdminLearnerRecord, new { pathwayId = registrationPathwayId });
         }
 
@@ -379,8 +388,16 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
                 return RedirectToRoute(RouteConstants.ProblemWithService);
             }
 
-            await _cacheService.SetAsync(CacheKey, new AdminNotificationBannerModel(LearnerRecord.Change_Year_Notification_Success), CacheExpiryTime.XSmall);
-
+            if (success)
+            {
+                await _cacheService.SetAsync(CacheKey, new NotificationBannerModel
+                {
+                    DisplayMessageBody = true,
+                    Message = LearnerRecord.Change_Year_Notification_Success,
+                    IsRawHtml = true,
+                },
+                CacheExpiryTime.XSmall);
+            }
             return RedirectToAction(nameof(RouteConstants.AdminLearnerRecord), new { pathwayId = model.RegistrationPathwayId });
         }
 
