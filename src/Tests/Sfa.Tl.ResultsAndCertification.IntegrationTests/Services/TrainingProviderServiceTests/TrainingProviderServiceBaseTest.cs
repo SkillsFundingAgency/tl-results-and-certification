@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using NSubstitute;
@@ -50,7 +51,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
 
         protected virtual void CreateMapper()
         {
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(TrainingProviderMapper).Assembly));
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(TrainingProviderMapper).Assembly), NullLoggerFactory.Instance);
             TrainingProviderMapper = new Mapper(mapperConfig);
         }
 

@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
@@ -55,7 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminProviderLoade
                         return null;
                     }
                 });
-            });
+            }, NullLoggerFactory.Instance);
 
             return new AutoMapper.Mapper(mapperConfig);
         }

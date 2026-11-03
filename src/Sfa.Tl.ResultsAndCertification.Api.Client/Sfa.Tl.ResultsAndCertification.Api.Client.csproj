@@ -1,21 +1,18 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="JWT" Version="9.0.3" />
-    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.9" />
-    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
-    <PackageReference Include="Microsoft.Azure.Services.AppAuthentication" Version="1.6.2" />
-    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="6.0.1" />
-    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.34.0" />
-    <PackageReference Include="System.ServiceModel.Duplex" Version="4.9.0" />
-    <PackageReference Include="System.ServiceModel.Http" Version="4.9.0" />
-    <PackageReference Include="System.ServiceModel.NetTcp" Version="4.9.0" />
-    <PackageReference Include="System.ServiceModel.Primitives" Version="4.9.0" />
-    <PackageReference Include="System.ServiceModel.Security" Version="4.9.0" />
+    <PackageReference Include="Azure.Identity" Version="1.21.0" />
+    <PackageReference Include="JWT" Version="11.1.0" />
+    <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.14" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="8.23.0" />
+    <PackageReference Include="System.ServiceModel.Http" Version="10.1.0" />
+    <PackageReference Include="System.ServiceModel.NetTcp" Version="10.1.0" />
+    <PackageReference Include="System.ServiceModel.Primitives" Version="10.1.0" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,6 +22,10 @@
 
   <ItemGroup>
     <WCFMetadata Include="Connected Services" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
 </Project>

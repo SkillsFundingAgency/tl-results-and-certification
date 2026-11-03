@@ -1,5 +1,5 @@
-﻿using AutoMapper;
-using Microsoft.Azure.WebJobs.Extensions.Timers;
+using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
@@ -14,7 +14,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.CertificatePrinting
     {
         protected IMapper Mapper;
         protected ILogger<ICertificatePrintingService> Logger;
-        protected TimerSchedule TimerSchedule;
         protected ICommonService CommonService;
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
         protected ICertificatePrintingService CertificatePrintingService;
@@ -22,7 +21,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.CertificatePrinting
 
         public override void Setup()
         {
-            TimerSchedule = Substitute.For<TimerSchedule>();
             CommonService = Substitute.For<ICommonService>();
             Logger = Substitute.For<ILogger<ICertificatePrintingService>>();
             CertificatePrintingService = Substitute.For<ICertificatePrintingService>();
@@ -31,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.CertificatePrinting
                 CertificatePrintingBatchesCreateStartDate = DateTime.UtcNow
             };
 
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(Startup).Assembly));
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(Startup).Assembly), NullLoggerFactory.Instance);
             Mapper = new AutoMapper.Mapper(mapperConfig);
             CertificatePrintingFunction = new Functions.CertificatePrinting(ResultsAndCertificationConfiguration, CommonService, CertificatePrintingService);
         }

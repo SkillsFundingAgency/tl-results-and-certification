@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
@@ -31,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
             InternalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();
             InternalApiClient.DeleteRegistrationAsync(Ukprn, ProfileId).Returns(ApiClientResponse);
 
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(RegistrationMapper).Assembly));
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(RegistrationMapper).Assembly), NullLoggerFactory.Instance);
             Mapper = new AutoMapper.Mapper(mapperConfig);
         }
 

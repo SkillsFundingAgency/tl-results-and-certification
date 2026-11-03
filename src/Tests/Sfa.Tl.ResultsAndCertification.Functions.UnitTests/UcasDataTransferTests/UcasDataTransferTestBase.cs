@@ -1,4 +1,3 @@
-﻿using Microsoft.Azure.WebJobs.Extensions.Timers;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Utils.Ranges;
@@ -11,7 +10,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.UcasDataTransferTes
 {
     public abstract class UcasDataTransferTestBase : BaseTest<UcasDataTransfer>
     {
-        protected TimerSchedule TimerSchedule;
 
         // Dependencies
         protected IUcasDataTransferService UcasDataTransferService;
@@ -24,7 +22,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.UcasDataTransferTes
 
         public override void Setup()
         {
-            TimerSchedule = Substitute.For<TimerSchedule>();
             UcasDataTransferService = Substitute.For<IUcasDataTransferService>();
             CommonService = Substitute.For<ICommonService>();
 
@@ -41,7 +38,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.UcasDataTransferTes
                 }
             };
 
-            TimerSchedule = Substitute.For<TimerSchedule>();
             UcasDataTransferService = Substitute.For<IUcasDataTransferService>();
             CommonService = Substitute.For<ICommonService>();
             UcasDataTransferFunction = new UcasDataTransfer(UcasDataTransferService, CommonService, config);

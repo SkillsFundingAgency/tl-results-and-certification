@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
@@ -25,7 +26,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.LrsLearner
             LrsService = Substitute.For<ILrsService>();
             LrsLearnerServiceApiClient = Substitute.For<ILrsLearnerServiceApiClient>();
 
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(Startup).Assembly));
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(Startup).Assembly), NullLoggerFactory.Instance);
             Mapper = new AutoMapper.Mapper(mapperConfig);
 
             Service = new Functions.Services.LrsLearnerService(Mapper, Logger, LrsLearnerServiceApiClient, LrsService);

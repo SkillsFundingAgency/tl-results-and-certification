@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Sfa.Tl.ResultsAndCertification.Common.Extensions;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
@@ -84,7 +84,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .Include(p => p.TqRegistrationPathway.TqRegistrationSpecialisms.Where(rs => rs.IsOptedin))
                     .ThenInclude(p => p.TqSpecialismAssessments.Where(sa => sa.IsOptedin))
                     .ThenInclude(p => p.AssessmentSeries)
-                .Include(p => p.TqRegistrationPathway.TqRegistrationSpecialisms.Where(sa => sa.IsOptedin))
+                .Include(p => p.TqRegistrationPathway.TqRegistrationSpecialisms.Where(rs => rs.IsOptedin))
                     .ThenInclude(p => p.TlSpecialism)
                 .Include(p => p.TqRegistrationPathway.TqRegistrationProfile)
                 .Include(p => p.TqRegistrationPathway.TqProvider)

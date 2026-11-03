@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Services.BlobStorage.Interface;
@@ -22,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.Certificat
         {
             Repository = Substitute.For<ICertificateRepository>();
             BlobStorageService = Substitute.For<IBlobStorageService>();
-            Mapper = new AutoMapper.Mapper(new MapperConfiguration(c => c.AddMaps(typeof(Startup).Assembly)));
+            Mapper = new AutoMapper.Mapper(new MapperConfiguration(c => c.AddMaps(typeof(Startup).Assembly), NullLoggerFactory.Instance));
             Logger = Substitute.For<ILogger<ICertificateTrackingExtractionService>>();
 
             Service = new Functions.Services.CertificateTrackingExtractionService(Repository, BlobStorageService, Mapper, Logger);

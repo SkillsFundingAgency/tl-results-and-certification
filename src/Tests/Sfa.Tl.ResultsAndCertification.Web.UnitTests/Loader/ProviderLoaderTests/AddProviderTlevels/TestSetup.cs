@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
@@ -68,7 +69,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTest
                 c.ConstructServicesUsing(type =>
                             type.Name.Contains("UserNameResolver") ?
                                 new UserNameResolver<ProviderTlevelViewModel, ProviderTlevel>(HttpContextAccessor) : null);
-            });
+            }, NullLoggerFactory.Instance);
             Mapper = new AutoMapper.Mapper(mapperConfig);
             InternalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();
         }

@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
@@ -51,7 +52,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
 
         protected virtual void CreateMapper()
         {
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(IndustryPlacementMapper).Assembly));
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(IndustryPlacementMapper).Assembly), NullLoggerFactory.Instance);
             Mapper = new Mapper(mapperConfig);
         }
 

@@ -77,6 +77,12 @@
         TokenStart: "__"
         TokenEnd: "__"
 
+    - task: UseDotNet@2
+      displayName: 'Install .NET 10 runtime'
+      inputs:
+        packageType: 'runtime'
+        version: '10.x'
+
     - task: VSTest@2
       displayName: 'Run Integration tests'
       inputs:

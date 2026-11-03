@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.Extensions.Logging;
@@ -75,7 +76,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
                 c.ConstructServicesUsing(type =>
                             type.Name.Contains("UserNameResolver") ?
                                 new UserNameResolver<RegistrationViewModel, RegistrationRequest>(HttpContextAccessor) : null);
-            });
+            }, NullLoggerFactory.Instance);
             Mapper = new AutoMapper.Mapper(mapperConfig);
         }
 

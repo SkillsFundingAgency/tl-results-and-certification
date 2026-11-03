@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
@@ -12,7 +13,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AwardingOrgan
 
         private static Mapper CreateMapper()
         {
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(AwardingOrganisationMapper).Assembly));
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(AwardingOrganisationMapper).Assembly), NullLoggerFactory.Instance);
             return new Mapper(mapperConfig);
         }
 

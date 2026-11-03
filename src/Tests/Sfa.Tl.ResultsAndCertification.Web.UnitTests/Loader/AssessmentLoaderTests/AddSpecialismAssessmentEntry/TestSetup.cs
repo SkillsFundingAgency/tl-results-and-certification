@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
@@ -58,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AssessmentLoaderTe
                 c.ConstructServicesUsing(type =>
                             type.Name.Contains("UserNameResolver") ?
                                 new UserNameResolver<AddSpecialismAssessmentEntryViewModel, AddAssessmentEntryRequest>(HttpContextAccessor) : null);
-            });
+            }, NullLoggerFactory.Instance);
 
             Mapper = new AutoMapper.Mapper(mapperConfig);
             Loader = new AssessmentLoader(Mapper, Logger, InternalApiClient, BlobStorageService);

@@ -246,7 +246,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
                             type.Name.Contains("DateTimeResolver") ?
                                 new DateTimeResolver<ManageRegistration, TqRegistrationProfile>(new DateTimeProvider()) :
                                 null);
-            });
+            }, NullLoggerFactory.Instance);
             RegistrationMapper = new Mapper(mapperConfig);
         }
     }

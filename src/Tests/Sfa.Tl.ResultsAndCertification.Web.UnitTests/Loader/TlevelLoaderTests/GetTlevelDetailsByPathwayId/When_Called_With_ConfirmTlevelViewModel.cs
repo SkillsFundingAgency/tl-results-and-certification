@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using FluentAssertions;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts;
@@ -31,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
                 c.ConstructServicesUsing(type =>
                             type.Name.Contains("UserNameResolver") ?
                                 new UserNameResolver<TlevelPathwayDetails, ConfirmTlevelViewModel>(HttpContextAccessor) : null);
-            });
+            }, NullLoggerFactory.Instance);
             Mapper = new AutoMapper.Mapper(mapperConfig);
         }
 

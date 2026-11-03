@@ -1,7 +1,7 @@
 {
   "IsEncrypted": false,
   "Values": {
-    "FUNCTIONS_WORKER_RUNTIME": "dotnet",
+    "FUNCTIONS_WORKER_RUNTIME": "dotnet-isolated",
     "LearnerVerificationAndLearningEventsTrigger": "0 23 15 1-12 *",
     "LearnerGenderTrigger": "0 21 15 1-12 *",
     "CertificatePrintingBatchesCreateTrigger": "0 * * * * *",
@@ -23,6 +23,7 @@
     "SpecialismRommExtractTrigger": "0 45 7 * * *",
     "CertificateTrackingExtractTrigger": "0 15 8 * * *",
     "ProviderAddressMissingReminderTrigger": "0 */5 * * * *",
+    "ProviderAddressValidationReminderTrigger": "0 */5 * * * *",
     "AzureWebJobsStorage": "UseDevelopmentStorage=true",
     "BlobStorageConnectionString": "UseDevelopmentStorage=true;",
     "ConfigurationStorageConnectionString": "UseDevelopmentStorage=true;",

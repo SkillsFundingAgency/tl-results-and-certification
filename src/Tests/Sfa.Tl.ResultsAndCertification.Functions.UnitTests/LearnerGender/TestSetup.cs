@@ -1,8 +1,7 @@
-﻿using AutoMapper;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Timers;
-using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Azure.Functions.Worker;
+using AutoMapper;
+using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
@@ -15,26 +14,24 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.LearnerGender
     {
         protected IMapper Mapper;
         protected ILogger<ILrsLearnerService> Logger;
-        protected TimerSchedule TimerSchedule;
         protected ICommonService CommonService;
         protected ILrsLearnerService LrsLearnerService;
         protected Functions.LearnerGender LearnerGenderFunction;
 
         public override void Setup()
         {
-            TimerSchedule = Substitute.For<TimerSchedule>();
             CommonService = Substitute.For<ICommonService>();
             Logger = Substitute.For<ILogger<ILrsLearnerService>>();
             LrsLearnerService = Substitute.For<ILrsLearnerService>();
 
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(Startup).Assembly));
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(Startup).Assembly), NullLoggerFactory.Instance);
             Mapper = new AutoMapper.Mapper(mapperConfig);
             LearnerGenderFunction = new Functions.LearnerGender(CommonService, LrsLearnerService);
         }
 
         public async override Task When()
         {
-            await LearnerGenderFunction.FetchLearnerGenderAsync(new TimerInfo(TimerSchedule, new ScheduleStatus()), new ExecutionContext(), new NullLogger<Functions.LearnerGender>());
+            await LearnerGenderFunction.FetchLearnerGenderAsync(new TimerInfo { ScheduleStatus = new ScheduleStatus() }, FunctionContextBuilder.Create());
         }
     }
 }

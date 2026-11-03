@@ -45,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
 
         private static Mapper CreateMapper()
         {
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(LearnerMapper).Assembly));
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(LearnerMapper).Assembly), NullLoggerFactory.Instance);
             return new Mapper(mapperConfig);
         }
 

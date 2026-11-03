@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
@@ -74,7 +75,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TlevelLoaderTests.
                             type.Name.Contains("UserNameResolver") ?
                                 new UserNameResolver<TlevelPathwayDetails, TLevelConfirmedDetailsViewModel>(HttpContextAccessor) :
                                 null);
-            });
+            }, NullLoggerFactory.Instance);
             Mapper = new AutoMapper.Mapper(mapperConfig);
         }               
     }

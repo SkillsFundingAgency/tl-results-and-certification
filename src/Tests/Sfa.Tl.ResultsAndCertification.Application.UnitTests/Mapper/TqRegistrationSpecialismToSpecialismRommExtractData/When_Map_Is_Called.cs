@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using Sfa.Tl.ResultsAndCertification.Models.CoreRommExtract;
@@ -13,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Mapper.TqRegistra
 
         public When_Map_Is_Called()
         {
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(SpecialismRommExtractMapper).Assembly));
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(SpecialismRommExtractMapper).Assembly), NullLoggerFactory.Instance);
             _mapper = mapperConfig.CreateMapper();
         }
 

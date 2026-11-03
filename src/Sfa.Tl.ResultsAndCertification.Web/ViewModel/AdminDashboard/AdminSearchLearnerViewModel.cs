@@ -1,4 +1,3 @@
-﻿using Microsoft.IdentityModel.Tokens;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminDashboard;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
@@ -71,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
             filters.Search = string.Empty;
             filters.SelectedProviderId = null;
 
-            if (!filters.AwardingOrganisations.IsNullOrEmpty())
+            if (filters.AwardingOrganisations != null && filters.AwardingOrganisations.Count > 0)
             {
                 foreach (var filter in filters.AwardingOrganisations)
                 {
@@ -79,7 +78,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard
                 }
             }
 
-            if (!filters.AcademicYears.IsNullOrEmpty())
+            if (filters.AcademicYears != null && filters.AcademicYears.Count > 0)
             {
                 foreach (var filter in filters.AcademicYears)
                 {

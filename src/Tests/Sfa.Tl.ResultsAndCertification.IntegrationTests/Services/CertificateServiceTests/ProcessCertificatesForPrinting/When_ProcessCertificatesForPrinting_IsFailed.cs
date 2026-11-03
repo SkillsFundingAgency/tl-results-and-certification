@@ -113,7 +113,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
             _certificateRepository = Substitute.For<ICertificateRepository>();
 
 
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(CertificateMapper).Assembly));
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(CertificateMapper).Assembly), NullLoggerFactory.Instance);
             var mapper = new Mapper(mapperConfig);
 
             // Create Service class to test. 

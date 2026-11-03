@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Common.Services.System.Interface;
@@ -45,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Mapper.AssessmentToAdminA
                         return null;
                     }
                 });
-            });
+            }, NullLoggerFactory.Instance);
 
             Mapper = configuration.CreateMapper();
 

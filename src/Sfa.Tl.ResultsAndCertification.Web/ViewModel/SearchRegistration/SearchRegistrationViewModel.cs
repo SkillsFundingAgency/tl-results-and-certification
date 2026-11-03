@@ -1,4 +1,3 @@
-﻿using Microsoft.IdentityModel.Tokens;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Pagination;
@@ -71,7 +70,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.SearchRegistration
             filters.Search = string.Empty;
             filters.SelectedProviderId = null;
 
-            if (!filters.AcademicYears.IsNullOrEmpty())
+            if (filters.AcademicYears != null && filters.AcademicYears.Count > 0)
             {
                 foreach (var filter in filters.AcademicYears)
                 {

@@ -1,6 +1,4 @@
-﻿using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Timers;
-using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Azure.Functions.Worker;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Utils.Ranges;
@@ -14,7 +12,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.ProviderAddressExtr
 {
     public abstract class TestSetup : BaseTest<ProviderAddressExtraction>
     {
-        private readonly TimerSchedule _timerSchedule = Substitute.For<TimerSchedule>();
         protected ProviderAddressExtraction ProviderAddressExtraction;
 
         protected IProviderAddressExtractionService ProviderAddressExtractionService = Substitute.For<IProviderAddressExtractionService>();
@@ -47,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.ProviderAddressExtr
 
         public override Task When()
         {
-            return ProviderAddressExtraction.ProviderAddressExtractAsync(new TimerInfo(_timerSchedule, new ScheduleStatus()), new ExecutionContext(), new NullLogger<AnalystOverallResultExtraction>());
+            return ProviderAddressExtraction.ProviderAddressExtractAsync(new TimerInfo { ScheduleStatus = new ScheduleStatus() }, FunctionContextBuilder.Create());
         }
     }
 }

@@ -1,8 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
-using Respawn;
 using Sfa.Tl.ResultsAndCertification.Data;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
@@ -18,7 +17,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services
         protected GenericRepository<T> Repository;
         protected ILogger<GenericRepository<T>> Logger;
         public ResultsAndCertificationDbContext DbContext;
-        public Checkpoint DbCheckpoint;
+        public DatabaseCheckpoint DbCheckpoint;
         private bool _isRelationalDb;
 
         public BaseTest(bool isRelationalDb = false)
@@ -34,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services
             Logger = Substitute.For<ILogger<GenericRepository<T>>>();
             DbContext = _isRelationalDb ? TestDatabaseConfiguration.CreateRelationalDbContext() : InMemoryDbContext.Create();
             Repository = new GenericRepository<T>(Logger, DbContext);
-            DbCheckpoint = _isRelationalDb ? new Checkpoint { WithReseed = true } : null;
+            DbCheckpoint = _isRelationalDb ? new DatabaseCheckpoint { WithReseed = true } : null;
         }
 
         public abstract void Given();

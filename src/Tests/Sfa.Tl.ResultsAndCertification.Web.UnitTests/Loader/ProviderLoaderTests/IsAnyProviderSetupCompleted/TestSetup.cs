@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Tests.Common.BaseTest;
@@ -22,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderLoaderTest
         {
             InternalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();
             
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(ProviderMapper).Assembly));
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(ProviderMapper).Assembly), NullLoggerFactory.Instance);
             Mapper = new AutoMapper.Mapper(mapperConfig);
 
             Loader = new ProviderLoader(InternalApiClient, Mapper);

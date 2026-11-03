@@ -59,14 +59,14 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         protected IRepository<ChangeLog> ChangeLogRepository;
         protected virtual void CreateMapper()
         {
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(RegistrationMapper).Assembly));
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(RegistrationMapper).Assembly), NullLoggerFactory.Instance);
             RegistrationMapper = new Mapper(mapperConfig);
         }
 
         protected void CreateCommonService()
         {
             var commonServiceLogger = new Logger<CommonService>(new NullLoggerFactory());
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(CommonMapper).Assembly));
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(CommonMapper).Assembly), NullLoggerFactory.Instance);
             var commonMapper = new Mapper(mapperConfig);
             var systemProvider = Substitute.For<ISystemProvider>();
 

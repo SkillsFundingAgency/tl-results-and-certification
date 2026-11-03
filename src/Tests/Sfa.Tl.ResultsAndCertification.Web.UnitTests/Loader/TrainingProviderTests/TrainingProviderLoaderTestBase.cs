@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
@@ -36,7 +37,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
 
             InternalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();
             
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(TrainingProviderMapper).Assembly));
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(TrainingProviderMapper).Assembly), NullLoggerFactory.Instance);
             Mapper = new AutoMapper.Mapper(mapperConfig);            
             
             Loader = new TrainingProviderLoader(InternalApiClient, Mapper);

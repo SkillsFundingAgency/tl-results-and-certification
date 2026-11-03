@@ -1,7 +1,7 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
-using Respawn;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
 using Sfa.Tl.ResultsAndCertification.Data;
@@ -42,12 +42,12 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
         public IList<TqPathwayAssessment> TqPathwayAssessmentsData;
         public IList<TqSpecialismAssessment> TqSpecialismAssessmentsData;
         protected IList<AssessmentSeries> AssessmentSeries;
-        public Checkpoint DbCheckpoint;
+        public DatabaseCheckpoint DbCheckpoint;
         public ResultsAndCertificationDbContext DbContext;
 
         public BulkAssessmentsTextFixture()
         {
-            DbCheckpoint = new Checkpoint { WithReseed = true };
+            DbCheckpoint = new DatabaseCheckpoint { WithReseed = true };
             DbContext = TestDatabaseConfiguration.CreateRelationalDbContext();
             Initialize();
         }
@@ -64,7 +64,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
 
         protected void CreateMapper()
         {
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(RegistrationMapper).Assembly));
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(RegistrationMapper).Assembly), NullLoggerFactory.Instance);
             AssessmentMapper = new Mapper(mapperConfig);
         }
 

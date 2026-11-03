@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
@@ -41,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderAddressLoa
             InternalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();
             OrdnanceSurveyApiClient = Substitute.For<IOrdnanceSurveyApiClient>();
 
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(ProviderAddressMapper).Assembly));
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(ProviderAddressMapper).Assembly), NullLoggerFactory.Instance);
             Mapper = new AutoMapper.Mapper(mapperConfig);
             Logger = Substitute.For<ILogger<ProviderAddressLoader>>();
             Loader = new ProviderAddressLoader(InternalApiClient, OrdnanceSurveyApiClient, Mapper, Logger);

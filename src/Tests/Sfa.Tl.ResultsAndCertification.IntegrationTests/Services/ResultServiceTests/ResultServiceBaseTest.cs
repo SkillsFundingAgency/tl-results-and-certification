@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
@@ -55,7 +56,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
 
         protected virtual void CreateMapper()
         {
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(ResultMapper).Assembly));
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(ResultMapper).Assembly), NullLoggerFactory.Instance);
             ResultMapper = new Mapper(mapperConfig);
         }
 

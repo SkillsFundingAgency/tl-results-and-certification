@@ -1,6 +1,4 @@
-﻿using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Timers;
-using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Azure.Functions.Worker;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.ProviderAddressMissingReminderTests
@@ -9,7 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.ProviderAddressMiss
     {
         public override async Task When()
         {
-            await ProviderAddressMissingReminderFunction.ProviderAddressMissingReminderAsync(new TimerInfo(TimerSchedule, new ScheduleStatus()), new ExecutionContext(), new NullLogger<ProviderAddressMissingReminder>());
+            await ProviderAddressMissingReminderFunction.ProviderAddressMissingReminderAsync(new TimerInfo { ScheduleStatus = new ScheduleStatus() }, FunctionContextBuilder.Create());
         }
     }
 }

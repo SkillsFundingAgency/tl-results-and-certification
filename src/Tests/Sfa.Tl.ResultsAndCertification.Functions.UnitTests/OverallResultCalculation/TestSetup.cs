@@ -1,7 +1,5 @@
-﻿using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Timers;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
@@ -15,7 +13,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.OverallResultCalcul
     public abstract class TestSetup : BaseTest<Functions.OverallResultCalculation>
     {
         protected ILogger<ILrsLearnerService> Logger;
-        protected TimerSchedule TimerSchedule;
         protected ICommonService CommonService;
         protected ResultsAndCertificationConfiguration ResultsAndCertificationConfiguration;
         protected IOverallResultCalculationFunctionService OverallResultCalculationFunctionService;
@@ -23,7 +20,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.OverallResultCalcul
 
         public override void Setup()
         {
-            TimerSchedule = Substitute.For<TimerSchedule>();
             CommonService = Substitute.For<ICommonService>();
             Logger = Substitute.For<ILogger<ILrsLearnerService>>();
             OverallResultCalculationFunctionService = Substitute.For<IOverallResultCalculationFunctionService>();
@@ -36,7 +32,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.OverallResultCalcul
 
         public async override Task When()
         {
-            await OverallResultCalculationFunction.OverallResultCalculationAsync(new TimerInfo(TimerSchedule, new ScheduleStatus()), new ExecutionContext(), new NullLogger<Functions.OverallResultCalculation>());
+            await OverallResultCalculationFunction.OverallResultCalculationAsync(new TimerInfo { ScheduleStatus = new ScheduleStatus() }, FunctionContextBuilder.Create());
         }
     }
 }

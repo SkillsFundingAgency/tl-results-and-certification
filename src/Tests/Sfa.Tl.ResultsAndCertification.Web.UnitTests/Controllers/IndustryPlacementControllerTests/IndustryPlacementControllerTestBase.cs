@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -53,7 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.IndustryPlace
             HttpContextAccessor = Substitute.For<IHttpContextAccessor>();
             HttpContextAccessor.HttpContext.Returns(HttpContext);
 
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(IndustryPlacementMapper).Assembly));
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(IndustryPlacementMapper).Assembly), NullLoggerFactory.Instance);
             Mapper = new AutoMapper.Mapper(mapperConfig);
 
             CacheKey = CacheKeyHelper.GetCacheKey(HttpContext.User.GetUserId(), CacheConstants.IpCacheKey);

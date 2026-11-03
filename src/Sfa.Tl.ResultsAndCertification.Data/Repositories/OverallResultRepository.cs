@@ -1,4 +1,4 @@
-﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
@@ -33,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                 .Include(r => r.TqRegistrationPathway.TqRegistrationSpecialisms.Where(r => r.IsOptedin))
                     .ThenInclude(r => r.TqSpecialismAssessments.Where(r => r.IsOptedin))
                     .ThenInclude(r => r.TqSpecialismResults.Where(r => r.IsOptedin))
-                .Include(r => r.TqRegistrationPathway.TqRegistrationSpecialisms.Where(p => p.IsOptedin))
+                .Include(r => r.TqRegistrationPathway.TqRegistrationSpecialisms.Where(r => r.IsOptedin))
                     .ThenInclude(s => s.TlSpecialism)
                     .ThenInclude(s => s.TlDualSpecialismToSpecialisms)
                     .ThenInclude(s => s.DualSpecialism)
@@ -63,7 +63,7 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Repositories
                             .Include(r => r.TqRegistrationPathway.TqRegistrationSpecialisms.Where(r => r.IsOptedin))
                                 .ThenInclude(r => r.TqSpecialismAssessments.Where(r => r.IsOptedin))
                                 .ThenInclude(r => r.TqSpecialismResults.Where(r => r.IsOptedin))
-                            .Include(r => r.TqRegistrationPathway.TqRegistrationSpecialisms.Where(p => p.IsOptedin))
+                            .Include(r => r.TqRegistrationPathway.TqRegistrationSpecialisms.Where(r => r.IsOptedin))
                                 .ThenInclude(s => s.TlSpecialism)
                                 .ThenInclude(s => s.TlDualSpecialismToSpecialisms)
                                 .ThenInclude(s => s.DualSpecialism)

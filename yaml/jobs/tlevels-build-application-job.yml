@@ -10,14 +10,14 @@ jobs:
   steps:
   
     - task: UseDotNet@2 
-      displayName: "Use .NET Core SDK 2.1.x"
+      displayName: "Use .NET SDK 10.x"
       inputs:
         packageType: 'sdk'
-        version: '2.1.x'
+        version: '10.x'
     
     - task: NodeTool@0
       inputs:
-        versionSpec: '14.x' 
+        versionSpec: '20.x' 
     
     - task: Npm@1
       displayName: 'npm install'
@@ -32,10 +32,10 @@ jobs:
         targets: default
     
     - task: UseDotNet@2 
-      displayName: "Install .NET 6 SDK"
+      displayName: "Install .NET 10 SDK"
       inputs:
         packageType: 'sdk'
-        version: '6.x'
+        version: '10.x'
 
     - task: gitversion/setup@3.1.1
       displayName: Install GitVersion

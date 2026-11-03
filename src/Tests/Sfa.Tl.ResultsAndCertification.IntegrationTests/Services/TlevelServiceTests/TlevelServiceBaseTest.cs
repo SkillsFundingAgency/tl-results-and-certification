@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using Microsoft.Extensions.Logging;
 using Notify.Interfaces;
 using NSubstitute;
@@ -52,7 +53,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TlevelService
                             type.Name.Contains("DateTimeResolver") ?
                                 new DateTimeResolver<VerifyTlevelDetails, TqAwardingOrganisation>(new DateTimeProvider()) :
                                 null);
-            });
+            }, NullLoggerFactory.Instance);
 
             return new Mapper(mapperConfig);
         }

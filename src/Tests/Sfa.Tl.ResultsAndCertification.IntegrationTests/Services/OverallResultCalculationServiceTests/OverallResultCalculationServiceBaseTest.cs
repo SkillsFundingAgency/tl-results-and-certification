@@ -110,7 +110,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.OverallResult
                 var overallGradeLookupRepository = new GenericRepository<OverallGradeLookup>(OverallGradeLookupLogger, DbContext);
                 OverallGradeStrategyFactory = new OverallGradeStrategyFactory(overallGradeLookupRepository);
 
-                var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(OverallResultCalculationMapper).Assembly));
+                var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(OverallResultCalculationMapper).Assembly), NullLoggerFactory.Instance);
                 Mapper = new Mapper(mapperConfig);
 
                 PathwayResultConverter = new PathwayResultConverter();

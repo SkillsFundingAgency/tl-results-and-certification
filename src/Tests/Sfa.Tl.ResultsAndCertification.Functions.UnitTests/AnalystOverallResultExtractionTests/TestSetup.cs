@@ -1,6 +1,4 @@
-﻿using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Timers;
-using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Azure.Functions.Worker;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Utils.Ranges;
@@ -14,7 +12,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystOverallResul
 {
     public abstract class TestSetup : BaseTest<AnalystOverallResultExtraction>
     {
-        private readonly TimerSchedule _timerSchedule = Substitute.For<TimerSchedule>();
         protected AnalystOverallResultExtraction AnalystDataExtraction;
 
         protected IAnalystOverallResultExtractionService AnalystResultExtractionService = Substitute.For<IAnalystOverallResultExtractionService>();
@@ -44,7 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.AnalystOverallResul
 
         public override Task When()
         {
-            return AnalystDataExtraction.AnalystOverallResultExtractAsync(new TimerInfo(_timerSchedule, new ScheduleStatus()), new ExecutionContext(), new NullLogger<AnalystOverallResultExtraction>());
+            return AnalystDataExtraction.AnalystOverallResultExtractAsync(new TimerInfo { ScheduleStatus = new ScheduleStatus() }, FunctionContextBuilder.Create());
         }
     }
 }

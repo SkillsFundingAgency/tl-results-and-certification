@@ -22,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminProvider
 
         private static Mapper CreateMapper()
         {
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(AdminProviderMapper).Assembly));
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(AdminProviderMapper).Assembly), NullLoggerFactory.Instance);
             return new Mapper(mapperConfig);
         }
     }

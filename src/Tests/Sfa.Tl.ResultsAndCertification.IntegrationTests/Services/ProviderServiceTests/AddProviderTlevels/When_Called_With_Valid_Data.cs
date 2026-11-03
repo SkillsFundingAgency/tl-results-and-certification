@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using FluentAssertions;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
@@ -63,7 +64,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderServi
                             type.Name.Contains("DateTimeResolver") ?
                                 new DateTimeResolver<ProviderTlevel, TqProvider>(new DateTimeProvider()) :
                                 null);
-            });
+            }, NullLoggerFactory.Instance);
             ProviderMapper = new Mapper(mapperConfig);
         }
 

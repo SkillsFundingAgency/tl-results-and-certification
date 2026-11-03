@@ -1,6 +1,7 @@
-﻿using JWT.Algorithms;
+using Azure.Core;
+using Azure.Identity;
+using JWT.Algorithms;
 using JWT.Builder;
-using Microsoft.Azure.Services.AppAuthentication;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 {
     public class TokenServiceClient : ITokenServiceClient
     {
+        private static readonly TokenCredential Credential = new DefaultAzureCredential();
         private readonly ResultsAndCertificationConfiguration _config;
 
         public TokenServiceClient(ResultsAndCertificationConfiguration configuration)
@@ -18,7 +20,9 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
 
         public async Task<string> GetInternalApiToken()
         {
-            return await new AzureServiceTokenProvider().GetAccessTokenAsync(_config.ResultsAndCertificationInternalApiSettings.IdentifierUri);
+            var resource = _config.ResultsAndCertificationInternalApiSettings.IdentifierUri.TrimEnd('/');
+            var token = await Credential.GetTokenAsync(new TokenRequestContext(new[] { $"{resource}/.default" }), default);
+            return token.Token;
         }
 
         public string GetDfeApiToken()

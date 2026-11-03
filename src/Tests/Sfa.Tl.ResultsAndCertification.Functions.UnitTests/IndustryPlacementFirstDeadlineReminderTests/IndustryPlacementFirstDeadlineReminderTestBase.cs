@@ -1,4 +1,3 @@
-﻿using Microsoft.Azure.WebJobs.Extensions.Timers;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Utils.Ranges;
@@ -12,7 +11,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementFi
     public abstract class IndustryPlacementFirstDeadlineReminderTestBase : BaseTest<IndustryPlacementFirstDeadlineReminder>
     {
         // Depedencies
-        protected TimerSchedule TimerSchedule;
         protected IIndustryPlacementNotificationService IndustryPlacementNotificationService;
         protected ResultsAndCertificationConfiguration Configuration;
         protected ICommonService CommonService;
@@ -22,7 +20,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementFi
 
         public override void Setup()
         {
-            TimerSchedule = Substitute.For<TimerSchedule>();
             IndustryPlacementNotificationService = Substitute.For<IIndustryPlacementNotificationService>();
             CommonService = Substitute.For<ICommonService>();
             DateTime today = DateTime.UtcNow.Date;

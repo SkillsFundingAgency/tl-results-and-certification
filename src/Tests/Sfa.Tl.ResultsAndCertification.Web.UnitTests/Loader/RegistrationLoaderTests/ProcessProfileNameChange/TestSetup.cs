@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
@@ -58,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
                 c.ConstructServicesUsing(type =>
                             type.Name.Contains("UserNameResolver") ?
                                 new UserNameResolver<ChangeLearnersNameViewModel, ManageRegistration>(HttpContextAccessor) : null);
-            });
+            }, NullLoggerFactory.Instance);
 
             Mapper = new AutoMapper.Mapper(mapperConfig);
             Loader = new RegistrationLoader(Mapper, Logger, InternalApiClient, BlobStorageService);

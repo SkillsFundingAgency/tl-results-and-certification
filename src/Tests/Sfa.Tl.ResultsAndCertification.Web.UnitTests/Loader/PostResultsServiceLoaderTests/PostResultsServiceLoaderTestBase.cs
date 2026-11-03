@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
@@ -57,7 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.PostResultsService
                                 new UserNameResolver<PrsAddAppealViewModel, PrsActivityRequest>(HttpContextAccessor) :
                                  type.Name.Contains("UserEmailResolver") ? (object)new UserEmailResolver<PrsGradeChangeRequestViewModel, Models.Contracts.PostResultsService.PrsGradeChangeRequest>(HttpContextAccessor) :
                                 null);
-            });
+            }, NullLoggerFactory.Instance);
             Mapper = new AutoMapper.Mapper(mapperConfig);
         }
     }

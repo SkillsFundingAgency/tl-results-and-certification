@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using NSubstitute;
@@ -87,7 +88,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
                                 new UserNameResolver<UploadRegistrationsRequestViewModel, BulkProcessRequest>(HttpContextAccessor) :
                                 type.Name.Contains("UserEmailResolver") ? (object)new UserEmailResolver<UploadRegistrationsRequestViewModel, BulkProcessRequest>(HttpContextAccessor) :
                                 null);
-            });
+            }, NullLoggerFactory.Instance);
             Mapper = new AutoMapper.Mapper(mapperConfig);
         }
     }

@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper;
@@ -17,7 +18,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Mapper
             MapperConfiguration configuration = new(cfg =>
             {
                 cfg.AddProfile<IndustryPlacementMapper>();
-            });
+            }, NullLoggerFactory.Instance);
 
             _mapper = configuration.CreateMapper();
         }

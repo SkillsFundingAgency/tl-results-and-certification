@@ -65,7 +65,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.CertificateSe
             var certificateRepositoryLogger = new Logger<CertificateRepository>(new NullLoggerFactory());
             var certificateRepository = new CertificateRepository(certificateRepositoryLogger, DbContext);
  
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(CertificateMapper).Assembly));
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(CertificateMapper).Assembly), NullLoggerFactory.Instance);
             var mapper = new Mapper(mapperConfig);
 
             // Create Service class to test. 

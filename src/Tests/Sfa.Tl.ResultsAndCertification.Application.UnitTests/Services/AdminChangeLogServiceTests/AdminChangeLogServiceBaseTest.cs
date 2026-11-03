@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
@@ -23,7 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.AdminCha
 
         private static AutoMapper.Mapper CreateMapper()
         {
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(ChangeLogMapper).Assembly));
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(ChangeLogMapper).Assembly), NullLoggerFactory.Instance);
             return new AutoMapper.Mapper(mapperConfig);
         }
     }

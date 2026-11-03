@@ -218,7 +218,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web
 
         private static void RegisterDependencies(IServiceCollection services)
         {
-            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            services.AddAutoMapper((sp, cfg) => cfg.LicenseKey = sp.GetRequiredService<ResultsAndCertificationConfiguration>().AutoMapperLicenseKey, AppDomain.CurrentDomain.GetAssemblies());
             services.AddSingleton<IWebConfigurationService, WebConfigurationService>();
             services.AddTransient<IBlobStorageService, BlobStorageService>();
             services.AddTransient<ITlevelLoader, TlevelLoader>();

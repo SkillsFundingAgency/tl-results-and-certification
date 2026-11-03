@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using FluentAssertions;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
@@ -58,7 +59,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.IndustryPlacementL
                 c.ConstructServicesUsing(type =>
                             type.Name.Contains("UserNameResolver") ?
                                 new UserNameResolver<IpCompletionViewModel, IndustryPlacementRequest>(HttpContextAccessor) : null);
-            });
+            }, NullLoggerFactory.Instance);
             Mapper = new AutoMapper.Mapper(mapperConfig);
         }
     }

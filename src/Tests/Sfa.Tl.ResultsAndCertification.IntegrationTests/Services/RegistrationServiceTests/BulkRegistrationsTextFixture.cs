@@ -1,9 +1,9 @@
-﻿using AutoMapper;
+using AutoMapper;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using Notify.Interfaces;
 using NSubstitute;
-using Respawn;
+using Sfa.Tl.ResultsAndCertification.Tests.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
@@ -61,7 +61,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
         public TqRegistrationProfile TqRegistrationProfileBeforeSeed;
 
         public bool RejoinResult;
-        public Checkpoint DbCheckpoint;
+        public DatabaseCheckpoint DbCheckpoint;
         public ResultsAndCertificationDbContext DbContext;
 
         protected ILogger<CommonService> CommonServiceLogger;
@@ -83,7 +83,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
         public BulkRegistrationsTextFixture()
         {
-            DbCheckpoint = new Checkpoint { WithReseed = true };
+            DbCheckpoint = new DatabaseCheckpoint { WithReseed = true };
             DbContext = TestDatabaseConfiguration.CreateRelationalDbContext();
             Initialize();
         }
@@ -126,10 +126,10 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
         protected void CreateMapper()
         {
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(RegistrationMapper).Assembly));
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(RegistrationMapper).Assembly), NullLoggerFactory.Instance);
             RegistrationMapper = new Mapper(mapperConfig);
 
-            var commonMapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(CommonMapper).Assembly));
+            var commonMapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(CommonMapper).Assembly), NullLoggerFactory.Instance);
             CommonMapper = new Mapper(commonMapperConfig);
         }
 

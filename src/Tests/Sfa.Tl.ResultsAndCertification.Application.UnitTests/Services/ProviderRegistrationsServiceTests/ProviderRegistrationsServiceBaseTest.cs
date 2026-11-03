@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Application.Services;
@@ -21,7 +22,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Services.Provider
             ProviderRegistrationsRepository = Substitute.For<IProviderRegistrationsRepository>();
             BlobStorageService = Substitute.For<IBlobStorageService>();
             
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(ProviderRegistrationsMapper).Assembly));
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(ProviderRegistrationsMapper).Assembly), NullLoggerFactory.Instance);
             Mapper = new AutoMapper.Mapper(mapperConfig);
 
             ProviderRegistrationsService = new ProviderRegistrationsService(ProviderRegistrationsRepository, BlobStorageService, Mapper);

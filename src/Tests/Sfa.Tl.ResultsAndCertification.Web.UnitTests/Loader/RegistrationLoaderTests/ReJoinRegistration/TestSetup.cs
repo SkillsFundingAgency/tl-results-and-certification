@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
@@ -57,7 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.RegistrationLoader
                 c.ConstructServicesUsing(type =>
                             type.Name.Contains("UserNameResolver") ?
                                 new UserNameResolver<RejoinRegistrationViewModel, RejoinRegistrationRequest>(HttpContextAccessor) : null);
-            });
+            }, NullLoggerFactory.Instance);
 
             Uln = 123456789;
             ProfileId = 1;

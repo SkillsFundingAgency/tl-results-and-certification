@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using FluentAssertions;
 using Sfa.Tl.ResultsAndCertification.Application.Mappers;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
@@ -20,7 +21,7 @@ namespace Sfa.Tl.ResultsAndCertification.Application.UnitTests.Mapper.TqRegistra
 
         public override void Setup()
         {
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(CoreRommExtractMapper).Assembly));
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(CoreRommExtractMapper).Assembly), NullLoggerFactory.Instance);
             Mapper = mapperConfig.CreateMapper();
 
             Source = InitialiseSource();

@@ -1,4 +1,3 @@
-﻿using Microsoft.Azure.WebJobs.Extensions.Timers;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Application.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Utils.Ranges;
@@ -11,7 +10,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.ProviderAddressMiss
     public abstract class ProviderAddressMissingReminderTestBase : BaseTest<ProviderAddressMissingReminder>
     {
         // Depedencies
-        protected TimerSchedule TimerSchedule;
 
         protected IProviderAddressNotificationService ProviderAddressNotificationService;
         protected ResultsAndCertificationConfiguration Configuration;
@@ -22,7 +20,6 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.ProviderAddressMiss
 
         public override void Setup()
         {
-            TimerSchedule = Substitute.For<TimerSchedule>();
             ProviderAddressNotificationService = Substitute.For<IProviderAddressNotificationService>();
             CommonService = Substitute.For<ICommonService>();
             DateTime today = DateTime.UtcNow.Date;

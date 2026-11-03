@@ -1,6 +1,4 @@
-﻿using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Timers;
-using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Azure.Functions.Worker;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementChaseBigGapsReminderTests
@@ -9,7 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementCh
     {
         public async override Task When()
         {
-            await IndustryPlacementChaseBigGapsReminderFunction.IndustryPlacementChaseBigGapsReminderAsync(new TimerInfo(TimerSchedule, new ScheduleStatus()), new ExecutionContext(), new NullLogger<IndustryPlacementChaseBigGapsReminder>());
+            await IndustryPlacementChaseBigGapsReminderFunction.IndustryPlacementChaseBigGapsReminderAsync(new TimerInfo { ScheduleStatus = new ScheduleStatus() }, FunctionContextBuilder.Create());
         }
     }
 }

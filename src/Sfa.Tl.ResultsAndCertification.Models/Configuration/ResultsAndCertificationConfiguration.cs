@@ -1,9 +1,14 @@
-﻿using System;
+using System;
 
 namespace Sfa.Tl.ResultsAndCertification.Models.Configuration
 {
     public class ResultsAndCertificationConfiguration
     {
+        /// <summary>
+        /// Gets or sets the AutoMapper commercial licence key (AutoMapper 15+).
+        /// </summary>
+        public string AutoMapperLicenseKey { get; set; }
+
         /// <summary>
         /// Gets or sets the redis settings.
         /// </summary>

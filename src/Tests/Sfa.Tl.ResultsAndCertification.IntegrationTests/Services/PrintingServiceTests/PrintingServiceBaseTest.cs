@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using Notify.Interfaces;
@@ -57,7 +58,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.PrintingServi
 
         protected virtual void CreateMapper()
         {
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(PrintingServiceMapper).Assembly));
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(PrintingServiceMapper).Assembly), NullLoggerFactory.Instance);
             PrintingServiceMapper = new Mapper(mapperConfig);
         }
 

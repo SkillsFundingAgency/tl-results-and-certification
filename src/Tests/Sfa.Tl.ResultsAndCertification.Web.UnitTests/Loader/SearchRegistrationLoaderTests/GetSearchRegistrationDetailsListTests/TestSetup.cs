@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using FluentAssertions;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
@@ -65,7 +66,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.SearchRegistration
         {
             InternalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();
 
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(SearchRegistrationMapper).Assembly));
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(SearchRegistrationMapper).Assembly), NullLoggerFactory.Instance);
             IMapper mapper = new AutoMapper.Mapper(mapperConfig);
             Loader = new SearchRegistrationLoader(InternalApiClient, mapper);
         }

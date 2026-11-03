@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
@@ -27,7 +28,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.TrainingProviderTe
                             type.Name.Contains("UserNameResolver") ?
                                 new UserNameResolver<RequestReplacementDocumentViewModel, ReplacementPrintRequest>(HttpContextAccessor) : null);
 
-            });
+            }, NullLoggerFactory.Instance);
             Mapper = new AutoMapper.Mapper(mapperConfig);
         }
     }

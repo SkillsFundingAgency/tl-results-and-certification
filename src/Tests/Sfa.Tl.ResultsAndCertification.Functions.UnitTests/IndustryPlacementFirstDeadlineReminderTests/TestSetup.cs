@@ -1,6 +1,4 @@
-﻿using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Timers;
-using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Azure.Functions.Worker;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementFirstDeadlineReminderTests
@@ -9,7 +7,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementFi
     {
         public async override Task When()
         {
-            await IndustryPlacementFirstDeadlineReminderFunction.IndustryPlacementFirstDeadlineReminderAsync(new TimerInfo(TimerSchedule, new ScheduleStatus()), new ExecutionContext(), new NullLogger<IndustryPlacementFirstDeadlineReminder>());
+            await IndustryPlacementFirstDeadlineReminderFunction.IndustryPlacementFirstDeadlineReminderAsync(new TimerInfo { ScheduleStatus = new ScheduleStatus() }, FunctionContextBuilder.Create());
         }
     }
 }

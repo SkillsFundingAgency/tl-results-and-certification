@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
@@ -26,7 +27,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.Services.Certificat
             PrintingApiClient = Substitute.For<IPrintingApiClient>();
             CertificateService = Substitute.For<ICertificateService>();
 
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(Startup).Assembly));
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(Startup).Assembly), NullLoggerFactory.Instance);
             Mapper = new AutoMapper.Mapper(mapperConfig);
 
             Service = new Functions.Services.CertificatePrintingService(Mapper, Logger, PrintingApiClient, PrintingService, CertificateService);

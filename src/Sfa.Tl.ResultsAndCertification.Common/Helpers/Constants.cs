@@ -217,7 +217,7 @@
         public const string ProviderAddressExtract = "ProviderAddressExtract";
         public const string CertificateTrackingExtractsFolder = "extracts";
         public const string ProviderAddressMissingReminder = "ProviderAddressMissingReminder";
-        public const string ProcessProviderAddressValidationReminder = "ProcessProviderAddressValidationReminder";
+        public const string ProviderAddressValidationReminder = "ProviderAddressValidationReminder";
 
         // File Extensions
         public const string FileExtensionTxt = "txt";

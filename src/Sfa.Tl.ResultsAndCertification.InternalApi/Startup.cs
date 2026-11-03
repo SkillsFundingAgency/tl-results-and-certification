@@ -132,7 +132,7 @@ namespace Sfa.Tl.ResultsAndCertification.InternalApi
                                       .EnableRetryOnFailure()), ServiceLifetime.Transient);
 
             services.AddSingleton(ResultsAndCertificationConfiguration);
-            services.AddAutoMapper(typeof(Startup).Assembly.GetReferencedAssemblies().Where(a => a.FullName.Contains("Sfa.Tl.ResultsAndCertification.Application")).Select(Assembly.Load));
+            services.AddAutoMapper(cfg => cfg.LicenseKey = ResultsAndCertificationConfiguration.AutoMapperLicenseKey, typeof(Startup).Assembly.GetReferencedAssemblies().Where(a => a.FullName.Contains("Sfa.Tl.ResultsAndCertification.Application")).Select(Assembly.Load).ToArray());
             RegisterApplicationServices(services);
 
             ValidatorOptions.Global.DisplayNameResolver = (type, memberInfo, expression) =>

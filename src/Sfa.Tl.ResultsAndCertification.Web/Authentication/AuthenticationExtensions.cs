@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Hosting;
@@ -6,13 +6,12 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Protocols.OpenIdConnect;
 using Sfa.Tl.ResultsAndCertification.Models.Configuration;
 using Sfa.Tl.ResultsAndCertification.Web.Authentication.Local;
 using Sfa.Tl.ResultsAndCertification.Web.Authentication.Strategies;
 using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
@@ -93,9 +92,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication
                     options.CallbackPath = new PathString(config.DfeSignInSettings.CallbackPath);
                     options.SignedOutCallbackPath = new PathString(config.DfeSignInSettings.SignedOutCallbackPath);
                     options.SignedOutRedirectUri = "/signout-complete";
-                    options.SecurityTokenValidator = new JwtSecurityTokenHandler
+                    // .NET 8+ validates tokens with TokenHandler (JsonWebTokenHandler); SecurityTokenValidator is ignored.
+                    options.TokenHandler = new JsonWebTokenHandler
                     {
-                        InboundClaimTypeMap = new Dictionary<string, string>(),
+                        MapInboundClaims = false,
                         TokenLifetimeInMinutes = cookieAndSessionTimeout,
                         SetDefaultTimesOnTokenCreation = true,
                     };

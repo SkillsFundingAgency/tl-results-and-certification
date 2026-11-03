@@ -32,9 +32,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Authentication.Strategies
         public async Task GetOnTokenValidatedTask(TokenValidatedContext context)
         {
             var claims = new List<Claim>();
-            var organisation = JObject.Parse(context.Principal.FindFirst("Organisation").Value);
+            var organisationClaimValue = context.Principal.FindFirst("organisation")?.Value;
+            var organisation = !string.IsNullOrWhiteSpace(organisationClaimValue)
+                ? JObject.Parse(organisationClaimValue)
+                : null;
 
-            if (organisation.HasValues)
+            if (organisation?.HasValues == true)
             {
                 var organisationId = organisation.SelectToken("id").ToString();
                 var userId = context.Principal.FindFirst("sub").Value;

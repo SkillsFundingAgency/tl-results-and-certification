@@ -1,6 +1,4 @@
-﻿using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Timers;
-using Microsoft.Extensions.Logging.Abstractions;
+using Microsoft.Azure.Functions.Worker;
 using Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlacementTests;
 using System.Threading.Tasks;
 
@@ -10,7 +8,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions.UnitTests.IndustryPlacementEx
     {
         public async override Task When()
         {
-            await IndustryPlacementExtractFunction.IndustryPlacementExtractAsync(new TimerInfo(TimerSchedule, new ScheduleStatus()), new ExecutionContext(), new NullLogger<IndustryPlacementExtract>());
+            await IndustryPlacementExtractFunction.IndustryPlacementExtractAsync(new TimerInfo { ScheduleStatus = new ScheduleStatus() }, FunctionContextBuilder.Create());
         }
     }
 }

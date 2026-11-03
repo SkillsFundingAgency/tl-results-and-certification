@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Azure.WebJobs;
-using Microsoft.Azure.WebJobs.Extensions.Http;
+using Microsoft.Azure.Functions.Worker;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.Extensions.Logging;
@@ -15,25 +14,27 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
     public class HealthCheck
     {
         private readonly DatabaseFacade _database;
+        private readonly ILogger<HealthCheck> _logger;
 
-        public HealthCheck(ResultsAndCertificationDbContext dbContext)
+        public HealthCheck(ResultsAndCertificationDbContext dbContext, ILogger<HealthCheck> logger)
         {
             _database = dbContext.Database;
+            _logger = logger;
         }
 
-        [FunctionName(Constants.HealthCheck)]
-        public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req, ILogger logger)
+        [Function(Constants.HealthCheck)]
+        public async Task<IActionResult> Run([HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = null)] HttpRequest req)
         {
             try
             {
-                logger.LogInformation("Health check endpoint called.");
+                _logger.LogInformation("Health check endpoint called.");
                 await _database.ExecuteSqlRawAsync("SELECT 1");
 
                 return new StatusCodeResult(StatusCodes.Status200OK);
             }
             catch (Exception ex)
             {
-                logger.LogError($"SQL Server check failed: {ex.Message}");
+                _logger.LogError($"SQL Server check failed: {ex.Message}");
                 return new StatusCodeResult(StatusCodes.Status500InternalServerError);
             }
         }

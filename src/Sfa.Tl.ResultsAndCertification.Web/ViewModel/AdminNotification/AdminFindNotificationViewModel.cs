@@ -1,4 +1,3 @@
-﻿using Microsoft.IdentityModel.Tokens;
 using Sfa.Tl.ResultsAndCertification.Common.Helpers;
 using Sfa.Tl.ResultsAndCertification.Web.Content.AdminNotification;
 using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
@@ -30,7 +29,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminNotification
         };
 
         public bool ContainsResults
-            => !Details.IsNullOrEmpty() && Details.Count > 0;
+            => Details != null && Details.Count > 0;
 
         public bool ContainsMultiplePages
             => ContainsResults && Pagination?.PagerInfo?.TotalPages > 1;

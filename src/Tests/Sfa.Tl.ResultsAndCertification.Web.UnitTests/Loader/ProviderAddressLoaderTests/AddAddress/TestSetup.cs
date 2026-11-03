@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using Sfa.Tl.ResultsAndCertification.Models.Contracts.ProviderAddress;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper;
 using Sfa.Tl.ResultsAndCertification.Web.Mapper.Resolver;
@@ -29,7 +30,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderAddressLoa
                                 type.Name.Contains("UserEmailResolver") ?
                                 (object)new UserEmailResolver<AddAddressViewModel, AddAddressRequest>(HttpContextAccessor) : null);
 
-            });
+            }, NullLoggerFactory.Instance);
             Mapper = new AutoMapper.Mapper(mapperConfig);
         }
     }

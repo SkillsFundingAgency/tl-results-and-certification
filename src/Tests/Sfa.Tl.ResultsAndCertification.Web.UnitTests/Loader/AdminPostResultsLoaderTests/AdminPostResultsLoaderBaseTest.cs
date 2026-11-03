@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Common.Enum;
@@ -22,7 +23,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminPostResultsLo
         {
             ApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();
 
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(AdminChangeLogMapper).Assembly));
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(AdminChangeLogMapper).Assembly), NullLoggerFactory.Instance);
             var mapper = new AutoMapper.Mapper(mapperConfig);
 
             Loader = new AdminPostResultsLoader(ApiClient, mapper);

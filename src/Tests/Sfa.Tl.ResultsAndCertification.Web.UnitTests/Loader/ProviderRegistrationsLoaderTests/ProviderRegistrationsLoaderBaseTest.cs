@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using Microsoft.Extensions.Logging;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
@@ -23,7 +24,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.ProviderRegistrati
             
             var logger = Substitute.For<ILogger<ProviderRegistrationsLoader>>();
 
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(ProviderRegistrationsMapper).Assembly));
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(ProviderRegistrationsMapper).Assembly), NullLoggerFactory.Instance);
             var mapper = new AutoMapper.Mapper(mapperConfig);
 
             Loader = new ProviderRegistrationsLoader(ApiClient, BlobStorageService, mapper, logger);

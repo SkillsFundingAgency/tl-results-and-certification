@@ -1,6 +1,5 @@
-﻿using Lrs.LearnerService.Api.Client;
+using Lrs.LearnerService.Api.Client;
 using Lrs.PersonalLearningRecordService.Api.Client;
-using Microsoft.Azure.Functions.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Notify.Client;
@@ -20,7 +19,6 @@ using Sfa.Tl.ResultsAndCertification.Common.Services.Configuration;
 using Sfa.Tl.ResultsAndCertification.Data;
 using Sfa.Tl.ResultsAndCertification.Data.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Data.Repositories;
-using Sfa.Tl.ResultsAndCertification.Functions;
 using Sfa.Tl.ResultsAndCertification.Functions.Helpers;
 using Sfa.Tl.ResultsAndCertification.Functions.Interfaces;
 using Sfa.Tl.ResultsAndCertification.Functions.Services;
@@ -29,15 +27,13 @@ using System;
 using System.Linq;
 using System.Reflection;
 
-[assembly: FunctionsStartup(typeof(Startup))]
-
 namespace Sfa.Tl.ResultsAndCertification.Functions
 {
-    public class Startup : FunctionsStartup
+    public class Startup
     {
         private ResultsAndCertificationConfiguration _configuration;
 
-        public override void Configure(IFunctionsHostBuilder builder)
+        public void ConfigureServices(IServiceCollection services)
         {
             _configuration = ConfigurationLoader.Load(
                Environment.GetEnvironmentVariable(Constants.EnvironmentNameConfigKey),
@@ -46,7 +42,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
                ?? Environment.GetEnvironmentVariable(Constants.ServiceVersionConfigKey), // Need ServiceVersion rather than Version in local with .Net 6
                Environment.GetEnvironmentVariable(Constants.ServiceNameConfigKey));
 
-            RegisterDependencies(builder.Services);
+            RegisterDependencies(services);
         }
 
         private void RegisterDependencies(IServiceCollection services)
@@ -59,7 +55,7 @@ namespace Sfa.Tl.ResultsAndCertification.Functions
 
             services.AddSingleton(_configuration);
             Assembly[] assemblies = new Assembly[] { typeof(Startup).Assembly, typeof(Startup).Assembly.GetReferencedAssemblies().Where(a => a.FullName.Contains("Sfa.Tl.ResultsAndCertification.Application")).Select(Assembly.Load).FirstOrDefault() };
-            services.AddAutoMapper(assemblies);
+            services.AddAutoMapper(cfg => cfg.LicenseKey = _configuration.AutoMapperLicenseKey, assemblies);
             services.AddHttpContextAccessor();
 
             RegisterApplicationServices(services);

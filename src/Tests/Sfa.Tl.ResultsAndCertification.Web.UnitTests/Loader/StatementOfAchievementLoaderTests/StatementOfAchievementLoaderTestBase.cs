@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using Microsoft.Extensions.Logging.Abstractions;
+using AutoMapper;
 using Microsoft.AspNetCore.Http;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Api.Client.Interfaces;
@@ -39,7 +40,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
 
             InternalApiClient = Substitute.For<IResultsAndCertificationInternalApiClient>();
 
-            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(StatementOfAchievementMapper).Assembly));
+            var mapperConfig = new MapperConfiguration(c => c.AddMaps(typeof(StatementOfAchievementMapper).Assembly), NullLoggerFactory.Instance);
             Mapper = new AutoMapper.Mapper(mapperConfig);
             Loader = new StatementOfAchievementLoader(InternalApiClient, Mapper);
         }
@@ -53,7 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.StatementOfAchieve
                             type.Name.Contains("UserNameResolver") ?
                                 new UserNameResolver<SoaLearnerRecordDetailsViewModel, SoaPrintingRequest>(HttpContextAccessor) : null);
 
-            });
+            }, NullLoggerFactory.Instance);
             Mapper = new AutoMapper.Mapper(mapperConfig);
         }
 
