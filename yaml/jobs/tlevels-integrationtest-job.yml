@@ -78,9 +78,9 @@
         TokenEnd: "__"
 
     - task: UseDotNet@2
-      displayName: 'Install .NET 10 runtime'
+      displayName: 'Install .NET 10 SDK'
       inputs:
-        packageType: 'runtime'
+        packageType: 'sdk'
         version: '10.x'
 
     - task: VSTest@2
