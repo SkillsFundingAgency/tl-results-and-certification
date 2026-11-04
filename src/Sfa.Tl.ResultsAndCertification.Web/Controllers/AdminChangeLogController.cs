@@ -88,6 +88,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             return RedirectToRoute(RouteConstants.AdminSearchChangeLog, new { pageNumber = viewModel.SearchCriteriaViewModel.PageNumber });
         }
 
+        [HttpGet("admin/view-change-record/21/{changeLogId}", Name = RouteConstants.AdminViewChangeUlnRecord)]
+        public async Task<IActionResult> AdminViewChangeRecordUlnAsync(int changeLogId)
+        {
+            var model = await _loader.GetAdminViewChangeUlnRecord(changeLogId);
+            if (model == null) return RedirectToRoute(RouteConstants.PageNotFound);
+            return View(model);
+        }
+
         #region View change log
 
         [HttpGet]

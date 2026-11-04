@@ -16,6 +16,10 @@ namespace Sfa.Tl.ResultsAndCertification.Application.Interfaces
 
         Task<IList<int>> GetAllowedChangeAcademicYearsAsync(int learnerAcademicYear, int pathwayStartYear);
 
+        Task<bool> IsLearnerUlnAvailableAsync(long uln);
+
+        Task<bool> ProcessChangeUlnAsync(ReviewChangeUlnRequest request);
+
         Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearRequest request);
 
         Task<bool> ProcessChangeIndustryPlacementAsync(ReviewChangeIndustryPlacementRequest request);

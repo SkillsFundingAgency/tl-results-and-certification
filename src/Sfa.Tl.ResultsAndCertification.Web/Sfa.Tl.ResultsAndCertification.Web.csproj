@@ -2528,4 +2528,29 @@
 		</EmbeddedResource>
 	</ItemGroup>
 
+
+    <ItemGroup>
+        <Compile Update="Content\AdminDashboard\ReviewChangeUln.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>ReviewChangeUln.resx</DependentUpon>
+        </Compile>
+        <EmbeddedResource Update="Content\AdminDashboard\ReviewChangeUln.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>ReviewChangeUln.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Compile Update="Content\AdminDashboard\ChangeUln.Designer.cs">
+            <DesignTime>True</DesignTime>
+            <AutoGen>True</AutoGen>
+            <DependentUpon>ChangeUln.resx</DependentUpon>
+        </Compile>
+        <EmbeddedResource Update="Content\AdminDashboard\ChangeUln.resx">
+            <Generator>PublicResXFileCodeGenerator</Generator>
+            <LastGenOutput>ChangeUln.Designer.cs</LastGenOutput>
+        </EmbeddedResource>
+    </ItemGroup>
+
 </Project>

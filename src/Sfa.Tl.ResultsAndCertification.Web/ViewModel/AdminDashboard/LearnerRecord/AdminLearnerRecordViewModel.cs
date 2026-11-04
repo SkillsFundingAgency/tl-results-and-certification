@@ -78,7 +78,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.AdminDashboard.LearnerRec
         {
             Id = "uln",
             Title = LearnerRecordDetailsContent.Uln_Text,
-            Value = Uln.ToString()
+            Value = Uln.ToString(),
+            ActionText = LearnerRecordDetailsContent.Action_Text_Link_Change,
+            RouteName = RouteConstants.AdminChangeUlnClear,
+            RouteAttributes = new Dictionary<string, string> { { Constants.RegistrationPathwayId, RegistrationPathwayId.ToString() } }
         };
 
         public SummaryItemModel SummaryDateofBirth => new SummaryItemModel

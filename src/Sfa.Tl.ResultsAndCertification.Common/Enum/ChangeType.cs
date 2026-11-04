@@ -21,6 +21,7 @@
         PathwayAppealOutcome = 17,
         SpecialismAppealOutcome = 18,
         MathsStatus = 19,
-        EnglishStatus = 20
+        EnglishStatus = 20,
+        Uln = 21
     }
 }

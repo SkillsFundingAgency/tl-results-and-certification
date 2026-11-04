@@ -67,6 +67,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Loader.AdminDashboardLoad
                            {
                                return new UserNameResolver<ReviewChangeStartYearViewModel, ReviewChangeStartYearRequest>(httpContextAccessor);
                            }
+                           else if (type.Equals(typeof(UserNameResolver<ReviewChangeUlnViewModel, ReviewChangeUlnRequest>)))
+                           {
+                               return new UserNameResolver<ReviewChangeUlnViewModel, ReviewChangeUlnRequest>(httpContextAccessor);
+                           }
                            else if (type.Equals(typeof(UserNameResolver<AdminReviewChangesIndustryPlacementViewModel, ReviewChangeIndustryPlacementRequest>)))
                            {
                                return new UserNameResolver<AdminReviewChangesIndustryPlacementViewModel, ReviewChangeIndustryPlacementRequest>(httpContextAccessor);
