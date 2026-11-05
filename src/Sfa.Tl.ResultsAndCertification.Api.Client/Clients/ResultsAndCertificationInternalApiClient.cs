@@ -518,6 +518,11 @@ namespace Sfa.Tl.ResultsAndCertification.Api.Client.Clients
             return GetAsync<IList<int>>(requestUri);
         }
 
+        public Task<bool> IsLearnerUlnAvailableAsync(long uln) => GetAsync<bool>($"/api/admindashboard/IsLearnerUlnAvailable/{uln}");
+
+        public async Task<bool> ProcessChangeUlnAsync(ReviewChangeUlnRequest request)
+            => await PostAsync<ReviewChangeUlnRequest, bool>("/api/admindashboard/ProcessChangeUln", request);
+
         public async Task<bool> ProcessChangeStartYearAsync(ReviewChangeStartYearRequest request)
         {
             return await PostAsync<ReviewChangeStartYearRequest, bool>(ApiConstants.ProcessChangeStartYearUri, request);

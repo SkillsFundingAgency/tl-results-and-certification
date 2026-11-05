@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <xsd:schema id="root">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Button_Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Button_Submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="Heading_Change_Summary" xml:space="preserve">
+    <value>Change summary</value>
+  </data>
+  <data name="Heading_Change_ULN" xml:space="preserve">
+    <value>Review changes to Unique Learner Number (ULN)</value>
+  </data>
+  <data name="Heading_Personal_Details" xml:space="preserve">
+    <value>Personal details</value>
+  </data>
+  <data name="Heading_Who_has_asked_for_change" xml:space="preserve">
+    <value>Who has asked for this change?</value>
+  </data>
+  <data name="Link_Change_Text" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="Message_You_Can_Enter_Up_To_Characters" xml:space="preserve">
+    <value>You can enter up to 2,000 characters</value>
+  </data>
+  <data name="Message_You_Have_Characters_Remaining" xml:space="preserve">
+    <value>You have 2,000 characters remaining</value>
+  </data>
+  <data name="Page_Title" xml:space="preserve">
+    <value>Review changes to Unique Learner Number (ULN)</value>
+  </data>
+  <data name="Title_Change_Summary_Change_Text" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="Title_Change_Summary_From_Text" xml:space="preserve">
+    <value>From</value>
+  </data>
+  <data name="Title_Change_Summary_To_Text" xml:space="preserve">
+    <value>To</value>
+  </data>
+  <data name="Title_Contact_Name_Text" xml:space="preserve">
+    <value>Contact name</value>
+  </data>
+  <data name="Title_Date_Of_Request" xml:space="preserve">
+    <value>Date of request</value>
+  </data>
+  <data name="Title_Day_Text" xml:space="preserve">
+    <value>Day</value>
+  </data>
+  <data name="Title_Learner_Text" xml:space="preserve">
+    <value>Learner</value>
+  </data>
+  <data name="Title_Month_Text" xml:space="preserve">
+    <value>Month</value>
+  </data>
+  <data name="Title_Provider_Text" xml:space="preserve">
+    <value>Provider (UKPRN)</value>
+  </data>
+  <data name="Title_Reason_For_Change_Text" xml:space="preserve">
+    <value>Reason for change</value>
+  </data>
+  <data name="Title_TLevel_Text" xml:space="preserve">
+    <value>T Level</value>
+  </data>
+  <data name="Title_ULN_Text" xml:space="preserve">
+    <value>ULN</value>
+  </data>
+  <data name="Title_Year_Text" xml:space="preserve">
+    <value>Year</value>
+  </data>
+  <data name="Title_Zendesk_Ticket_Id" xml:space="preserve">
+    <value>Zendesk ticket ID (optional)</value>
+  </data>
+  <data name="Validation_Contact_Name_Blank_Text" xml:space="preserve">
+    <value>Enter the name of the contact who requested this change</value>
+  </data>
+  <data name="Validation_Date_When_Change_Requested_Blank_Text" xml:space="preserve">
+    <value>Enter the date when the change was requested</value>
+  </data>
+  <data name="Validation_Date_When_Change_Requested_Future_Date_Text" xml:space="preserve">
+    <value>Date must be today or in the past</value>
+  </data>
+  <data name="Validation_Date_When_Change_Requested_Invalid_Text" xml:space="preserve">
+    <value>Date must be a real date</value>
+  </data>
+  <data name="Validation_Reason_For_Change_Blank_Text" xml:space="preserve">
+    <value>Enter the reason why this change is needed</value>
+  </data>
+  <data name="Validation_Uln_Must_Be_Digits" xml:space="preserve">
+    <value>Enter a ULN with 10 digits</value>
+  </data>
+</root>
