@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
         }
 
         [Fact]
-        public async void Then_Should_Save_Expected_And_Return_True()
+        public async Task Then_Should_Save_Expected_And_Return_True()
         {
             _result.Should().BeTrue();
 

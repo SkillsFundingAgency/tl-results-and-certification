@@ -49,7 +49,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.Certifica
 
         [Theory]
         [MemberData(nameof(Data))]
-        public async void Then_Returns_Expected_Results(DateTime from, List<PrintCertificate> printCertificates)
+        public async Task Then_Returns_Expected_Results(DateTime from, List<PrintCertificate> printCertificates)
         {
             IList<PrintCertificate> result = await WhenAsync(from);
 

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Sfa.Tl.ResultsAndCertification.Domain.Models;
 using System.Linq;
 using Xunit;
+using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminProviderServiceTests.UpdateProviderTests
 {
@@ -24,7 +25,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminProvider
         }
 
         [Fact]
-        public async void Then_Should_Return_Unsuccessful_Response()
+        public async Task Then_Should_Return_Unsuccessful_Response()
         {
             Result.IsRequestValid.Should().BeFalse();
             Result.DuplicatedUkprnFound.Should().BeFalse();
