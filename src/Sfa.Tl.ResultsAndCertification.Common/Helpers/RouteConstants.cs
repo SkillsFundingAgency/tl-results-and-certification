@@ -430,6 +430,12 @@
         public const string SubmitAdminSearchLearnerClearFilters = "SubmitAdminSearchLearnerClearFilters";
         public const string AdminLearnerRecord = "AdminLearnerRecord";
         public const string ChangeStartYearClear = "ChangeStartYearClear";
+        public const string SubmitChangeUln = "SubmitChangeUln";
+        public const string SubmitReviewChangeUln = "SubmitReviewChangeUln";
+        public const string AdminChangeUln = "AdminChangeUln";
+        public const string AdminChangeUlnClear = "AdminChangeUlnClear";
+        public const string AdminReviewChangeUln = "AdminReviewChangeUln";
+        public const string AdminViewChangeUlnRecord = "AdminViewChangeUlnRecord";
         public const string ChangeStartYear = "ChangeStartYear";
         public const string SubmitChangeStartYear = "SubmitChangeStartYear";
         public const string ReviewChangeStartYear = "ReviewChangeStartYear";
