@@ -43,7 +43,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminPostResu
         }
 
         [Fact]
-        public async void Then_Should_Return_False()
+        public async Task Then_Should_Return_False()
         {
             _result.Should().BeTrue();
 
