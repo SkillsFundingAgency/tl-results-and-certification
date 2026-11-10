@@ -16,7 +16,9 @@ namespace Sfa.Tl.ResultsAndCertification.Data.Builder
         public ResultsAndCertificationDbContext Create()
         {
             var optionsBuilder = new DbContextOptionsBuilder<ResultsAndCertificationDbContext>();
-            optionsBuilder.UseSqlServer(_config.SqlConnectionString);
+            optionsBuilder.UseSqlServer(_config.SqlConnectionString, (option) => {
+                option.UseQuerySplittingBehavior(QuerySplittingBehavior.SplitQuery);
+            });
 
             return new ResultsAndCertificationDbContext(optionsBuilder.Options);
         }
