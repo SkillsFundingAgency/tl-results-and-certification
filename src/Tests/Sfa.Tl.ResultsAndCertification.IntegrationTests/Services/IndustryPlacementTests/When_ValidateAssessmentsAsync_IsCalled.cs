@@ -78,9 +78,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.IndustryPlace
         }
 
         [Fact]
-        public void Expected_Results_Are_Returned()
+        public async Task Expected_Results_Are_Returned()
         {
-            var actualResult = _stage3Result.Result;
+            var actualResult = await _stage3Result;
             actualResult.Should().NotBeNull();
             actualResult.Count().Should().Be(_csvData.Count());
 

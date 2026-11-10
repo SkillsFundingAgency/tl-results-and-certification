@@ -94,7 +94,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.DataExpor
                             SpecialismCode = x.TqRegistrationSpecialism.TlSpecialism.LarId,
                             SpecialismAssessmentEntry = x.AssessmentSeries.Name,
                             SpecialismGrade = x.TqSpecialismResults.First().TlLookup != null ? x.TqSpecialismResults.First().TlLookup.Value : string.Empty
-                        }).ToListAsync();
+                        }).ToListAsync(TestContext.Current.CancellationToken);
 
             _actualResult.Count().Should().Be(expectedSpecialismResults.Count);
             _actualResult.Should().BeEquivalentTo(expectedSpecialismResults);

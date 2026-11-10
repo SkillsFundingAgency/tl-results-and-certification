@@ -33,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminProvider
             Result.DuplicatedNameFound.Should().BeFalse();
             Result.Success.Should().BeTrue();
 
-            TlProvider provider = await DbContext.TlProvider.SingleAsync(p => p.UkPrn == Ukprn);
+            TlProvider provider = await DbContext.TlProvider.SingleAsync(p => p.UkPrn == Ukprn, TestContext.Current.CancellationToken);
 
             provider.UkPrn.Should().Be(Ukprn);
             provider.Name.Should().Be(Request.Name);

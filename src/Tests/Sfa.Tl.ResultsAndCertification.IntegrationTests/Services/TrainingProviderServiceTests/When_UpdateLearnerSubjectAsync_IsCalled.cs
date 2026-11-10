@@ -99,7 +99,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
 
             var actualProfile = await DbContext.TqRegistrationProfile.FirstOrDefaultAsync(p => p.Id == expectedProfile.Id && p.UniqueLearnerNumber == expectedProfile.UniqueLearnerNumber
                                                                         && p.TqRegistrationPathways.Any(pa => pa.TqProvider.TlProvider.UkPrn == request.ProviderUkprn
-                                                                        && (pa.Status == RegistrationPathwayStatus.Active || pa.Status == RegistrationPathwayStatus.Withdrawn)));
+                                                                        && (pa.Status == RegistrationPathwayStatus.Active || pa.Status == RegistrationPathwayStatus.Withdrawn)), TestContext.Current.CancellationToken);
 
             actualProfile.Should().NotBeNull();
 

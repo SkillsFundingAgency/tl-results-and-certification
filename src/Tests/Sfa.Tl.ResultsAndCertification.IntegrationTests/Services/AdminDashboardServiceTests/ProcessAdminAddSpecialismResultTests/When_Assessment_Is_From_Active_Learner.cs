@@ -35,7 +35,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
         {
             _result.Should().BeTrue();
 
-            TqSpecialismResult specialismResult = await DbContext.TqSpecialismResult.SingleAsync(ip => ip.TqSpecialismAssessmentId == _request.SpecialismAssessmentId);
+            TqSpecialismResult specialismResult = await DbContext.TqSpecialismResult.SingleAsync(ip => ip.TqSpecialismAssessmentId == _request.SpecialismAssessmentId, TestContext.Current.CancellationToken);
             specialismResult.TqSpecialismAssessmentId.Should().Be(_request.SpecialismAssessmentId);
             specialismResult.TlLookupId.Should().Be(_request.SelectedGradeId);
             specialismResult.IsOptedin.Should().BeTrue();
@@ -45,7 +45,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             specialismResult.CreatedBy.Should().Be(_request.CreatedBy);
             specialismResult.CreatedOn.Should().BeCloseTo(DateTime.UtcNow, TimeSpan.FromSeconds(15));
 
-            ChangeLog changeLog = await DbContext.ChangeLog.SingleAsync(ip => ip.TqRegistrationPathwayId == _request.RegistrationPathwayId);
+            ChangeLog changeLog = await DbContext.ChangeLog.SingleAsync(ip => ip.TqRegistrationPathwayId == _request.RegistrationPathwayId, TestContext.Current.CancellationToken);
             changeLog.TqRegistrationPathwayId.Should().Be(_request.RegistrationPathwayId);
             changeLog.ChangeType.Should().Be(_request.ChangeType);
             changeLog.ReasonForChange.Should().Be(_request.ChangeReason);

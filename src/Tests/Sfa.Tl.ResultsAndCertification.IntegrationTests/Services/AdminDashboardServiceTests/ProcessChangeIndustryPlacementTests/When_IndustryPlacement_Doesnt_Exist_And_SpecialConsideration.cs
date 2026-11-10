@@ -33,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
         {
             _result.Should().BeTrue();
 
-            IndustryPlacement industryPlacement = await DbContext.IndustryPlacement.SingleAsync(p => p.TqRegistrationPathwayId == _request.RegistrationPathwayId);
+            IndustryPlacement industryPlacement = await DbContext.IndustryPlacement.SingleAsync(p => p.TqRegistrationPathwayId == _request.RegistrationPathwayId, TestContext.Current.CancellationToken);
             industryPlacement.TqRegistrationPathwayId.Should().Be(_request.RegistrationPathwayId);
             industryPlacement.Status.Should().Be(_request.IndustryPlacementStatus);
 
@@ -46,7 +46,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
 
             industryPlacement.Details.Should().Be(JsonConvert.SerializeObject(industryPlacementDetails));
 
-            ChangeLog changeLog = await DbContext.ChangeLog.SingleAsync(p => p.TqRegistrationPathwayId == _request.RegistrationPathwayId && p.ChangeType == _request.ChangeType);
+            ChangeLog changeLog = await DbContext.ChangeLog.SingleAsync(p => p.TqRegistrationPathwayId == _request.RegistrationPathwayId && p.ChangeType == _request.ChangeType, TestContext.Current.CancellationToken);
             changeLog.TqRegistrationPathwayId.Should().Be(_request.RegistrationPathwayId);
             changeLog.ChangeType.Should().Be(_request.ChangeType);
             changeLog.ReasonForChange.Should().Be(_request.ChangeReason);

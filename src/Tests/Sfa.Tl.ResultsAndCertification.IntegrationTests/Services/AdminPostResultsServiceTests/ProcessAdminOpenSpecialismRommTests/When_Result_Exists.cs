@@ -41,7 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminPostResu
         {
             _result.Should().BeTrue();
 
-            TqSpecialismResult existingSpecialismResultDb = await DbContext.TqSpecialismResult.SingleAsync(ip => ip.Id == _existingSpecialismResult.Id);
+            TqSpecialismResult existingSpecialismResultDb = await DbContext.TqSpecialismResult.SingleAsync(ip => ip.Id == _existingSpecialismResult.Id, TestContext.Current.CancellationToken);
             existingSpecialismResultDb.TqSpecialismAssessmentId.Should().Be(_existingSpecialismResult.TqSpecialismAssessmentId);
             existingSpecialismResultDb.TlLookupId.Should().Be(_existingSpecialismResult.TlLookupId);
             existingSpecialismResultDb.PrsStatus.Should().Be(_existingSpecialismResult.PrsStatus);
@@ -54,7 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminPostResu
             existingSpecialismResultDb.ModifiedBy.Should().Be(_request.CreatedBy);
             existingSpecialismResultDb.ModifiedOn.Should().BeCloseTo(DateTime.UtcNow, TimeSpan.FromSeconds(15));
 
-            TqSpecialismResult newSpecialismResultDb = await DbContext.TqSpecialismResult.SingleAsync(ip => ip.TqSpecialismAssessmentId == existingSpecialismResultDb.TqSpecialismAssessmentId && ip.IsOptedin);
+            TqSpecialismResult newSpecialismResultDb = await DbContext.TqSpecialismResult.SingleAsync(ip => ip.TqSpecialismAssessmentId == existingSpecialismResultDb.TqSpecialismAssessmentId && ip.IsOptedin, TestContext.Current.CancellationToken);
             newSpecialismResultDb.TqSpecialismAssessmentId.Should().Be(_existingSpecialismResult.TqSpecialismAssessmentId);
             newSpecialismResultDb.TlLookupId.Should().Be(_existingSpecialismResult.TlLookupId);
             newSpecialismResultDb.PrsStatus.Should().Be(PrsStatus.UnderReview);
@@ -67,7 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminPostResu
             newSpecialismResultDb.ModifiedBy.Should().BeNull();
             newSpecialismResultDb.ModifiedOn.Should().NotHaveValue();
 
-            ChangeLog changeLog = await DbContext.ChangeLog.SingleAsync(ip => ip.TqRegistrationPathwayId == _request.RegistrationPathwayId);
+            ChangeLog changeLog = await DbContext.ChangeLog.SingleAsync(ip => ip.TqRegistrationPathwayId == _request.RegistrationPathwayId, TestContext.Current.CancellationToken);
             changeLog.TqRegistrationPathwayId.Should().Be(_request.RegistrationPathwayId);
             changeLog.ChangeType.Should().Be(ChangeType.OpenSpecialismRomm);
             changeLog.ReasonForChange.Should().Be(_request.ChangeReason);

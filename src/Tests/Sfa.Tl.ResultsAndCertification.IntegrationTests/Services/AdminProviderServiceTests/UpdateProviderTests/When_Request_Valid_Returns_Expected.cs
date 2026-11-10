@@ -33,7 +33,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminProvider
             Result.Success.Should().BeTrue();
 
             TlProvider providerDb = ProvidersDb.First();
-            TlProvider provider = await DbContext.TlProvider.SingleAsync(p => p.Id == Request.ProviderId);
+            TlProvider provider = await DbContext.TlProvider.SingleAsync(p => p.Id == Request.ProviderId, TestContext.Current.CancellationToken);
 
             provider.Id.Should().Be(providerDb.Id);
             provider.UkPrn.Should().Be(Request.UkPrn);

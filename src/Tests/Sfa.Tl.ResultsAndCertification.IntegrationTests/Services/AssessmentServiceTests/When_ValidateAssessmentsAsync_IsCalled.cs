@@ -85,14 +85,15 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
         }
 
         [Fact]
-        public void Expected_Results_Are_Returned()
+        public async Task Expected_Results_Are_Returned()
         {
-            _stage3Result.Result.Should().NotBeNull();
-            _stage3Result.Result.Count().Should().Be(_stage2Response.Count());
+            var result = await _stage3Result;
+            result.Should().NotBeNull();
+            result.Count().Should().Be(_stage2Response.Count());
 
             // 1. ULN not recognised with AO
             var rowIndex = 0;
-            var actualResult = _stage3Result.Result[rowIndex];
+            var actualResult = result[rowIndex];
             actualResult.IsValid.Should().BeFalse();
             actualResult.ValidationErrors.Count.Should().Be(1);
             var expectedErrors = new List<string> { ValidationMessages.UlnNotRegistered };
@@ -100,7 +101,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
 
             // 2. ULN is withdrawn
             rowIndex++;
-            actualResult = _stage3Result.Result[rowIndex];
+            actualResult = result[rowIndex];
             actualResult.IsValid.Should().BeFalse();
             actualResult.ValidationErrors.Count.Should().Be(1);
             expectedErrors = new List<string> { ValidationMessages.CannotAddAssessmentToWithdrawnRegistration };
@@ -108,7 +109,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
 
             // 3. Invalid - Core Code, Specialism Code, Core assessment entry and Specialism assessment entry
             rowIndex++;
-            actualResult = _stage3Result.Result[rowIndex];
+            actualResult = result[rowIndex];
             actualResult.IsValid.Should().BeFalse();
             actualResult.ValidationErrors.Count.Should().Be(4);
             expectedErrors = new List<string>
@@ -122,7 +123,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
 
             // 4. Core and Specialism series are not open. 
             rowIndex++;
-            actualResult = _stage3Result.Result[rowIndex];
+            actualResult = result[rowIndex];
             actualResult.IsValid.Should().BeFalse();
             actualResult.ValidationErrors.Count.Should().Be(2);
             expectedErrors = new List<string>
@@ -134,7 +135,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
 
             // 5. Couplets registered - first entry, both entries are expected but has only one.   
             rowIndex++;
-            actualResult = _stage3Result.Result[rowIndex];
+            actualResult = result[rowIndex];
             actualResult.IsValid.Should().BeFalse();
             actualResult.ValidationErrors.Count.Should().Be(1);
             expectedErrors = new List<string>
@@ -145,7 +146,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
 
             // 6. Couplets registered - Contains invalid code   
             rowIndex++;
-            actualResult = _stage3Result.Result[rowIndex];
+            actualResult = result[rowIndex];
             actualResult.IsValid.Should().BeFalse();
             actualResult.ValidationErrors.Count.Should().Be(1);
             expectedErrors = new List<string>
@@ -158,7 +159,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AssessmentSer
             // 7. Valid Rows.
             for (int i = ++rowIndex; i < _stage2Response.ToList().Count; i++)
             {
-                actualResult = _stage3Result.Result[i];
+                actualResult = result[i];
                 actualResult.IsValid.Should().BeTrue();
                 actualResult.ValidationErrors.Count.Should().Be(0);
             }

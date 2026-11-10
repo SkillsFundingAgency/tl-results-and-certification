@@ -20,7 +20,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TrainingProvi
         private SearchLearnerFilters _actualResult;
         private IList<FilterLookupData> _mockAcademicYears;
         private IList<FilterLookupData> _mockTlevels;
-        private IList<FilterLookupData> _expectedStatusFilters;
         private IList<FilterLookupData> _expectedIndustryPlacementStatusFilters;
 
         public override void Given()
