@@ -529,6 +529,9 @@
           "functionAppName": {
             "value": "[variables('functionAppName')]"
           },
+          "netFrameworkVersion": {
+            "value": "v10.0"
+          },
           "appServicePlanName": {
             "value": "[parameters('sharedASPName')]"
           },
