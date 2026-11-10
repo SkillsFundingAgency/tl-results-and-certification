@@ -31,7 +31,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminProvider
             Result.DuplicatedDisplayNameFound.Should().BeFalse();
             Result.Success.Should().BeFalse();
 
-            bool exists = await DbContext.TlProvider.AnyAsync(p => p.Name == Request.Name);
+            bool exists = await DbContext.TlProvider.AnyAsync(p => p.Name == Request.Name, TestContext.Current.CancellationToken);
             exists.Should().BeFalse();
         }
     }

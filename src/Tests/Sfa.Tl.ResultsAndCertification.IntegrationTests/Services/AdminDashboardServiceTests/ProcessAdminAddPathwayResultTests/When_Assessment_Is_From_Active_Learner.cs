@@ -34,7 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
         {
             _result.Should().BeTrue();
 
-            TqPathwayResult pathwayResult = await DbContext.TqPathwayResult.SingleAsync(ip => ip.TqPathwayAssessmentId == _request.PathwayAssessmentId);
+            TqPathwayResult pathwayResult = await DbContext.TqPathwayResult.SingleAsync(ip => ip.TqPathwayAssessmentId == _request.PathwayAssessmentId, TestContext.Current.CancellationToken);
             pathwayResult.TqPathwayAssessmentId.Should().Be(_request.PathwayAssessmentId);
             pathwayResult.TlLookupId.Should().Be(_request.SelectedGradeId);
             pathwayResult.IsOptedin.Should().BeTrue();
@@ -44,7 +44,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             pathwayResult.CreatedBy.Should().Be(_request.CreatedBy);
             pathwayResult.CreatedOn.Should().BeCloseTo(DateTime.UtcNow, TimeSpan.FromSeconds(15));
 
-            ChangeLog changeLog = await DbContext.ChangeLog.SingleAsync(ip => ip.TqRegistrationPathwayId == _request.RegistrationPathwayId);
+            ChangeLog changeLog = await DbContext.ChangeLog.SingleAsync(ip => ip.TqRegistrationPathwayId == _request.RegistrationPathwayId, TestContext.Current.CancellationToken);
             changeLog.TqRegistrationPathwayId.Should().Be(_request.RegistrationPathwayId);
             changeLog.ChangeType.Should().Be(_request.ChangeType);
             changeLog.ReasonForChange.Should().Be(_request.ChangeReason);

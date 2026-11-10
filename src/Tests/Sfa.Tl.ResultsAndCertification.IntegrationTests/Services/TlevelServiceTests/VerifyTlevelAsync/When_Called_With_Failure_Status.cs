@@ -14,7 +14,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TlevelService
         private readonly EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Pearson;
         private readonly TlevelReviewStatus _tlevelReviewStatus = TlevelReviewStatus.AwaitingConfirmation;
         private readonly TlevelReviewStatus _updatedTlevelReviewStatus = TlevelReviewStatus.Confirmed;
-        private VerifyTlevelDetails _verifyTlevelDetailsModel;
+        private readonly VerifyTlevelDetails _verifyTlevelDetailsModel = new();
         private bool _isSuccess;
 
         public override void Given()
@@ -35,9 +35,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TlevelService
         }
 
         [Fact]
-        public void Then_Record_Does_Not_Exist()
+        public async Task Then_Record_Does_Not_Exist()
         {
-            var result = Service.GetTlevelsByStatusIdAsync(_tlAwardingOrganisation.UkPrn, (int)_updatedTlevelReviewStatus).Result;
+            var result = await Service.GetTlevelsByStatusIdAsync(_tlAwardingOrganisation.UkPrn, (int)_updatedTlevelReviewStatus);
             result.Should().BeEmpty();
         }
 

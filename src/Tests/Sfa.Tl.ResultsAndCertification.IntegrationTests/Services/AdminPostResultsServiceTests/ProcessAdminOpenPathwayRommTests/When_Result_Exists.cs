@@ -41,7 +41,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminPostResu
         {
             _result.Should().BeTrue();
 
-            TqPathwayResult existingPathwayResultDb = await DbContext.TqPathwayResult.SingleAsync(ip => ip.Id == _existingPathwayResult.Id);
+            TqPathwayResult existingPathwayResultDb = await DbContext.TqPathwayResult.SingleAsync(ip => ip.Id == _existingPathwayResult.Id, TestContext.Current.CancellationToken);
             existingPathwayResultDb.TqPathwayAssessmentId.Should().Be(_existingPathwayResult.TqPathwayAssessmentId);
             existingPathwayResultDb.TlLookupId.Should().Be(_existingPathwayResult.TlLookupId);
             existingPathwayResultDb.PrsStatus.Should().Be(_existingPathwayResult.PrsStatus);
@@ -54,7 +54,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminPostResu
             existingPathwayResultDb.ModifiedBy.Should().Be(_request.CreatedBy);
             existingPathwayResultDb.ModifiedOn.Should().BeCloseTo(DateTime.UtcNow, TimeSpan.FromSeconds(15));
 
-            TqPathwayResult newPathwayResultDb = await DbContext.TqPathwayResult.SingleAsync(ip => ip.TqPathwayAssessmentId == existingPathwayResultDb.TqPathwayAssessmentId && ip.IsOptedin);
+            TqPathwayResult newPathwayResultDb = await DbContext.TqPathwayResult.SingleAsync(ip => ip.TqPathwayAssessmentId == existingPathwayResultDb.TqPathwayAssessmentId && ip.IsOptedin, TestContext.Current.CancellationToken);
             newPathwayResultDb.TqPathwayAssessmentId.Should().Be(_existingPathwayResult.TqPathwayAssessmentId);
             newPathwayResultDb.TlLookupId.Should().Be(_existingPathwayResult.TlLookupId);
             newPathwayResultDb.PrsStatus.Should().Be(PrsStatus.UnderReview);
@@ -67,7 +67,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminPostResu
             newPathwayResultDb.ModifiedBy.Should().BeNull();
             newPathwayResultDb.ModifiedOn.Should().NotHaveValue();
 
-            ChangeLog changeLog = await DbContext.ChangeLog.SingleAsync(ip => ip.TqRegistrationPathwayId == _request.RegistrationPathwayId);
+            ChangeLog changeLog = await DbContext.ChangeLog.SingleAsync(ip => ip.TqRegistrationPathwayId == _request.RegistrationPathwayId, TestContext.Current.CancellationToken);
             changeLog.TqRegistrationPathwayId.Should().Be(_request.RegistrationPathwayId);
             changeLog.ChangeType.Should().Be(ChangeType.OpenPathwayRomm);
             changeLog.ReasonForChange.Should().Be(_request.ChangeReason);

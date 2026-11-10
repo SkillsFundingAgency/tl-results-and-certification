@@ -50,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ProviderAddre
         {
             await WhenAsync(request);
 
-            var actualAddress = await DbContext.TlProviderAddress.Where(p => p.TlProvider.UkPrn == request.Ukprn && p.TlProvider.IsActive && p.IsActive).OrderByDescending(p => p.CreatedOn).FirstOrDefaultAsync();
+            var actualAddress = await DbContext.TlProviderAddress.Where(p => p.TlProvider.UkPrn == request.Ukprn && p.TlProvider.IsActive && p.IsActive).OrderByDescending(p => p.CreatedOn).FirstOrDefaultAsync(TestContext.Current.CancellationToken);
 
             _actualResult.Should().Be(expectedResult);
 

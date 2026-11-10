@@ -92,7 +92,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.DataExpor
                             CoreCode = x.TqRegistrationPathway.TqProvider.TqAwardingOrganisation.TlPathway.LarId,
                             CoreAssessmentEntry = x.AssessmentSeries.Name,
                             CoreGrade = x.TqPathwayResults.First().TlLookup != null ? x.TqPathwayResults.First().TlLookup.Value : string.Empty
-                        }).ToListAsync();
+                        }).ToListAsync(TestContext.Current.CancellationToken);
 
             _actualResult.Count().Should().Be(expectedPathwayResults.Count);
             _actualResult.Should().BeEquivalentTo(expectedPathwayResults);

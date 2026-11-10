@@ -49,9 +49,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
 
         [Theory]
         [MemberData(nameof(Data))]
-        public void Then_Returns_Expected_Results(long ukprn, long uln, FindUlnResponse expectedResponse)
+        public async Task Then_Returns_Expected_Results(long ukprn, long uln, FindUlnResponse expectedResponse)
         {
-            var actualResult = RegistrationService.FindUlnAsync(ukprn, uln).Result;
+            var actualResult = await RegistrationService.FindUlnAsync(ukprn, uln);
 
             if (actualResult == null)
             {

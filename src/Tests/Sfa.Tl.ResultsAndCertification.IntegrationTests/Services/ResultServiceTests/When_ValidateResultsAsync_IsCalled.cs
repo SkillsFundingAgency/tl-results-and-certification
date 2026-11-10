@@ -106,10 +106,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.ResultService
         }
 
         [Fact]
-        public void Expected_Results_Are_Returned()
+        public async Task Expected_Results_Are_Returned()
         {
-            _stage3Result.Result.Should().NotBeNull();
-            var actualResult = _stage3Result.Result;
+            var result = await _stage3Result;
+            result.Should().NotBeNull();
+            var actualResult = result;
 
             var expectedValidationErrors = GetExpectedValidationErrors();
             var actualValidationErrors = actualResult.Where(x => !x.IsValid).SelectMany(x => x.ValidationErrors).ToList();

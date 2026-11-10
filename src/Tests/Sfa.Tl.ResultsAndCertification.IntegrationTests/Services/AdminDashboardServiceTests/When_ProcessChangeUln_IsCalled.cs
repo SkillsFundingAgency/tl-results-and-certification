@@ -82,11 +82,11 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.AdminDashboar
             await WhenAsync(request);
 
             DbContext.ChangeTracker.Clear();
-            TqRegistrationProfile actual = await DbContext.TqRegistrationProfile.SingleAsync(x => x.Id == expected.Id);
-            TqRegistrationPathway actualPathway = await DbContext.TqRegistrationPathway.SingleAsync(x => x.Id == request.RegistrationPathwayId);
-            TqPathwayAssessment actualAssessment = await DbContext.TqPathwayAssessment.SingleAsync(x => x.Id == expectedAssessment.Id);
-            TqPathwayResult actualResult = await DbContext.TqPathwayResult.SingleAsync(x => x.Id == expectedResult.Id);
-            ChangeLog actualChangeLog = await DbContext.ChangeLog.SingleAsync(x => x.TqRegistrationPathwayId == request.RegistrationPathwayId && x.ChangeType == ChangeType.Uln);
+            TqRegistrationProfile actual = await DbContext.TqRegistrationProfile.SingleAsync(x => x.Id == expected.Id, TestContext.Current.CancellationToken);
+            TqRegistrationPathway actualPathway = await DbContext.TqRegistrationPathway.SingleAsync(x => x.Id == request.RegistrationPathwayId, TestContext.Current.CancellationToken);
+            TqPathwayAssessment actualAssessment = await DbContext.TqPathwayAssessment.SingleAsync(x => x.Id == expectedAssessment.Id, TestContext.Current.CancellationToken);
+            TqPathwayResult actualResult = await DbContext.TqPathwayResult.SingleAsync(x => x.Id == expectedResult.Id, TestContext.Current.CancellationToken);
+            ChangeLog actualChangeLog = await DbContext.ChangeLog.SingleAsync(x => x.TqRegistrationPathwayId == request.RegistrationPathwayId && x.ChangeType == ChangeType.Uln, TestContext.Current.CancellationToken);
             ChangeUlnDetails actualDetails = JsonConvert.DeserializeObject<ChangeUlnDetails>(actualChangeLog.Details);
 
             // Assert

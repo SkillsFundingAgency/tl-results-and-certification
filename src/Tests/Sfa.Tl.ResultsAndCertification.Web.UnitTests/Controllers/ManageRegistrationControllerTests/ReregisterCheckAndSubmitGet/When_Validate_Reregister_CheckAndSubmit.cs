@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using NSubstitute;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.Registration.Manual;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistrationControllerTests.ReregisterCheckAndSubmitGet
@@ -12,11 +13,11 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.ManageRegistr
 
         [Theory]
         [ClassData(typeof(ReregisterCheckAndSubmitTestDataGenerator))]
-        public void Then_Returns_Expected_Results(ReregisterCheckAndSubmitTestDataModel data)
+        public async Task Then_Returns_Expected_Results(ReregisterCheckAndSubmitTestDataModel data)
         {
             CacheService.GetAsync<ReregisterViewModel>(CacheKey).Returns(data.ReregisterViewModel);
 
-            Result = Controller.ReregisterCheckAndSubmitAsync(data.ProfileId).Result;
+            Result = await Controller.ReregisterCheckAndSubmitAsync(data.ProfileId);
 
             var actualRouteName = (Result as RedirectToRouteResult).RouteName;
             actualRouteName.Should().Be(data.RouteName);

@@ -12,7 +12,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Repositories.DataExpor
 {
     public class When_GetDataExportPendingWithdrawal_IsCalled : DataExportRepositoryBaseTest
     {
-        private List<TqRegistrationProfile> _registrations;
         private IList<PendingWithdrawalsExport> _actualResult;
 
         public override void Given()

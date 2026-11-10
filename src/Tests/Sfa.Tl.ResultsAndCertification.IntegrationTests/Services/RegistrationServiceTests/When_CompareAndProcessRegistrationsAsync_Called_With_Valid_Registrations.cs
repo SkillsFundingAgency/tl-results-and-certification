@@ -50,7 +50,7 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.RegistrationS
             var actualRegistrationProfile = await _bulkRegistrationTestFixture.DbContext.TqRegistrationProfile.Where(x => x.UniqueLearnerNumber == _bulkRegistrationTestFixture.Uln)
                                                                                                               .Include(x => x.TqRegistrationPathways)
                                                                                                                   .ThenInclude(x => x.TqRegistrationSpecialisms)
-                                                                                                              .Include(x => x.TqRegistrationPathways).FirstOrDefaultAsync();
+                                                                                                              .Include(x => x.TqRegistrationPathways).FirstOrDefaultAsync(TestContext.Current.CancellationToken);
 
             // assert registration profile data
             actualRegistrationProfile.Should().NotBeNull();

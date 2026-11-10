@@ -45,9 +45,9 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TlevelService
         }
 
         [Fact]
-        public void Then_Record_Does_Exist()
+        public async Task Then_Record_Does_Exist()
         {
-            var result = Service.GetTlevelsByStatusIdAsync(_tlAwardingOrganisation.UkPrn, (int)_updatedTlevelReviewStatus).Result;
+            var result = await Service.GetTlevelsByStatusIdAsync(_tlAwardingOrganisation.UkPrn, (int)_updatedTlevelReviewStatus);
             result.Should().ContainSingle();
         }
 

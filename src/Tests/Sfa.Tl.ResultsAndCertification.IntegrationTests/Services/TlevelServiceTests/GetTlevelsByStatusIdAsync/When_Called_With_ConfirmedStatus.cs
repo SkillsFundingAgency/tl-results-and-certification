@@ -15,7 +15,6 @@ namespace Sfa.Tl.ResultsAndCertification.IntegrationTests.Services.TlevelService
     {
         private readonly EnumAwardingOrganisation _awardingOrganisation = EnumAwardingOrganisation.Pearson;
         private readonly TlevelReviewStatus _tlevelReviewStatus = TlevelReviewStatus.Confirmed;
-        private IEnumerable<AwardingOrganisationPathwayStatus> _result;
 
         protected IList<TlRoute> _routes;
         protected IList<TlPathway> _pathways;
