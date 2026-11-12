@@ -371,6 +371,10 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             await _cacheService.RemoveAsync<SearchCriteriaViewModel>(CacheKey);
             var cacheModel = await _cacheService.GetAndRemoveAsync<SearchLearnerRecordViewModel>(CacheKey);
             var viewModel = cacheModel ?? new SearchLearnerRecordViewModel();
+
+            if (!await PopulateAvailableAcademicYearsAsync(viewModel))
+                return RedirectToRoute(RouteConstants.ProblemWithService);
+
             return View(viewModel);
         }
 
@@ -380,7 +384,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
         {
             // Note: Please note this is intrim search page, we have another stories coming up will replace this method. 
             if (!ModelState.IsValid)
+            {
+                if (!await PopulateAvailableAcademicYearsAsync(model))
+                    return RedirectToRoute(RouteConstants.ProblemWithService);
+
                 return View(model);
+            }
 
             var learnerRecord = await _trainingProviderLoader.FindLearnerRecordAsync(User.GetUkPrn(), model.SearchUln.ToLong());
             if (learnerRecord == null || !learnerRecord.IsLearnerRegistered)
@@ -405,6 +414,12 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Controllers
             }
 
             return View(new SearchLearnerRecordNotFoundViewModel { Uln = cacheModel.SearchUln?.ToString() });
+        }
+
+        private async Task<bool> PopulateAvailableAcademicYearsAsync(SearchLearnerRecordViewModel model)
+        {
+            model.AvailableAcademicYears = await _trainingProviderLoader.GetAvailableAcademicYearsAsync();
+            return !model.AvailableAcademicYears.IsNullOrEmpty();
         }
 
         [HttpGet]
