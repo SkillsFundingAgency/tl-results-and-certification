@@ -1,6 +1,8 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Models.Contracts.TrainingProvider;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderRegistrations;
 using Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
@@ -9,6 +11,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Loader.Interfaces
     {
         Task<SearchLearnerDetailsListViewModel> SearchLearnerDetailsAsync(long providerUkprn, SearchCriteriaViewModel searchCriteriaViewModel);
         Task<SearchLearnerFiltersViewModel> GetSearchLearnerFiltersAsync(long providerUkprn);
+        Task<IList<AvailableStartYearViewModel>> GetAvailableAcademicYearsAsync();
         Task<FindLearnerRecord> FindLearnerRecordAsync(long providerUkprn, long uln);
         Task<T> GetLearnerRecordDetailsAsync<T>(long providerUkprn, int profileId, int? pathwayId = null);
         Task<bool> UpdateLearnerWithdrawnStatusAsync(long providerUkprn, ChangeWithdrawnStatusHaveYouToldAwardingOrganisationViewModel model);
