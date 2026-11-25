@@ -16,12 +16,14 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
         {
             _cacheModel = new SearchLearnerRecordViewModel { SearchUln = "1234567890" };
             CacheService.GetAndRemoveAsync<SearchLearnerRecordViewModel>(CacheKey).Returns(_cacheModel);
+            TrainingProviderLoader.GetAvailableAcademicYearsAsync().Returns(AvailableAcademicYears);
         }
 
         [Fact]
         public void Then_Expected_Methods_AreCalled()
         {
             CacheService.Received(1).RemoveAsync<SearchCriteriaViewModel>(CacheKey);
+            TrainingProviderLoader.Received(1).GetAvailableAcademicYearsAsync();
         }
 
         [Fact]
@@ -32,6 +34,7 @@ namespace Sfa.Tl.ResultsAndCertification.Web.UnitTests.Controllers.TrainingProvi
 
             var model = (Result as ViewResult).Model as SearchLearnerRecordViewModel;
             model.SearchUln.Should().Be(_cacheModel.SearchUln);
+            model.AvailableAcademicYears.Should().BeEquivalentTo(AvailableAcademicYears);
             model.Breadcrumb.Should().NotBeNull();
             model.Breadcrumb.BreadcrumbItems.Count.Should().Be(1);
 

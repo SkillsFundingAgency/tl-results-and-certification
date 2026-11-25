@@ -70,60 +70,6 @@ namespace Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 2020 to 2021.
-        /// </summary>
-        public static string Link_2020_To_2021 {
-            get {
-                return ResourceManager.GetString("Link_2020_To_2021", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 2021 to 2022.
-        /// </summary>
-        public static string Link_2021_To_2022 {
-            get {
-                return ResourceManager.GetString("Link_2021_To_2022", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 2022 to 2023.
-        /// </summary>
-        public static string Link_2022_To_2023 {
-            get {
-                return ResourceManager.GetString("Link_2022_To_2023", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 2023 to 2024.
-        /// </summary>
-        public static string Link_2023_To_2024 {
-            get {
-                return ResourceManager.GetString("Link_2023_To_2024", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 2024 to 2025.
-        /// </summary>
-        public static string Link_2024_To_2025 {
-            get {
-                return ResourceManager.GetString("Link_2024_To_2025", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to 2025 to 2026.
-        /// </summary>
-        public static string Link_2025_To_2026 {
-            get {
-                return ResourceManager.GetString("Link_2025_To_2026", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to List all active learners by start year.
         /// </summary>
         public static string List_All_Learners_By_Start_Year {

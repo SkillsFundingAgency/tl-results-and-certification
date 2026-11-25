@@ -1,4 +1,5 @@
 ﻿using Sfa.Tl.ResultsAndCertification.Web.ViewComponents.Breadcrumb;
+using Sfa.Tl.ResultsAndCertification.Web.ViewModel.ProviderRegistrations;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using ErrorResource = Sfa.Tl.ResultsAndCertification.Web.Content.TrainingProvider;
@@ -16,6 +17,8 @@ namespace Sfa.Tl.ResultsAndCertification.Web.ViewModel.TrainingProvider.Manual
         public bool IsLearnerRegistered { get; set; }
 
         public bool IsLearnerRecordAdded { get; set; }
+
+        public IList<AvailableStartYearViewModel> AvailableAcademicYears { get; set; }
 
         public BreadcrumbModel Breadcrumb => new()
         {
